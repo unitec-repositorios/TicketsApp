@@ -14,5 +14,17 @@ namespace tickets
             database = new SQLiteAsyncConnection(dbPath);
             database.CreateTableAsync<User>().Wait();
         }
+
+        public User GetCurrentUser()
+        {
+            try
+            {
+                return database.FindWithQueryAsync<User>("SELECT IsActive from User WHERE IsActive = true").Result;
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

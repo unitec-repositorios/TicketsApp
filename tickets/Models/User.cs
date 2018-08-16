@@ -14,6 +14,6 @@ namespace tickets
         public string Account { get; set; }
         public string Career { get; set; }
         public string PhoneNumber { get; set; }
-        public DateTime Date { get; set; }
+        public bool IsCurrent { get; set; }
     }
 }
