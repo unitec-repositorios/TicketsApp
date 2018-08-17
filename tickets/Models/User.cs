@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using SQLite;
 
 namespace tickets
@@ -15,5 +16,15 @@ namespace tickets
         public string Career { get; set; }
         public string PhoneNumber { get; set; }
         public bool IsCurrent { get; set; }
+
+        public void PrintData()
+        {
+            foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(this))
+            {
+                string name = descriptor.Name;
+                object value = descriptor.GetValue(this);
+                Console.WriteLine("{0}={1}", name, value);
+            }
+        }
     }
 }
