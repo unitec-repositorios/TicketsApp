@@ -15,11 +15,18 @@ namespace tickets
             database.CreateTableAsync<User>().Wait();
         }
 
-        public User GetCurrentUser()
+        public async void EraseDatabase()
+        {
+            await database.DropTableAsync<User>();
+            await database.ExecuteAsync("VACUUM");
+        }
+
+
+        public async Task<User> GetCurrentUser()
         {
             try
             {
-                return database.FindWithQueryAsync<User>("SELECT IsActive from User WHERE IsActive = true").Result;
+                return await database.FindWithQueryAsync<User>("SELECT IsActive from User WHERE IsActive = true");
             }
             catch (System.Exception ex)
             {
