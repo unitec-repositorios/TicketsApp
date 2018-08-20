@@ -2,9 +2,6 @@ using System;
 using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-//using Microsoft.AppCenter;
-//using Microsoft.AppCenter.Analytics;
-//using Microsoft.AppCenter.Crashes;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace tickets
@@ -34,8 +31,7 @@ namespace tickets
 
         protected override void OnStart()
         {
-            // Handle when your app starts
-            //AppCenter.Start("ios=02cc353c-73aa-4d1e-a762-2025aeba8df7;" + "uwp={Your UWP App secret here};" + "android={Your Android App secret here}", typeof(Analytics), typeof(Crashes));
+
         }
 
         protected override void OnSleep()
