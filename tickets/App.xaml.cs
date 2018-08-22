@@ -26,7 +26,7 @@ namespace tickets
         {
             InitializeComponent();
 
-            MainPage = new UserSettingsPage();
+            MainPage = new NavigationPage(new UserSettingsPage());
         }
 
         protected override void OnStart()

@@ -10,18 +10,14 @@ namespace tickets
         public UserSettingsPage()
         {
             InitializeComponent();
+            Title = "Ajustes de Cuenta";
         }
 
         async protected override void OnAppearing()
         {
             base.OnAppearing();
             User current = await App.Database.GetCurrentUser();
-            if (current == null)
-            {
-                Console.WriteLine("OnAppearing: Current user is null");
-                BindingContext = new User();
-            }
-            else
+            if (current != null && BindingContext == null)
             {
                 Console.WriteLine("OnAppearing: Current user exists");
                 BindingContext = current;
@@ -53,9 +49,9 @@ namespace tickets
             BindingContext = new User();
         }
 
-        void OnCancelTouched(object sender, System.EventArgs e)
+        async void OnCancelTouched(object sender, System.EventArgs e)
         {
-            Navigation.PopAsync();
+            await Navigation.PopAsync();
         }
     }
 }
