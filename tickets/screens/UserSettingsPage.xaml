@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.UserSettingsPage">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,20,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Margin="20">
-                <Label FontSize="Large" Text="Account Settings" HorizontalOptions="Center"/>
+            <StackLayout Margin="10,20,10,10">
+                <Label FontSize="Large" Text="Account Settings" HorizontalOptions="Center" />
                 <Label Text="Name" />
                 <Entry Text="{Binding Name}" Placeholder="Marco Antonio Banegas Paredes" Keyboard="Text" />
                 <Label Text="Email" />
@@ -49,8 +54,9 @@
                 </Picker>
                 <Label Text="Numero Celular o Telefono" />
                 <Entry Text="{Binding PhoneNumber}" Placeholder="99550000" Keyboard="Numeric" MaxLength="8" />
-                <Button Text="Save" Clicked="OnSaveTouched"/>
-                <Button Text="Clear" Clicked="OnClearTouched"/>
+                <Button Text="Save" Clicked="OnSaveTouched" />
+                <Button Text="Clear" Clicked="OnClearTouched" />
+                <Button Text="Cancel" Clicked="OnCancelTouched" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

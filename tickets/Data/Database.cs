@@ -45,7 +45,8 @@ namespace tickets
         public async Task<int> CreateNewCurrentUser(User user)
         {
             await database.ExecuteAsync("UPDATE User SET IsCurrent = 0");
-            return await database.InsertAsync(user);
+            user.IsCurrent = true;
+            return await SaveUserAsync(user);
         }
 
         /// <summary>
