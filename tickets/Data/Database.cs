@@ -20,6 +20,12 @@ namespace tickets
             return database;
         }
 
+        public void clearDatabase()
+        {
+            database.DropTableAsync<User>().Wait();
+            database.CreateTableAsync<User>().Wait();
+        }
+
         /// <summary>
         /// Returns a <see cref="User"/> which is the current user
         /// </summary>

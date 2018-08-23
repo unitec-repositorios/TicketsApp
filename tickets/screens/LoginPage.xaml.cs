@@ -54,6 +54,7 @@ namespace tickets
                         Email = email
                     }
                 });
+                await Navigation.PushModalAsync(new SendTicket());
             }
             catch (Exception ex)
             {
