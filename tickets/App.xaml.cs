@@ -25,8 +25,10 @@ namespace tickets
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage(new SendTicket());
+            MainPage = new NavigationPage(new MainPage()) {
+                BarBackgroundColor = Color.Navy,
+                BarTextColor = Color.White
+            };
         }
 
         protected override void OnStart()
