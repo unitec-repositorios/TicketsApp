@@ -44,14 +44,12 @@ Global
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.AppStore|iPhoneSimulator.Deploy.0 = Release|Any CPU
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9343C8A3-31B1-44C1-946A-488316016EE9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9343C8A3-31B1-44C1-946A-488316016EE9}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.Release|iPhone.Build.0 = Release|Any CPU
 		{9343C8A3-31B1-44C1-946A-488316016EE9}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
@@ -131,6 +129,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {2B8F366C-34C6-4E1D-832C-6159F1A44121}
+		SolutionGuid = {5707C0C1-D84E-4AB5-98F8-75E458D641C9}
 	EndGlobalSection
 EndGlobal
