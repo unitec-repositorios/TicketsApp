@@ -4,7 +4,6 @@ using System.IO;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-
 namespace tickets.UITests.UnitTests
 {
 

@@ -34,7 +34,8 @@ namespace tickets
         {
             InitializeComponent();
             IdentityClientApp = new PublicClientApplication(ClientID);
-            MainPage = new LoginPage();
+            IdentityClientApp.RedirectUri = RedirectUri;
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

@@ -40,5 +40,11 @@
     <Compile Include="AppInitializer.cs" />
     <Compile Include="UnitTests\DatabaseTest.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\tickets\tickets.csproj">
+      <Project>{814182FF-CDDC-4DCD-BEF6-57297921101D}</Project>
+      <Name>tickets</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
