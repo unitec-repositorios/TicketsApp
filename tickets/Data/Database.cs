@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SQLite;
-
+using System.Diagnostics;
 
 namespace tickets
 {
@@ -15,15 +15,32 @@ namespace tickets
             database.CreateTableAsync<User>().Wait();
         }
 
+        public Database(string dbPath, bool eraseDB)
+        {
+            database = new SQLiteAsyncConnection(dbPath);
+            database.CreateTableAsync<User>().Wait();
+        }
+
         public SQLiteAsyncConnection GetConnection()
         {
             return database;
         }
 
-        public void clearDatabase()
+        public void ClearDatabase()
         {
-            database.DropTableAsync<User>().Wait();
-            database.CreateTableAsync<User>().Wait();
+            database.ExecuteAsync("DELETE FROM User").Wait();
+        }
+
+        public User GetCurrentUserNotAsync()
+        {
+            try
+            {
+                return database.FindWithQueryAsync<User>("SELECT * from User WHERE IsCurrent = 1").Result;
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
         }
 
         /// <summary>

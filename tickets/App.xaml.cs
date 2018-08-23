@@ -3,6 +3,8 @@ using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Microsoft.Identity.Client;
+using System.Diagnostics;
+
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace tickets
@@ -36,16 +38,20 @@ namespace tickets
             IdentityClientApp = new PublicClientApplication(ClientID);
             IdentityClientApp.RedirectUri = RedirectUri;
 
-#if DEBUG
-            database.clearDatabase();
-#endif
 
-            if (App.Database.GetCurrentUser() == null)
+            Database.ClearDatabase();
+
+            Debug.WriteLineIf(Database.GetCurrentUserNotAsync() == null, "Current user is null, should go to login page");
+
+            if (Database.GetCurrentUserNotAsync() == null)
             {
                 MainPage = new NavigationPage(new LoginPage());
-            } else {
+            }
+            else
+            {
                 MainPage = new NavigationPage(new SendTicket());
             }
+
         }
 
         protected override void OnStart()

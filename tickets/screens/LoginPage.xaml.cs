@@ -46,15 +46,19 @@ namespace tickets
 
                 username = App.Username;
                 email = App.UserEmail;
-                await Navigation.PushAsync(new UserSettingsPage()
+                var userSettings = new UserSettingsPage()
                 {
                     BindingContext = new User()
                     {
                         Name = username,
                         Email = email
                     }
-                });
-                await Navigation.PushModalAsync(new SendTicket());
+                };
+                userSettings.Disappearing += (sender2, e2) => {
+                    Navigation.PushAsync(new SendTicket());
+                };
+                await Navigation.PushAsync(userSettings);
+                //await Navigation.PushModalAsync(new SendTicket());
             }
             catch (Exception ex)
             {
