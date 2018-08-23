@@ -24,7 +24,6 @@ namespace tickets
         public string Body { get; set; }
     }
 
-  [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SendTicket : ContentPage
 	{
         private HttpClient _client = new HttpClient();
