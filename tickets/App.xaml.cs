@@ -39,7 +39,7 @@ namespace tickets
             {
                 MainPage = new NavigationPage(new LoginPage());
             } else {
-                MainPage = new SendTicket();
+                MainPage = new NavigationPage(new SendTicket());
             }
         }
 
