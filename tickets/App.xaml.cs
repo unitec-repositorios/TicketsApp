@@ -43,10 +43,8 @@ namespace tickets
             if (App.Database.GetCurrentUser() == null)
             {
                 MainPage = new NavigationPage(new LoginPage());
-            }
-            else
-            {
-                MainPage = new SendTicket();
+            } else {
+                MainPage = new NavigationPage(new SendTicket());
             }
         }
 
