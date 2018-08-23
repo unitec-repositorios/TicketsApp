@@ -23,6 +23,8 @@ namespace tickets
         public static string TokenForUser = null;
         public static DateTimeOffset expiration;
 
+        public static String username;
+        public static String email;
         public LoginPage ()
 		{
 			InitializeComponent();
@@ -41,6 +43,10 @@ namespace tickets
                     App.UserEmail = currentUserObject.UserPrincipalName;
                     Debug.WriteLine(App.Username);
                     Debug.WriteLine(App.UserEmail);
+             
+                    username = App.Username;
+                    email = App.UserEmail;
+
 
                 }
                 
