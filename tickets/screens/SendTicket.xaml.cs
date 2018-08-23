@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Net;
 
-namespace tickets.screens
+namespace tickets
 {
     public class Post
     {
@@ -24,7 +24,7 @@ namespace tickets.screens
         public string Body { get; set; }
     }
 
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+  [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SendTicket : ContentPage
 	{
         private HttpClient _client = new HttpClient();

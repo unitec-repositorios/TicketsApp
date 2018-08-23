@@ -25,7 +25,6 @@ namespace tickets
         public App()
         {
             InitializeComponent();
-
             MainPage = new NavigationPage(new MainPage()) {
                 BarBackgroundColor = Color.Navy,
                 BarTextColor = Color.White
