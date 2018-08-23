@@ -142,7 +142,7 @@ namespace tickets
                     string categoryInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "category", "category");
                     byte[] categoryInputBytes = ascii.GetBytes(categoryInput);
                     //priority
-                    string priorityInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "priority", pickerPriority.SelectedIndex.ToString());
+                    string priorityInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "priority", (pickerPriority.SelectedIndex+1)+"");
                     byte[] priorityInputBytes = ascii.GetBytes(priorityInput);
                     //subject
                     string subjectInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "subject", subject.Text);
@@ -229,14 +229,19 @@ namespace tickets
                             beginR++;
                             valR = responseHtml[beginR];
                         }
+                        await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + ticketID, "OK");
+                        //
+                        number.Text = "";
+                        subject.Text = "";
+                        message.Text = "";
+                        picker.SelectedIndex = 1;
+                        pickerPriority.SelectedIndex = 1;
                     }
-                    await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + ticketID, "OK");
-                    //
-                    number.Text = "";
-                    subject.Text = "";
-                    message.Text = "";
-                    picker.SelectedIndex = 1;
-                    pickerPriority.SelectedIndex = 1;
+                    else
+                    {
+                        await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
+
+                    }
                 }
                 else
                 {
