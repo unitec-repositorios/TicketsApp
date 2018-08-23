@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using SQLite;
+using System.Diagnostics;
+
 
 namespace tickets
 {
@@ -23,7 +25,7 @@ namespace tickets
             {
                 string name = descriptor.Name;
                 object value = descriptor.GetValue(this);
-                Console.WriteLine("{0}={1}", name, value);
+                Debug.WriteLine("{0}={1}", name, value);
             }
         }
     }

@@ -27,7 +27,6 @@ namespace tickets
         async void OnSaveTouched(object sender, System.EventArgs e)
         {
             var user = (User)BindingContext;
-            user.PrintData();
             User current = await App.Database.GetCurrentUser();
             if (current == null)
             {
@@ -41,6 +40,7 @@ namespace tickets
                 await App.Database.SaveUserAsync(user);
                 await DisplayAlert("Sucess", "Actualizado correctamente", "Ok");
             }
+            user.PrintData();
             await Navigation.PopAsync();
         }
 

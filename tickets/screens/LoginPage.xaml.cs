@@ -34,28 +34,33 @@ namespace tickets
 
         async void OnSignInSignOut(object sender, EventArgs e)
         {
-
-            if (SignInSignOutBtn.Text == "Iniciar Sesion")
+            try
             {
                 Microsoft.Graph.User currentUserObject;
                 graphClient = GetAuthenticatedClient();
-                try
-                {
-                    currentUserObject = await graphClient.Me.Request().GetAsync();
-                    App.Username = currentUserObject.DisplayName;
-                    App.UserEmail = currentUserObject.UserPrincipalName;
-                    Debug.WriteLine(App.Username);
-                    Debug.WriteLine(App.UserEmail);
+                currentUserObject = await graphClient.Me.Request().GetAsync();
+                App.Username = currentUserObject.DisplayName;
+                App.UserEmail = currentUserObject.UserPrincipalName;
+                Debug.WriteLine(App.Username);
+                Debug.WriteLine(App.UserEmail);
 
-                    username = App.Username;
-                    email = App.UserEmail;
-                }
-                catch (Exception ex)
+                username = App.Username;
+                email = App.UserEmail;
+                await Navigation.PushAsync(new UserSettingsPage()
                 {
-                    Console.WriteLine(ex);
-                    await DisplayAlert("Cancelled", "User cancelled authentication", "Ok");
-                }
+                    BindingContext = new User()
+                    {
+                        Name = username,
+                        Email = email
+                    }
+                });
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                await DisplayAlert("Cancelled", "User cancelled authentication", "Ok");
+            }
+
         }
 
         public static GraphServiceClient GetAuthenticatedClient()

@@ -35,7 +35,12 @@ namespace tickets
             InitializeComponent();
             IdentityClientApp = new PublicClientApplication(ClientID);
             IdentityClientApp.RedirectUri = RedirectUri;
-            MainPage = new NavigationPage(new LoginPage());
+            if (App.Database.GetCurrentUser() == null)
+            {
+                MainPage = new NavigationPage(new LoginPage());
+            } else {
+                MainPage = new SendTicket();
+            }
         }
 
         protected override void OnStart()
