@@ -14,9 +14,9 @@ using Microsoft.Identity.Client;
 
 namespace tickets
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LoginPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class LoginPage : ContentPage
+    {
 
         private static GraphServiceClient graphClient = null;
         private static GraphServiceClient graphClient2 = null;
@@ -25,34 +25,37 @@ namespace tickets
 
         public static String username;
         public static String email;
-        public LoginPage ()
-		{
-			InitializeComponent();
-		}
+        public LoginPage()
+        {
+            InitializeComponent();
+        }
 
-        
+
 
         async void OnSignInSignOut(object sender, EventArgs e)
         {
-            
-                if (SignInSignOutBtn.Text == "Iniciar Sesion")
+
+            if (SignInSignOutBtn.Text == "Iniciar Sesion")
+            {
+                Microsoft.Graph.User currentUserObject;
+                graphClient = GetAuthenticatedClient();
+                try
                 {
-                    graphClient = GetAuthenticatedClient();
-                    var currentUserObject = await graphClient.Me.Request().GetAsync();
+                    currentUserObject = await graphClient.Me.Request().GetAsync();
                     App.Username = currentUserObject.DisplayName;
                     App.UserEmail = currentUserObject.UserPrincipalName;
                     Debug.WriteLine(App.Username);
                     Debug.WriteLine(App.UserEmail);
-             
+
                     username = App.Username;
                     email = App.UserEmail;
-
-
                 }
-                
-            
-            
-           
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    await DisplayAlert("Cancelled", "User cancelled authentication", "Ok");
+                }
+            }
         }
 
         public static GraphServiceClient GetAuthenticatedClient()
@@ -69,7 +72,7 @@ namespace tickets
                             {
                                 var token = await GetTokenForUserAsync();
                                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", token);
-                               
+
 
                             }));
                     return graphClient2;
