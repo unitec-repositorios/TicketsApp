@@ -4,9 +4,25 @@
              x:Class="tickets.LoginPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Login"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Image 
+            x:Name="Photo"
+            Source="http://www.unitec.edu/cap/images/cap.png" 
+            Aspect="AspectFit" 
+            Margin="20" 
+            HeightRequest="400" 
+            WidthRequest="200" 
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+            <Button
+            x:Name="SignInSignOutBtn" 
+            Margin="70,20"
+			Text="Iniciar Sesion" 
+			TextColor="White"
+            FontSize="20"
+            BorderRadius="20"
+			BackgroundColor="#01265A"
+            Clicked="OnSignInSignOut"
+           />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
