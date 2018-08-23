@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace tickets.screens
+namespace tickets
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SendTicket : ContentView
+    public partial class SendTicket : ContentPage
 	{
 		public SendTicket ()
 		{
