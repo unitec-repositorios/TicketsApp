@@ -1,24 +1,27 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage Title="Enviar ticket" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="tickets.screens.SendTicket">
-  <ContentView.Content>
-      <StackLayout>
+    <ContentPage.Resources>
+        <StyleSheet Source="../styles/style.css"></StyleSheet>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <ScrollView>
             <StackLayout>
-                <Label Text="Enviar ticket" HorizontalOptions="Center"></Label>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250" />
-                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="150" />
                     </Grid.ColumnDefinitions>
                     <Label Text="Cantidad de afectados" Grid.Row="0" Grid.Column="0" ></Label>
                     <Entry Placeholder="#" Keyboard="Numeric" x:Name="number" Grid.Row="0" Grid.Column="1" ></Entry>
                 </Grid>
                 <Label Text="Clasificación"></Label>
-                <Picker x:Name="picker">
+                <Picker x:Name="picker" SelectedIndex="1">
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
                             <x:String>Solicitud</x:String>
@@ -29,15 +32,25 @@
                         </x:Array>
                     </Picker.ItemsSource>
                 </Picker>
+                <Label Text="Prioridad"></Label>
+                <Picker x:Name="pickerPriority" SelectedIndex="1">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Alto</x:String>
+                            <x:String>Medio</x:String>
+                            <x:String>Bajo</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
                 <Label Text="Asunto"></Label>
                 <Entry Placeholder="Problema" x:Name="subject"></Entry>
                 <Label Text="Mensaje"></Label>
-                <Editor x:Name="message"></Editor>
-                <Button Text="Adjuntar Archivo" x:Name="MyButton" HorizontalOptions="Center"></Button>
+                <Editor x:Name="message" class="editor"></Editor>
+                <Button Text="Adjuntar Archivo" x:Name="Append" HorizontalOptions="Center" class="button" BorderRadius="20"></Button>
+                <Button Text="Enviar Ticket" x:Name="Send" HorizontalOptions="Center" class="sendbutton" BorderRadius="20"></Button>
                 <Label Text="Archivos adjuntados" x:Name="Mylabel" HorizontalOptions="Center"></Label>
                 <ListView x:Name="Adjun"></ListView>
-                <Button Text="Enviar Ticket" x:Name="Send" HorizontalOptions="Center"></Button>
             </StackLayout>
-        </StackLayout>
-  </ContentView.Content>
-</ContentView>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
