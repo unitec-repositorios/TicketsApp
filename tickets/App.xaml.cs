@@ -39,7 +39,7 @@ namespace tickets
             IdentityClientApp.RedirectUri = RedirectUri;
 
 
-            Database.ClearDatabase();
+            //Database.ClearDatabase();
 
             Debug.WriteLineIf(Database.GetCurrentUserNotAsync() == null, "Current user is null, should go to login page");
 
