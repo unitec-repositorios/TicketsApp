@@ -49,7 +49,7 @@ namespace tickets
             }
             else
             {
-                MainPage = new NavigationPage(new SendTicket());
+                MainPage = new NavigationPage(new HomeScreen());
             }
 
         }
