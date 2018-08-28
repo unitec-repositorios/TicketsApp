@@ -4522,11 +4522,11 @@ namespace tickets.Droid
 			// aapt resource value: 0x7f020128
 			public const int notification_bg_normal_pressed = 2130837800;
 			
-			// aapt resource value: 0x7f020129
-			public const int notification_icon_background = 2130837801;
-			
 			// aapt resource value: 0x7f02012e
 			public const int notification_template_icon_bg = 2130837806;
+			
+			// aapt resource value: 0x7f02012f
+			public const int notification_template_icon_low_bg = 2130837807;
 			
 			// aapt resource value: 0x7f02012f
 			public const int notification_template_icon_low_bg = 2130837807;
@@ -4535,7 +4535,7 @@ namespace tickets.Droid
 			public const int notification_tile_bg = 2130837802;
 			
 			// aapt resource value: 0x7f02012b
-			public const int notify_panel_notification_icon_bg = 2130837803;
+			public const int settings_icon = 2130837803;
 			
 			// aapt resource value: 0x7f02012c
 			public const int tooltip_frame_dark = 2130837804;

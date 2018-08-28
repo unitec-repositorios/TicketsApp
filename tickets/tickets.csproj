@@ -14,6 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="LoginPage.xaml.cs" />
+    <Compile Remove="screens\MainPage.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="screens\SendTicket.xaml.cs">
