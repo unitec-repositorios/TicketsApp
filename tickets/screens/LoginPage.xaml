@@ -6,13 +6,18 @@
         <StackLayout>
             <Image 
             x:Name="Photo"
-            Source="http://www.unitec.edu/cap/images/cap.png" 
+            Source="cap.png" 
             Aspect="AspectFit" 
             Margin="20" 
             HeightRequest="400" 
             WidthRequest="200" 
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" 
+                />
+            <ActivityIndicator x:Name="Loading"
+                               Color="Red" 
+                               IsRunning="true"
+                               IsVisible="false"/>
             <Button
             x:Name="SignInSignOutBtn" 
             Margin="70,20"
