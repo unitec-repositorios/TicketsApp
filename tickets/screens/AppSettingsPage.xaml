@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.AppSettingsPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.AppSettingsPage" Title="Ajustes" Icon="baseline_settings_black_36pt">
     <ContentPage.Content>
         <TableView Intent="Settings">
             <TableRoot>
-                <TableSection Title="Ring">
-                    <ViewCell>
-                        <StackLayout Orientation="Horizontal">
-                            <Image Source="bulb.png" />
-                            <Label Text="left"
-                              TextColor="#f35e20" />
-                            <Label Text="right"
-                              HorizontalOptions="EndAndExpand"
-                              TextColor="#503026" />
-                        </StackLayout>    
+                <TableSection Title="Ajustes">
+                    <ViewCell Tapped="goToUserSettings" StyleId="disclosure">
+                        <Label Text="Ajustes de Cuenta" />  
                     </ViewCell>
-                    <SwitchCell Text="New Voice Mail" />
-                    <SwitchCell Text="New Mail" On="true" />
                 </TableSection>
             </TableRoot>
         </TableView>

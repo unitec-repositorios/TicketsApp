@@ -11,5 +11,10 @@ namespace tickets
         {
             InitializeComponent();
         }
+
+        public async void goToUserSettings(object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new UserSettingsPage());
+        }
     }
 }

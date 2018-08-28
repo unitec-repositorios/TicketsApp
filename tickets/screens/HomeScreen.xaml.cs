@@ -10,6 +10,12 @@ namespace tickets
         public HomeScreen()
         {
             InitializeComponent();
+            CurrentPageChanged += CurrentPageHasChanged;
+        }
+
+        protected void CurrentPageHasChanged(object sender, EventArgs e) 
+        { 
+            Title = CurrentPage.Title; 
         }
     }
 }
