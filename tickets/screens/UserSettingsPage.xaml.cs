@@ -11,6 +11,12 @@ namespace tickets
         {
             InitializeComponent();
             Title = "Ajustes de Cuenta";
+            txtname.Completed += (s, e) => txtemail.Focus();
+            txtemail.Completed += (s, e) => campuspicker.Focus();
+            profilepicker.SelectedIndexChanged += (s, e) => txtaccount.Focus();
+            //txtemail.Completed += (s, e) => campuspicker.Focus();
+            //txtemail.Completed += (s, e) => campuspicker.Focus();
+            //txtemail.Completed += (s, e) => campuspicker.Focus();
         }
 
         async protected override void OnAppearing()
