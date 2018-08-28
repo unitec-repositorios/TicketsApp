@@ -10,7 +10,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Microsoft.Graph;
 using Microsoft.Identity.Client;
-
+using System.Net;
 
 namespace tickets
 {
@@ -34,38 +34,95 @@ namespace tickets
 
         async void OnSignInSignOut(object sender, EventArgs e)
         {
+            if (CheckInternetConnection())
+            {
+                SignInSignOutBtn.IsVisible = false;
+                Loading.IsVisible = true;
+                try
+                {
+                    Microsoft.Graph.User currentUserObject;
+                    graphClient = GetAuthenticatedClient();
+                    currentUserObject = await graphClient.Me.Request().GetAsync();
+
+
+
+
+                    if (currentUserObject.UserPrincipalName.ToLower().Contains("@unitec.edu"))
+                    {
+                        
+                        App.Username = currentUserObject.DisplayName;
+                        App.UserEmail = currentUserObject.UserPrincipalName;
+                        username = App.Username;
+                        email = App.UserEmail;
+                        Debug.WriteLine(App.Username);
+                        Debug.WriteLine(App.UserEmail);
+                        var userSettings = new UserSettingsPage()
+                        {
+                            BindingContext = new User()
+                            {
+                                Name = username,
+                                Email = email
+                            }
+                        };
+                        userSettings.Disappearing += (sender2, e2) =>
+                        {
+                            Navigation.PushAsync(new SendTicket());
+                        };
+                        await Navigation.PushAsync(userSettings);
+                        //await Navigation.PushModalAsync(new SendTicket());
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Llegue aca!");
+                        await DisplayAlert("Error", "El correo utilizado no es valido", "Ok");
+                        username = null;
+                        email = null;
+                        TokenForUser = null;
+                        graphClient = null;
+                        SignInSignOutBtn.IsVisible = true;
+                        Loading.IsVisible = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    await DisplayAlert("Cancelled", "User cancelled authentication", "Ok");
+                }
+            }
+            else
+            {
+                await DisplayAlert("No hay conexion", "No se detecto una conexion a Internet. Por favor vuelta a intentarlo", "Ok");
+                SignInSignOutBtn.IsVisible =true;
+                Loading.IsVisible = false;
+            }
+
+        }
+
+        public bool CheckInternetConnection()
+        {
+            string CheckUrl = "http://google.com";
+
             try
             {
-                Microsoft.Graph.User currentUserObject;
-                graphClient = GetAuthenticatedClient();
-                currentUserObject = await graphClient.Me.Request().GetAsync();
-                App.Username = currentUserObject.DisplayName;
-                App.UserEmail = currentUserObject.UserPrincipalName;
-                Debug.WriteLine(App.Username);
-                Debug.WriteLine(App.UserEmail);
+                HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(CheckUrl);
 
-                username = App.Username;
-                email = App.UserEmail;
-                var userSettings = new UserSettingsPage()
-                {
-                    BindingContext = new User()
-                    {
-                        Name = username,
-                        Email = email
-                    }
-                };
-                userSettings.Disappearing += (sender2, e2) => {
-                    Navigation.PushAsync(new SendTicket());
-                };
-                await Navigation.PushAsync(userSettings);
-                //await Navigation.PushModalAsync(new SendTicket());
+                iNetRequest.Timeout = 5000;
+
+                WebResponse iNetResponse = iNetRequest.GetResponse();
+
+                // Console.WriteLine ("...connection established..." + iNetRequest.ToString ());
+                iNetResponse.Close();
+
+                return true;
+
             }
-            catch (Exception ex)
+            catch (WebException ex)
             {
-                Console.WriteLine(ex);
-                await DisplayAlert("Cancelled", "User cancelled authentication", "Ok");
-            }
 
+                // Console.WriteLine (".....no connection..." + ex.ToString ());
+
+                return false;
+            }
         }
 
         public static GraphServiceClient GetAuthenticatedClient()
