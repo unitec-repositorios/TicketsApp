@@ -64,12 +64,13 @@ namespace tickets
                                 Email = email
                             }
                         };
-                        userSettings.Disappearing += (sender2, e2) =>
+                        userSettings.Disappearing += async (sender2, e2) =>
                         {
-                            Navigation.PushAsync(new SendTicket());
+                            HomeScreen home = new HomeScreen();
+                            App.Current.MainPage = new NavigationPage(home);
+                            //Navigation.RemovePage(page);
                         };
                         await Navigation.PushAsync(userSettings);
-                        //await Navigation.PushModalAsync(new SendTicket());
                     }
                     else
                     {
@@ -86,7 +87,7 @@ namespace tickets
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
-                    await DisplayAlert("Cancelled", "User cancelled authentication", "Ok");
+                    //await DisplayAlert("Cancelled", "User cancelled authentication", "Ok");
                 }
             }
             else
