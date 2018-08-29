@@ -177,5 +177,19 @@ namespace tickets
             return TokenForUser;
         }
 
+        public static void SignOut()
+        {
+            foreach (var user in App.IdentityClientApp.Users)
+            {
+                App.IdentityClientApp.Remove(user);
+            }
+            graphClient = null;
+            TokenForUser = null;
+            username = null;
+            email = null;
+
+            Debug.WriteLine("LLegue al logout");
+        }
+
     }
 }
