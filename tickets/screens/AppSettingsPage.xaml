@@ -8,10 +8,7 @@
                         <Label Text="Ajustes de Cuenta" />  
                     </ViewCell>
                 </TableSection>
-                <StackLayout VerticalOptions="EndAndExpand">
-                    <Button Text="Borrar datos" class="btn_red" />
-                    <Button Text="Cerrar Sesion" class="btn_blue" />
-                </StackLayout>
+                
             </TableRoot>
         </TableView>
     </ContentPage.Content>
