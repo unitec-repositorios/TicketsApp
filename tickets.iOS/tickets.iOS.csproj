@@ -160,6 +160,8 @@
     <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_48pt.xcassets\baseline_settings_black_48pt.imageset\baseline_settings_black_48pt_1x.png" />
     <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_48pt.xcassets\baseline_settings_black_48pt.imageset\baseline_settings_black_48pt_2x.png" />
     <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_48pt.xcassets\baseline_settings_black_48pt.imageset\baseline_settings_black_48pt_3x.png" />
+    <ImageAsset Include="Assets.xcassets\cap.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\cap.imageset\cap.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -181,5 +183,8 @@
       <Project>{814182FF-CDDC-4DCD-BEF6-57297921101D}</Project>
       <Name>tickets</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets.xcassets\cap.imageset\" />
   </ItemGroup>
 </Project>
