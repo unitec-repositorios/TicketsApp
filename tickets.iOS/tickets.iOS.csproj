@@ -162,6 +162,22 @@
     <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_48pt.xcassets\baseline_settings_black_48pt.imageset\baseline_settings_black_48pt_3x.png" />
     <ImageAsset Include="Assets.xcassets\cap.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\cap.imageset\cap.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_18pt.xcassets\baseline_home_black_18pt.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_18pt.xcassets\baseline_home_black_18pt.imageset\baseline_home_black_18pt_1x.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_18pt.xcassets\baseline_home_black_18pt.imageset\baseline_home_black_18pt_2x.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_18pt.xcassets\baseline_home_black_18pt.imageset\baseline_home_black_18pt_3x.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_24pt.xcassets\baseline_home_black_24pt.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_24pt.xcassets\baseline_home_black_24pt.imageset\baseline_home_black_24pt_1x.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_24pt.xcassets\baseline_home_black_24pt.imageset\baseline_home_black_24pt_2x.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_24pt.xcassets\baseline_home_black_24pt.imageset\baseline_home_black_24pt_3x.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_36pt.xcassets\baseline_home_black_36pt.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_36pt.xcassets\baseline_home_black_36pt.imageset\baseline_home_black_36pt_1x.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_36pt.xcassets\baseline_home_black_36pt.imageset\baseline_home_black_36pt_2x.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_36pt.xcassets\baseline_home_black_36pt.imageset\baseline_home_black_36pt_3x.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_48pt.xcassets\baseline_home_black_48pt.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_48pt.xcassets\baseline_home_black_48pt.imageset\baseline_home_black_48pt_1x.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_48pt.xcassets\baseline_home_black_48pt.imageset\baseline_home_black_48pt_2x.png" />
+    <ImageAsset Include="Assets.xcassets\baseline-home-ios-black\baseline_home_black_48pt.xcassets\baseline_home_black_48pt.imageset\baseline_home_black_48pt_3x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -186,5 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets.xcassets\cap.imageset\" />
+    <Folder Include="Assets.xcassets\ticket.imageset\" />
   </ItemGroup>
 </Project>
