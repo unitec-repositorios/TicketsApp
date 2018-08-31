@@ -31,12 +31,11 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-<<<<<<< HEAD
+
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
     <BundleAssemblies>false</BundleAssemblies>
-=======
->>>>>>> 0b1e5f5f337de883c7da77add767679bdfa87a9f
+
     <AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -47,14 +46,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
-<<<<<<< HEAD
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
-=======
+
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
->>>>>>> 0b1e5f5f337de883c7da77add767679bdfa87a9f
+
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
