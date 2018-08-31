@@ -49,7 +49,16 @@ namespace tickets
             }
             else
             {
-                MainPage = new NavigationPage(new HomeScreen());
+                switch(Device.RuntimePlatform)
+                {
+                    case Device.iOS:
+                        MainPage = new NavigationPage(new HomeScreen());
+                        break;
+                    case Device.Android:
+                        MainPage = new NavigationPage(new MyTickets());
+                        break;
+
+                }
             }
 
         }

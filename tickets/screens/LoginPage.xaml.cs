@@ -68,6 +68,16 @@ namespace tickets
                         {
                             HomeScreen home = new HomeScreen();
                             App.Current.MainPage = new NavigationPage(home);
+                            switch (Xamarin.Forms.Device.RuntimePlatform)
+                            {
+                                case Xamarin.Forms.Device.iOS:
+                                    App.Current.MainPage = new NavigationPage(new HomeScreen());
+                                    break;
+                                case Xamarin.Forms.Device.Android:
+                                    App.Current.MainPage = new NavigationPage(new MyTickets());
+                                    break;
+
+                            }
                             //Navigation.RemovePage(page);
                         };
                         await Navigation.PushAsync(userSettings);

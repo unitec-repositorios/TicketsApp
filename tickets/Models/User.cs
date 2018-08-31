@@ -28,5 +28,16 @@ namespace tickets
                 Debug.WriteLine("{0}={1}", name, value);
             }
         }
+
+        public bool IsValid()
+        {
+            return !(string.IsNullOrEmpty(Name)
+                     || string.IsNullOrEmpty(Email)
+                     || string.IsNullOrEmpty(Campus)
+                     || string.IsNullOrEmpty(Profile)
+                     || string.IsNullOrEmpty(Account)
+                     || string.IsNullOrEmpty(Career)
+                     || string.IsNullOrEmpty(PhoneNumber));
+        }
     }
 }
