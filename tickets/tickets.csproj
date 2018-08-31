@@ -14,6 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="LoginPage.xaml.cs" />
+    <Compile Remove="screens\MainPage.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="screens\SendTicket.xaml.cs">
@@ -24,5 +25,8 @@
     <EmbeddedResource Update="screens\SendTicket.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ticket-black.png" />
   </ItemGroup>
 </Project>

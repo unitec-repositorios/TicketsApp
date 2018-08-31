@@ -25,3 +25,17 @@
     width: 200;
     height: 40;
 }
+
+.btn_red {
+    color: white;
+    background-color: red;
+    width: 200;
+    height: 40;
+}
+
+.btn_blue {
+    color: white;
+    background-color: navy;
+    width: 200;
+    height: 40;
+}

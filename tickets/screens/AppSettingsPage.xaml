@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.AppSettingsPage" Title="Ajustes" Icon="baseline_settings_black_36pt">
+    <ContentPage.Content>
+        <TableView Intent="Settings">
+            <TableRoot>
+                <TableSection Title="Ajustes">
+                    <ViewCell Tapped="goToUserSettings" StyleId="disclosure">
+                        <Label Text="Ajustes de Cuenta" />  
+                    </ViewCell>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+    </ContentPage.Content>
+</ContentPage>

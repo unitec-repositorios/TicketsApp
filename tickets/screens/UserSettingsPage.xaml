@@ -1,66 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:tickets" x:Class="tickets.UserSettingsPage">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save" Clicked="OnSaveTouched">
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
-<!--    <ContentPage.Padding>
-        <OnPlatform x:TypeArguments="Thickness">
-            <On Platform="iOS" Value="0,20,0,0" />
-        </OnPlatform>
-    </ContentPage.Padding>-->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:tickets" x:Class="tickets.UserSettingsPage" Title="Ajustes de Cuenta" Icon="baseline_settings_black_36pt">
+    <ContentPage.Resources>
+        <StyleSheet Source="../styles/style.css">
+        </StyleSheet>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Margin="10,20,10,10">
-<!--                <Label FontSize="Large" Text="Ajustes de Cuenta" HorizontalOptions="Center" />-->
-                <Label Text="Nombre" />
-                <Entry Text="{Binding Name}" x:Name="txtname" Placeholder="Marco Antonio Banegas Paredes" Keyboard="Text" />
-                <Label Text="Email" />
-                <Entry Text="{Binding Email}" x:Name="txtemail" Placeholder="student@unitec.edu" Keyboard="Email" />
-                <Label Text="Campus" />
-                <Picker x:Name="campuspicker" Title="Campus" SelectedItem="{Binding Campus}">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>UNITEC TGU</x:String>
-                            <x:String>UNITEC SPS</x:String>
-                            <x:String>CEUTEC TGU</x:String>
-                            <x:String>CEUTEC LCE</x:String>
-                            <x:String>CEUTEC SPS</x:String>
-                            <x:String>CEUTEC NORTE SPS</x:String>
-                            <x:String>UV</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-                <Label Text="Perfil" />
-                <Picker x:Name="profilepicker" Title="Perfil" SelectedItem="{Binding Profile}">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Alumno</x:String>
-                            <x:String>Docente</x:String>
-                            <x:String>Administrativo</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-                <Label Text="Numero de Cuenta" />
-                <Entry Text="{Binding Account}" x:Name="txtaccount" Placeholder="21616161" Keyboard="Numeric" MaxLength="8" />
-                <Label Text="Carrera" />
-                <Picker x:Name="careerpicker" Title="Carrera" SelectedItem="{Binding Career}">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Ing. En sistemas</x:String>
-                            <x:String>Ing. En Mecatronica</x:String>
-                            <x:String>Ing. Industrial</x:String>
-                            <x:String>Ing. Civil</x:String>
-                            <x:String>Psicologia</x:String>
-                            <x:String>Etc...</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-                <Label Text="Numero Celular o Telefono" />
-                <Entry Text="{Binding PhoneNumber}" x:Name="txtphone" Placeholder="99550000" Keyboard="Numeric" MaxLength="8" />
-                <Button Text="Cancelar" Clicked="OnCancelTouched" />
-                <Button Text="Limpiar" Clicked="OnClearTouched" />
+        <StackLayout Margin="10,20,10,10" BackgroundColor="{DynamicResource backgroundColor}">
+            <ScrollView>
+                <StackLayout>
+                    <Label Text="Nombre" Font="Bold, 24" />
+                    <Entry Text="{Binding Name}" HeightRequest="50" ReturnType="Next" x:Name="txtname" Placeholder="Marco Antonio Banegas Paredes" Keyboard="Text" />
+                    <Label Text="Email" Font="Bold, 24" />
+                    <Entry Text="{Binding Email}" x:Name="txtemail" Placeholder="student@unitec.edu" Keyboard="Email" />
+                    <Label Text="Campus" Font="Bold, 24"/>
+                    <Picker x:Name="campuspicker" Title="Campus" SelectedItem="{Binding Campus}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>UNITEC TGU</x:String>
+                                <x:String>UNITEC SPS</x:String>
+                                <x:String>CEUTEC TGU</x:String>
+                                <x:String>CEUTEC LCE</x:String>
+                                <x:String>CEUTEC SPS</x:String>
+                                <x:String>CEUTEC NORTE SPS</x:String>
+                                <x:String>UV</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <Label Text="Perfil" Font="Bold, 24"/>
+                    <Picker x:Name="profilepicker" Title="Perfil" SelectedItem="{Binding Profile}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Alumno</x:String>
+                                <x:String>Docente</x:String>
+                                <x:String>Administrativo</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <Label Text="Numero de Cuenta" Font="Bold, 24"/>
+                    <Entry Text="{Binding Account}" x:Name="txtaccount" Placeholder="21616161" Keyboard="Numeric" MaxLength="8" />
+                    <Label Text="Carrera" Font="Bold, 24"/>
+                    <Picker x:Name="careerpicker" Title="Carrera" SelectedItem="{Binding Career}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Ing. En sistemas</x:String>
+                                <x:String>Ing. En Mecatronica</x:String>
+                                <x:String>Ing. Industrial</x:String>
+                                <x:String>Ing. Civil</x:String>
+                                <x:String>Psicologia</x:String>
+                                <x:String>Etc...</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <Label Text="Numero Celular o Telefono" Font="Bold, 24"/>
+                    <Entry Text="{Binding PhoneNumber}" x:Name="txtphone" Placeholder="99550000" Keyboard="Numeric" MaxLength="8" />
+                    
+                </StackLayout>
+            </ScrollView>
+            <StackLayout VerticalOptions="EndAndExpand">
+                <Button Text="Guardar" class="btn_blue" Clicked="OnSaveTouched" />
+                <Button Text="Cancelar" class="btn_red" Clicked="OnCancelTouched" />
             </StackLayout>
-        </ScrollView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

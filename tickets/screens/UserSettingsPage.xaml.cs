@@ -11,6 +11,12 @@ namespace tickets
         {
             InitializeComponent();
             Title = "Ajustes de Cuenta";
+            txtname.Completed += (s, e) => txtemail.Focus();
+            txtemail.Completed += (s, e) => campuspicker.Focus();
+            profilepicker.SelectedIndexChanged += (s, e) => txtaccount.Focus();
+            //txtemail.Completed += (s, e) => campuspicker.Focus();
+            //txtemail.Completed += (s, e) => campuspicker.Focus();
+            //txtemail.Completed += (s, e) => campuspicker.Focus();
         }
 
         async protected override void OnAppearing()
@@ -28,20 +34,28 @@ namespace tickets
         {
             var user = (User)BindingContext;
             User current = await App.Database.GetCurrentUser();
-            if (current == null)
+            if (user.IsValid())
             {
-                await App.Database.CreateNewCurrentUser(user);
-                await DisplayAlert("Sucess", "Creado correctamente", "Ok");
+                if (current == null)
+                {
+                    await App.Database.CreateNewCurrentUser(user);
+                    await DisplayAlert("Enhorabuena", "Su usuario ha sido creado exitosamente!", "Aceptar");
+                }
+                else
+                {
+                    user.ID = current.ID;
+                    user.IsCurrent = true;
+                    await App.Database.SaveUserAsync(user);
+                    await DisplayAlert("Enhorabuena", "Su usuario ha sido actualizado exitosamente!", "Aceptar");
+                }
+                user.PrintData();
+                await Navigation.PopAsync();
             }
             else
             {
-                user.ID = current.ID;
-                user.IsCurrent = true;
-                await App.Database.SaveUserAsync(user);
-                await DisplayAlert("Sucess", "Actualizado correctamente", "Ok");
+                await DisplayAlert("Error", "Debe rellenar todos los campos", "Aceptar");
             }
-            user.PrintData();
-            await Navigation.PopAsync();
+
         }
 
         void OnClearTouched(object sender, System.EventArgs e)
