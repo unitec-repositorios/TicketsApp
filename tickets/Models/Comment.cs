@@ -1,19 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
 using SQLite;
+using System.Diagnostics;
 
 namespace tickets
 {
-    public class Ticket
+    public class Comment
     {
-        [PrimaryKey]
+        [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
-        public int UserID { get; set; }
-        public int Affected { get; set; }
-        public int Classification { get; set; }
-        public int Priority { get; set; }
-        public string Subject { get; set; }
-        public string Message { get; set; }
+        public int TicketID { get; set; }
+        public DateTime Time { get; set; }
+        public string Sender { get; set; }
+        public string Body { get; set; }
+
+
 
         public void PrintData()
         {
@@ -21,7 +22,7 @@ namespace tickets
             {
                 string name = descriptor.Name;
                 object value = descriptor.GetValue(this);
-                Console.WriteLine("{0}={1}", name, value);
+                Debug.WriteLine("{0}={1}", name, value);
             }
         }
     }
