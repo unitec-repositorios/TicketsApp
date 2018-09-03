@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using tickets.API;
@@ -22,7 +21,7 @@ namespace tickets.screens
 		{
 			InitializeComponent ();
 		}
-        public async void readTicket(object sender, System.EventArgs e)
+        public async void readTicket()
         {
             string html = await server.getTicket(ticketID);
             string autor = "";
@@ -73,31 +72,44 @@ namespace tickets.screens
         }
         public string getMessage(string html)
         {
-            string message = "";
+            string Mimessage = "";
             string supportString = "";
-            int index = html.IndexOf("<p>")+3;
-            int endMessage = html.IndexOf("&nbsp;</p>");
-            while (index < endMessage)
+            int index = html.IndexOf("<p>") + 3;
+            int endMessage = html.IndexOf("</p>");
+            int endMessage2 = html.IndexOf("&nbsp;</p>");
+            bool tag = false;
+            if (endMessage2 < 0)
+            {
+                endMessage2 = endMessage;
+            }
+            while (index < endMessage && index < endMessage2)
             {
                 if (html[index] == '<')
                 {
                     supportString += html[index];
+                    tag = true;
                 }
-                else if (supportString.Contains("/>"))
+                else if (html[index] == '>')
                 {
+                    supportString += html[index];
                     if (supportString.Equals("<br />"))
                     {
-                        message += "\n";
+                        Mimessage += "\n";
                     }
                     supportString = "";
+                    tag = false;
+                }
+                else if (tag)
+                {
+                    supportString += html[index];
                 }
                 else
                 {
-                    message += html[index];
+                    Mimessage += html[index];
                 }
                 index++;
             }
-            return message;
+            return Mimessage;
         }
     }
 }

@@ -7,6 +7,10 @@ using Plugin.FilePicker.Abstractions;
 using System.Collections.ObjectModel;
 using tickets.API;
 
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace tickets
 {
 	public partial class SendTicket : ContentPage
@@ -15,7 +19,6 @@ namespace tickets
         private User user;
         List<String> filesNames = new List<String>();
         List<FileData> loadFiles = new List<FileData>();
-        
 
         public SendTicket ()
 		{
@@ -51,7 +54,7 @@ namespace tickets
 
         async void OnSubmit(object sender, System.EventArgs e)
         {
-                var valid = !String.IsNullOrWhiteSpace(number.Text) && !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
+            var valid = !String.IsNullOrWhiteSpace(number.Text) && !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
                 if (valid)
                 {
                     try
@@ -84,5 +87,6 @@ namespace tickets
                 }
 
         }
+
     }
 }
