@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Microsoft.Identity.Client;
 using System.Diagnostics;
+using tickets.screens;
 
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -55,7 +56,7 @@ namespace tickets
                         MainPage = new NavigationPage(new HomeScreen());
                         break;
                     case Device.Android:
-                        MainPage = new NavigationPage(new MyTickets());
+                        MainPage = new NavigationPage(new chatTicket());
                         break;
 
                 }

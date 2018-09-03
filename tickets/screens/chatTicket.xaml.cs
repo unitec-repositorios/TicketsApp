@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using tickets.API;
-
+using tickets.Models;
 
 namespace tickets.screens
 {
@@ -17,10 +17,21 @@ namespace tickets.screens
         private string ticketID;
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
+        private chatViewModel chatVM;
         public chatTicket ()
 		{
 			InitializeComponent ();
-		}
+            BindingContext = chatVM = new chatViewModel();
+            //temporal ticketID
+            ticketID = "g86vpnm3tm";
+            readTicket();
+            chatVM.ListMessages.CollectionChanged += (sender, e) =>
+            {
+                var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
+                MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
+            };
+
+        }
         public async void readTicket()
         {
             string html = await server.getTicket(ticketID);
@@ -39,6 +50,14 @@ namespace tickets.screens
                     html = html.Substring(index);
                     message = getMessage(html);
                     //add new message to the chat
+                    var mimessage = new Message
+                    {
+                        Text = autor+": "+message,
+                        IsTextIn = true,
+                        //need to correct the time message
+                        MessageDateTime = DateTime.Now
+                    };
+                    chatVM.ListMessages.Add(mimessage);
                 }
                 position = html.IndexOf(autorRef + "N");
                 index = position + autorRef.Count();
