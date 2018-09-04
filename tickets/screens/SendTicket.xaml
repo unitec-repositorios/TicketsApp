@@ -53,7 +53,7 @@
                 <Label Text="Mensaje" class="label"></Label>
                 <Editor x:Name="message" class="editor" ></Editor>
                 <Button Text="Adjuntar Archivo" x:Name="Append" HorizontalOptions="Center" class="button" BorderRadius="20"></Button>
-                <Button Text="Enviar Ticket" x:Name="Send" HorizontalOptions="Center" class="sendbutton" BorderRadius="20"></Button>
+                <Button Text="Enviar Ticket" Clicked="OnSubmit" HorizontalOptions="Center" class="sendbutton" BorderRadius="20"></Button>
                 <Label Text="Archivos adjuntados" x:Name="Mylabel" HorizontalOptions="Center" class="label"></Label>
                 <ListView x:Name="Adjun" SeparatorVisibility="None"></ListView>
             </StackLayout>

@@ -16,5 +16,26 @@ namespace tickets
         {
             await Navigation.PushAsync(new UserSettingsPage());
         }
+
+        private async void SignInSignOutBtn_Clicked(object sender, EventArgs e)
+        {
+            
+            LoginPage.SignOut();
+            LoginPage login = new LoginPage();
+            App.Current.MainPage = new NavigationPage(login);
+
+        }
+
+        private async void ClearBtn_Clicked(object sender, EventArgs e)
+        {
+            App.Database.ClearDatabase();
+            LoginPage login = new LoginPage();
+            App.Current.MainPage = new NavigationPage(login);
+        }
+
+        private void ViewCell_Tapped(object sender, EventArgs e)
+        {
+
+        }
     }
 }

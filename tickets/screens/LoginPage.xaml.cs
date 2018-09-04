@@ -85,7 +85,7 @@ namespace tickets
                     else
                     {
                         Debug.WriteLine("Llegue aca!");
-                        await DisplayAlert("Error", "El correo utilizado no es valido", "Ok");
+                        await DisplayAlert("Error", "El correo utilizado no es valido. Por favor, utilice el correo de la Universidad", "Ok");
                         username = null;
                         email = null;
                         TokenForUser = null;
@@ -102,7 +102,7 @@ namespace tickets
             }
             else
             {
-                await DisplayAlert("No hay conexion", "No se detecto una conexion a Internet. Por favor vuelta a intentarlo", "Ok");
+                await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
                 SignInSignOutBtn.IsVisible =true;
                 Loading.IsVisible = false;
             }
@@ -185,6 +185,20 @@ namespace tickets
             }
 
             return TokenForUser;
+        }
+
+        public static void SignOut()
+        {
+            foreach (var user in App.IdentityClientApp.Users)
+            {
+                App.IdentityClientApp.Remove(user);
+            }
+            graphClient = null;
+            TokenForUser = null;
+            username = null;
+            email = null;
+
+            Debug.WriteLine("LLegue al logout");
         }
 
     }
