@@ -17,13 +17,14 @@ namespace tickets.screens
         private string ticketID;
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
+
         private chatViewModel chatVM;
         public chatTicket ()
 		{
 			InitializeComponent ();
             BindingContext = chatVM = new chatViewModel();
-            //temporal ticketID
-            ticketID = "g86vpnm3tm";
+            //set the ticketID
+            //ticketID = "g86vpnm3tm";
             readTicket();
             chatVM.ListMessages.CollectionChanged += (sender, e) =>
             {
@@ -37,27 +38,41 @@ namespace tickets.screens
             string html = await server.getTicket(ticketID);
             string autor = "";
             string message = "";
+            string myName = null;
             int position = html.IndexOf(autorRef + "N");
             int index = position + autorRef.Count();
             while (position!=-1)
             {
                 html = html.Substring(index);
                 autor = getAutor(html);
+                if (myName == null)
+                {
+                    myName = autor;
+                }
                 position = html.IndexOf(messageRef);
                 index = position + messageRef.Count();
                 if (position != -1)
                 {
                     html = html.Substring(index);
                     message = getMessage(html);
+                    bool typeText = true;
                     //add new message to the chat
-                    var mimessage = new Message
+                    if (autor.Equals(myName))
                     {
-                        Text = autor+": "+message,
-                        IsTextIn = true,
+                        autor = "";
+                        typeText = false;
+                    }
+                    else {
+                        autor += ":\n";
+                    }
+                    var mymessage = new Message
+                    {
+                        Text = autor+message,
+                        IsTextIn = typeText,
                         //need to correct the time message
                         MessageDateTime = DateTime.Now
                     };
-                    chatVM.ListMessages.Add(mimessage);
+                    chatVM.ListMessages.Add(mymessage);
                 }
                 position = html.IndexOf(autorRef + "N");
                 index = position + autorRef.Count();

@@ -37,7 +37,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Remove="sendIcon.png" />
     <None Remove="ticket-black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="sendIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CustomCells\" />

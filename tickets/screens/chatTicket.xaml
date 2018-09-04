@@ -24,10 +24,10 @@
                 <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White">
                     <Entry 
                         HorizontalOptions="FillAndExpand"  
-                        Placeholder="Message"  
+                        Placeholder="Mensaje"  
                         Text="{Binding OutText}" Keyboard="Chat" Margin="4"/>
 
-                    <Image Source="" WidthRequest="40" HeightRequest="40" Margin="4">
+                    <Image Source="sendIcon.png" WidthRequest="40" HeightRequest="40" Margin="4">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding SendCommand}" />
