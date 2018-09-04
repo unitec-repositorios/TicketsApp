@@ -7,7 +7,7 @@ namespace tickets
     public class Ticket
     {
         [PrimaryKey]
-        public int ID { get; set; }
+        public string ID { get; set; }
         public int UserID { get; set; }
         public int Affected { get; set; }
         public int Classification { get; set; }

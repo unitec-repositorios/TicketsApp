@@ -114,6 +114,7 @@ namespace tickets
             return database.Table<Ticket>().ToListAsync();
         }
 
+
         /// <summary>
         /// Gets the comments for ticket async.
         /// </summary>

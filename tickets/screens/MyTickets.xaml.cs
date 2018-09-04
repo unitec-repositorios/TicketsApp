@@ -10,6 +10,7 @@ namespace tickets
         public MyTickets()
         {
             InitializeComponent();
+
             var newTicket = new ToolbarItem
             {
                 Text = "Nuevo",
@@ -34,6 +35,11 @@ namespace tickets
                     ToolbarItems.Add(settings);
                     break;
             }
+        }
+
+        protected override async void OnAppearing()
+        {
+            TicketsListView.ItemsSource = await App.Database.GetTicketsAsync();
         }
     }
 }
