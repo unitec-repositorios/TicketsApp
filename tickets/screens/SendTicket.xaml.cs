@@ -6,6 +6,7 @@ using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using System.Collections.ObjectModel;
 using tickets.API;
+using Plugin.Clipboard;
 
 namespace tickets
 {
@@ -51,21 +52,30 @@ namespace tickets
 
         async void OnSubmit(object sender, System.EventArgs e)
         {
-                var valid = !String.IsNullOrWhiteSpace(number.Text) && !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
+                var valid = !String.IsNullOrWhiteSpace(number.Value.ToString()) && !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
                 if (valid)
                 {
                     try
                     {
-                        string response = await server.submitTicket(number.Text, subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex]);
-                        if (response.Equals("error"))
+                        button.IsVisible = false;
+                        Loading.IsVisible = true;
+                        string response = await server.submitTicket(number.Value.ToString(), subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex]);
+                        Loading.IsVisible = false;
+                        button.IsVisible = true;
+                    if (response.Equals("error"))
                         {
                             await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
                         }
                         else
                         {
-                            await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK");
+                            
+                            bool copy= await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
+                            if (!copy)
+                            {
+                                CrossClipboard.Current.SetText(response); 
+                            }
                             //clean
-                            number.Text = "";
+                            number.Value = 1;
                             subject.Text = "";
                             message.Text = "";
                             picker.SelectedIndex = 1;
