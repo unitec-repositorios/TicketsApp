@@ -11,6 +11,7 @@ using Xamarin.Forms.Xaml;
 using Microsoft.Graph;
 using Microsoft.Identity.Client;
 using System.Net;
+using Xamarin.Essentials;
 
 namespace tickets
 {
@@ -98,6 +99,8 @@ namespace tickets
                 {
                     Console.WriteLine(ex);
                     //await DisplayAlert("Cancelled", "User cancelled authentication", "Ok");
+                    SignInSignOutBtn.IsVisible = true;
+                    Loading.IsVisible = false;
                 }
             }
             else
@@ -111,29 +114,16 @@ namespace tickets
 
         public bool CheckInternetConnection()
         {
-            string CheckUrl = "http://google.com";
-
-            try
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
             {
-                HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(CheckUrl);
-
-                iNetRequest.Timeout = 5000;
-
-                WebResponse iNetResponse = iNetRequest.GetResponse();
-
-                // Console.WriteLine ("...connection established..." + iNetRequest.ToString ());
-                iNetResponse.Close();
-
                 return true;
-
             }
-            catch (WebException ex)
+            else
             {
-
-                // Console.WriteLine (".....no connection..." + ex.ToString ());
-
                 return false;
             }
+            
         }
 
         public static GraphServiceClient GetAuthenticatedClient()
