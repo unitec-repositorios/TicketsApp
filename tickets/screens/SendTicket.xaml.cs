@@ -8,6 +8,10 @@ using System.Collections.ObjectModel;
 using tickets.API;
 using Plugin.Clipboard;
 
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace tickets
 {
 	public partial class SendTicket : ContentPage
@@ -16,7 +20,6 @@ namespace tickets
         private User user;
         List<String> filesNames = new List<String>();
         List<FileData> loadFiles = new List<FileData>();
-        
 
         public SendTicket ()
 		{
@@ -94,5 +97,6 @@ namespace tickets
                 }
 
         }
+
     }
 }

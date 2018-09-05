@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.AppSettingsPage" Title="Ajustes" Icon="baseline_settings_black_36pt">
     <ContentPage.Content>
+        <StackLayout>
         <TableView Intent="Settings">
             <TableRoot>
-                <TableSection Title="Ajustes">
+                <TableSection >
                     <ViewCell Tapped="goToUserSettings" StyleId="disclosure">
-                        <Label Text="Ajustes de Cuenta" />  
+                        <Label Text="Ajustes de Cuenta" />
                     </ViewCell>
-                </TableSection>
+                    <ViewCell Tapped="ClearBtn_Clicked" StyleId="disclosure">
+                            <Label Text="Borrar datos" />
+                    </ViewCell>
+                    <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
+                            <Label Text="Cerrar Sesion" />
+                    </ViewCell>
+                    </TableSection>
             </TableRoot>
         </TableView>
+           
+            
+        </StackLayout>
+       
     </ContentPage.Content>
 </ContentPage>

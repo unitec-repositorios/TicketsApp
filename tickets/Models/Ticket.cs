@@ -2,13 +2,18 @@
 using System.ComponentModel;
 using SQLite;
 
-namespace tickets.Models
+namespace tickets
 {
     public class Ticket
     {
-        [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
+        [PrimaryKey]
+        public string ID { get; set; }
         public int UserID { get; set; }
+        public int Affected { get; set; }
+        public int Classification { get; set; }
+        public int Priority { get; set; }
+        public string Subject { get; set; }
+        public string Message { get; set; }
 
         public void PrintData()
         {

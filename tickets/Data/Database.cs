@@ -13,12 +13,8 @@ namespace tickets
         {
             database = new SQLiteAsyncConnection(dbPath);
             database.CreateTableAsync<User>().Wait();
-        }
-
-        public Database(string dbPath, bool eraseDB)
-        {
-            database = new SQLiteAsyncConnection(dbPath);
-            database.CreateTableAsync<User>().Wait();
+            database.CreateTableAsync<Ticket>().Wait();
+            database.CreateTableAsync<Comment>().Wait();
         }
 
         public SQLiteAsyncConnection GetConnection()
@@ -26,11 +22,19 @@ namespace tickets
             return database;
         }
 
+        /// <summary>
+        /// Clears the database.
+        /// </summary>
         public void ClearDatabase()
         {
             database.ExecuteAsync("DELETE FROM User").Wait();
+            database.ExecuteAsync("DELETE FROM Ticket").Wait();
+            database.ExecuteAsync("DELETE FROM Comment").Wait();
         }
-
+        /// <summary>
+        /// Gets the current user not async.
+        /// </summary>
+        /// <returns>The current user not async.</returns>
         public User GetCurrentUserNotAsync()
         {
             try
@@ -89,6 +93,36 @@ namespace tickets
             {
                 return database.InsertAsync(user);
             }
+        }
+
+        /// <summary>
+        /// Creates the new ticket.
+        /// </summary>
+        /// <returns>The new ticket.</returns>
+        /// <param name="ticket">Ticket.</param>
+        public Task<int> CreateNewTicket(Ticket ticket)
+        {
+            return database.InsertAsync(ticket);
+        }
+
+        /// <summary>
+        /// Gets the tickets async.
+        /// </summary>
+        /// <returns>The tickets async.</returns>
+        public Task<List<Ticket>>GetTicketsAsync()
+        {
+            return database.Table<Ticket>().ToListAsync();
+        }
+
+
+        /// <summary>
+        /// Gets the comments for ticket async.
+        /// </summary>
+        /// <returns>The comments for ticket async.</returns>
+        /// <param name="TicketID">Ticket identifier.</param>
+        public Task<List<Comment>> GetCommentsForTicketAsync(string TicketID)
+        {
+            return database.QueryAsync<Comment>("SELECT * FROM Comment WHERE TicketID = ?", TicketID);
         }
     }
 }

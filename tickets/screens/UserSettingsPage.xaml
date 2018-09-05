@@ -9,9 +9,9 @@
             <ScrollView>
                 <StackLayout>
                     <Label Text="Nombre" Font="Bold, 24" />
-                    <Entry Text="{Binding Name}" HeightRequest="50" ReturnType="Next" x:Name="txtname" Placeholder="Marco Antonio Banegas Paredes" Keyboard="Text" />
+                    <Entry Text="{Binding Name}" HeightRequest="50" ReturnType="Next" x:Name="txtname" Placeholder="Escribe su nombre completo" Keyboard="Text" />
                     <Label Text="Email" Font="Bold, 24" />
-                    <Entry Text="{Binding Email}" x:Name="txtemail" Placeholder="student@unitec.edu" Keyboard="Email" />
+                    <Entry Text="{Binding Email}" x:Name="txtemail" Keyboard="Email" />
                     <Label Text="Campus" Font="Bold, 24"/>
                     <Picker x:Name="campuspicker" Title="Campus" SelectedItem="{Binding Campus}">
                         <Picker.ItemsSource>
@@ -37,22 +37,21 @@
                         </Picker.ItemsSource>
                     </Picker>
                     <Label Text="Numero de Cuenta" Font="Bold, 24"/>
-                    <Entry Text="{Binding Account}" x:Name="txtaccount" Placeholder="21616161" Keyboard="Numeric" MaxLength="8" />
+                    <Entry Text="{Binding Account}" x:Name="txtaccount" Keyboard="Numeric" MaxLength="8" />
                     <Label Text="Carrera" Font="Bold, 24"/>
                     <Picker x:Name="careerpicker" Title="Carrera" SelectedItem="{Binding Career}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
-                                <x:String>Ing. En sistemas</x:String>
-                                <x:String>Ing. En Mecatronica</x:String>
-                                <x:String>Ing. Industrial</x:String>
-                                <x:String>Ing. Civil</x:String>
+                                <x:String>Ingenieria En sistemas</x:String>
+                                <x:String>Ingenieria En Mecatronica</x:String>
+                                <x:String>Ingenieria Industrial</x:String>
+                                <x:String>Ingenieria Civil</x:String>
                                 <x:String>Psicologia</x:String>
-                                <x:String>Etc...</x:String>
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
                     <Label Text="Numero Celular o Telefono" Font="Bold, 24"/>
-                    <Entry Text="{Binding PhoneNumber}" x:Name="txtphone" Placeholder="99550000" Keyboard="Numeric" MaxLength="8" />
+                    <Entry Text="{Binding PhoneNumber}" x:Name="txtphone" Placeholder="Escriba su número" Keyboard="Numeric" MaxLength="8" />
                     
                 </StackLayout>
             </ScrollView>

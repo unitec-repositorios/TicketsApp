@@ -3,7 +3,15 @@
     <ContentPage.Content>
         <StackLayout>
             <SearchBar Text="{Binding Search}" BackgroundColor="white" />
-            <ListView />
+            <ListView x:Name="TicketsListView">
+                <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding Subject}"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
