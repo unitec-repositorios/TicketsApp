@@ -26,13 +26,6 @@ namespace tickets
 
         }
 
-        private async void ClearBtn_Clicked(object sender, EventArgs e)
-        {
-            App.Database.ClearDatabase();
-            LoginPage login = new LoginPage();
-            App.Current.MainPage = new NavigationPage(login);
-        }
-
         private void ViewCell_Tapped(object sender, EventArgs e)
         {
 

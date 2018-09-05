@@ -11,13 +11,7 @@
                                 <Label Text="Ajustes de Cuenta" VerticalOptions="Center" />
                             </StackLayout>
                         </ViewCell>
-                        <ViewCell Tapped="ClearBtn_Clicked" StyleId="disclosure">
-                            <StackLayout Orientation="Horizontal" Margin="10,0,0,0" >
-                                <Image Source="baseline_settings_black_36pt"/>
-                                <Label Text="Borrar datos" VerticalOptions="Center" />
-                            </StackLayout>
-                            
-                        </ViewCell>
+                       
                         <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
                             <StackLayout Orientation="Horizontal" Margin="10,0,0,0" >
                                 <Image Source="baseline_settings_black_36pt"/>
@@ -25,6 +19,7 @@
                             </StackLayout>
                             
                         </ViewCell>
+
                     </TableSection>
                 </TableRoot>
             </TableView>
