@@ -102,6 +102,7 @@ namespace tickets
         /// <param name="ticket">Ticket.</param>
         public Task<int> CreateNewTicket(Ticket ticket)
         {
+            ticket.PrintData();
             return database.InsertAsync(ticket);
         }
 

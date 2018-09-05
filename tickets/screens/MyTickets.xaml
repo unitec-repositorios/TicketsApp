@@ -5,12 +5,10 @@
             <SearchBar Text="{Binding Search}" BackgroundColor="white" />
             <ListView x:Name="TicketsListView" ItemSelected="goToViewTicket">
                 <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Label Text="{Binding Subject}"/>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Subject}" Detail="{Binding Message}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
     </ContentPage.Content>

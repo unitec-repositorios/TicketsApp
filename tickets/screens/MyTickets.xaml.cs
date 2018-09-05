@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace tickets
@@ -35,6 +35,37 @@ namespace tickets
                     ToolbarItems.Add(settings);
                     break;
             }
+
+            //App.Database.CreateNewTicket(new Ticket()
+            //{
+            //    ID = "qwerty",
+            //    UserID = App.Database.GetCurrentUserNotAsync().ID,
+            //    Affected = 1,
+            //    Classification = 1,
+            //    Priority = 1,
+            //    Subject = "Problemas con el correo",
+            //    Message = "He tenido ciertos problemas cuando ...",
+            //});
+            //App.Database.CreateNewTicket(new Ticket()
+            //{
+            //    ID = "qwerty2",
+            //    UserID = App.Database.GetCurrentUserNotAsync().ID,
+            //    Affected = 1,
+            //    Classification = 1,
+            //    Priority = 1,
+            //    Subject = "Problemas con el correo",
+            //    Message = "He tenido ciertos problemas cuando ...",
+            //});
+            //App.Database.CreateNewTicket(new Ticket()
+            //{
+            //    ID = "qwerty3",
+            //    UserID = App.Database.GetCurrentUserNotAsync().ID,
+            //    Affected = 1,
+            //    Classification = 1,
+            //    Priority = 1,
+            //    Subject = "Problemas con el correo",
+            //    Message = "He tenido ciertos problemas cuando ...",
+            //});
         }
 
         protected override async void OnAppearing()
@@ -46,7 +77,11 @@ namespace tickets
         {
             if (e.SelectedItem != null)
             {
-                await Navigation.PushAsync(new chatTicket());
+                Debug.WriteLine("Opening messages for ticket with id = " + ((Ticket)e.SelectedItem).ID);
+                await Navigation.PushAsync(new chatTicket()
+                {
+                    BindingContext = ((Ticket)e.SelectedItem).ID
+                });
             }
         }
     }
