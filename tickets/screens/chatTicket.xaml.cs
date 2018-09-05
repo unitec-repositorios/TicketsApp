@@ -8,7 +8,7 @@ using Xamarin.Forms.Xaml;
 using tickets.API;
 using tickets.Models;
 
-namespace tickets.screens
+namespace tickets
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class chatTicket : ContentPage

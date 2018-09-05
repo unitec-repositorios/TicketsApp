@@ -25,6 +25,7 @@ namespace tickets
 			InitializeComponent ();
             Adjun.HasUnevenRows = true;
             Append.Clicked += searchFile;
+            this.BindingContext = new Ticket();
         }
 
         private async void searchFile(object sender, EventArgs e)
@@ -66,6 +67,7 @@ namespace tickets
                         }
                         else
                         {
+                            
                             await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK");
                             //clean
                             number.Text = "";

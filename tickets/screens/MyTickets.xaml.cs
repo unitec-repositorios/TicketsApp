@@ -41,5 +41,13 @@ namespace tickets
         {
             TicketsListView.ItemsSource = await App.Database.GetTicketsAsync();
         }
+
+        async void goToViewTicket(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem != null)
+            {
+                await Navigation.PushAsync(new chatTicket());
+            }
+        }
     }
 }
