@@ -1,24 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage Title="Mi Chat" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:tickets;assembly=tickets"
-             x:Class="tickets.screens.chatTicket">
+             x:Class="tickets.chatTicket">
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:SelectorDataTemplate x:Key="MessageTemplateSelector"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-
     <ContentPage.Content>
         <ScrollView>
             <Grid RowSpacing="0" ColumnSpacing="0" >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="90*"/>
+                    <RowDefinition Height="7*" />
                 </Grid.RowDefinitions>
                 <ListView x:Name="MessagesListView"
                           ItemTemplate="{StaticResource MessageTemplateSelector}" 
-                          ItemsSource="{Binding ListMessages}" 
                           HasUnevenRows="True" SeparatorVisibility="None" IsEnabled="True" Grid.Row="0"/>
 
                 <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White">

@@ -102,6 +102,7 @@ namespace tickets
         /// <param name="ticket">Ticket.</param>
         public Task<int> CreateNewTicket(Ticket ticket)
         {
+            ticket.PrintData();
             return database.InsertAsync(ticket);
         }
 
@@ -109,9 +110,9 @@ namespace tickets
         /// Gets the tickets async.
         /// </summary>
         /// <returns>The tickets async.</returns>
-        public Task<List<Ticket>>GetTicketsAsync()
+        public Task<List<Ticket>> GetTicketsAsync()
         {
-            return database.Table<Ticket>().ToListAsync();
+            return database.QueryAsync<Ticket>("SELECT * FROM Ticket");
         }
 
 
