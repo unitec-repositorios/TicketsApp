@@ -3,7 +3,7 @@
     <ContentPage.Content>
         <StackLayout>
             <SearchBar Text="{Binding Search}" BackgroundColor="white" />
-            <ListView x:Name="TicketsListView" ItemSelected="goToViewTicket">
+            <ListView x:Name="TicketsListView" ItemSelected="goToViewTicket" SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding Subject}" Detail="{Binding Message}" />

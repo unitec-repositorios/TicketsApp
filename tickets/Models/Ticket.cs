@@ -16,6 +16,7 @@ namespace tickets
         public int Priority { get; set; }
         public string Subject { get; set; }
         public string Message { get; set; }
+        public bool Open = true; 
 
         public void PrintData()
         {
