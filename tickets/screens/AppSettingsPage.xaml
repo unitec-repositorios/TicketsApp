@@ -2,24 +2,27 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.AppSettingsPage" Title="Ajustes" Icon="baseline_settings_black_36pt">
     <ContentPage.Content>
         <StackLayout>
-        <TableView Intent="Settings">
-            <TableRoot>
-                <TableSection >
-                    <ViewCell Tapped="goToUserSettings" StyleId="disclosure">
-                        <Label Text="Ajustes de Cuenta" />
-                    </ViewCell>
-                    <ViewCell Tapped="ClearBtn_Clicked" StyleId="disclosure">
-                            <Label Text="Borrar datos" />
-                    </ViewCell>
-                    <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
-                            <Label Text="Cerrar Sesion" />
-                    </ViewCell>
+            <TableView Intent="Settings">
+                <TableRoot>
+                    <TableSection>
+                        <ViewCell Tapped="goToUserSettings" StyleId="disclosure">
+                            <StackLayout Orientation="Horizontal" Margin="10,0,0,0" >
+                                <Image Source="baseline_settings_black_36pt"/>
+                                <Label Text="Ajustes de Cuenta" VerticalOptions="Center" />
+                            </StackLayout>
+                        </ViewCell>
+                       
+                        <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
+                            <StackLayout Orientation="Horizontal" Margin="10,0,0,0" >
+                                <Image Source="baseline_settings_black_36pt"/>
+                                <Label Text="Cerrar Sesion" VerticalOptions="Center" />
+                            </StackLayout>
+                            
+                        </ViewCell>
+
                     </TableSection>
-            </TableRoot>
-        </TableView>
-           
-            
+                </TableRoot>
+            </TableView>
         </StackLayout>
-       
     </ContentPage.Content>
 </ContentPage>

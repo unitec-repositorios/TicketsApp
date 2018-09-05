@@ -24,13 +24,16 @@ namespace tickets.Droid
             //ToolbarResource = Resource.Layout.Toolbar;
             await TryToGetPermissions();
             base.OnCreate(bundle);
-
+            Xamarin.Essentials.Platform.Init(this, bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
             App.IdentityClientApp.RedirectUri = App.RedirectUri;
             App.UiParent = new UIParent(Xamarin.Forms.Forms.Context as Activity);
 
+           
+
         }
+
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {

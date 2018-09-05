@@ -13,58 +13,61 @@
     </ContentPage.Padding>
     
     <ContentPage.Content>
-        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <StackLayout Margin="10,20,10,10" VerticalOptions="FillAndExpand">
-                <Label Text="Cantidad de afectados"  Font="Bold, 24"></Label>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="180" />
-                    </Grid.ColumnDefinitions>
-                    <Label Text="{Binding Source={x:Reference number}, Path = Value}" Grid.Row="0" Grid.Column="0" class="label"></Label>
-                    <Stepper x:Name="number" Grid.Row="0" Grid.Column="1" Minimum="1" />
+        <StackLayout>
+            <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <StackLayout Margin="10,20,10,10" VerticalOptions="FillAndExpand">
+                    <Label Text="Cantidad de afectados"  Font="Bold, 24"></Label>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="180" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="{Binding Source={x:Reference number}, Path = Value}" Grid.Row="0" Grid.Column="0" class="label"></Label>
+                        <Stepper x:Name="number" Grid.Row="0" Grid.Column="1" Minimum="1" />
 
-                </Grid>
-                <Label Text="Clasificación"  Font="Bold, 24"></Label>
-                <Picker x:Name="picker" SelectedIndex="1" BackgroundColor="LightGray">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Solicitud</x:String>
-                            <x:String>Información</x:String>
-                            <x:String>Queja</x:String>
-                            <x:String>Reclamo</x:String>
-                            <x:String>Sugerencia</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-                <Label Text="Prioridad"  Font="Bold, 24"></Label>
-                <Picker x:Name="pickerPriority" SelectedIndex="1" BackgroundColor="LightGray">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Alto</x:String>
-                            <x:String>Medio</x:String>
-                            <x:String>Bajo</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-                
-                <Label Text="Asunto"  Font="Bold, 24"></Label>
-                <Entry x:Name="subject" BackgroundColor="LightGray"></Entry>
-                <Label Text="Mensaje"  Font="Bold, 24"></Label>
-                <Editor x:Name="message" class="editor" BackgroundColor="LightGray"></Editor>
-                <Button Text="Adjuntar Archivo" x:Name="Append" HorizontalOptions="Center" class="button" BorderRadius="20"></Button>
+                    </Grid>
+                    <Label Text="Clasificación"  Font="Bold, 24"></Label>
+                    <Picker x:Name="picker" SelectedIndex="1">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Solicitud</x:String>
+                                <x:String>Información</x:String>
+                                <x:String>Queja</x:String>
+                                <x:String>Reclamo</x:String>
+                                <x:String>Sugerencia</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <Label Text="Prioridad"  Font="Bold, 24"></Label>
+                    <Picker x:Name="pickerPriority" SelectedIndex="1">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Alto</x:String>
+                                <x:String>Medio</x:String>
+                                <x:String>Bajo</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+
+                    <Label Text="Asunto"  Font="Bold, 24"></Label>
+                    <Entry x:Name="subject"></Entry>
+                    <Label Text="Mensaje"  Font="Bold, 24"></Label>
+                    <Editor x:Name="message" class="editor"></Editor>
+                    <Label Text="Archivo adjuntados" x:Name="Mylabel" HorizontalOptions="Center" class="label"></Label>
+                    <Label x:Name="Adjun"></Label >
+                </StackLayout>
+            </ScrollView>
+            <StackLayout VerticalOptions="EndAndExpand">
+                <Button Text="Adjuntar Archivo" x:Name="Append" class="btn_blue"></Button>
                 <ActivityIndicator x:Name="Loading"
                                Color="Red" 
                                IsRunning="true"
                                IsVisible="false"/>
-                <Button x:Name="button" Text="Enviar Ticket" Clicked="OnSubmit" HorizontalOptions="Center" class="sendbutton" BorderRadius="20"></Button>
-                <Label Text="Archivos adjuntados" x:Name="Mylabel" HorizontalOptions="Center" class="label"></Label>
-                <ListView x:Name="Adjun" SeparatorVisibility="None"></ListView >
-                
+                <Button x:Name="button" Text="Enviar Ticket" Clicked="OnSubmit" class="btn_red"></Button>
             </StackLayout>
-        </ScrollView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

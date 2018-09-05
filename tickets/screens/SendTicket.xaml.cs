@@ -14,18 +14,20 @@ using System.Threading.Tasks;
 
 namespace tickets
 {
-	public partial class SendTicket : ContentPage
-	{
+    public partial class SendTicket : ContentPage
+    {
         private Server server = new Server();
         private User user;
         List<String> filesNames = new List<String>();
         List<FileData> loadFiles = new List<FileData>();
 
-        public SendTicket ()
-		{
-			InitializeComponent ();
-            Adjun.HasUnevenRows = true;
+        public SendTicket()
+        {
+            InitializeComponent();
+            
+            //Adjun.HasUnevenRows = true;
             Append.Clicked += searchFile;
+            this.BindingContext = new Ticket();
         }
 
         private async void searchFile(object sender, EventArgs e)
@@ -38,8 +40,14 @@ namespace tickets
                     string name = file.FileName;
                     filesNames.Add(name);
                     loadFiles.Add(file);
-                    Adjun.ItemsSource = null;
-                    Adjun.ItemsSource = filesNames;
+                    //Adjun.ItemsSource = null;
+                    string temp = "";
+                    for (int i=0;i<filesNames.Count();i++)
+                    {
+                        temp += filesNames[i].ToString();
+                        temp += "\n";
+                    }
+                    Adjun.Text = temp;
                 }
                 else
                 {
@@ -55,47 +63,45 @@ namespace tickets
 
         async void OnSubmit(object sender, System.EventArgs e)
         {
-                var valid = !String.IsNullOrWhiteSpace(number.Value.ToString()) && !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
-                if (valid)
+            var valid = !String.IsNullOrWhiteSpace(number.Value.ToString()) && !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
+            if (valid)
+            {
+                try
                 {
-                    try
-                    {
-                        button.IsVisible = false;
-                        Loading.IsVisible = true;
-                        string response = await server.submitTicket(number.Value.ToString(), subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex]);
-                        Loading.IsVisible = false;
-                        button.IsVisible = true;
+                    button.IsVisible = false;
+                    Loading.IsVisible = true;
+                    string response = await server.submitTicket(number.Value.ToString(), subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex]);
+                    Loading.IsVisible = false;
+                    button.IsVisible = true;
                     if (response.Equals("error"))
-                        {
-                            await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
-                        }
-                        else
-                        {
-                            
-                            bool copy= await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
-                            if (!copy)
-                            {
-                                CrossClipboard.Current.SetText(response); 
-                            }
-                            //clean
-                            number.Value = 1;
-                            subject.Text = "";
-                            message.Text = "";
-                            picker.SelectedIndex = 1;
-                            pickerPriority.SelectedIndex = 1;
-                        }
-                    }
-                    catch (Exception ex)
                     {
-                        await DisplayAlert("Error", "Error= "+ex, "OK");
+                        await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
                     }
-                
+                    else
+                    {      
+                        bool copy= await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
+                        if (!copy)
+                        {
+                            CrossClipboard.Current.SetText(response); 
+                        }
+                        //clean
+                        number.Value = 1;
+                        subject.Text = "";
+                        message.Text = "";
+                        picker.SelectedIndex = 1;
+                        pickerPriority.SelectedIndex = 1;
+                        await Navigation.PopAsync();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    await DisplayAlert("Advertencia", "Favor llene todos los campos", "OK");
+                    await DisplayAlert("Error", "Error= " + ex, "OK");
                 }
-
+            }
+            else
+            {
+                await DisplayAlert("Advertencia", "Favor llene todos los campos", "OK");
+            }
         }
 
     }

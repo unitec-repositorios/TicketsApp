@@ -17,7 +17,8 @@
             <ActivityIndicator x:Name="Loading"
                                Color="Red" 
                                IsRunning="true"
-                               IsVisible="false"/>
+                               IsVisible="false"
+                               />
             <Button
             x:Name="SignInSignOutBtn" 
             Margin="70,20"

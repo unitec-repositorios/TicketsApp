@@ -31,13 +31,10 @@
     <PackageReference Include="NUnit">
       <Version>3.10.1</Version>
     </PackageReference>
-<<<<<<< HEAD
     <PackageReference Include="Xamarin.Plugins.Clipboard">
       <Version>2.2.1</Version>
-=======
     <PackageReference Include="Refractored.MvvmHelpers">
       <Version>1.3.0</Version>
->>>>>>> 201d9d3a63ba935e422b49fcb0d7764d55432dfe
     </PackageReference>
     <PackageReference Include="Xamarin.UITest">
       <Version>2.2.5</Version>
