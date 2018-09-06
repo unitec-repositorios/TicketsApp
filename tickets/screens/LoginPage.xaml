@@ -3,21 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="tickets.LoginPage">
     <ContentPage.Content>
+
         <StackLayout>
+
             <Image 
             x:Name="Photo"
             Source="cap.png" 
             Aspect="AspectFit" 
             Margin="20" 
-            HeightRequest="400" 
+            HeightRequest="200" 
             WidthRequest="200" 
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" 
+            VerticalOptions="CenterAndExpand"
                 />
             <ActivityIndicator x:Name="Loading"
                                Color="Red" 
                                IsRunning="true"
                                IsVisible="false"
+                                VerticalOptions="CenterAndExpand"
                                />
             <Button
             x:Name="SignInSignOutBtn" 
@@ -28,7 +30,11 @@
             BorderRadius="20"
 			BackgroundColor="#01265A"
             Clicked="OnSignInSignOut"
+                VerticalOptions="CenterAndExpand"
+               
+               
            />
-        </StackLayout>
+            </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>
