@@ -6,6 +6,7 @@ using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using System.Collections.ObjectModel;
 using tickets.API;
+using Plugin.Clipboard;
 
 using System.Linq;
 using System.Text;
@@ -23,7 +24,8 @@ namespace tickets
         public SendTicket()
         {
             InitializeComponent();
-            Adjun.HasUnevenRows = true;
+            
+            //Adjun.HasUnevenRows = true;
             Append.Clicked += searchFile;
             this.BindingContext = new Ticket();
         }
@@ -38,8 +40,14 @@ namespace tickets
                     string name = file.FileName;
                     filesNames.Add(name);
                     loadFiles.Add(file);
-                    Adjun.ItemsSource = null;
-                    Adjun.ItemsSource = filesNames;
+                    //Adjun.ItemsSource = null;
+                    string temp = "";
+                    for (int i=0;i<filesNames.Count();i++)
+                    {
+                        temp += filesNames[i].ToString();
+                        temp += "\n";
+                    }
+                    Adjun.Text = temp;
                 }
                 else
                 {
@@ -55,31 +63,29 @@ namespace tickets
 
         async void OnSubmit(object sender, System.EventArgs e)
         {
-            var valid = !String.IsNullOrWhiteSpace(number.Text) && !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
+            var valid = !String.IsNullOrWhiteSpace(number.Value.ToString()) && !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
             if (valid)
             {
                 try
                 {
-                    string response = await server.submitTicket(number.Text, subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex]);
+                    button.IsVisible = false;
+                    Loading.IsVisible = true;
+                    string response = await server.submitTicket(number.Value.ToString(), subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex]);
+                    Loading.IsVisible = false;
+                    button.IsVisible = true;
                     if (response.Equals("error"))
                     {
                         await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
                     }
                     else
-                    {
-                        await App.Database.CreateNewTicket(new Ticket()
+                    {      
+                        bool copy= await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
+                        if (!copy)
                         {
-                            ID = response,
-                            UserID = App.Database.GetCurrentUserNotAsync().ID,
-                            Affected = int.Parse(number.Text),
-                            Classification = picker.SelectedIndex + 1,
-                            Priority = pickerPriority.SelectedIndex + 1,
-                            Subject = subject.Text,
-                            Message = message.Text,
-                        });
-                        await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK");
+                            CrossClipboard.Current.SetText(response); 
+                        }
                         //clean
-                        number.Text = "";
+                        number.Value = 1;
                         subject.Text = "";
                         message.Text = "";
                         picker.SelectedIndex = 1;
@@ -91,13 +97,11 @@ namespace tickets
                 {
                     await DisplayAlert("Error", "Error= " + ex, "OK");
                 }
-
             }
             else
             {
                 await DisplayAlert("Advertencia", "Favor llene todos los campos", "OK");
             }
-
         }
 
     }

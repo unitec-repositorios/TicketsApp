@@ -19,6 +19,7 @@
     <PackageReference Include="sqlite-net-pcl" Version="1.5.166-beta" />
     <PackageReference Include="Microsoft.Identity.Client" Version="1.1.4-preview0002" />
     <PackageReference Include="Microsoft.Graph" Version="1.10.0" />
+    <PackageReference Include="Xamarin.Plugins.Clipboard" Version="2.2.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="LoginPage.xaml.cs" />
