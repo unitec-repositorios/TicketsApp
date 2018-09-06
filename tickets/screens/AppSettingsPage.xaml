@@ -7,19 +7,17 @@
                     <TableSection>
                         <ViewCell Tapped="goToUserSettings" StyleId="disclosure">
                             <StackLayout Orientation="Horizontal" Margin="10,0,0,0" >
-                                <Image Source="baseline_settings_black_36pt"/>
-                                <Label Text="Ajustes de Cuenta" VerticalOptions="Center" />
+                                <Image Source="baseline_settings_black_36pt.png"/>
+                                <Label Text="Configuración de Cuenta" VerticalOptions="Center" />
                             </StackLayout>
                         </ViewCell>
                        
                         <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
                             <StackLayout Orientation="Horizontal" Margin="10,0,0,0" >
-                                <Image Source="baseline_settings_black_36pt"/>
+                                <Image Source="baseline_settings_black_36pt.png"/>
                                 <Label Text="Cerrar Sesion" VerticalOptions="Center" />
                             </StackLayout>
-                            
                         </ViewCell>
-
                     </TableSection>
                 </TableRoot>
             </TableView>

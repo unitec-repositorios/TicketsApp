@@ -72,7 +72,6 @@ namespace tickets
         public async Task<int> CreateNewCurrentUser(User user)
         {
             await database.ExecuteAsync("UPDATE User SET IsCurrent = 0");
-            user.ID = 0;
             user.IsCurrent = true;
             return await SaveUserAsync(user);
         }
@@ -110,9 +109,9 @@ namespace tickets
         /// Gets the tickets async.
         /// </summary>
         /// <returns>The tickets async.</returns>
-        public Task<List<Ticket>> GetTicketsAsync()
+        public Task<List<Ticket>> GetTicketsAsync(User user)
         {
-            return database.QueryAsync<Ticket>("SELECT * FROM Ticket");
+            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = ? ORDER BY Open", user.ID);
         }
 
 
