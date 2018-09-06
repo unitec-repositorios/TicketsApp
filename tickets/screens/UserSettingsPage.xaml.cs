@@ -10,7 +10,6 @@ namespace tickets
         public UserSettingsPage()
         {
             InitializeComponent();
-            Title = "Ajustes de Cuenta";
             txtname.Completed += (s, e) => txtemail.Focus();
             txtemail.Completed += (s, e) => campuspicker.Focus();
             profilepicker.SelectedIndexChanged += (s, e) => txtaccount.Focus();

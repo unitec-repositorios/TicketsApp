@@ -42,6 +42,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -104,6 +105,10 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\drawable\settings_icon.svg" />
+    <AndroidResource Include="Resources\drawable\baseline_settings_black_18.png" />
+    <AndroidResource Include="Resources\drawable\baseline_settings_black_24.png" />
+    <AndroidResource Include="Resources\drawable\baseline_settings_black_36.png" />
+    <AndroidResource Include="Resources\drawable\baseline_settings_black_48.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable-hdpi\" />

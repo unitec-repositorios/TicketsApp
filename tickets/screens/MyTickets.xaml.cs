@@ -70,7 +70,7 @@ namespace tickets
 
         protected override async void OnAppearing()
         {
-            TicketsListView.ItemsSource = await App.Database.GetTicketsAsync();
+            TicketsListView.ItemsSource = await App.Database.GetTicketsAsync(App.Database.GetCurrentUserNotAsync());
         }
 
         async void goToViewTicket(object sender, SelectedItemChangedEventArgs e)
