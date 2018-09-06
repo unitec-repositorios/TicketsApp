@@ -37,6 +37,7 @@ namespace tickets
             {
                 if (current == null)
                 {
+                    user.ID = 0;
                     await App.Database.CreateNewCurrentUser(user);
                     await DisplayAlert("Enhorabuena", "Su usuario ha sido creado exitosamente!", "Aceptar");
                 }
