@@ -15,7 +15,7 @@
                         <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
                             <StackLayout Orientation="Horizontal" Margin="10,0,0,0" >
                                 <Image Source="baseline_settings_black_36pt.png"/>
-                                <Label Text="Cerrar Sesion" VerticalOptions="Center" />
+                                <Label Text="Cerrar Sesión" VerticalOptions="Center" />
                             </StackLayout>
                         </ViewCell>
                     </TableSection>
