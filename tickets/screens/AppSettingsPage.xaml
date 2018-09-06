@@ -14,8 +14,10 @@
                        
                         <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
                             <StackLayout Orientation="Horizontal" Margin="10,0,0,0" >
+
                                 <Image Source="baseline_settings_black_36.png"/>
                                 <Label Text="Cerrar Sesion" VerticalOptions="Center" />
+
                             </StackLayout>
                         </ViewCell>
                     </TableSection>
