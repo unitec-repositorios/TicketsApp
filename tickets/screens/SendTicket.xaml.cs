@@ -78,7 +78,17 @@ namespace tickets
                         await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
                     }
                     else
-                    {      
+                    {
+                        await App.Database.CreateNewTicket(new Ticket()
+                        {
+                            ID = response,
+                            UserID = App.Database.GetCurrentUserNotAsync().ID,
+                            Affected = int.Parse(number.Value.ToString()),
+                            Classification = picker.SelectedIndex + 1,
+                            Priority = pickerPriority.SelectedIndex + 1,
+                            Subject = subject.Text,
+                            Message = message.Text,
+                        });
                         bool copy= await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
                         if (!copy)
                         {
