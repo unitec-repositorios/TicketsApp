@@ -19,7 +19,7 @@ namespace tickets
 
         private async void SignInSignOutBtn_Clicked(object sender, EventArgs e)
         {
-            
+            App.Database.Logout();
             LoginPage.SignOut();
             LoginPage login = new LoginPage();
             App.Current.MainPage = new NavigationPage(login);

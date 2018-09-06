@@ -50,7 +50,7 @@ namespace tickets
 
                     if (currentUserObject.UserPrincipalName.ToLower().Contains("@unitec.edu"))
                     {
-                        
+
                         App.Username = currentUserObject.DisplayName;
                         App.UserEmail = currentUserObject.UserPrincipalName;
                         username = App.Username;
@@ -68,6 +68,36 @@ namespace tickets
                                 Email = email
                             }
                         };
+                        var user = App.Database.GetUserAsync(email);
+                        if (user == null)
+                        {
+                            await Navigation.PushAsync(userSettings);
+                        }
+                        else
+                        {
+                            user.PrintData();
+                            Debug.WriteLine("Before createNewCurrentUser");
+                            App.Database.CreateNewCurrentUser(user);
+                            Debug.WriteLine("After createNewCurrentUser");
+                            //HomeScreen home = new HomeScreen();
+                            //App.Current.MainPage = new NavigationPage(home);
+                            switch (Xamarin.Forms.Device.RuntimePlatform)
+                            {
+                                case Xamarin.Forms.Device.iOS:
+                                    Debug.WriteLine("Device is IOS");
+                                    var newHome = new HomeScreen();
+                                    Navigation.PushAsync(newHome);
+                                    App.Current.MainPage = new NavigationPage(newHome);
+                                    break;
+                                case Xamarin.Forms.Device.Android:
+                                    Debug.WriteLine("Device is NOT IOS");
+                                    var newHome2 = new MyTickets();
+                                    Navigation.PushAsync(newHome2);
+                                    App.Current.MainPage = new NavigationPage(newHome2);
+                                    break;
+
+                            }
+                        }
                         userSettings.Disappearing += async (sender2, e2) =>
                         {
                             HomeScreen home = new HomeScreen();
@@ -84,7 +114,6 @@ namespace tickets
                             }
                             //Navigation.RemovePage(page);
                         };
-                        await Navigation.PushAsync(userSettings);
                     }
                     else
                     {
@@ -205,8 +234,7 @@ namespace tickets
             TokenForUser = null;
             username = null;
             email = null;
-
-            Debug.WriteLine("LLegue al logout");
+            
         }
 
     }
