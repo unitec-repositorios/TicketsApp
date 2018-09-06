@@ -50,7 +50,7 @@ namespace tickets
 
                     if (currentUserObject.UserPrincipalName.ToLower().Contains("@unitec.edu"))
                     {
-                        
+
                         App.Username = currentUserObject.DisplayName;
                         App.UserEmail = currentUserObject.UserPrincipalName;
                         username = App.Username;
@@ -65,6 +65,27 @@ namespace tickets
                                 Email = email
                             }
                         };
+                        var user = App.Database.GetUserAsync(email);
+                        if (user == null)
+                        {
+                            await Navigation.PushAsync(userSettings);
+                        }
+                        else
+                        {
+                            App.Database.CreateNewCurrentUser(user);
+                            HomeScreen home = new HomeScreen();
+                            App.Current.MainPage = new NavigationPage(home);
+                            switch (Xamarin.Forms.Device.RuntimePlatform)
+                            {
+                                case Xamarin.Forms.Device.iOS:
+                                    App.Current.MainPage = new NavigationPage(new HomeScreen());
+                                    break;
+                                case Xamarin.Forms.Device.Android:
+                                    App.Current.MainPage = new NavigationPage(new MyTickets());
+                                    break;
+
+                            }
+                        }
                         userSettings.Disappearing += async (sender2, e2) =>
                         {
                             HomeScreen home = new HomeScreen();
@@ -81,7 +102,6 @@ namespace tickets
                             }
                             //Navigation.RemovePage(page);
                         };
-                        await Navigation.PushAsync(userSettings);
                     }
                     else
                     {

@@ -47,6 +47,24 @@ namespace tickets
             }
         }
 
+        public User GetUserAsync(string email)
+        {
+            try
+            {
+                return database.FindWithQueryAsync<User>("SELECT * from User WHERE Email LIKE ?", email).Result;
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async void Logout()
+        {
+            await database.ExecuteAsync("Update user SET IsCurrent = 0");
+
+        }
+
         /// <summary>
         /// Returns a <see cref="User"/> which is the current user
         /// </summary>
