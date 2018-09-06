@@ -57,6 +57,7 @@ namespace tickets
             }
             catch (Exception ex)
             {
+                System.Console.WriteLine("Exception choosing file: " + ex.ToString());
                 await DisplayAlert("Aviso", "Se produjo un error", "OK");
             }
         }
