@@ -57,6 +57,9 @@ namespace tickets
                         email = App.UserEmail;
                         Debug.WriteLine(App.Username);
                         Debug.WriteLine(App.UserEmail);
+
+                        // AQUI LOGIN
+
                         var userSettings = new UserSettingsPage()
                         {
                             BindingContext = new User()
