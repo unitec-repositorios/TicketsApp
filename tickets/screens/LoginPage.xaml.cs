@@ -75,16 +75,25 @@ namespace tickets
                         }
                         else
                         {
+                            user.PrintData();
+                            Debug.WriteLine("Before createNewCurrentUser");
                             App.Database.CreateNewCurrentUser(user);
-                            HomeScreen home = new HomeScreen();
-                            App.Current.MainPage = new NavigationPage(home);
+                            Debug.WriteLine("After createNewCurrentUser");
+                            //HomeScreen home = new HomeScreen();
+                            //App.Current.MainPage = new NavigationPage(home);
                             switch (Xamarin.Forms.Device.RuntimePlatform)
                             {
                                 case Xamarin.Forms.Device.iOS:
-                                    App.Current.MainPage = new NavigationPage(new HomeScreen());
+                                    Debug.WriteLine("Device is IOS");
+                                    var newHome = new HomeScreen();
+                                    Navigation.PushAsync(newHome);
+                                    App.Current.MainPage = new NavigationPage(newHome);
                                     break;
                                 case Xamarin.Forms.Device.Android:
-                                    App.Current.MainPage = new NavigationPage(new MyTickets());
+                                    Debug.WriteLine("Device is NOT IOS");
+                                    var newHome2 = new MyTickets();
+                                    Navigation.PushAsync(newHome2);
+                                    App.Current.MainPage = new NavigationPage(newHome2);
                                     break;
 
                             }
@@ -225,8 +234,7 @@ namespace tickets
             TokenForUser = null;
             username = null;
             email = null;
-
-            Debug.WriteLine("LLegue al logout");
+            
         }
 
     }
