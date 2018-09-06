@@ -25,7 +25,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="180" />
                         </Grid.ColumnDefinitions>
-                        <Label Text="{Binding Source={x:Reference number}, Path = Value}" Grid.Row="0" Grid.Column="0" class="label"></Label>
+                        <Entry Keyboard="Numeric"  Text="{Binding Source={x:Reference number}, Path = Value}" Grid.Row="0" Grid.Column="0" class="label"></Entry>
                         <Stepper x:Name="number" Grid.Row="0" Grid.Column="1" Minimum="1" />
                     </Grid>
                     <Label Text="Clasificación"  Font="Bold, 24"></Label>
