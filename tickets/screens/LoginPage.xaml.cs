@@ -77,7 +77,7 @@ namespace tickets
                         {
                             user.PrintData();
                             Debug.WriteLine("Before createNewCurrentUser");
-                            App.Database.CreateNewCurrentUser(user);
+                            await App.Database.CreateNewCurrentUser(user);
                             Debug.WriteLine("After createNewCurrentUser");
                             //HomeScreen home = new HomeScreen();
                             //App.Current.MainPage = new NavigationPage(home);
@@ -86,16 +86,21 @@ namespace tickets
                                 case Xamarin.Forms.Device.iOS:
                                     Debug.WriteLine("Device is IOS");
                                     var newHome = new HomeScreen();
-                                    Navigation.PushAsync(newHome);
+                                    await Navigation.PushAsync(newHome);
                                     App.Current.MainPage = new NavigationPage(newHome);
                                     break;
                                 case Xamarin.Forms.Device.Android:
                                     Debug.WriteLine("Device is NOT IOS");
                                     var newHome2 = new MyTickets();
-                                    Navigation.PushAsync(newHome2);
+                                    await Navigation.PushAsync(newHome2);
                                     App.Current.MainPage = new NavigationPage(newHome2);
                                     break;
-
+                                case Xamarin.Forms.Device.UWP:
+                                    Debug.WriteLine("Device is NOT IOS");
+                                    var newHome3 = new MyTickets();
+                                    await Navigation.PushAsync(newHome3);
+                                    App.Current.MainPage = new NavigationPage(newHome3);
+                                    break;
                             }
                         }
                         userSettings.Disappearing += async (sender2, e2) =>

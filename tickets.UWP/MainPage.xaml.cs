@@ -25,7 +25,7 @@ namespace tickets.UWP
         public MainPage()
         {
             this.InitializeComponent();
-            loadApplication(new tickets.App());
+            LoadApplication(new tickets.App());
         }
     }
 }
