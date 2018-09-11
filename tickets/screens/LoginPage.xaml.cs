@@ -90,14 +90,14 @@ namespace tickets
                                     App.Current.MainPage = new NavigationPage(newHome);
                                     break;
                                 case Xamarin.Forms.Device.Android:
-                                    Debug.WriteLine("Device is NOT IOS");
+                                    Debug.WriteLine("Device is ANDROID");
                                     var newHome2 = new MyTickets();
                                     await Navigation.PushAsync(newHome2);
                                     App.Current.MainPage = new NavigationPage(newHome2);
                                     break;
                                 case Xamarin.Forms.Device.UWP:
-                                    Debug.WriteLine("Device is NOT IOS");
-                                    var newHome3 = new MyTickets();
+                                    Debug.WriteLine("Device is UWP");
+                                    var newHome3 = new HomeScreen();
                                     await Navigation.PushAsync(newHome3);
                                     App.Current.MainPage = new NavigationPage(newHome3);
                                     break;
