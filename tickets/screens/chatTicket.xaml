@@ -16,7 +16,8 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <ListView x:Name="MessagesListView"
-                          ItemTemplate="{StaticResource MessageTemplateSelector}" 
+                          ItemTemplate="{StaticResource MessageTemplateSelector}"
+                          ItemsSource="{Binding ListMessages}"  
                           HasUnevenRows="True" SeparatorVisibility="None" IsEnabled="True" Grid.Row="0"/>
 
                 <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White">

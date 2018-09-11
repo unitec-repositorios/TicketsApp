@@ -24,9 +24,6 @@ namespace tickets
 		{
 			InitializeComponent ();
             chatVM = new chatViewModel();
-            //BindingContext =
-            //set the ticketID
-            //ticketID = "g86vpnm3tm";
             chatVM.ListMessages.CollectionChanged += (sender, e) =>
             {
                 var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
@@ -37,12 +34,12 @@ namespace tickets
 
         protected override async void OnAppearing()
         {
-            readTicket();
-            MessagesListView.ItemsSource = chatVM.ListMessages;
-        }
+            ticketID = (string)BindingContext;
+            BindingContext = chatVM = new chatViewModel();
+            readTicket();        }
         public async void readTicket()
         {
-            string html = await server.getTicket((string)BindingContext);
+            string html = await server.getTicket(ticketID);
             string autor = "";
             string message = "";
             string myName = null;
