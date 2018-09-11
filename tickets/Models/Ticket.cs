@@ -17,6 +17,8 @@ namespace tickets
         public string Subject { get; set; }
         public string Message { get; set; }
         public bool Open { get; set; }
+        public string Date { get; set; }
+        public string Image { get; set; }
 
         public void PrintData()
         {

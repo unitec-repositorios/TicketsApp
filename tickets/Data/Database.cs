@@ -124,6 +124,17 @@ namespace tickets
         }
 
         /// <summary>
+        /// Update the ticket.
+        /// </summary>
+        /// <returns>The new ticket.</returns>
+        /// <param name="ticket">Ticket.</param>
+        public Task<int> UpdateTicket(Ticket ticket)
+        {
+            ticket.PrintData();
+            return database.UpdateAsync(ticket);
+        }
+
+        /// <summary>
         /// Gets the tickets async.
         /// </summary>
         /// <returns>The tickets async.</returns>
