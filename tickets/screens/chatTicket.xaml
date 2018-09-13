@@ -13,28 +13,30 @@
             <Grid RowSpacing="0" ColumnSpacing="0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <ListView x:Name="MessagesListView"
                           ItemTemplate="{StaticResource MessageTemplateSelector}"
                           ItemsSource="{Binding ListMessages}"  
                           HasUnevenRows="True" SeparatorVisibility="None" IsEnabled="True" Grid.Row="0"/>
-
-                <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White">
-                    <Entry 
+                <ContentView x:Name="Loading" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"  AbsoluteLayout.LayoutFlags="All" IsVisible="False" BackgroundColor="#C0808080" Padding="10, 0" IsEnabled="False" Grid.Row="0">
+                    <ActivityIndicator  WidthRequest="110" HeightRequest="70" IsRunning="True" IsVisible="True" Color="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                </ContentView>
+                <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" VerticalOptions="EndAndExpand">
+                        <Entry 
                         HorizontalOptions="FillAndExpand"  
                         Placeholder="Mensaje"  
                         Text="{Binding OutText}" Keyboard="Chat" Margin="4"/>
 
-                    <Image Source="sendIcon.png" WidthRequest="40" HeightRequest="40" Margin="4">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer
+                        <Image Source="sendIcon.png" WidthRequest="40" HeightRequest="40" Margin="4">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
                                 Command="{Binding SendCommand}" />
-                        </Image.GestureRecognizers>
-                    </Image>
+                            </Image.GestureRecognizers>
+                        </Image>
 
-                </StackLayout>
-            </Grid>
-        </ScrollView>
+                    </StackLayout>
+                </Grid>
+            </ScrollView>
     </ContentPage.Content>
 </ContentPage>

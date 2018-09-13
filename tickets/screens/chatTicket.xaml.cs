@@ -39,7 +39,11 @@ namespace tickets
             readTicket();        }
         public async void readTicket()
         {
+            Loading.IsEnabled = true;
+            Loading.IsVisible = true;
             string html = await server.getTicket(ticketID);
+            Loading.IsVisible = false;
+            Loading.IsEnabled = false;
             string autor = "";
             string message = "";
             string myName = null;
