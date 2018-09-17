@@ -140,7 +140,7 @@ namespace tickets
         /// <returns>The tickets async.</returns>
         public Task<List<Ticket>> GetTicketsAsync(User user)
         {
-            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = ? ORDER BY Open", user.ID);
+            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = ? ORDER BY Image DESC", user.ID);
         }
 
 

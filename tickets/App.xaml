@@ -4,10 +4,13 @@
         <ResourceDictionary>
             <Color x:Key="backgroundColor">white</Color>
             <Color x:Key="textColor">White</Color>
-            
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="#0e2456" />
                 <Setter Property="BarTextColor" Value="Color.White" />
+                <Setter Property="BackgroundColor" Value="#0e2456" />
+            </Style>
+            <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor" Value="Color.White" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>
