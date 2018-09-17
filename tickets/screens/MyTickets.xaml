@@ -11,7 +11,7 @@
                                 <StackLayout HorizontalOptions="StartAndExpand">
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="{Binding Subject}" TextColor="#0e2456" FontSize="20" LineBreakMode="TailTruncation" />
-                                        <Label Content="{Binding Date}" ContentStringFormat="d/M/yy" TextColor="Color.Gray" FontSize="18" LineBreakMode="TailTruncation" HorizontalOptions="EndAndExpand"/>
+                                        <Label Text="{Binding Date}"  TextColor="Color.Gray" FontSize="18" LineBreakMode="TailTruncation" HorizontalOptions="EndAndExpand"/>
                                     </StackLayout>
                                     
                                     <Label Text="{Binding Message}" LineBreakMode="TailTruncation" />
