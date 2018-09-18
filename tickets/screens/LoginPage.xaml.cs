@@ -90,12 +90,17 @@ namespace tickets
                                     App.Current.MainPage = new NavigationPage(newHome);
                                     break;
                                 case Xamarin.Forms.Device.Android:
-                                    Debug.WriteLine("Device is NOT IOS");
+                                    Debug.WriteLine("Device is ANDROID");
                                     var newHome2 = new MyTickets();
                                     await Navigation.PushAsync(newHome2);
                                     App.Current.MainPage = new NavigationPage(newHome2);
                                     break;
-
+                                case Xamarin.Forms.Device.UWP:
+                                    Debug.WriteLine("Device is UWP");
+                                    var newHome3 = new HomeScreen();
+                                    await Navigation.PushAsync(newHome3);
+                                    App.Current.MainPage = new NavigationPage(newHome3);
+                                    break;
                             }
                         }
                         userSettings.Disappearing += async (sender2, e2) =>
@@ -149,22 +154,7 @@ namespace tickets
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
-                string CheckUrl = "http://google.com";
-                try
-                {
-                    HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(CheckUrl);
-                    iNetRequest.Timeout = 6500;
-                    WebResponse iNetResponse = iNetRequest.GetResponse();
-                    iNetResponse.Close();
-                    return true;
-                }
-                catch (WebException ex)
-                {
-
-                    // Console.WriteLine (".....no connection..." + ex.ToString ());
-
-                    return false;
-                }
+                return true;
             }
             else
             {

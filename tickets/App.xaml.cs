@@ -57,7 +57,9 @@ namespace tickets
                     case Device.Android:
                         MainPage = new NavigationPage(new MyTickets());
                         break;
-
+                    case Device.UWP:
+                        MainPage = new NavigationPage(new HomeScreen());
+                        break;
                 }
             }
 
