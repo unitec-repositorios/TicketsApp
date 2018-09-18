@@ -154,22 +154,7 @@ namespace tickets
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
             {
-                string CheckUrl = "http://google.com";
-                try
-                {
-                    HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(CheckUrl);
-                    iNetRequest.Timeout = 6500;
-                    WebResponse iNetResponse = iNetRequest.GetResponse();
-                    iNetResponse.Close();
-                    return true;
-                }
-                catch (WebException ex)
-                {
-
-                    // Console.WriteLine (".....no connection..." + ex.ToString ());
-
-                    return false;
-                }
+                return true;
             }
             else
             {

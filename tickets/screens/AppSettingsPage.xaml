@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.AppSettingsPage" Title="Ajustes" Icon="baseline_settings_black_36pt">
     <ContentPage.Content>
-        <StackLayout>
-            <TableView Intent="Settings">
-                <TableRoot>
-                    <TableSection>
-                        <ViewCell Tapped="goToUserSettings" StyleId="disclosure">
-                            <StackLayout Orientation="Horizontal" Margin="10,0,0,0" >
+        <StackLayout >
+            <TableView Intent="Settings"  >
+                <TableRoot >
+                    <TableSection >
+                    
+                        <ViewCell Tapped="goToUserSettings" StyleId="disclosure"  >
+                            <StackLayout Orientation="Horizontal" Margin="10,5,0,5" Spacing="20" >
                                 <Image Source="baseline_settings_black_36.png"/>
-                                <Label Text="Configuración de Cuenta" VerticalOptions="Center" />
+                                <Label Text="Configuración de Cuenta" VerticalOptions="Center" FontSize="Large" />
                             </StackLayout>
                         </ViewCell>
-                       
-                        <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
-                            <StackLayout Orientation="Horizontal" Margin="10,0,0,0" >
+                    </TableSection>
+                    <TableSection >
+                        <ViewCell IsEnabled="False">
+                            <StackLayout></StackLayout></ViewCell>
+                    </TableSection>
+
+                    <TableSection>
+                        <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure" >
+                            
+                            <StackLayout Orientation="Horizontal"  Margin="10,5,0,5" Spacing="20">
 
                                 <Image Source="baseline_settings_black_36.png"/>
-                                <Label Text="Cerrar Sesion" VerticalOptions="Center" />
+                                <Label Text="Cerrar Sesión" VerticalOptions="Center" FontSize="Large" />
 
                             </StackLayout>
+                           
                         </ViewCell>
                     </TableSection>
                 </TableRoot>

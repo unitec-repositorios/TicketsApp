@@ -34,6 +34,10 @@ namespace tickets
                     ToolbarItems.Add(newTicket);
                     ToolbarItems.Add(settings);
                     break;
+                case Device.UWP:
+                    ToolbarItems.Add(newTicket);
+                    ToolbarItems.Add(settings);
+                    break;
             }
 
             //App.Database.CreateNewTicket(new Ticket()
