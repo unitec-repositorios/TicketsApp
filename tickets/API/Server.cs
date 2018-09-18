@@ -33,6 +33,62 @@ namespace tickets.API
             return count;
         }
 
+        public async Task<string> getInitDate(string id)
+        {
+            HttpClient _client = new HttpClient();
+            HttpResponseMessage response = await _client.GetAsync("http://178.128.75.38/ticket.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            string search = "Creado en: </td>";
+            int size = search.Count();
+            int begin = size + html.IndexOf(search);
+            string date = "";
+            char val = html[begin];
+            if (html.IndexOf(search) > -1)
+            {
+                while (val != '/')
+                {
+                    date += val;
+                    begin++;
+                    val = html[begin];
+                }
+                string[] array = date.Split('>');
+                date = array[1];
+                date = date.Remove(date.Length-1);
+                return date;
+
+            }
+            
+            return"error";
+        }
+
+        public async Task<string> getUpdateDate(string id)
+        {
+            HttpClient _client = new HttpClient();
+            HttpResponseMessage response = await _client.GetAsync("http://178.128.75.38/ticket.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            string search = "�ltima actualizacion: </td>";
+            int size = search.Count();
+            int begin = size + html.IndexOf(search);
+            string date = "";
+            char val = html[begin];
+            if (html.IndexOf(search) > -1)
+            {
+                while (val != '/')
+                {
+                    date += val;
+                    begin++;
+                    val = html[begin];
+                }
+                string[] array = date.Split('>');
+                date = array[1];
+                date = date.Remove(date.Length-1);
+                return date;
+
+            }
+            return "error";
+        }
+
+
         public async Task<string> getTicket(string id)
         {
             HttpClient _client = new HttpClient();
@@ -210,6 +266,95 @@ namespace tickets.API
 
             }
         }
+        public async Task<string> replyTicket(string message, string ticketID)
+        {
+            //catch the cookie
+            HttpClient _client = new HttpClient();
+            HttpResponseMessage capture = await _client.GetAsync("http://178.128.75.38/ticket.php?track=" + ticketID);
+            String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
+            String[] tokens = res.Split(';');
+            String cookie = tokens[0];
 
+            //catch the token
+            String html = await capture.Content.ReadAsStringAsync();
+            string searchSS = "name=\"token\" value=\"";
+            int size = searchSS.Count();
+            int begin = size + html.IndexOf(searchSS);
+            string token = "";
+            char val = html[begin];
+            while (val != '\"')
+            {
+                token += val;
+                begin++;
+                val = html[begin];
+            }
+
+            //value cookie
+            String[] tokensValue = cookie.Split('=');
+            String valueCookie = tokensValue[1];
+
+            //headers
+            HttpWebRequest requestToServer = (HttpWebRequest)WebRequest.Create("http://178.128.75.38/reply_ticket.php");
+            String boundaryString = "----WebKitFormBoundary" + valueCookie;
+            requestToServer.AllowReadStreamBuffering = false;
+            requestToServer.Method = WebRequestMethods.Http.Post;
+            requestToServer.Headers.Add("Cookie", cookie);
+            requestToServer.ContentType = "multipart/form-data; boundary=" + boundaryString;
+
+            //generate body
+            ASCIIEncoding ascii = new ASCIIEncoding();
+            //boundary
+            string boundaryStringLine = "\r\n--" + boundaryString + "\r\n";
+            byte[] boundaryStringLineBytes = ascii.GetBytes(boundaryStringLine);
+            //message
+            string messageInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "message", message);
+            byte[] messageInputBytes = ascii.GetBytes(messageInput);
+            //ticketID
+            string ticketInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "orig_track", ticketID);
+            byte[] ticketInputBytes = ascii.GetBytes(ticketInput);
+            //token
+            string tokenInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "token", token);
+            byte[] tokenInputBytes = ascii.GetBytes(tokenInput);
+            //boundary final
+            string lastBoundaryStringLine = "\r\n--" + boundaryString + "--";
+            byte[] lastBoundaryStringLineBytes = ascii.GetBytes(lastBoundaryStringLine);
+
+            //size buffer
+            long totalRequestBodySize = boundaryStringLineBytes.Length * 3
+                + messageInputBytes.Length
+                + ticketInputBytes.Length
+                + tokenInputBytes.Length
+                + lastBoundaryStringLineBytes.Length;
+
+            requestToServer.ContentLength = totalRequestBodySize;
+
+            //white body
+            using (Stream s = requestToServer.GetRequestStream())
+            {
+                s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
+                s.Write(messageInputBytes, 0, messageInputBytes.Length);
+                s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
+                s.Write(ticketInputBytes, 0, ticketInputBytes.Length);
+                s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
+                s.Write(tokenInputBytes, 0, tokenInputBytes.Length);
+                s.Write(lastBoundaryStringLineBytes, 0, lastBoundaryStringLineBytes.Length);
+            }
+
+            //response 
+            WebResponse response = requestToServer.GetResponse();
+            StreamReader responseReader = new StreamReader(response.GetResponseStream());
+
+            //catch ticketID
+            String responseHtml = responseReader.ReadToEnd();
+            string searchR = "�xito:</b>";
+            if (responseHtml.IndexOf(searchR) > -1)
+            {
+                return "ok";
+            }
+            else
+            {
+                return "error";
+            }
+        }
     }
 }

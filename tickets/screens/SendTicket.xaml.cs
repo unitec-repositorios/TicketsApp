@@ -24,7 +24,6 @@ namespace tickets
         public SendTicket()
         {
             InitializeComponent();
-            
             //Adjun.HasUnevenRows = true;
             Append.Clicked += searchFile;
             this.BindingContext = new Ticket();
@@ -69,17 +68,16 @@ namespace tickets
             {
                 try
                 {
-                    button.IsVisible = false;
                     Loading.IsVisible = true;
                     string response = await server.submitTicket(number.Value.ToString(), subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex]);
                     Loading.IsVisible = false;
-                    button.IsVisible = true;
                     if (response.Equals("error"))
                     {
                         await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
                     }
                     else
                     {
+                        string date = await server.getInitDate(response);
                         await App.Database.CreateNewTicket(new Ticket()
                         {
                             ID = response,
@@ -89,6 +87,7 @@ namespace tickets
                             Priority = pickerPriority.SelectedIndex + 1,
                             Subject = subject.Text,
                             Message = message.Text,
+                            Date = date,
                         });
                         bool copy= await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
                         if (!copy)
