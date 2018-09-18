@@ -33,6 +33,62 @@ namespace tickets.API
             return count;
         }
 
+        public async Task<string> getInitDate(string id)
+        {
+            HttpClient _client = new HttpClient();
+            HttpResponseMessage response = await _client.GetAsync("http://178.128.75.38/ticket.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            string search = "Creado en: </td>";
+            int size = search.Count();
+            int begin = size + html.IndexOf(search);
+            string date = "";
+            char val = html[begin];
+            if (html.IndexOf(search) > -1)
+            {
+                while (val != '/')
+                {
+                    date += val;
+                    begin++;
+                    val = html[begin];
+                }
+                string[] array = date.Split('>');
+                date = array[1];
+                date = date.Remove(date.Length-1);
+                return date;
+
+            }
+            
+            return"error";
+        }
+
+        public async Task<string> getUpdateDate(string id)
+        {
+            HttpClient _client = new HttpClient();
+            HttpResponseMessage response = await _client.GetAsync("http://178.128.75.38/ticket.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            string search = "�ltima actualizacion: </td>";
+            int size = search.Count();
+            int begin = size + html.IndexOf(search);
+            string date = "";
+            char val = html[begin];
+            if (html.IndexOf(search) > -1)
+            {
+                while (val != '/')
+                {
+                    date += val;
+                    begin++;
+                    val = html[begin];
+                }
+                string[] array = date.Split('>');
+                date = array[1];
+                date = date.Remove(date.Length-1);
+                return date;
+
+            }
+            return "error";
+        }
+
+
         public async Task<string> getTicket(string id)
         {
             HttpClient _client = new HttpClient();

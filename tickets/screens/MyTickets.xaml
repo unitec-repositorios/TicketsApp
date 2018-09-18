@@ -2,11 +2,23 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.MyTickets" Title="Mis Tickets" Icon="baseline_home_black_36pt">
     <ContentPage.Content>
         <StackLayout>
-            <SearchBar Text="{Binding Search}" BackgroundColor="white" />
-            <ListView x:Name="TicketsListView" ItemSelected="goToViewTicket" SeparatorVisibility="None" RowHeight="50">
+            <SearchBar Placeholder="Buscar" TextChanged="SearchBar_TextChanged" BackgroundColor="#0e2456" HeightRequest="40" CancelButtonColor="White"/>
+            <ListView x:Name="TicketsListView" IsPullToRefreshEnabled="True" Refreshing="TicketsListView_Refreshing" ItemSelected="goToViewTicket" SeparatorVisibility="Default" RowHeight="70">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Subject}" Detail="{Binding Message}" StyleId="disclosure"/>
+                        <ViewCell StyleId="disclosure">
+                            <StackLayout Orientation="Horizontal" Padding="10">
+                                <StackLayout HorizontalOptions="StartAndExpand">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Subject}" TextColor="#0e2456" FontSize="20" LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding Date}"  TextColor="Color.Gray" FontSize="18" LineBreakMode="TailTruncation" HorizontalOptions="EndAndExpand"/>
+                                    </StackLayout>
+                                    
+                                    <Label Text="{Binding Message}" LineBreakMode="TailTruncation" />
+                                </StackLayout>
+                                <Image x:Name="notification" Source="{Binding Image}" />
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

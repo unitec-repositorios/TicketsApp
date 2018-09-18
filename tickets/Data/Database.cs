@@ -124,12 +124,23 @@ namespace tickets
         }
 
         /// <summary>
+        /// Update the ticket.
+        /// </summary>
+        /// <returns>The new ticket.</returns>
+        /// <param name="ticket">Ticket.</param>
+        public Task<int> UpdateTicket(Ticket ticket)
+        {
+            ticket.PrintData();
+            return database.UpdateAsync(ticket);
+        }
+
+        /// <summary>
         /// Gets the tickets async.
         /// </summary>
         /// <returns>The tickets async.</returns>
         public Task<List<Ticket>> GetTicketsAsync(User user)
         {
-            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = ? ORDER BY Open", user.ID);
+            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = ? ORDER BY Image DESC", user.ID);
         }
 
 
