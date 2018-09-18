@@ -14,7 +14,7 @@ namespace tickets
 	public partial class chatTicket : ContentPage
 	{
         private Server server = new Server();
-        public string ticketID;
+        public string ticketID = "";
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
 
@@ -23,10 +23,7 @@ namespace tickets
         public chatTicket ()
 		{
 			InitializeComponent ();
-            chatVM = new chatViewModel();
-            //BindingContext =
-            //set the ticketID
-            //ticketID = "g86vpnm3tm";
+            chatVM = new chatViewModel(ticketID);
             chatVM.ListMessages.CollectionChanged += (sender, e) =>
             {
                 var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
@@ -37,12 +34,16 @@ namespace tickets
 
         protected override async void OnAppearing()
         {
-            readTicket();
-            MessagesListView.ItemsSource = chatVM.ListMessages;
-        }
+            ticketID = (string)BindingContext;
+            BindingContext = chatVM = new chatViewModel(ticketID);
+            readTicket();        }
         public async void readTicket()
         {
-            string html = await server.getTicket((string)BindingContext);
+            Loading.IsEnabled = true;
+            Loading.IsVisible = true;
+            string html = await server.getTicket(ticketID);
+            Loading.IsVisible = false;
+            Loading.IsEnabled = false;
             string autor = "";
             string message = "";
             string myName = null;
