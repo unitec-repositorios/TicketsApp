@@ -19,7 +19,7 @@ namespace tickets
 
         private async void SignInSignOutBtn_Clicked(object sender, EventArgs e)
         {
-            var answer = await DisplayAlert("Cerrar Sesión", "Esta seguro de cerrar Sesión?", "Si", "No");
+            var answer = await DisplayAlert("Cerrar Sesión", "Esta seguro de cerrar sesión?", "Si", "No");
             if (answer)
             {
                 App.Database.Logout();
