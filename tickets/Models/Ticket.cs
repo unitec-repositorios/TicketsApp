@@ -2,11 +2,12 @@
 using System.ComponentModel;
 using SQLite;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 
 namespace tickets
 {
-    public class Ticket
+    public class Ticket : INotifyPropertyChanged
     {
         [PrimaryKey]
         public string ID { get; set; }
@@ -18,7 +19,13 @@ namespace tickets
         public string Message { get; set; }
         public bool Open { get; set; }
         public string Date { get; set; }
-        public string Image { get; set; }
+        string image { get; set; }
+
+
+        public Ticket()
+        {
+            this.image = "";
+        }
 
         public void PrintData()
         {
@@ -29,5 +36,35 @@ namespace tickets
                 Debug.WriteLine("{0}={1}", name, value);
             }
         }
+
+        public string Image
+        {
+            set
+            {
+                if (image != value)
+                {
+                    image = value;
+
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("Image"));
+                    }
+                }
+            }
+            get
+            {
+                return image;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string propertyName = null)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
     }
 }
