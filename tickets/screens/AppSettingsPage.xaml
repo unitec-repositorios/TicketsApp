@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.AppSettingsPage" Title="Ajustes" Icon="baseline_settings_black_36pt">
     <ContentPage.Content>
-        <StackLayout >
-            <TableView Intent="Settings"  >
+        <StackLayout  Padding="0,20,0,0" Spacing="15" >
+            <TableView Intent="Settings" HasUnevenRows="True" RowHeight="-1" >
                 <TableRoot >
-                    <TableSection >
+                    <TableSection  >
                     
                         <ViewCell Tapped="goToUserSettings" StyleId="disclosure"  >
-                            <StackLayout Orientation="Horizontal" Margin="10,5,0,5" Spacing="20" >
+                            <StackLayout Orientation="Horizontal" Margin="10,0,0,0" Padding="0,0,0,10" Spacing="15">
                                 <Image Source="baseline_settings_black_36.png"/>
                                 <Label Text="Configuración de Cuenta" VerticalOptions="Center" FontSize="Large" />
                             </StackLayout>
                         </ViewCell>
-                    </TableSection>
-                    <TableSection >
-                        <ViewCell IsEnabled="False">
-                            <StackLayout></StackLayout></ViewCell>
-                    </TableSection>
 
-                    <TableSection>
+                        
                         <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure" >
-                            
-                            <StackLayout Orientation="Horizontal"  Margin="10,5,0,5" Spacing="20">
+
+                            <StackLayout Orientation="Horizontal"  Margin="10,0,0,0" Padding="0,10,0,0" Spacing="15">
 
                                 <Image Source="baseline_settings_black_36.png"/>
                                 <Label Text="Cerrar Sesión" VerticalOptions="Center" FontSize="Large" />
