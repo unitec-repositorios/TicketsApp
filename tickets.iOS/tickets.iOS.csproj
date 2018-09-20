@@ -138,6 +138,18 @@
     <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_24pt.xcassets\baseline_settings_black_24pt.imageset\baseline_settings_black_24pt_3x.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_36pt.xcassets\baseline_settings_black_36pt.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_36pt.xcassets\baseline_settings_black_36pt.imageset\baseline_settings_black_36pt_1x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_36pt.xcassets\baseline_settings_black_36pt.imageset\baseline_settings_black_36pt_2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_36pt.xcassets\baseline_settings_black_36pt.imageset\baseline_settings_black_36pt_3x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_48pt.xcassets\.DS_Store">
       <Visible>false</Visible>
     </ImageAsset>
@@ -231,18 +243,6 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-Small-50x50%401x.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-Small-50x50%402x.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\ItunesArtwork%402x.png" />
-    <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_36pt.xcassets\baseline_settings_black_36pt.imageset\baseline_settings_black_36pt_1x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_36pt.xcassets\baseline_settings_black_36pt.imageset\baseline_settings_black_36pt_2x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_36pt.xcassets\baseline_settings_black_36pt.imageset\baseline_settings_black_36pt_3x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_36pt.xcassets\baseline_settings_black_36pt.imageset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -277,6 +277,5 @@
   <ItemGroup>
     <Folder Include="Assets.xcassets\cap.imageset\" />
     <Folder Include="Assets.xcassets\ticket.imageset\" />
-    <Folder Include="Assets.xcassets\baseline-settings-ios-black\baseline_settings_black_36pt.xcassets\baseline_settings_black_36pt.imageset\" />
   </ItemGroup>
 </Project>
