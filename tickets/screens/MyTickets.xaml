@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.MyTickets" Title="Mis Tickets" Icon="baseline_home_black_36pt">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.MyTickets" Title="Mis Tickets" Icon="baseline_home_black_36pt" >
     <ContentPage.Content>
         <StackLayout>
             <SearchBar Placeholder="Buscar" TextChanged="SearchBar_TextChanged" HeightRequest="40"/>
