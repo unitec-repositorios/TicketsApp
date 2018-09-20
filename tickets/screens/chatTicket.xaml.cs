@@ -34,9 +34,16 @@ namespace tickets
 
         protected override async void OnAppearing()
         {
-            ticketID = (string)BindingContext;
-            BindingContext = chatVM = new chatViewModel(ticketID);
-            readTicket();        }
+            try
+            {
+                ticketID = (string)BindingContext;
+                BindingContext = chatVM = new chatViewModel(ticketID);
+                readTicket();  
+            }
+            catch (Exception ex)
+            {                
+            }      
+        }
         public async void readTicket()
         {
             Loading.IsEnabled = true;
