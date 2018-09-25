@@ -2,6 +2,7 @@
 
 using Android.App;
 using Android.Content;
+using Plugin.CurrentActivity;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
@@ -10,6 +11,7 @@ using Android.OS;
 using Microsoft.Identity.Client;
 using System.Threading.Tasks;
 using Android;
+
 
 namespace tickets.Droid
 {
@@ -26,6 +28,7 @@ namespace tickets.Droid
             base.OnCreate(bundle);
             Xamarin.Essentials.Platform.Init(this, bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
+            CrossCurrentActivity.Current.Init(this, bundle);
             LoadApplication(new App());
             App.IdentityClientApp.RedirectUri = App.RedirectUri;
             App.UiParent = new UIParent(Xamarin.Forms.Forms.Context as Activity);
@@ -34,6 +37,10 @@ namespace tickets.Droid
 
         }
 
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        {
+            Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {

@@ -16,7 +16,7 @@
         <Grid>
             <StackLayout>
                 <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                    <StackLayout Margin="10,20,10,10" VerticalOptions="FillAndExpand">
+                    <StackLayout VerticalOptions="FillAndExpand">
                         <Label Text="Cantidad de afectados"  Font="Bold, 24"></Label>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -60,6 +60,7 @@
                     </StackLayout>
                 </ScrollView>
                 <StackLayout VerticalOptions="EndAndExpand">
+                    <Button x:Name="take_photo" Text="Capturar" Image="baseline_camera_alt_white_36.png" class="btn_blue"></Button>
                     <Button Text="Adjuntar Archivo" x:Name="Append" class="btn_blue"></Button>
                     <Button x:Name="button" Text="Enviar Ticket" Clicked="OnSubmit" class="btn_red"></Button>
                 </StackLayout>

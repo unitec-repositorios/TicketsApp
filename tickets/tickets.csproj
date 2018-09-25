@@ -21,6 +21,7 @@
     <PackageReference Include="Microsoft.Graph" Version="1.10.0" />
     <PackageReference Include="Xamarin.Plugins.Clipboard" Version="2.2.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.8.7" />
+    <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="LoginPage.xaml.cs" />
