@@ -18,8 +18,8 @@ namespace tickets
     {
         private Server server = new Server();
         private User user;
-        List<String> filesNames = new List<String>();
-        List<FileData> loadFiles = new List<FileData>();
+        List<(string, byte[])> files = new List<(string, byte[])>();
+        //List<FileData> loadFiles = new List<FileData>();
 
         public SendTicket()
         {
@@ -37,13 +37,14 @@ namespace tickets
                 if (file != null)
                 {
                     string name = file.FileName;
-                    filesNames.Add(name);
-                    loadFiles.Add(file);
+                    var data = file.DataArray;
+                    files.Add((name, data));
+                    //loadFiles.Add(file);
                     //Adjun.ItemsSource = null;
                     string temp = "";
-                    for (int i=0;i<filesNames.Count();i++)
+                    for (int i = 0; i < files.Count(); i++)
                     {
-                        temp += filesNames[i].ToString();
+                        temp += files[i].Item1;
                         temp += "\n";
                     }
                     Adjun.Text = temp;
@@ -69,7 +70,7 @@ namespace tickets
                 try
                 {
                     Loading.IsVisible = true;
-                    string response = await server.submitTicket(number.Value.ToString(), subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex]);
+                    string response = await server.submitTicket(number.Value.ToString(), subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex], files);
                     Loading.IsVisible = false;
                     if (response.Equals("error"))
                     {
@@ -89,10 +90,10 @@ namespace tickets
                             Message = message.Text,
                             Date = date,
                         });
-                        bool copy= await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
+                        bool copy = await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
                         if (!copy)
                         {
-                            CrossClipboard.Current.SetText(response); 
+                            CrossClipboard.Current.SetText(response);
                         }
                         //clean
                         number.Value = 1;

@@ -100,7 +100,7 @@ namespace tickets.API
             return value;
         }
 
-        public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification)
+        public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, List<(string, byte[])> files)
         {
             User user = await App.Database.GetCurrentUser();
 
@@ -137,13 +137,16 @@ namespace tickets.API
             form.Add(new StringContent(user.Account), "custom3");
             form.Add(new StringContent(user.Career), "custom4");
             form.Add(new StringContent(qualification), "custom5");
-            form.Add(new StringContent(user.PhoneNumber ), "custom15");
+            form.Add(new StringContent(user.PhoneNumber), "custom15");
             form.Add(new StringContent(number), "custom20");
             form.Add(new StringContent("1"), "category");
             form.Add(new StringContent(priority), "priority");
             form.Add(new StringContent(subject), "subject");
             form.Add(new StringContent(message), "message");
-            //form.Add(new ByteArrayContent(new byte[0]), "attachment[1]");
+            for (int x = 0; x < files.Count; x++)
+            {
+                form.Add(new ByteArrayContent(files[x].Item2, 0, files[x].Item2.Length), "attachment[" + (x + 1) + "]", files[x].Item1);
+            }
             form.Add(new StringContent(token), "token");
             HttpResponseMessage response = await httpClient.PostAsync(BASE_ADDRESS + "/submit_ticket.php", form);
             //response.Headers.Add(
