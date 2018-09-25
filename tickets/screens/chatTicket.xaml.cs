@@ -14,7 +14,7 @@ namespace tickets
 	public partial class chatTicket : ContentPage
 	{
         private Server server = new Server();
-        public string ticketID = "";
+        public string ticketID = null;
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
 
@@ -36,7 +36,10 @@ namespace tickets
         {
             try
             {
-                ticketID = (string)BindingContext;
+                if (ticketID == null) {
+                    ticketID = (string)BindingContext;
+                    Title = "Ticket No. " + ticketID;
+                }
                 BindingContext = chatVM = new chatViewModel(ticketID);
                 readTicket();  
             }
