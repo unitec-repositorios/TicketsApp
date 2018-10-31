@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:tickets" x:Class="tickets.UserSettingsPage" Title="Configuración de Cuenta" Icon="baseline_settings_black_36pt">
+    <ContentPage.Resources>
+        <StyleSheet Source="../styles/style.css">
+        </StyleSheet>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Margin="10,20,10,10" BackgroundColor="{DynamicResource backgroundColor}">
+            <ScrollView>
+                <StackLayout>
+                    <Label Text="Nombre" Font="Bold, 24" />
+                    <Entry Text="{Binding Name}" ReturnType="Next" x:Name="txtname" Placeholder="Escribe su nombre completo" Keyboard="Text" />
+                    <Label Text="Email" Font="Bold, 24" />
+                    <Entry Text="{Binding Email}" x:Name="txtemail" Keyboard="Email" Placeholder="Correo electrónico"/>
+                    <Label Text="Campus" Font="Bold, 24"/>
+                    <Picker x:Name="campuspicker" Title="Campus" SelectedItem="{Binding Campus}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>UNITEC TGU</x:String>
+                                <x:String>UNITEC SPS</x:String>
+                                <x:String>CEUTEC TGU</x:String>
+                                <x:String>CEUTEC LCE</x:String>
+                                <x:String>CEUTEC SPS</x:String>
+                                <x:String>CEUTEC NORTE SPS</x:String>
+                                <x:String>UV</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <Label Text="Perfil" Font="Bold, 24"/>
+                    <Picker x:Name="profilepicker" Title="Perfil" SelectedItem="{Binding Profile}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Alumno</x:String>
+                                <x:String>Docente</x:String>
+                                <x:String>Administrativo</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <Label Text="Número de Cuenta" Font="Bold, 24"/>
+                    <Entry Text="{Binding Account}" x:Name="txtaccount" Keyboard="Numeric" MaxLength="8" Placeholder="Número de Cuenta"/>
+                    <Label Text="Carrera" Font="Bold, 24"/>
+                    <Picker x:Name="careerpicker" Title="¿Que carrera cursas?" SelectedItem="{Binding Career}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Arquitectura</x:String>
+                                <x:String>Ingeniería en Biomédica</x:String>
+                                <x:String>Ingeniería en Civil</x:String>
+                                <x:String>Ingeniería en Energía</x:String>
+                                <x:String>Ingeniería en Industrial y de Sistemas</x:String>
+                                <x:String>Ingeniería en Mecatrónica</x:String>
+                                <x:String>Ingeniería en Sistemas Computacionales</x:String>
+                                <x:String>Ingeniería en Telecomunicaciones</x:String>
+                                <x:String>Licenciatura en Administración de Hospitalidad y el Turismo</x:String>
+                                <x:String>Licenciatura en Administración Industrial y de Negocios</x:String>
+                                <x:String>Licenciatura en Animación Digital y Diseño Interactivo</x:String>
+                                <x:String>Licenciatura en Comunicación Audiovisual y Publicitaria</x:String>
+                                <x:String>Licenciatura en Derecho</x:String>
+                                <x:String>Licenciatura en Diseño de Modas</x:String>
+                                <x:String>Licenciatura en Diseño Gráfico</x:String>
+                                <x:String>Licenciatura en Economía</x:String>
+                                <x:String>Licenciatura en Finanzas</x:String>
+                                <x:String>Licenciatura en Gastronomía</x:String>
+                                <x:String>Licenciatura en Mercadotecnia y Negocios Internacionales</x:String>
+                                <x:String>Licenciatura en Psicología</x:String>
+                                <x:String>Licenciatura en Relaciones Internacionales</x:String>
+                                <x:String>Medicina y Cirugía</x:String>
+                                <x:String>Nutrición</x:String>
+                                <x:String>Odontología</x:String>
+                                <x:String>Terapia Física y Ocupacional</x:String>
+                                <x:String>Maestría en Administración de Proyectos</x:String>
+                                <x:String>Maestría en Contaduría Pública</x:String>
+                                <x:String>Maestría en Derecho Empresarial</x:String>
+                                <x:String>Maestría en Desarrollo Local y Turismo</x:String>
+                                <x:String>Maestría en Dirección de la Comunicación Corporativa</x:String>
+                                <x:String>Maestría en Dirección de Recursos Humanos</x:String>
+                                <x:String>Maestría en Dirección Empresarial</x:String>
+                                <x:String>Maestría en Finanzas</x:String>
+                                <x:String>Maestría en Gestión de Energías Renovables</x:String>
+                                <x:String>Maestría en Gestión de Operaciones y Logística</x:String>
+                                <x:String>Maestría en Gestión de Servicios de Salud</x:String>
+                                <x:String>Maestría en Gestión de Tecnologías de Información</x:String>
+                                <x:String>Maestría en Ingeniería de Estructuras</x:String>
+                                <x:String>Maestría en Sistemas de Gestión de Calidad Integrados</x:String>
+                                <x:String>Doctorado en Economía y Empresa</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <Label Text="Número Celular o Teléfono" Font="Bold, 24"/>
+                    <Entry Text="{Binding PhoneNumber}" x:Name="txtphone" Placeholder="Bríndanos tu número telefónico" Keyboard="Telephone" MaxLength="12" />
+                    
+                </StackLayout>
+            </ScrollView>
+            <StackLayout VerticalOptions="EndAndExpand">
+                <Button Text="Guardar" class="btn_blue" Clicked="OnSaveTouched" />
+                <Button Text="Cancelar" class="btn_red" Clicked="OnCancelTouched" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

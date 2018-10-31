@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="tickets.LoginPage"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Content>
+
+        <StackLayout>
+
+            <Image 
+            x:Name="Photo"
+            Source="cap.png" 
+            Aspect="AspectFit" 
+            Margin="20" 
+            HeightRequest="200" 
+            WidthRequest="200" 
+            VerticalOptions="CenterAndExpand"
+                />
+            <ActivityIndicator x:Name="Loading"
+                               Color="Red" 
+                               IsRunning="true"
+                               IsVisible="false"
+                                VerticalOptions="CenterAndExpand"
+                               />
+            <Button
+            x:Name="SignInSignOutBtn" 
+            Margin="70,20"
+			Text="INICIAR SESIÓN" 
+			TextColor="White"
+            FontSize="20"
+            BorderRadius="20"
+			BackgroundColor="#01265A"
+            Clicked="OnSignInSignOut"
+                VerticalOptions="CenterAndExpand"
+               
+               
+           />
+            </StackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>

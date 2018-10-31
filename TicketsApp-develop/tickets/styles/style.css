@@ -1,0 +1,41 @@
+﻿ContentPage {
+    background-color: white;
+}
+.label {
+    color: black;
+    font-size:medium;
+    margin-top:10;
+}
+
+.editor {
+    height: 200;
+    border: 2;
+}
+
+.button {
+    color: white;
+    background-color: navy;
+    width: 200;
+    height: 40;
+}
+
+.sendbutton {
+    color: white;
+    background-color: red;
+    width: 200;
+    height: 40;
+}
+
+.btn_red {
+    color: white;
+    background-color: red;
+    width: 200;
+    height: 40;
+}
+
+.btn_blue {
+    color: white;
+    background-color: navy;
+    width: 200;
+    height: 40;
+}
