@@ -39,7 +39,7 @@ namespace tickets
 
                     DisplayAlert("No Camera", ":( No camera available.", "OK");
 
-                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
+                    //await DisplayAlert("No Camera", ":( No camera available.", "OK");
 
                     return;
                 }
@@ -71,10 +71,7 @@ namespace tickets
                     temp += "\n";
                 }
                 Adjun.Text = temp;
-
-                await DisplayAlert("File Location", file.Path, "OK");
-
-                //await DisplayAlert("File Location", filePath, "OK");
+                await DisplayAlert("File Location", filePath, "OK");
 
             };
 
