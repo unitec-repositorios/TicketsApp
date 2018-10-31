@@ -36,20 +36,13 @@ namespace tickets
 
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
-
-                    DisplayAlert("No Camera", ":( No camera available.", "OK");
-
                     await DisplayAlert("No Camera", ":( No camera available.", "OK");
-
                     return;
                 }
 
                 var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                 {
                     Directory = "photo",
-
-                   // Name = "photo" + files.Count + ".jpg"
-
                     Name = "photo" + files.Count + ".jpg",
                     CompressionQuality = 25
 
@@ -60,7 +53,6 @@ namespace tickets
 
 
                 string filePath = file.Path;
-
                 byte[] data = MediaFileBytes(file);
 
                 files.Add(("photo" + files.Count + ".jpg", data));
@@ -72,10 +64,7 @@ namespace tickets
                 }
                 Adjun.Text = temp;
 
-                await DisplayAlert("File Location", file.Path, "OK");
-
-                //await DisplayAlert("File Location", filePath, "OK");
-
+                await DisplayAlert("File Location", filePath, "OK");
             };
 
         }
