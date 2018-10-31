@@ -29,15 +29,21 @@
                         Placeholder="Mensaje"  
                         Text="{Binding OutText}" Keyboard="Chat" Margin="4"/>
 
-                        <Image Source="sendIcon.png" WidthRequest="40" HeightRequest="40" Margin="4">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer
+                    <Image Source="sendIcon.png" WidthRequest="40" HeightRequest="40" Margin="4">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
                                 Command="{Binding SendCommand}" />
-                            </Image.GestureRecognizers>
-                        </Image>
+                        </Image.GestureRecognizers>
+                    </Image>
 
+                    <Label x:Name="Adjun"></Label >
+                    <StackLayout VerticalOptions="EndAndExpand">
+                        <Button x:Name="take_photo" Image="camara.png" WidthRequest="40" HeightRequest="40"  BackgroundColor="AliceBlue" class="btn_blue"></Button>
+                        <Button x:Name="Append" Image="adjuntar.png" WidthRequest="40" HeightRequest="40" BackgroundColor="AliceBlue" class="btn_blue"></Button>
                     </StackLayout>
-                </Grid>
+                </StackLayout>
+
+            </Grid>
             </ScrollView>
     </ContentPage.Content>
 </ContentPage>

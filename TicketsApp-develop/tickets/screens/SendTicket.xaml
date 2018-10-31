@@ -60,9 +60,9 @@
                     </StackLayout>
                 </ScrollView>
                 <StackLayout VerticalOptions="EndAndExpand">
-                    <Button x:Name="take_photo" Text="Capturar" Image="baseline_camera_alt_white_36.png" class="btn_blue"></Button>
-                    <Button Text="Adjuntar Archivo" x:Name="Append" class="btn_blue"></Button>
-                    <Button x:Name="button" Text="Enviar Ticket" Clicked="OnSubmit" class="btn_red"></Button>
+                    <Button x:Name="take_photo" Image="camara.png" BorderWidth="5" BackgroundColor="AliceBlue" class="btn_blue"></Button>
+                    <Button x:Name="Append" Image="adjuntar.png" BorderWidth="5" BackgroundColor="AliceBlue" class="btn_blue"></Button>
+                    <Button x:Name="button" Image="correo.png" BorderWidth="5" BackgroundColor="GreenYellow" Clicked="OnSubmit" class="btn_red"></Button>
                 </StackLayout>
             </StackLayout>
             <ContentView x:Name="Loading" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"  AbsoluteLayout.LayoutFlags="All" IsVisible="False" BackgroundColor="#C0808080" Padding="10, 0">
