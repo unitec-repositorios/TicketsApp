@@ -38,8 +38,8 @@
 
                     <Label x:Name="Adjun"></Label >
                     <StackLayout VerticalOptions="EndAndExpand">
-                        <Button x:Name="take_photo" Image="camara.png" WidthRequest="40" HeightRequest="40"  BackgroundColor="AliceBlue" class="btn_blue"></Button>
-                        <Button x:Name="Append" Image="adjuntar.png" WidthRequest="40" HeightRequest="40" BackgroundColor="AliceBlue" class="btn_blue"></Button>
+                        <Button x:Name="take_photo" Image="camara.png" WidthRequest="40" HeightRequest="40"  BackgroundColor="White" class="btn_blue"></Button>
+                        <Button x:Name="Append" Image="adjuntar.png" WidthRequest="40" HeightRequest="40" BackgroundColor="White" class="btn_blue"></Button>
                     </StackLayout>
                 </StackLayout>
 
