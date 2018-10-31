@@ -36,7 +36,15 @@ namespace tickets
 
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
+<<<<<<< HEAD
                     await DisplayAlert("No Camera", ":( No camera available.", "OK");
+=======
+
+                    DisplayAlert("No Camera", ":( No camera available.", "OK");
+
+                    //await DisplayAlert("No Camera", ":( No camera available.", "OK");
+
+>>>>>>> Samuel
                     return;
                 }
 
@@ -63,8 +71,13 @@ namespace tickets
                     temp += "\n";
                 }
                 Adjun.Text = temp;
+<<<<<<< HEAD
 
                 await DisplayAlert("File Location", filePath, "OK");
+=======
+                await DisplayAlert("File Location", filePath, "OK");
+
+>>>>>>> Samuel
             };
 
         }

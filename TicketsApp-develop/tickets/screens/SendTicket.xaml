@@ -29,12 +29,12 @@
                             <Entry Keyboard="Numeric"  Text="{Binding Source={x:Reference number}, Path = Value}" Grid.Row="0" Grid.Column="0" class="label"></Entry>
                             <Stepper x:Name="number" Grid.Row="0" Grid.Column="1" Minimum="1" />
                         </Grid>
-                        <Label Text="ClasificaciÃ³n"  Font="Bold, 24"></Label>
+                        <Label Text="Clasificación"  Font="Bold, 24"></Label>
                         <Picker x:Name="picker" SelectedIndex="1">
                             <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Solicitud</x:String>
-                                    <x:String>InformaciÃ³n</x:String>
+                                    <x:String>Información</x:String>
                                     <x:String>Queja</x:String>
                                     <x:String>Reclamo</x:String>
                                     <x:String>Sugerencia</x:String>
@@ -60,9 +60,9 @@
                     </StackLayout>
                 </ScrollView>
                 <StackLayout VerticalOptions="EndAndExpand">
-                    <Button x:Name="take_photo" Text="Capturar" Image="baseline_camera_alt_white_36.png" class="btn_blue"></Button>
-                    <Button Text="Adjuntar Archivo" x:Name="Append" class="btn_blue"></Button>
-                    <Button x:Name="button" Text="Enviar Ticket" Clicked="OnSubmit" class="btn_red"></Button>
+                    <Button x:Name="take_photo" Image="camara.png" WidthRequest="40" HeightRequest="40" BorderWidth="5" BackgroundColor="AliceBlue" class="btn_blue"></Button>
+                    <Button x:Name="Append" Image="adjuntar.png"  WidthRequest="40" HeightRequest="40" BorderWidth="5" BackgroundColor="AliceBlue" class="btn_blue"></Button>
+                    <Button x:Name="button" Image="send1.png"  WidthRequest="40" HeightRequest="40" BorderWidth="5" BackgroundColor="AliceBlue" Clicked="OnSubmit" class="btn_red"></Button>
                 </StackLayout>
             </StackLayout>
             <ContentView x:Name="Loading" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"  AbsoluteLayout.LayoutFlags="All" IsVisible="False" BackgroundColor="#C0808080" Padding="10, 0">

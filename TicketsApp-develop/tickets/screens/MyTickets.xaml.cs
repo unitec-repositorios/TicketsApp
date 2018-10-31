@@ -22,7 +22,7 @@ namespace tickets
 
             var newTicket = new ToolbarItem
             {
-                Icon = "plus1.jpg",
+                Icon = "plus1.png",
                 Command = new Command(async (s) => await Navigation.PushAsync(new SendTicket())),
                 Order = ToolbarItemOrder.Primary
                 
