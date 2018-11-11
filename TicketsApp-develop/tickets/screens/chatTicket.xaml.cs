@@ -17,7 +17,7 @@ namespace tickets
         public string ticketID = null;
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
-
+        private string ticket;
         private chatViewModel chatVM;
 
         public chatTicket ()
@@ -29,6 +29,12 @@ namespace tickets
                 var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
                 MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
             };
+            this.BindingContext = this;
+            ticket = "";
+
+
+
+
 
         }
 
@@ -39,14 +45,24 @@ namespace tickets
                 if (ticketID == null) {
                     ticketID = (string)BindingContext;
                     Title = "Ticket No. " + ticketID;
+                    
+
+                   
                 }
                 BindingContext = chatVM = new chatViewModel(ticketID);
-                readTicket();  
+                readTicket();
+                ticket = await changeTicket();
+                bool open = await server.getOpenTicket(ticketID);
+                if(!open)
+                {
+                    switcher.IsToggled=true;
+                }
             }
             catch (Exception ex)
             {                
             }      
         }
+
         public async void readTicket()
         {
             Loading.IsEnabled = true;
@@ -162,6 +178,18 @@ namespace tickets
                 index++;
             }
             return Mimessage;
+        }
+
+        async void switcherToggled(object sender, ToggledEventArgs e)
+        {
+            await server.changeStatusTicket(ticketID);
+            bool open = await server.getOpenTicket(ticketID);
+            ticket = await changeTicket();
+        }
+
+        async Task<string> changeTicket()
+        {
+            return await server.getOpenTicket(ticketID) ? "Ticked abierto":"Ticked cerrado";
         }
     }
 }

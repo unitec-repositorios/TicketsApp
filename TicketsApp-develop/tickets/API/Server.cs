@@ -48,12 +48,7 @@ namespace tickets.API
             char val = html[begin];
             if (html.IndexOf(search) > -1)
             {
-                while (val != '/')
-                {
-                    date += val;
-                    begin++;
-                    val = html[begin];
-                }
+                date = getTextAux('/', html, begin);
                 string[] array = date.Split('>');
                 date = array[1];
                 date = date.Remove(date.Length - 1);
@@ -76,12 +71,7 @@ namespace tickets.API
             char val = html[begin];
             if (html.IndexOf(search) > -1)
             {
-                while (val != '/')
-                {
-                    date += val;
-                    begin++;
-                    val = html[begin];
-                }
+                date = getTextAux('/', html, begin);
                 string[] array = date.Split('>');
                 date = array[1];
                 date = date.Remove(date.Length - 1);
@@ -101,6 +91,38 @@ namespace tickets.API
             Console.WriteLine("Pos " + html.IndexOf(search));
             return html.IndexOf(search) == -1;
         }
+
+        public async Task<string> changeStatusTicket(string id)
+        {
+            string message = await getOpenTicket(id)  ? "Opening ticket: "+ id: "Closing ticket: "+id;
+            HttpClient _client = new HttpClient();
+            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            string searchRefresh = "Refresh=";
+            string searchToken = "token=";
+            int posRefresh = html.IndexOf(searchRefresh);
+            int posToken =  html.IndexOf(searchToken);
+            string refresh = getTextAux('a', html, posRefresh);
+            string token = getTextAux('"',html,posToken);
+            string s = await getOpenTicket(id) ? "3" : "1"; // 1 to open and 3 to close
+            string link = BASE_ADDRESS + "/change_status.php?track=" + id + "&s=" + s + "&" + refresh + "&" + token;
+            response = await _client.GetAsync(link);
+            return message;
+        }
+
+        private string getTextAux(char delimiter,string text,int pos)
+        {
+            string txt = "";
+            char val = text[pos];
+            while (val != delimiter)
+            {
+                txt += val;
+                pos++;
+                val = text[pos];
+            }
+            return txt;
+        }
+
 
 //>>>>>>> David
 //=======
@@ -195,6 +217,9 @@ namespace tickets.API
                 return ticketId.InnerText;
             }
         }
+
+
+
         public async Task<string> replyTicket(string message, string ticketID)
         {
             //catch the cookie
