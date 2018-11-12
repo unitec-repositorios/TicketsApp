@@ -29,7 +29,7 @@ namespace tickets
             //Adjun.HasUnevenRows = true;
             Append.Clicked += searchFile;
             this.BindingContext = new Ticket();
-
+            /*
             take_photo.Clicked += async (sender, args) =>
             {
                 await CrossMedia.Current.Initialize();
@@ -74,7 +74,43 @@ namespace tickets
                 await DisplayAlert("File Location", filePath, "OK");
 
             };
+            */
 
+        }
+
+        private async void take_Photo(object sender, EventArgs args)
+        {
+            await CrossMedia.Current.Initialize();
+
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            {
+                DisplayAlert("No Camera", ":( No camera available.", "OK");
+                return;
+            }
+
+            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+            {
+                Directory = "photo",
+                Name = "photo" + files.Count + ".jpg",
+                CompressionQuality = 25
+
+
+            });
+
+            if (file == null)
+                return;
+            string filePath = file.Path;
+            byte[] data = MediaFileBytes(file);
+
+            files.Add(("photo" + files.Count + ".jpg", data));
+            string temp = "";
+            for (int i = 0; i < files.Count(); i++)
+            {
+                temp += files[i].Item1;
+                temp += "\n";
+            }
+            Adjun.Text = temp;
+            //await DisplayAlert("File Location", filePath, "OK");
         }
 
         private async void searchFile(object sender, EventArgs e)

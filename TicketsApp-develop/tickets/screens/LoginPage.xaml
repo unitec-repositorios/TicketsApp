@@ -26,7 +26,7 @@
             <Button
             x:Name="SignInSignOutBtn" 
             Margin="70,20"
-			Text="INICIAR SESIÃ“N" 
+			Text="INICIAR SESIÓN" 
 			TextColor="White"
             FontSize="20"
             BorderRadius="20"

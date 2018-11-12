@@ -23,24 +23,49 @@
                 <ContentView x:Name="Loading" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"  AbsoluteLayout.LayoutFlags="All" IsVisible="False" BackgroundColor="#C0808080" Padding="10, 0" IsEnabled="False" Grid.Row="0">
                     <ActivityIndicator  WidthRequest="110" HeightRequest="70" IsRunning="True" IsVisible="True" Color="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                 </ContentView>
-                <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" VerticalOptions="EndAndExpand">
-                        <Entry 
-                        HorizontalOptions="FillAndExpand"  
-                        Placeholder="Mensaje"  
-                        Text="{Binding OutText}" Keyboard="Chat" Margin="4"/>
 
-                    <Image Source="sendIcon.png" WidthRequest="40" HeightRequest="40" Margin="4">
+                <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" VerticalOptions="EndAndExpand">
+                    <Label x:Name="Adjun"></Label >
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" VerticalOptions="EndAndExpand">
+                    
+
+                    <Entry 
+                    HorizontalOptions="FillAndExpand"  
+                    Placeholder="Mensaje"  
+                    Text="{Binding OutText}" Keyboard="Chat" Margin="4"/>
+                    <!--Enviar Mensaje -->
+                    <Image Source="enviarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding SendCommand}" />
                         </Image.GestureRecognizers>
                     </Image>
 
-                    <Label x:Name="Adjun"></Label >
-                    <StackLayout VerticalOptions="EndAndExpand">
-                        <Button x:Name="take_photo" Image="camara.png" WidthRequest="40" HeightRequest="40"  BackgroundColor="White" class="btn_blue"></Button>
-                        <Button x:Name="Append" Image="adjuntar.png" WidthRequest="40" HeightRequest="40" BackgroundColor="White" class="btn_blue"></Button>
+                    
+                    <!--Tomar foto -->
+                    <Image Source="camaraIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Tapped="take_Photo" />
+                        </Image.GestureRecognizers>
+                    </Image>
+ 
+                    <!--Adjuntar archivos -->
+                    <Image Source="adjuntarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Tapped="searchFile" />
+                        </Image.GestureRecognizers>
+                    </Image>
+
+<!--
+                    <StackLayout Orientation="Horizontal" Grid.Row="1" VerticalOptions="EndAndExpand">
+                        <Button x:Name="take_photo" Image="camaraIcono.png" WidthRequest="40" HeightRequest="40" Margin="4"></Button>
+                        <Button x:Name="Append" Image="adjuntarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4"></Button>
                     </StackLayout>
+-->
+                    
                 </StackLayout>
 
             </Grid>
