@@ -27,7 +27,7 @@ namespace tickets
         {
             InitializeComponent();
             //Adjun.HasUnevenRows = true;
-            Append.Clicked += searchFile;
+            //Append.Clicked += searchFile;
             this.BindingContext = new Ticket();
             /*
             take_photo.Clicked += async (sender, args) =>

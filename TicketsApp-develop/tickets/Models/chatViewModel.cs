@@ -29,6 +29,8 @@ namespace tickets.Models
                         IsTextIn = false,
                         MessageDateTime = DateTime.Now
                     };
+                    
+                    
                     sendMessage(message);
                     //ListMessages.Add(message);
                     //OutText = "";

@@ -182,7 +182,9 @@ namespace tickets
                     Title = "Ticket No. " + ticketID;
                 }
                 BindingContext = chatVM = new chatViewModel(ticketID);
-                readTicket();  
+                
+                readTicket();
+                
             }
             catch (Exception ex)
             {                
