@@ -301,7 +301,7 @@ namespace tickets.API
 
             //catch ticketID
             String responseHtml = responseReader.ReadToEnd();
-            string searchR = "�xito:</b>";
+            string searchR = "Éxito:</b>";
             if (responseHtml.IndexOf(searchR) > -1)
             {
                 return "ok";

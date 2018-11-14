@@ -30,6 +30,7 @@
     color: white;
     background-color: red;
     width: 200;
+	border-radius: 50%;
     height: 40;
 }
 
@@ -37,5 +38,6 @@
     color: white;
     background-color: navy;
     width: 200;
+	border-radius: 50%;
     height: 40;
 }
