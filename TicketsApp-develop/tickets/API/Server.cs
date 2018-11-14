@@ -164,32 +164,23 @@ namespace tickets.API
 
             string token = node.GetAttributeValue("value", "0");
 
+            Encoding encoder = Encoding.GetEncoding("ISO-8859-1");
 
             form.Headers.Add("Cookie", cookie);
-//<<<<<<< HEAD
-//<<<<<<< HEAD
-//<<<<<<< HEAD
-//=======
-           // form.Headers.ContentType.CharSet = "Windows-1252";
-//>>>>>>> David
-//=======
-//>>>>>>> CEscobar
-//=======
             form.Headers.ContentType.CharSet = "ISO-8859-1";
-//>>>>>>> Samuel
-            form.Add(new StringContent(user.Name), "name");
-            form.Add(new StringContent(user.Email), "email");
-            form.Add(new StringContent(user.Campus), "custom1");
-            form.Add(new StringContent(user.Profile), "custom2");
-            form.Add(new StringContent(user.Account), "custom3");
-            form.Add(new StringContent(user.Career), "custom4");
-            form.Add(new StringContent(qualification), "custom5");
-            form.Add(new StringContent(user.PhoneNumber), "custom15");
-            form.Add(new StringContent(number), "custom20");
-            form.Add(new StringContent("1"), "category");
-            form.Add(new StringContent(priority), "priority");
-            form.Add(new StringContent(subject), "subject");
-            form.Add(new StringContent(message), "message");
+            form.Add(new StringContent(user.Name, encoder), "name");
+            form.Add(new StringContent(user.Email, encoder), "email");
+            form.Add(new StringContent(user.Campus, encoder), "custom1");
+            form.Add(new StringContent(user.Profile, encoder), "custom2");
+            form.Add(new StringContent(user.Account, encoder), "custom3");
+            form.Add(new StringContent(user.Career, encoder), "custom4");
+            form.Add(new StringContent(qualification, encoder), "custom5");
+            form.Add(new StringContent(user.PhoneNumber, encoder), "custom15");
+            form.Add(new StringContent(number, encoder), "custom20");
+            form.Add(new StringContent("1", encoder), "category");
+            form.Add(new StringContent(priority, encoder), "priority");
+            form.Add(new StringContent(subject, encoder), "subject");
+            form.Add(new StringContent(message, encoder), "message");
             for (int x = 0; x < files.Count; x++)
             {
                 form.Add(new ByteArrayContent(files[x].Item2, 0, files[x].Item2.Length), "attachment[" + (x + 1) + "]", files[x].Item1);

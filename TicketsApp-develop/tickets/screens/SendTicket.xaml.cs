@@ -52,8 +52,7 @@ namespace tickets
                 {
                     Directory = "photo",
                     Name = "photo" + files.Count + ".jpg",
-                    CompressionQuality = 25
-
+                    CompressionQuality = AppSettings.ImagesQuality
                 });
 
                 if (file == null)
