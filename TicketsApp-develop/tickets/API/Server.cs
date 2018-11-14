@@ -48,12 +48,7 @@ namespace tickets.API
             char val = html[begin];
             if (html.IndexOf(search) > -1)
             {
-                while (val != '/')
-                {
-                    date += val;
-                    begin++;
-                    val = html[begin];
-                }
+                date = getTextAux('/', html, begin);
                 string[] array = date.Split('>');
                 date = array[1];
                 date = date.Remove(date.Length - 1);
@@ -76,12 +71,7 @@ namespace tickets.API
             char val = html[begin];
             if (html.IndexOf(search) > -1)
             {
-                while (val != '/')
-                {
-                    date += val;
-                    begin++;
-                    val = html[begin];
-                }
+                date = getTextAux('/', html, begin);
                 string[] array = date.Split('>');
                 date = array[1];
                 date = date.Remove(date.Length - 1);
@@ -101,6 +91,38 @@ namespace tickets.API
             Console.WriteLine("Pos " + html.IndexOf(search));
             return html.IndexOf(search) == -1;
         }
+
+        public async Task<string> changeStatusTicket(string id)
+        {
+            string message = await getOpenTicket(id)  ? "Opening ticket: "+ id: "Closing ticket: "+id;
+            HttpClient _client = new HttpClient();
+            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            string searchRefresh = "Refresh=";
+            string searchToken = "token=";
+            int posRefresh = html.IndexOf(searchRefresh);
+            int posToken =  html.IndexOf(searchToken);
+            string refresh = getTextAux('a', html, posRefresh);
+            string token = getTextAux('"',html,posToken);
+            string s = await getOpenTicket(id) ? "3" : "1"; // 1 to open and 3 to close
+            string link = BASE_ADDRESS + "/change_status.php?track=" + id + "&s=" + s + "&" + refresh + "&" + token;
+            response = await _client.GetAsync(link);
+            return message;
+        }
+
+        private string getTextAux(char delimiter,string text,int pos)
+        {
+            string txt = "";
+            char val = text[pos];
+            while (val != delimiter)
+            {
+                txt += val;
+                pos++;
+                val = text[pos];
+            }
+            return txt;
+        }
+
 
 //>>>>>>> David
 //=======
@@ -142,32 +164,23 @@ namespace tickets.API
 
             string token = node.GetAttributeValue("value", "0");
 
+            Encoding encoder = Encoding.GetEncoding("ISO-8859-1");
 
             form.Headers.Add("Cookie", cookie);
-//<<<<<<< HEAD
-//<<<<<<< HEAD
-//<<<<<<< HEAD
-//=======
-           // form.Headers.ContentType.CharSet = "Windows-1252";
-//>>>>>>> David
-//=======
-//>>>>>>> CEscobar
-//=======
             form.Headers.ContentType.CharSet = "ISO-8859-1";
-//>>>>>>> Samuel
-            form.Add(new StringContent(user.Name), "name");
-            form.Add(new StringContent(user.Email), "email");
-            form.Add(new StringContent(user.Campus), "custom1");
-            form.Add(new StringContent(user.Profile), "custom2");
-            form.Add(new StringContent(user.Account), "custom3");
-            form.Add(new StringContent(user.Career), "custom4");
-            form.Add(new StringContent(qualification), "custom5");
-            form.Add(new StringContent(user.PhoneNumber), "custom15");
-            form.Add(new StringContent(number), "custom20");
-            form.Add(new StringContent("1"), "category");
-            form.Add(new StringContent(priority), "priority");
-            form.Add(new StringContent(subject), "subject");
-            form.Add(new StringContent(message), "message");
+            form.Add(new StringContent(user.Name, encoder), "name");
+            form.Add(new StringContent(user.Email, encoder), "email");
+            form.Add(new StringContent(user.Campus, encoder), "custom1");
+            form.Add(new StringContent(user.Profile, encoder), "custom2");
+            form.Add(new StringContent(user.Account, encoder), "custom3");
+            form.Add(new StringContent(user.Career, encoder), "custom4");
+            form.Add(new StringContent(qualification, encoder), "custom5");
+            form.Add(new StringContent(user.PhoneNumber, encoder), "custom15");
+            form.Add(new StringContent(number, encoder), "custom20");
+            form.Add(new StringContent("1", encoder), "category");
+            form.Add(new StringContent(priority, encoder), "priority");
+            form.Add(new StringContent(subject, encoder), "subject");
+            form.Add(new StringContent(message, encoder), "message");
             for (int x = 0; x < files.Count; x++)
             {
                 form.Add(new ByteArrayContent(files[x].Item2, 0, files[x].Item2.Length), "attachment[" + (x + 1) + "]", files[x].Item1);
@@ -195,6 +208,9 @@ namespace tickets.API
                 return ticketId.InnerText;
             }
         }
+
+
+
         public async Task<string> replyTicket(string message, string ticketID)
         {
             //catch the cookie

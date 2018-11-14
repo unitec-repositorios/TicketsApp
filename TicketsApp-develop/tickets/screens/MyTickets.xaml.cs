@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using tickets.API;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using System.Timers;
 
 namespace tickets
 {
@@ -13,50 +14,82 @@ namespace tickets
     {
         private Server server = new Server();
         ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
-
+        private Timer refreshTicketsTimer;
 
         public MyTickets()
         {
-            InitializeComponent();
-            this.BindingContext = this;
-
-            var newTicket = new ToolbarItem
+            try
             {
-                Icon = "nuevo.png",
-                Command = new Command(async (s) => await Navigation.PushAsync(new SendTicket())),
-                Order = ToolbarItemOrder.Primary
+                InitializeComponent();
+                this.BindingContext = this;
                 
-            };
+                var newTicket = new ToolbarItem
+                {
+                    Icon = "nuevo.jpg",
+                    Command = new Command(async (s) => await Navigation.PushAsync(new SendTicket())),
+                    Order = ToolbarItemOrder.Primary
 
-            var settings = new ToolbarItem
-            {
-                Text = "Ajustes",
-                Command = new Command(async (s) => await Navigation.PushAsync(new AppSettingsPage())),
-                Order = ToolbarItemOrder.Secondary
-            };
+                };
 
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                    ToolbarItems.Add(newTicket);
-                    break;
-                case Device.Android:
-                    ToolbarItems.Add(newTicket);
-                    ToolbarItems.Add(settings);
-                    break;
-                case Device.UWP:
-                    ToolbarItems.Add(newTicket);
-                    ToolbarItems.Add(settings);
-                    break;
+                var settings = new ToolbarItem
+                {
+                    Text = "Ajustes",
+                    Command = new Command(async (s) => await Navigation.PushAsync(new AppSettingsPage())),
+                    Order = ToolbarItemOrder.Secondary
+                };
+
+                switch (Device.RuntimePlatform)
+                {
+                    case Device.iOS:
+                        ToolbarItems.Add(newTicket);
+                        break;
+                    case Device.Android:
+                        ToolbarItems.Add(newTicket);
+                        ToolbarItems.Add(settings);
+                        break;
+                    case Device.UWP:
+                        ToolbarItems.Add(newTicket);
+                        ToolbarItems.Add(settings);
+                        break;
+                }
+                //TicketsListView.BeginRefresh();
+                //GetTickets();
+                TicketsListView.ItemsSource = tickets;
             }
-            //TicketsListView.BeginRefresh();
-            //GetTickets();
-            TicketsListView.ItemsSource = tickets;
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void TimerFunction(object source, ElapsedEventArgs e)
+        {
+            GetTickets();
+        }
+
+        private void SetTimer()
+        {
+            refreshTicketsTimer = new Timer(AppSettings.RefreshTicketsTimeout * 1000);
+            refreshTicketsTimer.Elapsed += TimerFunction;
+            refreshTicketsTimer.AutoReset = true;
+            refreshTicketsTimer.Enabled = true;
+            GetTickets();
+        }
+
+        private void ClearTimer()
+        {
+            refreshTicketsTimer.Stop();
+            refreshTicketsTimer.Dispose();
         }
 
         protected override async void OnAppearing()
         {
-            GetTickets();
+            SetTimer();
+        }
+
+        protected override async void OnDisappearing()
+        {
+            ClearTimer();
         }
 
         async void goToViewTicket(object sender, SelectedItemChangedEventArgs e)
@@ -111,65 +144,63 @@ namespace tickets
 
         async void GetTickets()
         {
-            List<Ticket> dbtickets = await App.Database.GetTicketsAsync(App.Database.GetCurrentUserNotAsync());
-            dbtickets = new List<Ticket>(dbtickets.OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                                                                                              System.Globalization.CultureInfo.InvariantCulture)));
-            for (int i = 0; i < dbtickets.Count; i++)
-            {
-                String updateDate = await server.getUpdateDate(dbtickets[i].ID);
-                if (!updateDate.Equals(dbtickets[i].Date))
+            try {
+                
+                List<Ticket> dbtickets = await App.Database.GetTicketsAsync(App.Database.GetCurrentUserNotAsync());
+                dbtickets = new List<Ticket>(dbtickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
+                                                                                                  System.Globalization.CultureInfo.InvariantCulture)));
+
+                for (int i = 0; i < dbtickets.Count; i++)
                 {
-                    dbtickets[i].Image = "https://cdn.pixabay.com/photo/2015/12/16/17/41/bell-1096280_640.png";
-                    dbtickets[i].Date = updateDate;
-                    await App.Database.UpdateTicket(dbtickets[i]);
-                }
-
-
-                bool open = await server.getOpenTicket(dbtickets[i].ID);
-                Console.WriteLine("Recibiendo del sevidor: "+open.ToString());
-                if(!open)
-                {
-                    dbtickets[i].OpenImage = "https://cdn.pixabay.com/photo/2015/12/08/19/08/castle-1083570_960_720.png";
-                    dbtickets[i].Open = open;
-                    await App.Database.UpdateTicket(dbtickets[i]);
-                }
-
-                var exists = tickets.FirstOrDefault(t => t.ID == dbtickets[i].ID);
-
-                if (exists == null) // if no ticket was found with that id
-                {
-                    tickets.Add(dbtickets[i]);
-                }
-                else
-                {
-                    exists.Image = dbtickets[i].Image;
-
-                    exists.OpenImage = dbtickets[i].OpenImage;
-
-
-                    if (!updateDate.Equals(exists))
+                    String updateDate = await server.getUpdateDate(dbtickets[i].ID);
+                    if (!updateDate.Equals(dbtickets[i].Date) && updateDate != "error")
                     {
-                        exists.Date = updateDate;
+                        dbtickets[i].Image = "https://cdn.pixabay.com/photo/2015/12/16/17/41/bell-1096280_640.png";
+                        dbtickets[i].Date = updateDate;
+                        await App.Database.UpdateTicket(dbtickets[i]);
                     }
 
+
+                    bool open = await server.getOpenTicket(dbtickets[i].ID);
+                    Console.WriteLine("Recibiendo del sevidor: "+ open.ToString());
+                    if(!open)
+                    {
+                        dbtickets[i].OpenImage = "https://cdn.pixabay.com/photo/2015/12/08/19/08/castle-1083570_960_720.png";
+                        dbtickets[i].Open = open;
+                        await App.Database.UpdateTicket(dbtickets[i]);
+                    }
+
+                    var exists = tickets.FirstOrDefault(t => t.ID == dbtickets[i].ID);
+
+                    if (exists == null) // if no ticket was found with that id
+                    {
+                        tickets.Add(dbtickets[i]);
+                    }
+                    else
+                    {
+                        exists.Image = dbtickets[i].Image;
+
+                        exists.OpenImage = dbtickets[i].OpenImage;
+
+
+                        if (!updateDate.Equals(exists))
+                        {
+                            exists.Date = updateDate;
+                        }
+
+                    }
                 }
+                
+                tickets =  new ObservableCollection<Ticket>(
+                        tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
+                            System.Globalization.CultureInfo.InvariantCulture))
+                        );
+                
             }
-
-
-            tickets = new ObservableCollection<Ticket>(
-                tickets.OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                    System.Globalization.CultureInfo.InvariantCulture)
-            ).ToList());
-            TicketsListView.ItemsSource = tickets;
-
-            //tickets.OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-            //System.Globalization.CultureInfo.InvariantCulture));
-            //Date=2018-09-05 17:02:41
-            //tickets = from item in tickets orderby item.Date select item;
-            //tickets = new ObservableCollection<Ticket>(dbtickets);
-            //if (String.IsNullOrWhiteSpace(searchText))
-            //    return tickets.OrderByDescending(c => c.Date).ToList();
-            //return tickets.Where(c => c.Subject.StartsWith(searchText)).OrderByDescending(c => c.Date).ToList();
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

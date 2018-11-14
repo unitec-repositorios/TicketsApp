@@ -24,6 +24,49 @@
                         </ViewCell>
                     </TableSection>
                     <TableSection>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Margin="10,5,0,5" Spacing="20">
+                                <Image>
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="FileImageSource">
+                                            <OnPlatform.Platforms>
+                                                <On Platform="iOS" Value="baseline_settings_black_36pt" />
+                                                <On Platform="Android" Value="baseline_settings_black_36.png" />
+                                            </OnPlatform.Platforms>
+                                        </OnPlatform>
+                                    </Image.Source>
+                                </Image>
+                                <Label Text="Calidad de Imagen" VerticalOptions="Center" FontSize="Large" />
+                            </StackLayout>
+                        </ViewCell>
+                    </TableSection>
+                    <TableSection>
+                        <ViewCell>
+                            <Slider x:Name="pictureQualitySetting" Maximum="100" Minimum="1"  MinimumTrackColor="DarkBlue"></Slider>
+                        </ViewCell>
+                    </TableSection>
+                    <TableSection>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Margin="10,5,0,5" Spacing="20">
+                                <Image>
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="FileImageSource">
+                                            <OnPlatform.Platforms>
+                                                <On Platform="iOS" Value="baseline_settings_black_36pt" />
+                                                <On Platform="Android" Value="baseline_settings_black_36.png" />
+                                            </OnPlatform.Platforms>
+                                        </OnPlatform>
+                                    </Image.Source>
+                                </Image>
+                                <Label Text="Tiempo de Refrezcamiento" VerticalOptions="Center" FontSize="Large" />
+                            </StackLayout>
+                        </ViewCell>
+                    </TableSection>
+                    <TableSection>
+                        <EntryCell x:Name="ticketsTimeoutSetting" Placeholder="Segundos (s)" Keyboard="Numeric">
+                        </EntryCell>
+                    </TableSection>
+                    <TableSection>
                         <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
                             <StackLayout Orientation="Horizontal" Margin="10,5,0,5" Spacing="20">
                                 <Image>

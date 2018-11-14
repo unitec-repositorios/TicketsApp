@@ -10,8 +10,24 @@ namespace tickets
         public AppSettingsPage()
         {
             InitializeComponent();
+
+            pictureQualitySetting.Value = AppSettings.ImagesQuality;
+            ticketsTimeoutSetting.Text = AppSettings.RefreshTicketsTimeout.ToString();
+
+            pictureQualitySetting.ValueChanged += Slider_ValueChanged;
+            ticketsTimeoutSetting.Completed += Timeout_ValueChanged;
         }
 
+        private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            AppSettings.ImagesQuality = Convert.ToInt32(pictureQualitySetting.Value);
+        }
+        
+        private void Timeout_ValueChanged(object sender, EventArgs e)
+        {
+            AppSettings.RefreshTicketsTimeout = Convert.ToInt32(ticketsTimeoutSetting.Text);
+        }
+        
         public async void goToUserSettings(object sender, System.EventArgs e)
         {
             await Navigation.PushAsync(new UserSettingsPage());

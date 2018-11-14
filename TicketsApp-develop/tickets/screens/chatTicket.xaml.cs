@@ -14,9 +14,9 @@ using Plugin.FilePicker.Abstractions;
 
 namespace tickets
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class chatTicket : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class chatTicket : ContentPage
+    {
         private Server server = new Server();
         List<(string, byte[])> files = new List<(string, byte[])>();
         public string ticketID = null;
@@ -26,12 +26,12 @@ namespace tickets
         private chatViewModel chatVM;
         public chatTicket()
         {
-           
+
             InitializeComponent();
             //Append.Clicked += searchFile;
             chatVM = new chatViewModel(ticketID);
 
-            
+
 
             chatVM.ListMessages.CollectionChanged += (sender, e) =>
             {
@@ -177,18 +177,19 @@ namespace tickets
         {
             try
             {
-                if (ticketID == null) {
+                if (ticketID == null)
+                {
                     ticketID = (string)BindingContext;
                     Title = "Ticket No. " + ticketID;
                 }
                 BindingContext = chatVM = new chatViewModel(ticketID);
-                
+
                 readTicket();
-                
+
             }
             catch (Exception ex)
-            {                
-            }      
+            {
+            }
         }
         public async void readTicket()
         {
@@ -202,7 +203,7 @@ namespace tickets
             string myName = null;
             int position = html.IndexOf(autorRef + "N");
             int index = position + autorRef.Count();
-            while (position!=-1)
+            while (position != -1)
             {
                 html = html.Substring(index);
                 autor = getAutor(html);
@@ -223,12 +224,13 @@ namespace tickets
                         autor = "";
                         typeText = false;
                     }
-                    else {
+                    else
+                    {
                         autor += ":\n";
                     }
                     var mymessage = new Message
                     {
-                        Text = autor+message,
+                        Text = autor + message,
                         IsTextIn = typeText,
                         //need to correct the time message
                         MessageDateTime = DateTime.Now
@@ -308,6 +310,6 @@ namespace tickets
         }
 
 
-}
-    
+    }
+
 }

@@ -36,23 +36,23 @@ namespace tickets
 
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
+<<<<<<< HEAD
+                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
+=======
 
                     DisplayAlert("No Camera", ":( No camera available.", "OK");
 
                     //await DisplayAlert("No Camera", ":( No camera available.", "OK");
 
+>>>>>>> Samuel
                     return;
                 }
 
                 var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                 {
                     Directory = "photo",
-
-                   // Name = "photo" + files.Count + ".jpg"
-
                     Name = "photo" + files.Count + ".jpg",
-                    CompressionQuality = 25
-
+                    CompressionQuality = AppSettings.ImagesQuality
                 });
 
                 if (file == null)
@@ -60,7 +60,6 @@ namespace tickets
 
 
                 string filePath = file.Path;
-
                 byte[] data = MediaFileBytes(file);
 
                 files.Add(("photo" + files.Count + ".jpg", data));
@@ -71,8 +70,13 @@ namespace tickets
                     temp += "\n";
                 }
                 Adjun.Text = temp;
+<<<<<<< HEAD
+
+                await DisplayAlert("File Location", filePath, "OK");
+=======
                 await DisplayAlert("File Location", filePath, "OK");
 
+>>>>>>> Samuel
             };
             */
 
