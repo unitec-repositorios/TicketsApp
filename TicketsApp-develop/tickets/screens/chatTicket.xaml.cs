@@ -193,10 +193,10 @@ namespace tickets
         public async void readTicket()
         {
             Loading.IsEnabled = true;
-            Loading.IsVisible = true;
+            //Loading.IsVisible = true;
             string html = await server.getTicket(ticketID);
-            Loading.IsVisible = false;
-            Loading.IsEnabled = false;
+            //Loading.IsVisible = false;
+            //Loading.IsEnabled = false;
             string autor = "";
             string message = "";
             string myName = null;
