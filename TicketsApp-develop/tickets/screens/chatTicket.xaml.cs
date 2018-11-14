@@ -14,24 +14,24 @@ using Plugin.FilePicker.Abstractions;
 
 namespace tickets
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class chatTicket : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class chatTicket : ContentPage
+    {
         private Server server = new Server();
         List<(string, byte[])> files = new List<(string, byte[])>();
         public string ticketID = null;
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
-        private string ticket;
+
         private chatViewModel chatVM;
         public chatTicket()
         {
-           
+
             InitializeComponent();
             //Append.Clicked += searchFile;
             chatVM = new chatViewModel(ticketID);
 
-            
+
 
             chatVM.ListMessages.CollectionChanged += (sender, e) =>
             {
@@ -171,58 +171,39 @@ namespace tickets
                 var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
                 MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
             };
-            this.BindingContext = this;
-            ticket = "";
-
-
-
-
 
         }*/
         protected override async void OnAppearing()
         {
             try
             {
-                if (ticketID == null) {
+                if (ticketID == null)
+                {
                     ticketID = (string)BindingContext;
                     Title = "Ticket No. " + ticketID;
-                    
-
-                   
                 }
                 BindingContext = chatVM = new chatViewModel(ticketID);
-<<<<<<< HEAD
+
                 readTicket();
-                ticket = await changeTicket();
-                bool open = await server.getOpenTicket(ticketID);
-                if(!open)
-                {
-                    switcher.IsToggled=true;
-                }
-=======
-                
-                readTicket();
-                
->>>>>>> Samuel
+
             }
             catch (Exception ex)
-            {                
-            }      
+            {
+            }
         }
-
         public async void readTicket()
         {
             Loading.IsEnabled = true;
-            Loading.IsVisible = true;
+            //Loading.IsVisible = true;
             string html = await server.getTicket(ticketID);
-            Loading.IsVisible = false;
-            Loading.IsEnabled = false;
+            //Loading.IsVisible = false;
+            //Loading.IsEnabled = false;
             string autor = "";
             string message = "";
             string myName = null;
             int position = html.IndexOf(autorRef + "N");
             int index = position + autorRef.Count();
-            while (position!=-1)
+            while (position != -1)
             {
                 html = html.Substring(index);
                 autor = getAutor(html);
@@ -243,12 +224,13 @@ namespace tickets
                         autor = "";
                         typeText = false;
                     }
-                    else {
+                    else
+                    {
                         autor += ":\n";
                     }
                     var mymessage = new Message
                     {
-                        Text = autor+message,
+                        Text = autor + message,
                         IsTextIn = typeText,
                         //need to correct the time message
                         MessageDateTime = DateTime.Now
@@ -327,22 +309,7 @@ namespace tickets
             return Mimessage;
         }
 
-<<<<<<< HEAD
-        async void switcherToggled(object sender, ToggledEventArgs e)
-        {
-            await server.changeStatusTicket(ticketID);
-            bool open = await server.getOpenTicket(ticketID);
-            ticket = await changeTicket();
-        }
 
-        async Task<string> changeTicket()
-        {
-            return await server.getOpenTicket(ticketID) ? "Ticked abierto":"Ticked cerrado";
-        }
     }
-=======
 
-}
-    
->>>>>>> Samuel
 }
