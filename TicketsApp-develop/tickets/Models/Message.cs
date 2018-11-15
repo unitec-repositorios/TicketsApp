@@ -21,7 +21,12 @@ namespace tickets.Models
             get { return _messageDateTime; }
             set { SetProperty(ref _messageDateTime, value); }
         }
-
+        public List<(string, byte[])> Files
+        {
+            get { return _files; }
+            set { SetProperty(ref _files, value); }
+        }
+        List<(string, byte[])> _files;
         DateTime _messageDateTime;
 
         public string TimeDisplay => MessageDateTime.ToLocalTime().ToString();

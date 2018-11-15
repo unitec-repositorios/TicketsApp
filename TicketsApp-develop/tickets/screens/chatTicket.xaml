@@ -26,14 +26,16 @@
                 </ContentView>
 
 
-                <StackLayout Orientation="Vertical" Grid.Row="1" BackgroundColor="White" VerticalOptions="EndAndExpand">
+                <StackLayout Orientation="Vertical" Grid.Row="1" BackgroundColor="White" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand">
                     <Label Text="Archivos adjuntos:" x:Name="Adjun"></Label >
-                    <Entry 
+
+                    <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+
+                        <Entry 
                         HorizontalOptions="FillAndExpand"  
                         Placeholder="Mensaje"  
-                        Text="{Binding OutText}" Keyboard="Chat" Margin="4"/>
-                    <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="EndAndExpand">
-
+                        Text="{Binding OutText}" Keyboard="Chat"/>
+                        
                         <!--Enviar Mensaje -->
                         <Image Source="enviarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
                             <Image.GestureRecognizers>
@@ -60,13 +62,7 @@
                                 Tapped="searchFile" />
                             </Image.GestureRecognizers>
                         </Image>
-
-                        <!--
-                    <StackLayout Orientation="Horizontal" Grid.Row="1" VerticalOptions="EndAndExpand">
-                        <Button x:Name="take_photo" Image="camaraIcono.png" WidthRequest="40" HeightRequest="40" Margin="4"></Button>
-                        <Button x:Name="Append" Image="adjuntarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4"></Button>
-                    </StackLayout>
--->
+                        
                     </StackLayout>
                 </StackLayout>
             </Grid>

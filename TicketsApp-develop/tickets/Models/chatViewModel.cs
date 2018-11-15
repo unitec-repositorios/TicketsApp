@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
 using MvvmHelpers;
@@ -13,11 +14,16 @@ namespace tickets.Models
         public ICommand SendCommand { get; set; }
         private Server server = new Server();
         private string ticketID;
+        private chatTicket chatfile;
+        public List<(string, byte[])> Files = new List<(string, byte[])>();
 
-        public chatViewModel(string ticket)
+        public chatViewModel(string ticket, List<(string, byte[])> files)
         {
             this.ticketID = ticket;
+            this.Files = files;
             ListMessages = new ObservableRangeCollection<Message>();
+
+            //chatfile = new chatTicket();
 
             SendCommand = new Command(() =>
             {
@@ -26,6 +32,7 @@ namespace tickets.Models
                     var message = new Message
                     {
                         Text = OutText,
+                        Files = Files,
                         IsTextIn = false,
                         MessageDateTime = DateTime.Now
                     };
@@ -41,7 +48,7 @@ namespace tickets.Models
         }
         public async void sendMessage(Message message)
         {
-            string status = await server.replyTicket(message.Text, this.ticketID);
+            string status = await server.replyTicket(message.Text,message.Files, this.ticketID);
             if(status.Equals("ok"))
             {
                 ListMessages.Add(message);

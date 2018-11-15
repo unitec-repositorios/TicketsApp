@@ -18,7 +18,7 @@ namespace tickets
     public partial class chatTicket : ContentPage
     {
         private Server server = new Server();
-        List<(string, byte[])> files = new List<(string, byte[])>();
+        public List<(string, byte[])> files = new List<(string, byte[])>();
         public string ticketID = null;
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
@@ -29,7 +29,7 @@ namespace tickets
 
             InitializeComponent();
             //Append.Clicked += searchFile;
-            chatVM = new chatViewModel(ticketID);
+            chatVM = new chatViewModel(ticketID, files);
 
 
 
@@ -182,7 +182,7 @@ namespace tickets
                     ticketID = (string)BindingContext;
                     Title = "Ticket No. " + ticketID;
                 }
-                BindingContext = chatVM = new chatViewModel(ticketID);
+                BindingContext = chatVM = new chatViewModel(ticketID, files);
 
                 readTicket();
 
