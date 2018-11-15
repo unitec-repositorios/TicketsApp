@@ -159,6 +159,8 @@ namespace tickets
                         dbtickets[i].Date = updateDate;
                         await App.Database.UpdateTicket(dbtickets[i]);
                     }
+                    else
+                        dbtickets[i].Image = "";
 
 
                     bool open = await server.getOpenTicket(dbtickets[i].ID);
