@@ -64,7 +64,7 @@ namespace tickets.API
             HttpClient _client = new HttpClient();
             HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
-            string search = "�ltima actualizacion: </td>";
+            string search = "Última actualizacion: </td>";
             int size = search.Count();
             int begin = size + html.IndexOf(search);
             string date = "";
@@ -164,15 +164,15 @@ namespace tickets.API
 
             string token = node.GetAttributeValue("value", "0");
 
-            Encoding encoder = Encoding.GetEncoding("ISO-8859-1");
+            Encoding encoder = Encoding.GetEncoding("Windows-1252");
 
             form.Headers.Add("Cookie", cookie);
-            form.Headers.ContentType.CharSet = "ISO-8859-1";
+            form.Headers.ContentType.CharSet = "Windows-1252";
             form.Add(new StringContent(user.Name, encoder), "name");
             form.Add(new StringContent(user.Email, encoder), "email");
+            form.Add(new StringContent(user.Account, encoder), "custom3");
             form.Add(new StringContent(user.Campus, encoder), "custom1");
             form.Add(new StringContent(user.Profile, encoder), "custom2");
-            form.Add(new StringContent(user.Account, encoder), "custom3");
             form.Add(new StringContent(user.Career, encoder), "custom4");
             form.Add(new StringContent(qualification, encoder), "custom5");
             form.Add(new StringContent(user.PhoneNumber, encoder), "custom15");
