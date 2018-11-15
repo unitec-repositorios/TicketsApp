@@ -163,12 +163,14 @@ namespace tickets
 
                     bool open = await server.getOpenTicket(dbtickets[i].ID);
                     Console.WriteLine("Recibiendo del sevidor: "+ open.ToString());
-                    if(!open)
+                    if (!open)
                     {
                         dbtickets[i].OpenImage = "https://cdn.pixabay.com/photo/2015/12/08/19/08/castle-1083570_960_720.png";
                         dbtickets[i].Open = open;
                         await App.Database.UpdateTicket(dbtickets[i]);
                     }
+                    else
+                        dbtickets[i].OpenImage = "";
 
                     var exists = tickets.FirstOrDefault(t => t.ID == dbtickets[i].ID);
 

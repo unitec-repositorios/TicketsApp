@@ -13,20 +13,25 @@
         <ScrollView>
             <Grid RowSpacing="0" ColumnSpacing="0" >
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
+                <StackLayout Orientation="Horizontal" Grid.Row="0" BackgroundColor="DarkBlue" VerticalOptions="EndAndExpand">
+                    <Label  Text="{Binding ticket}"  FontSize="Small" TextColor="White"></Label>
+                    <Switch x:Name= "switcher"  VerticalOptions = "Start" HorizontalOptions="EndAndExpand" Toggled="switcherToggled" />
+                </StackLayout>
                 <ListView x:Name="MessagesListView"
                           ItemTemplate="{StaticResource MessageTemplateSelector}"
                           ItemsSource="{Binding ListMessages}"  
-                          HasUnevenRows="True" SeparatorVisibility="None" IsEnabled="True" Grid.Row="0"/>
+                          HasUnevenRows="True" SeparatorVisibility="None" IsEnabled="True" Grid.Row="1"/>
 
-                <ContentView x:Name="Loading" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"  AbsoluteLayout.LayoutFlags="All" IsVisible="False" BackgroundColor="#C0808080" Padding="10, 0" IsEnabled="False" Grid.Row="0">
+                <ContentView x:Name="Loading" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"  AbsoluteLayout.LayoutFlags="All" IsVisible="False" BackgroundColor="#C0808080" Padding="10, 0" IsEnabled="False" Grid.Row="1">
                     <ActivityIndicator  WidthRequest="110" HeightRequest="70" IsRunning="True" IsVisible="True" Color="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                 </ContentView>
 
 
-                <StackLayout Orientation="Vertical" Grid.Row="1" BackgroundColor="White" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Vertical" Grid.Row="2" BackgroundColor="White" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand">
                     <Label Text="Archivos adjuntos:" x:Name="Adjun"></Label >
 
                     <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="FillAndExpand">
