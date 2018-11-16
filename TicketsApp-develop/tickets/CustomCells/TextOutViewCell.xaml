@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="tickets.CustomCells.TextOutViewCell">
+            xmlns:local="clr-namespace:tickets" 
+            x:Class="tickets.CustomCells.TextOutViewCell">
     <Grid ColumnSpacing="2" Padding="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -22,8 +23,13 @@
                 <OnPlatform x:TypeArguments="Color" Android="White" iOS="#F5F5F5"/>
             </Frame.BackgroundColor>
 
-            <StackLayout>
+            <StackLayout Orientation="Vertical">
                 <Label TextColor="Black"  Text="{Binding Text}" />
+
+                <StackLayout Orientation="Horizontal">
+                    <local:TicketsRoundedStroke AbsoluteLayout.LayoutFlags="XProportional,YProportional" AbsoluteLayout.LayoutBounds="0.5,0.5,190,30" Text="File 01.png"></local:TicketsRoundedStroke>
+                </StackLayout>
+                
             </StackLayout>
         </Frame>
         <Label Grid.Row="1" FontSize="Micro" Grid.Column="1" HorizontalTextAlignment="End"  Text="{Binding MessageDateTime, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" TextColor="Gray"></Label>
