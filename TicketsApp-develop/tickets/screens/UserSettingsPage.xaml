@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:tickets" x:Class="tickets.UserSettingsPage" Title="ConfiguraciÃ³n de Cuenta" Icon="baseline_settings_black_36pt">
     <ContentPage.Resources>
@@ -12,7 +12,7 @@
                     <Label Text="Nombre" Font="Bold, 24" />
                     <Entry Text="{Binding Name}" ReturnType="Next" x:Name="txtname" Placeholder="Escribe su nombre completo" Keyboard="Text" />
                     <Label Text="Email" Font="Bold, 24" />
-                    <Entry Text="{Binding Email}" x:Name="txtemail" Keyboard="Email" Placeholder="Correo electrÃ³nico"/>
+                    <Entry Text="{Binding Email}" x:Name="txtemail" Keyboard="Email" Placeholder="Correo electrónico"/>
                     <Label Text="Campus" Font="Bold, 24"/>
                     <Picker x:Name="campuspicker" Title="Campus" SelectedItem="{Binding Campus}">
                         <Picker.ItemsSource>
@@ -37,57 +37,57 @@
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
-                    <Label Text="NÃºmero de Cuenta" Font="Bold, 24"/>
-                    <Entry Text="{Binding Account}" x:Name="txtaccount" Keyboard="Numeric" MaxLength="8" Placeholder="NÃºmero de Cuenta"/>
+                    <Label Text="Número de Cuenta" Font="Bold, 24"/>
+                    <Entry Text="{Binding Account}" x:Name="txtaccount" Keyboard="Numeric" MaxLength="8" Placeholder="Número de Cuenta"/>
                     <Label Text="Carrera" Font="Bold, 24"/>
-                    <Picker x:Name="careerpicker" Title="Â¿Que carrera cursas?" SelectedItem="{Binding Career}">
+                    <Picker x:Name="careerpicker" Title="¿Que carrera cursas?" SelectedItem="{Binding Career}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>Arquitectura</x:String>
-                                <x:String>IngenierÃ­a en BiomÃ©dica</x:String>
-                                <x:String>IngenierÃ­a en Civil</x:String>
-                                <x:String>IngenierÃ­a en EnergÃ­a</x:String>
-                                <x:String>IngenierÃ­a en Industrial y de Sistemas</x:String>
-                                <x:String>IngenierÃ­a en MecatrÃ³nica</x:String>
-                                <x:String>IngenierÃ­a en Sistemas Computacionales</x:String>
-                                <x:String>IngenierÃ­a en Telecomunicaciones</x:String>
-                                <x:String>Licenciatura en AdministraciÃ³n de Hospitalidad y el Turismo</x:String>
-                                <x:String>Licenciatura en AdministraciÃ³n Industrial y de Negocios</x:String>
-                                <x:String>Licenciatura en AnimaciÃ³n Digital y DiseÃ±o Interactivo</x:String>
-                                <x:String>Licenciatura en ComunicaciÃ³n Audiovisual y Publicitaria</x:String>
+                                <x:String>Ingenierí­a en Biomédica</x:String>
+                                <x:String>Ingenierí­a en Civil</x:String>
+                                <x:String>Ingeniería en Energí­a</x:String>
+                                <x:String>Ingenierí­a en Industrial y de Sistemas</x:String>
+                                <x:String>Ingenierí­a en Mecatrónica</x:String>
+                                <x:String>Ingenierí­a en Sistemas Computacionales</x:String>
+                                <x:String>Ingeniería en Telecomunicaciones</x:String>
+                                <x:String>Licenciatura en Administración de Hospitalidad y el Turismo</x:String>
+                                <x:String>Licenciatura en Administración Industrial y de Negocios</x:String>
+                                <x:String>Licenciatura en Animación Digital y Diseño Interactivo</x:String>
+                                <x:String>Licenciatura en Comunicación Audiovisual y Publicitaria</x:String>
                                 <x:String>Licenciatura en Derecho</x:String>
-                                <x:String>Licenciatura en DiseÃ±o de Modas</x:String>
-                                <x:String>Licenciatura en DiseÃ±o GrÃ¡fico</x:String>
-                                <x:String>Licenciatura en EconomÃ­a</x:String>
+                                <x:String>Licenciatura en Diseño de Modas</x:String>
+                                <x:String>Licenciatura en Diseño Gráfico</x:String>
+                                <x:String>Licenciatura en Economía</x:String>
                                 <x:String>Licenciatura en Finanzas</x:String>
-                                <x:String>Licenciatura en GastronomÃ­a</x:String>
+                                <x:String>Licenciatura en Gastronomí­a</x:String>
                                 <x:String>Licenciatura en Mercadotecnia y Negocios Internacionales</x:String>
-                                <x:String>Licenciatura en PsicologÃ­a</x:String>
+                                <x:String>Licenciatura en Psicología</x:String>
                                 <x:String>Licenciatura en Relaciones Internacionales</x:String>
-                                <x:String>Medicina y CirugÃ­a</x:String>
-                                <x:String>NutriciÃ³n</x:String>
-                                <x:String>OdontologÃ­a</x:String>
-                                <x:String>Terapia FÃ­sica y Ocupacional</x:String>
-                                <x:String>MaestrÃ­a en AdministraciÃ³n de Proyectos</x:String>
-                                <x:String>MaestrÃ­a en ContadurÃ­a PÃºblica</x:String>
-                                <x:String>MaestrÃ­a en Derecho Empresarial</x:String>
-                                <x:String>MaestrÃ­a en Desarrollo Local y Turismo</x:String>
-                                <x:String>MaestrÃ­a en DirecciÃ³n de la ComunicaciÃ³n Corporativa</x:String>
-                                <x:String>MaestrÃ­a en DirecciÃ³n de Recursos Humanos</x:String>
-                                <x:String>MaestrÃ­a en DirecciÃ³n Empresarial</x:String>
-                                <x:String>MaestrÃ­a en Finanzas</x:String>
-                                <x:String>MaestrÃ­a en GestiÃ³n de EnergÃ­as Renovables</x:String>
-                                <x:String>MaestrÃ­a en GestiÃ³n de Operaciones y LogÃ­stica</x:String>
-                                <x:String>MaestrÃ­a en GestiÃ³n de Servicios de Salud</x:String>
-                                <x:String>MaestrÃ­a en GestiÃ³n de TecnologÃ­as de InformaciÃ³n</x:String>
-                                <x:String>MaestrÃ­a en IngenierÃ­a de Estructuras</x:String>
-                                <x:String>MaestrÃ­a en Sistemas de GestiÃ³n de Calidad Integrados</x:String>
-                                <x:String>Doctorado en EconomÃ­a y Empresa</x:String>
+                                <x:String>Medicina y Cirugía</x:String>
+                                <x:String>Nutrición</x:String>
+                                <x:String>Odontología</x:String>
+                                <x:String>Terapia Física y Ocupacional</x:String>
+                                <x:String>Maestrí­a en Administración de Proyectos</x:String>
+                                <x:String>Maestrí­a en Contadurí­a Pública</x:String>
+                                <x:String>Maestrí­a en Derecho Empresarial</x:String>
+                                <x:String>Maestrí­a en Desarrollo Local y Turismo</x:String>
+                                <x:String>Maestrí­a en Dirección de la Comunicación Corporativa</x:String>
+                                <x:String>Maestría en Dirección de Recursos Humanos</x:String>
+                                <x:String>Maestrí­a en Dirección Empresarial</x:String>
+                                <x:String>Maestrí­a en Finanzas</x:String>
+                                <x:String>Maestrí­a en Gestión de Energías Renovables</x:String>
+                                <x:String>Maestría en Gestión de Operaciones y Logística</x:String>
+                                <x:String>Maestrí­a en Gestión de Servicios de Salud</x:String>
+                                <x:String>Maestrí­a en Gestión de Tecnologías de Información</x:String>
+                                <x:String>Maestría en Ingeniería de Estructuras</x:String>
+                                <x:String>Maestrí­a en Sistemas de Gestión de Calidad Integrados</x:String>
+                                <x:String>Doctorado en Economí­a y Empresa</x:String>
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
-                    <Label Text="NÃºmero Celular o TelÃ©fono" Font="Bold, 24"/>
-                    <Entry Text="{Binding PhoneNumber}" x:Name="txtphone" Placeholder="BrÃ­ndanos tu nÃºmero telefÃ³nico" Keyboard="Telephone" MaxLength="12" />
+                    <Label Text="Número Celular o Teléfono" Font="Bold, 24"/>
+                    <Entry Text="{Binding PhoneNumber}" x:Name="txtphone" Placeholder="Bríndanos tu número telefónico" Keyboard="Telephone" MaxLength="12" />
                     
                 </StackLayout>
             </ScrollView>

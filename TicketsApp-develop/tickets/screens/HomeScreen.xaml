@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
     
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.HomeScreen" xmlns:pages="clr-namespace:tickets;assembly=tickets" Title="Tickets">
     <!--Pages can be added as references or inline-->

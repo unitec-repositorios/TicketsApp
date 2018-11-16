@@ -164,10 +164,10 @@ namespace tickets.API
 
             string token = node.GetAttributeValue("value", "0");
 
-            Encoding encoder = Encoding.GetEncoding("Windows-1252");
+            Encoding encoder = Encoding.GetEncoding("ISO-8859-1");
 
             form.Headers.Add("Cookie", cookie);
-            form.Headers.ContentType.CharSet = "Windows-1252";
+            form.Headers.ContentType.CharSet = "ISO-8859-1";
             form.Add(new StringContent(user.Name, encoder), "name");
             form.Add(new StringContent(user.Email, encoder), "email");
             form.Add(new StringContent(user.Account, encoder), "custom3");
