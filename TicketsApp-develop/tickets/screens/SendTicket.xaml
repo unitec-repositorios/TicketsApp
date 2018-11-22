@@ -60,11 +60,7 @@
                     </StackLayout>
                 </ScrollView>
                 <StackLayout Orientation="Horizontal" Grid.Column="0" HorizontalOptions="EndAndExpand">
-                    <!--
-                    <Button x:Name="take_photo" Image="camara.png" WidthRequest="40" HeightRequest="40" BorderWidth="5" BackgroundColor="AliceBlue" class="btn_blue"></Button>
-                    <Button x:Name="Append" Image="adjuntar.png"  WidthRequest="40" HeightRequest="40" BorderWidth="5" BackgroundColor="AliceBlue" class="btn_blue"></Button>
-                    <Button x:Name="button" Image="send1.png"  WidthRequest="40" HeightRequest="40" BorderWidth="5" BackgroundColor="AliceBlue" Clicked="OnSubmit" class="btn_red"></Button>
-                    -->
+                    
                     <!--Enviar Mensaje -->
                     <Image Source="enviarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
                         <Image.GestureRecognizers>

@@ -17,6 +17,25 @@ namespace tickets.Models
         private chatTicket chatfile;
         public List<(string, byte[])> Files = new List<(string, byte[])>();
 
+        private ContentView loading = new ContentView
+        {
+            IsVisible = false ,
+            BackgroundColor = Color.Gray,
+            Padding = 10
+            
+        };
+
+        private ActivityIndicator activityIndicator = new ActivityIndicator
+        {
+            WidthRequest = 110, 
+            HeightRequest = 70, 
+            IsRunning = true,
+            IsVisible = true,
+            Color = Color.Red,
+            HorizontalOptions = LayoutOptions.CenterAndExpand ,
+            VerticalOptions = LayoutOptions.CenterAndExpand
+        };
+
         public chatViewModel(string ticket, List<(string, byte[])> files)
         {
             this.ticketID = ticket;
@@ -36,9 +55,10 @@ namespace tickets.Models
                         IsTextIn = false,
                         MessageDateTime = DateTime.Now
                     };
-                    
-                    
+
+                    activityIndicator.IsVisible = true;
                     sendMessage(message);
+                    //activityIndicator.IsVisible = false;
                     //ListMessages.Add(message);
                     //OutText = "";
                 }
@@ -69,4 +89,7 @@ namespace tickets.Models
         }
         string _outText = string.Empty;
     }
+
+   
 }
+
