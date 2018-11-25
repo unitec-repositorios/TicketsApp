@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using MvvmHelpers;
 using tickets.API;
+using System.ComponentModel;
 
 namespace tickets.Models
 {
@@ -17,24 +18,6 @@ namespace tickets.Models
         private chatTicket chatfile;
         public List<(string, byte[])> Files = new List<(string, byte[])>();
 
-        private ContentView loading = new ContentView
-        {
-            IsVisible = false ,
-            BackgroundColor = Color.Gray,
-            Padding = 10
-            
-        };
-
-        private ActivityIndicator activityIndicator = new ActivityIndicator
-        {
-            WidthRequest = 110, 
-            HeightRequest = 70, 
-            IsRunning = true,
-            IsVisible = true,
-            Color = Color.Red,
-            HorizontalOptions = LayoutOptions.CenterAndExpand ,
-            VerticalOptions = LayoutOptions.CenterAndExpand
-        };
 
         public chatViewModel(string ticket, List<(string, byte[])> files)
         {
@@ -46,6 +29,7 @@ namespace tickets.Models
 
             SendCommand = new Command(() =>
             {
+
                 if (!String.IsNullOrWhiteSpace(OutText))
                 {
                     var message = new Message
@@ -56,9 +40,10 @@ namespace tickets.Models
                         MessageDateTime = DateTime.Now
                     };
 
-                    activityIndicator.IsVisible = true;
+                    IsBusy = true;
                     sendMessage(message);
-                    //activityIndicator.IsVisible = false;
+
+
                     //ListMessages.Add(message);
                     //OutText = "";
                 }
@@ -66,18 +51,21 @@ namespace tickets.Models
             });
             
         }
+
+
+
         public async void sendMessage(Message message)
         {
-            string status = await server.replyTicket(message.Text,message.Files, this.ticketID);
-            if(status.Equals("ok"))
+            string status = await server.replyTicket(message.Text, message.Files, this.ticketID);
+            Console.WriteLine(status);
+            if (status.Equals("ok"))
             {
+                
                 ListMessages.Add(message);
                 OutText = "";
-            }
-            else
-            {
-                //OutText = this.ticketID;
-            }
+                MessagingCenter.Send(this, "Notificacion", "Mensaje enviado!");
+            }        
+            
         }
 
 
@@ -88,8 +76,10 @@ namespace tickets.Models
             set { SetProperty(ref _outText, value); }
         }
         string _outText = string.Empty;
+
+       
     }
 
-   
+
 }
 

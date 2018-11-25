@@ -11,7 +11,9 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
+            
             <Grid RowSpacing="0" ColumnSpacing="0" >
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
@@ -21,31 +23,44 @@
                     <Label  Text="{Binding ticket}"  FontSize="Small" TextColor="White"></Label>
                     <Switch x:Name= "switcher"  VerticalOptions = "Start" HorizontalOptions="EndAndExpand" Toggled="switcherToggled" />
                 </StackLayout>
+                <ContentView x:Name="Loading" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"  AbsoluteLayout.LayoutFlags="All" IsVisible="False" BackgroundColor="#C0808080" Padding="10, 0">
+                    <ActivityIndicator x:Name="mascaraLoad" WidthRequest="110" HeightRequest="70" IsRunning="True" IsVisible="True" Color="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                </ContentView>
+
+
                 <ListView x:Name="MessagesListView"
                           ItemTemplate="{StaticResource MessageTemplateSelector}"
                           ItemsSource="{Binding ListMessages}"  
                           HasUnevenRows="True" SeparatorVisibility="None" IsEnabled="True" Grid.Row="1"/>
 
-                <ContentView x:Name="Loading" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"  AbsoluteLayout.LayoutFlags="All" IsVisible="False" BackgroundColor="#C0808080" Padding="10, 0" IsEnabled="False" Grid.Row="1">
-                    <ActivityIndicator  WidthRequest="110" HeightRequest="70" IsRunning="True" IsVisible="True" Color="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                </ContentView>
-
+                
 
                 <StackLayout Orientation="Vertical" Grid.Row="2" BackgroundColor="White" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand">
+                    
                     <Label Text="Archivos adjuntos:" x:Name="Adjun"></Label >
 
                     <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="FillAndExpand">
-
+                        
+                        <!--
                         <Entry 
                         HorizontalOptions="FillAndExpand"  
                         Placeholder="Mensaje"  
                         Text="{Binding OutText}" Keyboard="Chat"/>
+                        -->
                         
+
+                        <Entry 
+                        HorizontalOptions="FillAndExpand"  
+                        Placeholder="Mensaje"  
+                        x:Name="mensajeChat" Keyboard="Chat"/>
+
+
+
                         <!--Enviar Mensaje -->
                         <Image Source="enviarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer
-                                Command="{Binding SendCommand}"                                                  
+                                Tapped="enviarMensaje"                                                  
                                 />
 
                             </Image.GestureRecognizers>
@@ -70,6 +85,7 @@
                         
                     </StackLayout>
                 </StackLayout>
+                
             </Grid>
         </ScrollView>
     </ContentPage.Content>
