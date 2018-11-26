@@ -87,27 +87,21 @@ namespace tickets.API
             HttpClient _client = new HttpClient();
             HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
-            string search = "resolved";
-            Console.WriteLine("Pos " + html.IndexOf(search));
-            return html.IndexOf(search) == -1;
+            return html.IndexOf("resolved") == -1;
         }
 
-        public async Task<string> changeStatusTicket(string id)
+        public async Task changeStatusTicket(string id)
         {
-            string message = await getOpenTicket(id)  ? "Opening ticket: "+ id: "Closing ticket: "+id;
-            HttpClient _client = new HttpClient();
-            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
-            string searchRefresh = "Refresh=";
-            string searchToken = "token=";
-            int posRefresh = html.IndexOf(searchRefresh);
-            int posToken =  html.IndexOf(searchToken);
+            int posRefresh = html.IndexOf("Refresh=");
+            int posToken =  html.IndexOf("token=");
             string refresh = getTextAux('a', html, posRefresh);
             string token = getTextAux('"',html,posToken);
             string s = await getOpenTicket(id) ? "3" : "1"; // 1 to open and 3 to close
             string link = BASE_ADDRESS + "/change_status.php?track=" + id + "&s=" + s + "&" + refresh + "&" + token;
-            response = await _client.GetAsync(link);
-            return message;
+            response = await client.GetAsync(link);
         }
 
         private string getTextAux(char delimiter,string text,int pos)

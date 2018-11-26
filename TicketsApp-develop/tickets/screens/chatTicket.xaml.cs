@@ -22,17 +22,18 @@ namespace tickets
         public string ticketID = null;
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
-        public string ticket;
+       
 
         private chatViewModel chatVM;
         public chatTicket()
         {
 
             InitializeComponent();
+            //initSwtich();
             this.BindingContext = this;
             //Append.Clicked += searchFile;
             chatVM = new chatViewModel(ticketID, files);
-            ticket = "";
+       
             
 
             chatVM.ListMessages.CollectionChanged += (sender, e) =>
@@ -164,17 +165,7 @@ namespace tickets
                 await DisplayAlert("Aviso", "Se produjo un error", "OK");
             }
         }
-        /*public chatTicket ()
-		{
-			InitializeComponent ();
-            chatVM = new chatViewModel(ticketID);
-            chatVM.ListMessages.CollectionChanged += (sender, e) =>
-            {
-                var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
-                MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
-            };
 
-        }*/
         protected override async void OnAppearing()
         {
             try
@@ -194,14 +185,13 @@ namespace tickets
             {
             }
         }
+
         public async void readTicket()
         {
             Loading.IsEnabled = true;
             
             Loading.IsVisible = true;
             string html = await server.getTicket(ticketID);
-            //Loading.IsVisible = false;
-            //Loading.IsEnabled = false;
             string autor = "";
             string message = "";
             string myName = null;
@@ -245,9 +235,7 @@ namespace tickets
                 index = position + autorRef.Count();
             }
 
-            ticket = await changeTicket();
-            bool open = await server.getOpenTicket(ticketID);
-            switcher.IsToggled = !open;
+            await RefrehsSwitch();
             Loading.IsVisible = false;
         }
         public string getAutor(string html)
@@ -320,16 +308,21 @@ namespace tickets
 
         async void switcherToggled(object sender, ToggledEventArgs e)
         {
+            Loading.IsEnabled=true;
+            Loading.IsVisible = true;
             await server.changeStatusTicket(ticketID);
-            Console.WriteLine("cambiando estado del ticket");
-            bool open = await server.getOpenTicket(ticketID);
-            Console.WriteLine("Estado del ticket: "+ open);
-            ticket = await changeTicket();
+            string open = await RefrehsSwitch() ? "abierto":"cerrado";
+            Loading.IsVisible = false;
+            await DisplayAlert("Operanción exitosa", "El estado del ticket "+ticketID +" ha sido "+ open , "OK");
         }
 
-        async Task<string> changeTicket()
+        async Task<bool> RefrehsSwitch()
         {
-            return await server.getOpenTicket(ticketID) ? "Ticked abierto" : "Ticked cerrado";
+            bool open = await server.getOpenTicket(ticketID);
+            switchComponent.BackgroundColor = open ? Color.DarkBlue : Color.Red;
+            messageComponent.IsVisible = open;
+            ticket.Text= open ? "Ticket abierto" : "Ticket cerrado";
+            return open;
         }
 
 

@@ -3,7 +3,8 @@
 <ContentPage Title="Mi Chat" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:tickets;assembly=tickets"
-             x:Class="tickets.chatTicket">
+             x:Class="tickets.chatTicket"
+             >
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:SelectorDataTemplate x:Key="MessageTemplateSelector"/>
@@ -17,9 +18,9 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <StackLayout Orientation="Horizontal" Grid.Row="0" BackgroundColor="DarkBlue" VerticalOptions="EndAndExpand">
-                    <Label  Text="{Binding ticket}"  FontSize="Small" TextColor="White"></Label>
-                    <Switch x:Name= "switcher"  VerticalOptions = "Start" HorizontalOptions="EndAndExpand" Toggled="switcherToggled" />
+                <StackLayout x:Name="switchComponent" Orientation="Horizontal" Grid.Row="0" BackgroundColor="DarkBlue" VerticalOptions="EndAndExpand">
+                    <Label  Text="Estado" x:Name="ticket"  FontSize="Medium" TextColor="White" HorizontalOptions="CenterAndExpand"></Label>
+                    <Switch x:Name= "switcher"  VerticalOptions = "Start" HorizontalOptions="CenterAndExpand" Toggled="switcherToggled" />
                 </StackLayout>
                 <ListView x:Name="MessagesListView"
                           ItemTemplate="{StaticResource MessageTemplateSelector}"
@@ -31,7 +32,7 @@
                 </ContentView>
 
 
-                <StackLayout Orientation="Vertical" Grid.Row="2" BackgroundColor="White" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand">
+                <StackLayout x:Name="messageComponent" Orientation="Vertical" Grid.Row="2" BackgroundColor="White" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand">
                     <Label Text="Archivos adjuntos:" x:Name="Adjun"></Label >
 
                     <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="FillAndExpand">

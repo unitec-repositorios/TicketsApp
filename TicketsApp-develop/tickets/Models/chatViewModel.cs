@@ -14,6 +14,7 @@ namespace tickets.Models
         public ICommand SendCommand { get; set; }
         private Server server = new Server();
         private string ticketID;
+   
         private chatTicket chatfile;
         public List<(string, byte[])> Files = new List<(string, byte[])>();
 
