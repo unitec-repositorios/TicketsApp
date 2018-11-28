@@ -22,7 +22,7 @@ namespace tickets
         public string ticketID = null;
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
-       
+        
 
         private chatViewModel chatVM;
         public chatTicket()
@@ -33,9 +33,9 @@ namespace tickets
             this.BindingContext = this;
             //Append.Clicked += searchFile;
             chatVM = new chatViewModel(ticketID, files);
-       
+            switchComponent.BackgroundColor = Color.FromRgb(14, 36, 86);
             
-
+            
             chatVM.ListMessages.CollectionChanged += (sender, e) =>
             {
                 var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
@@ -306,20 +306,32 @@ namespace tickets
             return Mimessage;
         }
 
-        async void switcherToggled(object sender, ToggledEventArgs e)
+        async void switchState(object sender, EventArgs args)
         {
             Loading.IsEnabled=true;
             Loading.IsVisible = true;
-            await server.changeStatusTicket(ticketID);
-            string open = await RefrehsSwitch() ? "abierto":"cerrado";
+            string close = ticket.Text=="Ticket abierto" ? "cerrar" : "abrir";
             Loading.IsVisible = false;
-            await DisplayAlert("Operanción exitosa", "El estado del ticket "+ticketID +" ha sido "+ open , "OK");
+            bool answer = await DisplayAlert("Alerta!", "¿Estas seguro que deseas " + close +" el ticket?", "Yes","No");
+            Loading.IsVisible = true;
+            if (answer)
+            {
+                await server.changeStatusTicket(ticketID);
+                string open = await RefrehsSwitch() ? "abierto." : "cerrado.";
+                Loading.IsVisible = false;
+                await DisplayAlert("Operanción exitosa", "El estado del ticket " + ticketID + " ha sido " + open, "OK");
+            }
+            Loading.IsVisible = false;
         }
 
         async Task<bool> RefrehsSwitch()
         {
             bool open = await server.getOpenTicket(ticketID);
-            switchComponent.BackgroundColor = open ? Color.DarkBlue : Color.Red;
+            if(open)
+                this.chatVM.state= "https://cdn.pixabay.com/photo/2015/12/08/19/08/castle-1083570_960_720.png";
+            else
+                this.chatVM.state ="https://cdn.pixabay.com/photo/2018/11/28/05/56/05-56-54-829_960_720.png";
+            switcher.Source = chatVM.state;
             messageComponent.IsVisible = open;
             ticket.Text= open ? "Ticket abierto" : "Ticket cerrado";
             return open;
