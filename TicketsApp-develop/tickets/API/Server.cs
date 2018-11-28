@@ -242,16 +242,20 @@ namespace tickets.API
 
             //generate body
             ASCIIEncoding ascii = new ASCIIEncoding();
-            
+            MultipartFormDataContent form = new MultipartFormDataContent();
             //boundary
             string boundaryStringLine = "\r\n--" + boundaryString + "\r\n";
             byte[] boundaryStringLineBytes = ascii.GetBytes(boundaryStringLine);
             //message
             string messageInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "message", message);
             byte[] messageInputBytes = ascii.GetBytes(messageInput);
-            //archive
-            string filesInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "attachments", files);
-            byte[] filesInputBytes = ascii.GetBytes(filesInput);
+            //files
+            for (int x = 0; x < files.Count; x++)
+            {
+                form.Add(new ByteArrayContent(files[x].Item2, 0, files[x].Item2.Length), "attachment[" + (x + 1) + "]", files[x].Item1);
+            }
+            /* string filesInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "attachments", files);
+             byte[] filesInputBytes = ascii.GetBytes(filesInput);*/
             //ticketID
             string ticketInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "orig_track", ticketID);
             byte[] ticketInputBytes = ascii.GetBytes(ticketInput);
@@ -263,9 +267,9 @@ namespace tickets.API
             byte[] lastBoundaryStringLineBytes = ascii.GetBytes(lastBoundaryStringLine);
 
             //size buffer
-            long totalRequestBodySize = boundaryStringLineBytes.Length * 4
+            long totalRequestBodySize = boundaryStringLineBytes.Length * 3
                 + messageInputBytes.Length
-                + filesInputBytes.Length
+                //+ filesInputBytes.Length
                 + ticketInputBytes.Length
                 + tokenInputBytes.Length
                 + lastBoundaryStringLineBytes.Length;
@@ -278,8 +282,8 @@ namespace tickets.API
                 s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
                 s.Write(messageInputBytes, 0, messageInputBytes.Length);
                 s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
-                s.Write(filesInputBytes, 0, filesInputBytes.Length);
-                s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
+                //s.Write(filesInputBytes, 0, filesInputBytes.Length);
+                //s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
                 s.Write(ticketInputBytes, 0, ticketInputBytes.Length);
                 s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
                 s.Write(tokenInputBytes, 0, tokenInputBytes.Length);
@@ -289,7 +293,15 @@ namespace tickets.API
             //response 
             WebResponse response = requestToServer.GetResponse();
             StreamReader responseReader = new StreamReader(response.GetResponseStream());
+            HttpResponseMessage responsee = await _client.PostAsync(BASE_ADDRESS + "/reply_ticket.php", form);
+            //response.Headers.Add(
 
+            responsee.EnsureSuccessStatusCode();
+            _client.Dispose();
+            string sd = await responsee.Content.ReadAsStringAsync();
+
+            var result = new HtmlDocument();
+            result.LoadHtml(sd);
             //catch ticketID
             String responseHtml = responseReader.ReadToEnd();
             string searchR = "�xito:</b>";

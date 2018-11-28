@@ -26,10 +26,6 @@
             <StackLayout Orientation="Vertical">
                 <Label TextColor="Black"  Text="{Binding Text}" />
 
-                <StackLayout Orientation="Horizontal">
-                    <local:TicketsRoundedStroke AbsoluteLayout.LayoutFlags="XProportional,YProportional" AbsoluteLayout.LayoutBounds="0.5,0.5,190,30" Text="File 01.png"></local:TicketsRoundedStroke>
-                </StackLayout>
-                
             </StackLayout>
         </Frame>
         <Label Grid.Row="1" FontSize="Micro" Grid.Column="1" HorizontalTextAlignment="End"  Text="{Binding MessageDateTime, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" TextColor="Gray"></Label>
