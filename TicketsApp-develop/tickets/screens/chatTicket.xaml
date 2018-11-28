@@ -12,6 +12,7 @@
     <ContentPage.Content>
         <ScrollView>
             
+            
             <Grid RowSpacing="0" ColumnSpacing="0" >
                 
                 <Grid.RowDefinitions>
@@ -27,27 +28,27 @@
                     <ActivityIndicator x:Name="mascaraLoad" WidthRequest="110" HeightRequest="70" IsRunning="True" IsVisible="True" Color="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                 </ContentView>
 
-
                 <ListView x:Name="MessagesListView"
                           ItemTemplate="{StaticResource MessageTemplateSelector}"
                           ItemsSource="{Binding ListMessages}"  
+                          
                           HasUnevenRows="True" SeparatorVisibility="None" IsEnabled="True" Grid.Row="1"/>
 
-                
+                    
 
                 <StackLayout Orientation="Vertical" Grid.Row="2" BackgroundColor="White" VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand">
-                    
+
                     <Label Text="Archivos adjuntos:" x:Name="Adjun"></Label >
 
                     <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="FillAndExpand">
-                        
+
                         <!--
                         <Entry 
                         HorizontalOptions="FillAndExpand"  
                         Placeholder="Mensaje"  
                         Text="{Binding OutText}" Keyboard="Chat"/>
                         -->
-                        
+
 
                         <Entry 
                         HorizontalOptions="FillAndExpand"  
@@ -82,11 +83,12 @@
                                 Tapped="searchFile" />
                             </Image.GestureRecognizers>
                         </Image>
-                        
+
                     </StackLayout>
                 </StackLayout>
                 
-            </Grid>
+            </Grid>            
         </ScrollView>
+        
     </ContentPage.Content>
 </ContentPage>

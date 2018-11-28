@@ -34,7 +34,7 @@ namespace tickets
 
 
 
-        private chatViewModel chatVM;
+        public chatViewModel chatVM;
         public chatTicket()
         {
             ListMessages = new ObservableRangeCollection<Message>();
@@ -50,6 +50,9 @@ namespace tickets
             {
                 var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
                 MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
+                MessagesListView.IsPullToRefreshEnabled = true;
+
+
             };
         }
 
@@ -91,6 +94,7 @@ namespace tickets
                 mensajeChat.Text = "";
                 await DisplayAlert("Notificacion", "Mensaje Enviado!", "Ok");
                 Loading.IsVisible = false;
+
                 ListMessages.Add(message);
                 
             }
