@@ -25,22 +25,9 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <StackLayout x:Name="switchComponent" Orientation="Horizontal" Grid.Row="0" BackgroundColor="blue" VerticalOptions="EndAndExpand">
-                            <Label  Text="Estado" x:Name="ticket"  FontSize="Large" VerticalTextAlignment="Center" TextColor="White" HorizontalOptions="CenterAndExpand"></Label>
-                            <Image x:Name="switcher" Source="{Binding state}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" WidthRequest="40" HeightRequest="40" Margin="6">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
-                               Tapped="switchState"                                                  
-                                />
-
-                                </Image.GestureRecognizers>
-                            </Image>
-
-                        </StackLayout>
-                    
 
 
-                    <ListView x:Name="MessagesListView"
+                        <ListView x:Name="MessagesListView"
                           ItemTemplate="{StaticResource MessageTemplateSelector}"
                           ItemsSource="{Binding ListMessages}"  
                           
