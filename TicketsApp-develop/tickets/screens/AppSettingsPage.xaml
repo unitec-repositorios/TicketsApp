@@ -42,7 +42,7 @@
                     </TableSection>
                     <TableSection>
                         <ViewCell>
-                            <Slider x:Name="pictureQualitySetting" Maximum="100" Minimum="1"  MinimumTrackColor="DarkBlue"></Slider>
+                            <Slider x:Name="pictureQualitySetting" Maximum="100" Minimum="1"  MinimumTrackColor="DarkBlue" MaximumTrackColor="LightBlue"></Slider>
                         </ViewCell>
                     </TableSection>
                     <TableSection>
@@ -63,7 +63,7 @@
                         </ViewCell>
                     </TableSection>
                     <TableSection>
-                        <EntryCell x:Name="ticketsTimeoutSetting" Placeholder="Segundos (s)" Keyboard="Numeric">
+                        <EntryCell x:Name="ticketsTimeoutSetting" Label="Segundos" Keyboard="Numeric" XAlign="Start">
                         </EntryCell>
                     </TableSection>
                     <TableSection>

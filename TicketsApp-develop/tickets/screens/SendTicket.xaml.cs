@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
 
+
 namespace tickets
 {
     public partial class SendTicket : ContentPage
@@ -160,7 +161,7 @@ namespace tickets
                 {
                     UserDialogs.Instance.ShowLoading("Enviando Ticket...");
                     string response = await server.submitTicket(number.Value.ToString(), subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex], files);
-                    UserDialogs.Instance.ShowSuccess("Ticket Enviado!");
+                    
                     if (response.Equals("error"))
                     {
                         await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
@@ -179,7 +180,9 @@ namespace tickets
                             Message = message.Text,
                             Date = date,
                         });
+                        UserDialogs.Instance.ShowSuccess("Ticket Enviado!");
                         bool copy = await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
+                        
                         if (!copy)
                         {
                             CrossClipboard.Current.SetText(response);
@@ -191,6 +194,7 @@ namespace tickets
                         picker.SelectedIndex = 1;
                         pickerPriority.SelectedIndex = 1;
                         await Navigation.PopAsync();
+                        
                     }
                 }
                 catch (Exception ex)
