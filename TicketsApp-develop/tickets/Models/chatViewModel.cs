@@ -45,10 +45,14 @@ namespace tickets.Models
                     
                     
                     sendMessage(message);
-                    
+
 
                     //ListMessages.Add(message);
                     //OutText = "";
+                }
+                else
+                {
+                    UserDialogs.Instance.Alert("Ingresar el mensaje","Chat Ticket");
                 }
 
             });
