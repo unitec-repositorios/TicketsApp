@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using MvvmHelpers;
 using tickets.API;
 using System.ComponentModel;
+using Acr.UserDialogs;
 
 namespace tickets.Models
 {
@@ -40,12 +41,17 @@ namespace tickets.Models
                         MessageDateTime = DateTime.Now
                     };
 
-                    IsBusy = true;
+                    
+                    
                     sendMessage(message);
 
 
                     //ListMessages.Add(message);
                     //OutText = "";
+                }
+                else
+                {
+                    UserDialogs.Instance.Alert("Ingresar el mensaje","Chat Ticket");
                 }
 
             });
@@ -56,16 +62,23 @@ namespace tickets.Models
 
         public async void sendMessage(Message message)
         {
+            UserDialogs.Instance.ShowLoading("Enviando Mensaje...");
             string status = await server.replyTicket(message.Text, message.Files, this.ticketID);
             Console.WriteLine(status);
             if (status.Equals("ok"))
             {
-                
+                UserDialogs.Instance.ShowSuccess("Mensaje Enviado!");
                 ListMessages.Add(message);
                 OutText = "";
-                MessagingCenter.Send(this, "Notificacion", "Mensaje enviado!");
-            }        
+
+            }
+            else
+            {
+                UserDialogs.Instance.ShowError("Mensaje no fue enviado...");
+            }
+           
             
+
         }
 
 

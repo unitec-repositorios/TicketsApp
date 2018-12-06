@@ -37,10 +37,10 @@
                             </Image>
 
                         </StackLayout>
+                    
 
 
-
-                        <ListView x:Name="MessagesListView"
+                    <ListView x:Name="MessagesListView"
                           ItemTemplate="{StaticResource MessageTemplateSelector}"
                           ItemsSource="{Binding ListMessages}"  
                           
@@ -53,12 +53,12 @@
 
                     <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="FillAndExpand">
 
-
+                        
                         <Entry 
                         HorizontalOptions="FillAndExpand"  
                         Placeholder="Mensaje"  
                         Text="{Binding OutText}" Keyboard="Chat"/>
-
+                        
 
                         <!--
                         <Entry 
@@ -67,7 +67,7 @@
                         x:Name="mensajeChat" Keyboard="Chat"/>
                         
                         -->
-
+                        
 
 
                         <!--Enviar Mensaje -->
@@ -104,7 +104,7 @@
             <ContentView x:Name="Loading" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"  AbsoluteLayout.LayoutFlags="All" IsVisible="False" BackgroundColor="#C0808080" Padding="10, 0">
                 <ActivityIndicator x:Name="mascaraLoad" WidthRequest="110" HeightRequest="70" IsRunning="True" IsVisible="True" Color="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
             </ContentView>
-        </Grid>
-
+        </Grid>           
+        
     </ContentPage.Content>
 </ContentPage>

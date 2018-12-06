@@ -33,6 +33,7 @@ namespace tickets
 
                 var settings = new ToolbarItem
                 {
+                    
                     Text = "Ajustes",
                     Command = new Command(async (s) => await Navigation.PushAsync(new AppSettingsPage())),
                       
@@ -144,7 +145,7 @@ namespace tickets
             }
         }
 
-        async void GetTickets()
+        public async void GetTickets()
         {
             try {
                 
