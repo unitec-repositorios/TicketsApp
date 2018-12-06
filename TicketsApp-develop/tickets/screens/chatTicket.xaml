@@ -53,26 +53,28 @@
 
                     <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="FillAndExpand">
 
-                        <!--
+                        
                         <Entry 
                         HorizontalOptions="FillAndExpand"  
                         Placeholder="Mensaje"  
                         Text="{Binding OutText}" Keyboard="Chat"/>
-                        -->
+                        
 
-
+                        <!--
                         <Entry 
                         HorizontalOptions="FillAndExpand"  
                         Placeholder="Mensaje"  
                         x:Name="mensajeChat" Keyboard="Chat"/>
-
+                        
+                        -->
+                        
 
 
                         <!--Enviar Mensaje -->
                         <Image Source="enviarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer
-                                Tapped="enviarMensaje"                                                  
+                                Command="{Binding SendCommand}"                                                  
                                 />
 
                             </Image.GestureRecognizers>

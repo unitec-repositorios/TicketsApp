@@ -52,7 +52,7 @@ namespace tickets
             };
         }
 
-   
+   /*
         private async void enviarMensaje(object sender, EventArgs args)
         {           
 
@@ -100,6 +100,8 @@ namespace tickets
                 //OutText = this.ticketID;
             }
         }
+
+    */
 
         private async void take_Photo(object sender, EventArgs args)
         {

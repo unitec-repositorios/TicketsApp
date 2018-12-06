@@ -11,7 +11,7 @@ using Android.OS;
 using Microsoft.Identity.Client;
 using System.Threading.Tasks;
 using Android;
-
+using Acr.UserDialogs;
 
 namespace tickets.Droid
 {
@@ -24,6 +24,10 @@ namespace tickets.Droid
 
             //TabLayoutResource = Resource.Layout.Tabbar;
             //ToolbarResource = Resource.Layout.Toolbar;
+            //if(UserDialogs.Instance == null)
+            //{
+                UserDialogs.Init(this);
+            // }
             await TryToGetPermissions();
             base.OnCreate(bundle);
             Xamarin.Essentials.Platform.Init(this, bundle);
