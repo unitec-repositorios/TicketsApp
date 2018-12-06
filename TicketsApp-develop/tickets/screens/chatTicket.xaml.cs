@@ -24,7 +24,6 @@ namespace tickets
         private Server server = new Server();
         public List<(string, byte[])> files = new List<(string, byte[])>();
         public string ticketID = null;
-
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
         
@@ -32,24 +31,49 @@ namespace tickets
         public chatViewModel chatVM;
         public chatTicket()
         {
-            ListMessages = new ObservableRangeCollection<Message>();
-
-            InitializeComponent();
-            //initSwtich();
-            this.BindingContext = this;
-            //Append.Clicked += searchFile;
-            chatVM = new chatViewModel(ticketID, files);
-            switchComponent.BackgroundColor = Color.FromRgb(14, 36, 86);
-            
-            
-            chatVM.ListMessages.CollectionChanged += (sender, e) =>
+            try
             {
-                var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
-                MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
-                MessagesListView.IsPullToRefreshEnabled = true;
+                InitializeComponent();
+                this.BindingContext = this;
+                chatVM = new chatViewModel(ticketID, files);
+
+                chatVM.ListMessages.CollectionChanged += (sender, e) =>
+                {
+                    var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
+                    MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
+                    MessagesListView.IsPullToRefreshEnabled = true;
 
 
-            };
+                };
+                ListMessages = new ObservableRangeCollection<Message>();
+
+                var openTicket = new ToolbarItem
+                {
+                    Text = "Cambiar estado",
+                    Command = new Command(execute: () => switchState()),
+
+                    Order = ToolbarItemOrder.Secondary
+
+                };
+
+                switch (Device.RuntimePlatform)
+                {
+                    case Device.Android:
+                        ToolbarItems.Add(openTicket);
+                        break;
+                    case Device.UWP:
+                        ToolbarItems.Add(openTicket);
+                        break;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+
+           
         }
 
    
@@ -191,8 +215,11 @@ namespace tickets
                     Title = "Ticket No. " + ticketID;
                 }
                 BindingContext = chatVM = new chatViewModel(ticketID, files);
-
+                
                 readTicket();
+                
+ 
+
                 
 
             }
@@ -247,7 +274,7 @@ namespace tickets
                 index = position + autorRef.Count();
             }
 
-            await RefrehsSwitch();
+            messageComponent.IsVisible = await server.getOpenTicket(ticketID);
             Loading.IsVisible = false;
         }
         public string getAutor(string html)
@@ -318,36 +345,23 @@ namespace tickets
             return Mimessage;
         }
 
-        async void switchState(object sender, EventArgs args)
+        async void switchState()
         {
             Loading.IsEnabled=true;
-            Loading.IsVisible = true;
-            string close = ticket.Text=="Ticket abierto" ? "cerrar" : "abrir";
-            Loading.IsVisible = false;
+            string close = await server.getOpenTicket(ticketID) ? "cerrar" : "abrir";
             bool answer = await DisplayAlert("Alerta!", "¿Estas seguro que deseas " + close +" el ticket?", "Yes","No");
             Loading.IsVisible = true;
             if (answer)
             {
+                messageComponent.IsVisible = close == "abrir";
                 await server.changeStatusTicket(ticketID);
-                string open = await RefrehsSwitch() ? "abierto." : "cerrado.";
                 Loading.IsVisible = false;
+                string open = close == "abrir" ? "abierto" : "cerrado"; 
                 await DisplayAlert("Operanción exitosa", "El estado del ticket " + ticketID + " ha sido " + open, "OK");
             }
             Loading.IsVisible = false;
         }
 
-        async Task<bool> RefrehsSwitch()
-        {
-            bool open = await server.getOpenTicket(ticketID);
-            if(open)
-                this.chatVM.state= "https://cdn.pixabay.com/photo/2015/12/08/19/08/castle-1083570_960_720.png";
-            else
-                this.chatVM.state ="https://cdn.pixabay.com/photo/2018/11/28/05/56/05-56-54-829_960_720.png";
-            switcher.Source = chatVM.state;
-            messageComponent.IsVisible = open;
-            ticket.Text= open ? "Ticket abierto" : "Ticket cerrado";
-            return open;
-        }
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {

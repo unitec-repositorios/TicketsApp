@@ -35,7 +35,9 @@ namespace tickets
                 {
                     Text = "Ajustes",
                     Command = new Command(async (s) => await Navigation.PushAsync(new AppSettingsPage())),
+                      
                     Order = ToolbarItemOrder.Secondary
+                   
                 };
 
                 switch (Device.RuntimePlatform)

@@ -15,7 +15,6 @@ namespace tickets.Models
         public ICommand SendCommand { get; set; }
         private Server server = new Server();
         private string ticketID;
-        public string state { get; set; }
         private chatTicket chatfile;
         public List<(string, byte[])> Files = new List<(string, byte[])>();
 
@@ -24,8 +23,8 @@ namespace tickets.Models
         {
             this.ticketID = ticket;
             this.Files = files;
-            ListMessages = new ObservableRangeCollection<Message>();            
-
+            ListMessages = new ObservableRangeCollection<Message>();
+        
             //chatfile = new chatTicket();
 
             SendCommand = new Command(() =>
