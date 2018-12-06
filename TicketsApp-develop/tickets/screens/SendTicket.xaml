@@ -60,7 +60,7 @@
                     </StackLayout>
                 </ScrollView>
                 <StackLayout Orientation="Horizontal" Grid.Column="0" HorizontalOptions="EndAndExpand">
-                    
+
                     <!--Enviar Mensaje -->
                     <Image Source="enviarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
                         <Image.GestureRecognizers>
