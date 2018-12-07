@@ -13,98 +13,76 @@
 
     <ContentPage.Content>
 
-        <Grid>
-            <StackLayout>
-                <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
-                    <Grid RowSpacing="0" ColumnSpacing="0" >
+        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,0,0,5">
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
+            <Grid RowSpacing="0" ColumnSpacing="0" >
 
-                        <StackLayout x:Name="switchComponent" Orientation="Horizontal" Grid.Row="0" BackgroundColor="blue" VerticalOptions="EndAndExpand">
-                            <Label  Text="Estado" x:Name="ticket"  FontSize="Large" VerticalTextAlignment="Center" TextColor="White" HorizontalOptions="CenterAndExpand"></Label>
-                            <Image x:Name="switcher" Source="{Binding state}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" WidthRequest="40" HeightRequest="40" Margin="6">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
-                               Tapped="switchState"                                                  
-                                />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-                                </Image.GestureRecognizers>
-                            </Image>
-
-                        </StackLayout>
-                    
-
-
-                    <ListView x:Name="MessagesListView"
-                          ItemTemplate="{StaticResource MessageTemplateSelector}"
-                          ItemsSource="{Binding ListMessages}"  
+                <ListView x:Name="MessagesListView"
+                        ItemTemplate="{StaticResource MessageTemplateSelector}"
+                        ItemsSource="{Binding ListMessages}"  
                           
-                          HasUnevenRows="True" SeparatorVisibility="None" IsEnabled="True" Grid.Row="1"/>
-                    </Grid>
-                </ScrollView>
+                        HasUnevenRows="True" SeparatorVisibility="None" IsEnabled="True" Grid.Row="0"/>
+            </Grid>
 
-                <StackLayout x:Name="messageComponent" Orientation="Vertical" BackgroundColor="White" HorizontalOptions="FillAndExpand">
-                    <Label Text="Archivos adjuntos:" x:Name="Adjun"></Label >
 
-                    <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+            <StackLayout x:Name="messageComponent" Orientation="Vertical" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                <Label Text="Archivos adjuntos:" x:Name="Adjun"></Label >
 
+                <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="FillAndExpand">
+
+
+                    <Entry 
+                    HorizontalOptions="FillAndExpand"  
+                    Placeholder="Mensaje"  
+                    Text="{Binding OutText}" Keyboard="Chat"/>
+
+
+                    <!--
+                    <Entry 
+                    HorizontalOptions="FillAndExpand"  
+                    Placeholder="Mensaje"  
+                    x:Name="mensajeChat" Keyboard="Chat"/>
                         
-                        <Entry 
-                        HorizontalOptions="FillAndExpand"  
-                        Placeholder="Mensaje"  
-                        Text="{Binding OutText}" Keyboard="Chat"/>
-                        
+                    -->
+                    <!--Enviar Mensaje -->
+                    <Image Source="enviarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                            Command="{Binding SendCommand}"                                                  
+                            />
 
-                        <!--
-                        <Entry 
-                        HorizontalOptions="FillAndExpand"  
-                        Placeholder="Mensaje"  
-                        x:Name="mensajeChat" Keyboard="Chat"/>
-                        
-                        -->
-                        
+                        </Image.GestureRecognizers>
+                    </Image>
 
 
-                        <!--Enviar Mensaje -->
-                        <Image Source="enviarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer
-                                Command="{Binding SendCommand}"                                                  
-                                />
+                    <!--Tomar foto -->
+                    <Image Source="camaraIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                            Tapped="take_Photo" />
+                        </Image.GestureRecognizers>
+                    </Image>
 
-                            </Image.GestureRecognizers>
-                        </Image>
+                    <!--Adjuntar archivos -->
+                    <Image Source="adjuntarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                            Tapped="searchFile" />
+                        </Image.GestureRecognizers>
+                    </Image>
 
-
-                        <!--Tomar foto -->
-                        <Image Source="camaraIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer
-                                Tapped="take_Photo" />
-                            </Image.GestureRecognizers>
-                        </Image>
-
-                        <!--Adjuntar archivos -->
-                        <Image Source="adjuntarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer
-                                Tapped="searchFile" />
-                            </Image.GestureRecognizers>
-                        </Image>
-
-                    </StackLayout>
                 </StackLayout>
-
             </StackLayout>
-            <ContentView x:Name="Loading" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"  AbsoluteLayout.LayoutFlags="All" IsVisible="False" BackgroundColor="#C0808080" Padding="10, 0">
-                <ActivityIndicator x:Name="mascaraLoad" WidthRequest="110" HeightRequest="70" IsRunning="True" IsVisible="True" Color="Red" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            </ContentView>
-        </Grid>           
-        
+        </ScrollView>
+
+
+
     </ContentPage.Content>
 </ContentPage>
