@@ -7,7 +7,10 @@
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="#ffffff" />
                 <Setter Property="BarTextColor" Value="#ffffff" />
-                <Setter Property="BackgroundColor" Value="#3d4fff" />
+
+
+                <Setter Property="BackgroundColor" Value="#276EBB" />
+
                 
 
             </Style>

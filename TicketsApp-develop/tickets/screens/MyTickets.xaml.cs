@@ -7,6 +7,7 @@ using tickets.API;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Timers;
+using Acr.UserDialogs;
 
 namespace tickets
 {
@@ -30,6 +31,7 @@ namespace tickets
                     Order = ToolbarItemOrder.Primary
 
                 };
+                //GetTickets();
 
                 var settings = new ToolbarItem
                 {
@@ -102,6 +104,7 @@ namespace tickets
                 var ticket = tickets.FirstOrDefault(t => t.ID == ((Ticket)e.SelectedItem).ID);
                 if (ticket != null)
                 {
+                    UserDialogs.Instance.ShowLoading("Cargando Ticket...");
                     Debug.WriteLine("Opening messages for ticket with id = " + ticket.ID);
                     ticket.Date = await server.getUpdateDate(ticket.ID);
                     ticket.Image = "";
@@ -114,6 +117,7 @@ namespace tickets
                         BindingContext = ticket.ID
                     });
                     TicketsListView.SelectedItem = null;
+                    UserDialogs.Instance.HideLoading();
                 }
                 else
                 {
@@ -197,12 +201,14 @@ namespace tickets
 
                     }
                 }
-                
-                tickets =  new ObservableCollection<Ticket>(
-                        tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                            System.Globalization.CultureInfo.InvariantCulture))
-                        );
-                
+                TicketsListView.ItemsSource = null;
+                TicketsListView.ItemsSource = tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
+                            System.Globalization.CultureInfo.InvariantCulture));
+                //tickets = new ObservableCollection<Ticket>(
+                //        tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
+                //            System.Globalization.CultureInfo.InvariantCulture))
+                //        );
+
             }
             catch (Exception ex)
             {

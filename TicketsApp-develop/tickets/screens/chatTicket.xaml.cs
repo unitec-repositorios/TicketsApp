@@ -12,6 +12,7 @@ using Plugin.Media;
 using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using MvvmHelpers;
+using Acr.UserDialogs;
 
 namespace tickets
 {
@@ -277,7 +278,7 @@ namespace tickets
             }
 
             messageComponent.IsVisible = await server.getOpenTicket(ticketID);
-            Loading.IsVisible = false;
+            //Loading.IsVisible = false;
         }
         public string getAutor(string html)
         {
@@ -348,20 +349,19 @@ namespace tickets
         }
 
         async void switchState()
-        {
-            Loading.IsEnabled=true;
+        {           
             string close = await server.getOpenTicket(ticketID) ? "cerrar" : "abrir";
             bool answer = await DisplayAlert("Alerta!", "¿Estas seguro que deseas " + close +" el ticket?", "Yes","No");
-            Loading.IsVisible = true;
+            UserDialogs.Instance.ShowLoading("");
             if (answer)
             {
                 messageComponent.IsVisible = close == "abrir";
                 await server.changeStatusTicket(ticketID);
-                Loading.IsVisible = false;
+                //Loading.IsVisible = false;
                 string open = close == "abrir" ? "abierto" : "cerrado"; 
                 await DisplayAlert("Operanción exitosa", "El estado del ticket " + ticketID + " ha sido " + open, "OK");
             }
-            Loading.IsVisible = false;
+            UserDialogs.Instance.HideLoading();
         }
 
 
