@@ -8,7 +8,6 @@
                 <Setter Property="BarBackgroundColor" Value="#ffffff" />
                 <Setter Property="BarTextColor" Value="#ffffff" />
 
-
                 <Setter Property="BackgroundColor" Value="#276EBB" />
 
                 
