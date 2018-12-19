@@ -25,7 +25,6 @@ namespace tickets.Models
             this.ticketID = ticket;
             this.Files = files;
             ListMessages = new ObservableRangeCollection<Message>();
-        
             //chatfile = new chatTicket();
 
             SendCommand = new Command(() =>
