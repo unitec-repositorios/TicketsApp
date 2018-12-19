@@ -9,14 +9,16 @@
             <local:SelectorDataTemplate x:Key="MessageTemplateSelector"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+    
     <ContentPage.Content>
-      
-            <Grid RowSpacing="0" ColumnSpacing="0" >
+
+        <Grid RowSpacing="0" ColumnSpacing="0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <ListView x:Name="MessagesListView"
+
                           ItemTemplate="{StaticResource MessageTemplateSelector}"
                           ItemsSource="{Binding ListMessages}"  
                           HasUnevenRows="True" SeparatorVisibility="None" IsEnabled="True" Grid.Row="0"/>

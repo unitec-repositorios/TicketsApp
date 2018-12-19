@@ -27,7 +27,7 @@ namespace tickets
         public string ticketID = null;
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
-        
+        public string stateText {get;set;}
 
         public chatViewModel chatVM;
         public chatTicket()
@@ -37,7 +37,7 @@ namespace tickets
                 InitializeComponent();
                 this.BindingContext = this;
                 chatVM = new chatViewModel(ticketID, files);
-
+                stateText = "Probando";
                 chatVM.ListMessages.CollectionChanged += (sender, e) =>
                 {
                     var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
@@ -47,15 +47,16 @@ namespace tickets
 
                 };
                 ListMessages = new ObservableRangeCollection<Message>();
-
-                var openTicket = new ToolbarItem
+                
+               var openTicket = new ToolbarItem
                 {
-                    Text = "Cambiar estado",
+                    Text = "prueba",
                     Command = new Command(execute: () => switchState()),
 
                     Order = ToolbarItemOrder.Secondary
 
                 };
+            
 
                 switch (Device.RuntimePlatform)
                 {
@@ -65,7 +66,7 @@ namespace tickets
                     case Device.UWP:
                         ToolbarItems.Add(openTicket);
                         break;
-                }
+                }//*/
                 
             }
             catch (Exception ex)
@@ -218,7 +219,16 @@ namespace tickets
                     Title = "Ticket No. " + ticketID;
                 }
                 BindingContext = chatVM = new chatViewModel(ticketID, files);
-                
+                ToolbarItems.Clear();
+                var openTicket = new ToolbarItem
+                {
+                    Text = await getSateText(),
+                    Command = new Command(execute: () => switchState()),
+
+                    Order = ToolbarItemOrder.Secondary
+
+                };
+                ToolbarItems.Add(openTicket);
                 readTicket();
                 
  
@@ -360,8 +370,23 @@ namespace tickets
                 //Loading.IsVisible = false;
                 string open = close == "abrir" ? "abierto" : "cerrado"; 
                 await DisplayAlert("Operanción exitosa", "El estado del ticket " + ticketID + " ha sido " + open, "OK");
+                ToolbarItems.Clear();
+                var openTicket = new ToolbarItem
+                {
+                    Text = await getSateText(),
+                    Command = new Command(execute: () => switchState()),
+
+                    Order = ToolbarItemOrder.Secondary
+
+                };
+                ToolbarItems.Add(openTicket);
             }
             UserDialogs.Instance.HideLoading();
+        }
+
+        async Task<string> getSateText()
+        {
+            return  await server.getOpenTicket(ticketID) ? "Cerrar Ticket" : "Abrir Ticket";
         }
 
 
