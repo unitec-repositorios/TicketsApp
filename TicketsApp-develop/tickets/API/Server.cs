@@ -12,7 +12,8 @@ namespace tickets.API
 {
     public class Server
     {
-        const string BASE_ADDRESS = "http://178.128.177.170";
+        //const string BASE_ADDRESS = "https://cap.unitec.edu/";
+        const string BASE_ADDRESS = "http://138.197.198.67";
 
         public Server()
         {
