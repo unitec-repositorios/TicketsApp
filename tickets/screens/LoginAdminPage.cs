@@ -26,9 +26,19 @@ namespace tickets
 			var isValid = AreCredentialsCorrect (user);
 			if (isValid) {
 				App.IsUserLoggedIn = true;
-				Navigation.InsertPageBefore (new HomeScreen(), this);
-				await Navigation.PopAsync ();
-			} else {
+				MyTicketsAdmin home = new MyTicketsAdmin();
+            	App.Current.MainPage = new NavigationPage(home);
+                switch (Xamarin.Forms.Device.RuntimePlatform)
+                {
+                    case Xamarin.Forms.Device.iOS:
+                        App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
+                        break;
+                    case Xamarin.Forms.Device.Android:
+                        App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
+                        break;
+
+                }
+            } else {
 				messageLabel.Text = "Login failed";
 				passwordEntry.Text = string.Empty;
 			}
@@ -38,7 +48,7 @@ namespace tickets
 		{
 			string userRequest = "";
 			string passRequest = "";
-			return user.Username == userRequest && user.Password == passRequest;
+			return !(user.Username == userRequest) && !(user.Password == passRequest);
 		}
 	}
 }

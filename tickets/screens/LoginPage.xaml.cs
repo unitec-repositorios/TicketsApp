@@ -159,16 +159,16 @@ namespace tickets
 
                 /* Aqui va la conexion al ADMIN del hesk */
 
-                HomeScreen home = new HomeScreen();
+                LoginAdminPage home = new LoginAdminPage();
                 App.Current.MainPage = new NavigationPage(home);
 
                 switch (Xamarin.Forms.Device.RuntimePlatform)
                 {
                     case Xamarin.Forms.Device.iOS:
-                        App.Current.MainPage = new NavigationPage(new HomeScreen());
+                        App.Current.MainPage = new NavigationPage(new LoginAdminPage());
                         break;
                     case Xamarin.Forms.Device.Android:
-                        App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
+                        App.Current.MainPage = new NavigationPage(new LoginAdminPage());
                         break;
 
                 }
