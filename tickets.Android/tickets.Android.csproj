@@ -55,7 +55,6 @@
     <!--head-->
     <Reference Include="Mono.Android" />
     <!-- DAVID-->
-    <Reference Include="Mono.Android" />
     <!-- CESCOBAR-->
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -126,16 +125,16 @@
     <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\drawable\settings_icon.svg" />
-    <AndroidResource Include="Resources\drawable\baseline_settings_black_18.png" />
-    <AndroidResource Include="Resources\drawable\baseline_settings_black_24.png" />
-    <AndroidResource Include="Resources\drawable\baseline_settings_black_36.png" />
-    <AndroidResource Include="Resources\drawable\baseline_settings_black_48.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\settings_icon.svg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\baseline_settings_black_18.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\baseline_settings_black_24.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\baseline_settings_black_36.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\baseline_settings_black_48.png" />
     <AndroidResource Include="Resources\xml\file_paths.xml" />
-    <AndroidResource Include="Resources\drawable\baseline_camera_alt_white_18.png" />
-    <AndroidResource Include="Resources\drawable\baseline_camera_alt_white_24.png" />
-    <AndroidResource Include="Resources\drawable\baseline_camera_alt_white_36.png" />
-    <AndroidResource Include="Resources\drawable\baseline_camera_alt_white_48.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\baseline_camera_alt_white_18.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\baseline_camera_alt_white_24.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\baseline_camera_alt_white_36.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\baseline_camera_alt_white_48.png" />
   </ItemGroup>
   <ItemGroup>
     <!--head-->
@@ -153,43 +152,43 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\cap.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\cap.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\adjuntar.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\adjuntar.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\camara.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\camara.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\correo.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\correo.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\plus1.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\plus1.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\send1.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\send1.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\nuevo.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\nuevo.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\enviarIcono.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\enviarIcono.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\camaraIcono.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\camaraIcono.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\adjuntarIcono.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\adjuntarIcono.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\adjuntarIconomini.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\adjuntarIconomini.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\camaraIconomini.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\camaraIconomini.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
