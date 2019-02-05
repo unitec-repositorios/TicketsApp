@@ -171,6 +171,7 @@ namespace tickets
 
 
                     bool open = await server.getOpenTicket(dbtickets[i].ID);
+                    dbtickets[i].openInBrowser= "https://pixabay.com/es/internet-mundo-explorador-del-rat%C3%B3n-24984/";
                     Console.WriteLine("Recibiendo del sevidor: "+ open.ToString());
                     if (!open)
                     {

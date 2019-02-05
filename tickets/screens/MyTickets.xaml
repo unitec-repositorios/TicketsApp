@@ -19,6 +19,7 @@
                                 <Image x:Name="notification" Source="{Binding Image}" />
 
                                 <Image x:Name="open" Source="{Binding OpenImage}" />
+                                <Image x:Name="openBrowser" Source="{Binding OpenImage}" />
 
                                 
                                 
