@@ -13,6 +13,7 @@ using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using MvvmHelpers;
 using Acr.UserDialogs;
+using Xamarin.Essentials;
 
 namespace tickets
 {
@@ -47,8 +48,8 @@ namespace tickets
 
                 };
                 ListMessages = new ObservableRangeCollection<Message>();
-                
-               var openTicket = new ToolbarItem
+
+                var openTicket = new ToolbarItem
                 {
                     Text = "prueba",
                     Command = new Command(execute: () => switchState()),
@@ -56,78 +57,96 @@ namespace tickets
                     Order = ToolbarItemOrder.Secondary
 
                 };
-            
+
+                var openBrowserTool = new ToolbarItem
+                {
+                    Text = "Abrir en el navegador",
+                    Command = new Command(execute: () => openBrowser()),
+                    Order = ToolbarItemOrder.Secondary
+                };
+
 
                 switch (Device.RuntimePlatform)
                 {
                     case Device.Android:
                         ToolbarItems.Add(openTicket);
+                        ToolbarItems.Add(openBrowserTool);
                         break;
                     case Device.UWP:
                         ToolbarItems.Add(openTicket);
                         break;
                 }//*/
-                
+
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            
 
-           
-        }
 
-   /*
-        private async void enviarMensaje(object sender, EventArgs args)
-        {           
-
-            if (!String.IsNullOrWhiteSpace(mensajeChat.Text))
-            {
-                var message = new Message
-                {
-                    Text = mensajeChat.Text,
-                    Files = files,
-                    IsTextIn = false,
-                    MessageDateTime = DateTime.Now
-                };
-
-                //await DisplayAlert("Notificacion", "Enviando mensaje...", "Ok");
-               
-                sendMessage(message);
-                
-
-            }
-            else
-            {
-                await DisplayAlert("Notificacion", "Ingrese mensaje", "Ok");
-            }
 
         }
 
-        public async void sendMessage(Message message)
+
+        //Open In Browser
+
+        private async void openBrowser()
         {
-            Loading.IsVisible = true;
-            string status = await server.replyTicket(message.Text, message.Files, ticketID);
-            //await DisplayAlert("Notificacion del server", status, "Ok");
-            if (status.Equals("ok"))
-            {
-               
-                mensajeChat.Text = "";
-                await DisplayAlert("Notificacion", "Mensaje Enviado!", "Ok");
-                Loading.IsVisible = false;
-
-                ListMessages.Add(message);
-                
-            }
-            else
-            {
-                await DisplayAlert("Notificacion", "No se pudo enviar el mensaje...", "Ok");
-                //OutText = this.ticketID;
-            }
+            string refresh = await server.getRefresh();
+            string uri = server.getBaseAdress() + "/ticket.php?track=" + ticketID + "&Refresh=" + refresh;
+            await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
         }
 
-    */
+        /*
+             private async void enviarMensaje(object sender, EventArgs args)
+             {           
+
+                 if (!String.IsNullOrWhiteSpace(mensajeChat.Text))
+                 {
+                     var message = new Message
+                     {
+                         Text = mensajeChat.Text,
+                         Files = files,
+                         IsTextIn = false,
+                         MessageDateTime = DateTime.Now
+                     };
+
+                     //await DisplayAlert("Notificacion", "Enviando mensaje...", "Ok");
+
+                     sendMessage(message);
+
+
+                 }
+                 else
+                 {
+                     await DisplayAlert("Notificacion", "Ingrese mensaje", "Ok");
+                 }
+
+             }
+
+             public async void sendMessage(Message message)
+             {
+                 Loading.IsVisible = true;
+                 string status = await server.replyTicket(message.Text, message.Files, ticketID);
+                 //await DisplayAlert("Notificacion del server", status, "Ok");
+                 if (status.Equals("ok"))
+                 {
+
+                     mensajeChat.Text = "";
+                     await DisplayAlert("Notificacion", "Mensaje Enviado!", "Ok");
+                     Loading.IsVisible = false;
+
+                     ListMessages.Add(message);
+
+                 }
+                 else
+                 {
+                     await DisplayAlert("Notificacion", "No se pudo enviar el mensaje...", "Ok");
+                     //OutText = this.ticketID;
+                 }
+             }
+
+         */
 
         private async void take_Photo(object sender, EventArgs args)
         {

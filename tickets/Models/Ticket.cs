@@ -20,7 +20,6 @@ namespace tickets
         public bool Open { get; set; }
 
         public string OpenImage { get; set; }
-        public string openInBrowser { get; set; }
 
         public string Date { get; set; }
         string image { get; set; }
