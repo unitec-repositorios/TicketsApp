@@ -143,6 +143,10 @@ namespace tickets
             return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = ? ORDER BY Image DESC", user.ID);
         }
 
+        public Task<List<Ticket>> GetOpenTicketsAsync()
+        {
+            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE Open = true ORDER BY Image DESC");
+        }
 
         /// <summary>
         /// Gets the comments for ticket async.
