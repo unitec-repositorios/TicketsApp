@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="tickets.screens.LoginPageAdmin"
+             Title="Login Admin" Icon="baseline_home_white_36pt">
+    <ContentPage.Content>
+        <StackLayout>
+            <ActivityIndicator x:Name="Loading"
+                               Color="Red" 
+                               IsRunning="true"
+                               IsVisible="false"
+                                VerticalOptions="CenterAndExpand"
+                               />
+
+            <Label x:Name="label_usuario" Text="Usuario"  Font="Bold, 24"></Label>
+            <Entry x:Name="usuario"></Entry>
+
+            <Label x:Name="label_contrasena" Text="Contrasena"  Font="Bold, 24"></Label>
+            <Entry x:Name="contrasena"></Entry>
+
+
+            <Button
+            x:Name="login" 
+            Margin="70,20"
+			Text="Login" 
+			TextColor="White"
+            FontSize="10"
+            BorderRadius="20"
+			BackgroundColor="#01265A"
+            Clicked="SendRequest"
+                VerticalOptions="CenterAndExpand"
+               
+               
+           />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
