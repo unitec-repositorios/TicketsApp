@@ -43,14 +43,6 @@ namespace tickets
                     Order = ToolbarItemOrder.Secondary
                    
                 };
-                //Toolbar Item TEST Open ticket In Browser
-                var openB = new ToolbarItem
-                {
-                    Text = "Abrir en el navegador",
-                    Command = new Command(execute: () => openBrowser()),
-                    Order = ToolbarItemOrder.Secondary
-
-                };
 
                 switch (Device.RuntimePlatform)
                 {
@@ -60,8 +52,6 @@ namespace tickets
                     case Device.Android:
                         ToolbarItems.Add(newTicket);
                         ToolbarItems.Add(settings);
-                        //Add toolbar item test Open ticket In Browser
-                        ToolbarItems.Add(openB);
                         break;
                     case Device.UWP:
                         ToolbarItems.Add(newTicket);
@@ -76,15 +66,6 @@ namespace tickets
             {
                 throw ex;
             }
-        }
-
-        //Open ticket In Browser TEST
-
-        private async void openBrowser()
-        {
-            string refresh = await server.getRefresh();
-            string uri =server.getBaseAdress() + "/ticket.php?track=" + /*ticketID*/"X7GYEE4Y7W" + "&Refresh=" + refresh;
-            await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
         }
 
         private void TimerFunction(object source, ElapsedEventArgs e)
@@ -171,7 +152,7 @@ namespace tickets
 
         public async void GetTickets()
         {
-            /*try {
+            try {
                 
                 List<Ticket> dbtickets = await App.Database.GetTicketsAsync(App.Database.GetCurrentUserNotAsync());
                 dbtickets = new List<Ticket>(dbtickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
@@ -233,7 +214,7 @@ namespace tickets
             catch (Exception ex)
             {
                 throw ex;
-            }*/
+            }
         }
     }
 }
