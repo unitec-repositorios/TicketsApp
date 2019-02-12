@@ -59,7 +59,7 @@ namespace tickets
                 }
                 //TicketsListView.BeginRefresh();
                 //GetTickets();
-                TicketsListView.ItemsSource = tickets;
+                //TicketsListView.ItemsSource = tickets;
             }
             catch(Exception ex)
             {
@@ -89,12 +89,18 @@ namespace tickets
 
         protected override async void OnAppearing()
         {
-            SetTimer();
+            base.OnAppearing();
+            Device.StartTimer(new TimeSpan(0, 1, 0), () =>
+              {
+                  //Get tickets every 1 minute.
+                  GetTickets();
+                  return true;
+              });
         }
 
         protected override async void OnDisappearing()
         {
-            ClearTimer();
+            base.OnDisappearing();
         }
 
         async void goToViewTicket(object sender, SelectedItemChangedEventArgs e)
