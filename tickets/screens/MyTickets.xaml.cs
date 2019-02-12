@@ -15,7 +15,6 @@ namespace tickets
     {
         private Server server = new Server();
         ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
-        private Timer refreshTicketsTimer;
 
         public MyTickets()
         {
@@ -65,26 +64,6 @@ namespace tickets
             {
                 throw ex;
             }
-        }
-
-        private void TimerFunction(object source, ElapsedEventArgs e)
-        {
-            GetTickets();
-        }
-
-        private void SetTimer()
-        {
-            refreshTicketsTimer = new Timer(AppSettings.RefreshTicketsTimeout * 1000);
-            refreshTicketsTimer.Elapsed += TimerFunction;
-            refreshTicketsTimer.AutoReset = true;
-            refreshTicketsTimer.Enabled = true;
-            GetTickets();
-        }
-
-        private void ClearTimer()
-        {
-            refreshTicketsTimer.Stop();
-            refreshTicketsTimer.Dispose();
         }
 
         protected override async void OnAppearing()
