@@ -69,7 +69,7 @@ namespace tickets
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            Device.StartTimer(new TimeSpan(0, 1, 0), () =>
+            Device.StartTimer(new TimeSpan(0, 0, AppSettings.RefreshTicketsTimeout), () =>
               {
                   //Get tickets every 1 minute.
                   GetTickets();
