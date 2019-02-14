@@ -20,6 +20,22 @@ namespace tickets.API
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
+        public string GetBaseAdress()
+        {
+            return BASE_ADDRESS;
+        }
+
+        public async Task<string> getRefresh()
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php");
+            string html = await response.Content.ReadAsStringAsync();
+            string search = "\"Refresh\" value=" + '"';
+            int posRefresh = html.IndexOf(search) + search.Length;
+            string refresh = getTextAux('"', html, posRefresh);
+            return refresh;
+        }
+
         public async Task<int> countResponse(string id)
         {
             HttpClient _client = new HttpClient();

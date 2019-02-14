@@ -13,6 +13,7 @@ using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using MvvmHelpers;
 using Acr.UserDialogs;
+using Xamarin.Essentials;
 
 namespace tickets
 {
@@ -78,56 +79,63 @@ namespace tickets
            
         }
 
-   /*
-        private async void enviarMensaje(object sender, EventArgs args)
-        {           
-
-            if (!String.IsNullOrWhiteSpace(mensajeChat.Text))
-            {
-                var message = new Message
-                {
-                    Text = mensajeChat.Text,
-                    Files = files,
-                    IsTextIn = false,
-                    MessageDateTime = DateTime.Now
-                };
-
-                //await DisplayAlert("Notificacion", "Enviando mensaje...", "Ok");
-               
-                sendMessage(message);
-                
-
-            }
-            else
-            {
-                await DisplayAlert("Notificacion", "Ingrese mensaje", "Ok");
-            }
-
-        }
-
-        public async void sendMessage(Message message)
+        private async void openBrowser()
         {
-            Loading.IsVisible = true;
-            string status = await server.replyTicket(message.Text, message.Files, ticketID);
-            //await DisplayAlert("Notificacion del server", status, "Ok");
-            if (status.Equals("ok"))
-            {
-               
-                mensajeChat.Text = "";
-                await DisplayAlert("Notificacion", "Mensaje Enviado!", "Ok");
-                Loading.IsVisible = false;
-
-                ListMessages.Add(message);
-                
-            }
-            else
-            {
-                await DisplayAlert("Notificacion", "No se pudo enviar el mensaje...", "Ok");
-                //OutText = this.ticketID;
-            }
+            string refresh = await server.getRefresh();
+            string uri = server.GetBaseAdress() + "/ticket.php?track=" + ticketID + "&Refresh=" + refresh;
+            await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
         }
 
-    */
+        /*
+             private async void enviarMensaje(object sender, EventArgs args)
+             {           
+
+                 if (!String.IsNullOrWhiteSpace(mensajeChat.Text))
+                 {
+                     var message = new Message
+                     {
+                         Text = mensajeChat.Text,
+                         Files = files,
+                         IsTextIn = false,
+                         MessageDateTime = DateTime.Now
+                     };
+
+                     //await DisplayAlert("Notificacion", "Enviando mensaje...", "Ok");
+
+                     sendMessage(message);
+
+
+                 }
+                 else
+                 {
+                     await DisplayAlert("Notificacion", "Ingrese mensaje", "Ok");
+                 }
+
+             }
+
+             public async void sendMessage(Message message)
+             {
+                 Loading.IsVisible = true;
+                 string status = await server.replyTicket(message.Text, message.Files, ticketID);
+                 //await DisplayAlert("Notificacion del server", status, "Ok");
+                 if (status.Equals("ok"))
+                 {
+
+                     mensajeChat.Text = "";
+                     await DisplayAlert("Notificacion", "Mensaje Enviado!", "Ok");
+                     Loading.IsVisible = false;
+
+                     ListMessages.Add(message);
+
+                 }
+                 else
+                 {
+                     await DisplayAlert("Notificacion", "No se pudo enviar el mensaje...", "Ok");
+                     //OutText = this.ticketID;
+                 }
+             }
+
+         */
 
         private async void take_Photo(object sender, EventArgs args)
         {
@@ -228,7 +236,14 @@ namespace tickets
                     Order = ToolbarItemOrder.Secondary
 
                 };
+                var openBrowserTool = new ToolbarItem
+                {
+                    Text = "Abrir en el navegador",
+                    Command = new Command(execute: () => openBrowser()),
+                    Order = ToolbarItemOrder.Secondary
+                };
                 ToolbarItems.Add(openTicket);
+                ToolbarItems.Add(openBrowserTool);
                 readTicket();
                 
  
