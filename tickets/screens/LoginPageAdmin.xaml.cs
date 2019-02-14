@@ -32,46 +32,55 @@ namespace tickets.screens
             var valid = !String.IsNullOrWhiteSpace(usuario.Text) && !String.IsNullOrWhiteSpace(contrasena.Text);
             if (valid)
             {
+
+            if (CheckInternetConnection())
+            {
+
                 try
                 {
                     string response = await server.loginAdmins(usuario.Text, contrasena.Text);
-                    if (response.Equals(" error"))
+                    if (response == " error")
                     {
                         await DisplayAlert("No se ha podido Acceder como Admin", "Revise por favor", "OK");
                     }
-                    else
+                    else if(response == "sucess")
                     {
-                        if (CheckInternetConnection())
-                        {
-                            label_contrasena.IsVisible = false;
-                            usuario.IsVisible = false;
-                            contrasena.IsVisible = false;
-                            label_usuario.IsVisible = false;
-                            login.IsVisible = false;
-                            Loading.IsVisible = true;
+                        label_contrasena.IsVisible = false;
+                        usuario.IsVisible = false;
+                        contrasena.IsVisible = false;
+                        label_usuario.IsVisible = false;
+                        login.IsVisible = false;
+                        Loading.IsVisible = true;
 
-                            switch (Xamarin.Forms.Device.RuntimePlatform)
-                            {
-                                case Xamarin.Forms.Device.iOS:
-                                    App.Current.MainPage = new NavigationPage(new HomeScreen());
-                                    break;
-                                case Xamarin.Forms.Device.Android:
-                                    App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
-                                    break;
-
-                            }
-                        }
-                        else
+                        switch (Xamarin.Forms.Device.RuntimePlatform)
                         {
-                            await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
+                            case Xamarin.Forms.Device.iOS:
+                                App.Current.MainPage = new NavigationPage(new HomeScreen());
+                                break;
+                            case Xamarin.Forms.Device.Android:
+                                App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
+                                break;
 
                         }
+
                     }
                 }
                 catch
                 {
                     await DisplayAlert("Error", "Revise el Admin", "OK");
                 }
+            }
+            else
+            {
+                    await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
+                    }
+
+            }
+
+
+            else
+            {
+                await DisplayAlert("Error", "Ingrese Datos", "OK");
             }
         }
         public bool CheckInternetConnection()

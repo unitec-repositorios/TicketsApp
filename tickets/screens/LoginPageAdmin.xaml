@@ -16,7 +16,7 @@
             <Entry x:Name="usuario"></Entry>
 
             <Label x:Name="label_contrasena" Text="Contrasena"  Font="Bold, 24"></Label>
-            <Entry x:Name="contrasena"></Entry>
+            <Entry x:Name="contrasena" IsPassword="true"></Entry>
 
 
             <Button
