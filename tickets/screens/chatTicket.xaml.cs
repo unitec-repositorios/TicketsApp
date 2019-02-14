@@ -247,7 +247,15 @@ namespace tickets
                     Order = ToolbarItemOrder.Secondary
 
                 };
+                var openBrowserTool = new ToolbarItem
+                {
+                    Text = "Abrir en el navegador",
+                    Command = new Command(execute: () => openBrowser()),
+                    Order = ToolbarItemOrder.Secondary
+                };
+
                 ToolbarItems.Add(openTicket);
+                ToolbarItems.Add(openBrowserTool);
                 readTicket();
                 
  
