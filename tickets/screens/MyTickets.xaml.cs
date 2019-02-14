@@ -59,7 +59,7 @@ namespace tickets
                 }
                 //TicketsListView.BeginRefresh();
                 //GetTickets();
-                TicketsListView.ItemsSource = tickets;
+                //TicketsListView.ItemsSource = tickets;
             }
             catch(Exception ex)
             {

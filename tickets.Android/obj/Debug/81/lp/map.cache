@@ -1,5 +1,3 @@
-System.Runtime
-tickets
 Acr.Support.Android
 Acr.UserDialogs
 Acr.UserDialogs.Interface
@@ -25,6 +23,8 @@ SQLitePCLRaw.batteries_v2
 SQLitePCLRaw.core
 SQLitePCLRaw.lib.e_sqlite3
 SQLitePCLRaw.provider.e_sqlite3
+System.Runtime
+tickets
 Xamarin.Android.Arch.Core.Common
 Xamarin.Android.Arch.Lifecycle.Common
 Xamarin.Android.Arch.Lifecycle.Runtime

@@ -34,6 +34,7 @@
     <Jar>obj\Debug\81\lp\37\jl\bin\classes.jar</Jar>
     <Jar>obj\Debug\81\lp\38\jl\bin\classes.jar</Jar>
     <Jar>obj\Debug\81\lp\39\jl\bin\classes.jar</Jar>
+    <Jar>obj\Debug\81\lp\4\jl\formsviewgroup.jar</Jar>
     <Jar>obj\Debug\81\lp\40\jl\bin\classes.jar</Jar>
     <Jar>obj\Debug\81\lp\41\jl\bin\classes.jar</Jar>
     <Jar>obj\Debug\81\lp\42\jl\bin\classes.jar</Jar>
@@ -41,6 +42,5 @@
     <Jar>obj\Debug\81\lp\44\jl\bin\classes.jar</Jar>
     <Jar>obj\Debug\81\lp\45\jl\bin\classes.jar</Jar>
     <Jar>obj\Debug\81\lp\46\jl\bin\classes.jar</Jar>
-    <Jar>obj\Debug\81\lp\6\jl\formsviewgroup.jar</Jar>
   </Jars>
 </Paths>

@@ -228,7 +228,7 @@ namespace tickets
                     {
                         Text = autor + message,
                         IsTextIn = typeText,
-                        //need to correct the time message
+                        //aqui es donde esta el problema de la fecha en chat!!!!!!!!
                         MessageDateTime = DateTime.Now
                     };
                     chatVM.ListMessages.Add(mymessage);

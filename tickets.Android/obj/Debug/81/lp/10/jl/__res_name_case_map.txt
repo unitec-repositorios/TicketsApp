@@ -1,2 +1,0 @@
-layout/WebAuthenticationBroker.axml;layout/webauthenticationbroker.xml
-Values/Strings.xml;values/strings.xml
