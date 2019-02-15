@@ -145,7 +145,7 @@ namespace tickets
 
         public Task<List<Ticket>> GetOpenTicketsAsync()
         {
-            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE Open = true ORDER BY Image DESC");
+            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE Open = 1 ORDER BY Image DESC");
         }
 
         /// <summary>

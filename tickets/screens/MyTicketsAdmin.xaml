@@ -19,11 +19,7 @@
                                     <Label Text="{Binding Message}" LineBreakMode="TailTruncation" />
                                 </StackLayout>
                                 <Image x:Name="notification" Source="{Binding Image}" />
-
                                 <Image x:Name="open" Source="{Binding OpenImage}" />
-
-                                
-                                
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
@@ -46,7 +42,6 @@
                                         <Label Text="{Binding Message}" LineBreakMode="TailTruncation" />
                                     </StackLayout>
                                     <Image x:Name="notification" Source="{Binding Image}" />
-
                                     <Image x:Name="open" Source="{Binding OpenImage}" />
                                 </StackLayout>
                             </ViewCell>

@@ -9,6 +9,8 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Timers;
 using Acr.UserDialogs;
+using HtmlAgilityPack;
+using System.Net.Http;
 
 namespace tickets
 {
@@ -102,11 +104,23 @@ namespace tickets
         private async void TicketsListView_RefreshingAdmin(object sender, EventArgs e)
         {
             GetTickets();
-            TicketsListViewAdminAssign.EndRefresh();
+            TicketsListViewAdmin.ItemsSource = null;
+            TicketsListViewAdmin.ItemsSource = tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss", 
+                        System.Globalization.CultureInfo.InvariantCulture));
+            TicketsListViewAdmin.EndRefresh();
         }
 
         private async void SearchBar_TextChangedAdmin(object sender, TextChangedEventArgs e)
         {
+            if (!String.IsNullOrWhiteSpace(e.NewTextValue))
+            {
+                var showTickets = tickets.Where(t => t.Subject.Contains(e.NewTextValue)).ToList();
+                TicketsListViewAdmin.ItemsSource = showTickets;
+            }
+            else
+            {
+                TicketsListViewAdmin.ItemsSource = tickets;
+            }
         }
 
         //Tickets Asignados
@@ -137,6 +151,44 @@ namespace tickets
         public async void GetTickets()
         {
             //Por ahora obtiene todos los tickets abiertos, se debe cambiar a solo los tickets abiertos asignados al usuario admin
+            
+            User user = await App.Database.GetCurrentUser();
+
+            var requestURI = @"http://138.197.198.67/admin/index.php";
+            //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+            HttpClient httpClient = new HttpClient();
+            //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            //httpClient.BaseAddress = new Uri("https://178.128.75.38/");
+            var parameters = new Dictionary<string, string>();
+            parameters["user"] = "administrator";
+            parameters["pass"] = "admin";
+            parameters["remember_user"] = "NOTHANKS";
+            parameters["a"] = "do_login";
+            var response = await httpClient.PostAsync(requestURI, new FormUrlEncodedContent(parameters));
+            var contents = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine("Contents: {0}", contents);
+
+            
+            IEnumerable<String> headerVals;
+            string session = string.Empty;
+            if (response.Headers.TryGetValues("Set-Cookie", out headerVals))
+            {
+                session = headerVals.First();
+            }
+            Debug.WriteLine("!!!COOKIE: {0} !!!", session);
+            // MultipartFormDataContent form = new MultipartFormDataContent();
+
+            // String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
+            // String[] tokens = res.Split(';');
+            // String cookie = tokens[0];
+
+            // String[] tokensValue = cookie.Split('=');
+            // String valueCookie = tokensValue[1];
+
+            // var htmlDoc = new HtmlDocument();
+            // htmlDoc.LoadHtml(await capture.Content.ReadAsStringAsync());
+
+            // var node = htmlDoc.DocumentNode.SelectSingleNode("//input[@name='token']");
             List<Ticket> openTickets = await App.Database.GetOpenTicketsAsync();
             openTickets = new List<Ticket>(openTickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
                                                                                                   System.Globalization.CultureInfo.InvariantCulture)));
@@ -184,6 +236,21 @@ namespace tickets
 
                 }
             }
+            tickets = new ObservableCollection<Ticket>();
+            //Tickets de prueba para verificar que el listado funciona
+            //--------------------------------------------------------
+            // Ticket t1 = new Ticket();
+            // t1.Subject = "Hola";
+            // t1.Priority = 1;
+            // t1.Message = "ASasdad";
+            // t1.Date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            // Ticket t2 = new Ticket();
+            // t2.Subject = "Adios";
+            // t2.Priority = 2;
+            // t2.Message = "aver";
+            // t2.Date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            // tickets.Add(t1);
+            // tickets.Add(t2);
             TicketsListViewAdminAssign.ItemsSource = null;
             TicketsListViewAdminAssign.ItemsSource = tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss", 
                         System.Globalization.CultureInfo.InvariantCulture));
