@@ -88,12 +88,14 @@ namespace tickets
 
         protected override async void OnAppearing()
         {
-            SetTimer();
+            //Llamado a GetTickets reemplaza a SetTimer() debido a que el request de sesión en GetTickets crea exception al repetirse
+            GetTickets();
+            //SetTimer();
         }
 
         protected override async void OnDisappearing()
         {
-            ClearTimer();
+           // ClearTimer();
         }
         //Tickets Enviados
         async void goToViewTicketAdmin(object sender, SelectedItemChangedEventArgs e)
@@ -150,110 +152,68 @@ namespace tickets
 
         public async void GetTickets()
         {
-            //Por ahora obtiene todos los tickets abiertos, se debe cambiar a solo los tickets abiertos asignados al usuario admin
             
             User user = await App.Database.GetCurrentUser();
 
             var requestURI = @"http://138.197.198.67/admin/index.php";
-            //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             HttpClient httpClient = new HttpClient();
-            //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-            //httpClient.BaseAddress = new Uri("https://178.128.75.38/");
             var parameters = new Dictionary<string, string>();
+
+            //Aquí se debe obtener la cookie en lugar de la sesión de login hardcoded que se realiza
             parameters["user"] = "administrator";
             parameters["pass"] = "admin";
             parameters["remember_user"] = "NOTHANKS";
             parameters["a"] = "do_login";
             var response = await httpClient.PostAsync(requestURI, new FormUrlEncodedContent(parameters));
             var contents = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine("Contents: {0}", contents);
-
-            
             IEnumerable<String> headerVals;
             string session = string.Empty;
             if (response.Headers.TryGetValues("Set-Cookie", out headerVals))
             {
                 session = headerVals.First();
-            }
-            Debug.WriteLine("!!!COOKIE: {0} !!!", session);
-            // MultipartFormDataContent form = new MultipartFormDataContent();
+            }            
 
-            // String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
-            // String[] tokens = res.Split(';');
-            // String cookie = tokens[0];
-
-            // String[] tokensValue = cookie.Split('=');
-            // String valueCookie = tokensValue[1];
-
-            // var htmlDoc = new HtmlDocument();
-            // htmlDoc.LoadHtml(await capture.Content.ReadAsStringAsync());
-
-            // var node = htmlDoc.DocumentNode.SelectSingleNode("//input[@name='token']");
-            List<Ticket> openTickets = await App.Database.GetOpenTicketsAsync();
-            openTickets = new List<Ticket>(openTickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                                                                                                  System.Globalization.CultureInfo.InvariantCulture)));
-            for (int i = 0; i < openTickets.Count; i++)
-            {
-                String updateDate = await server.getUpdateDate(openTickets[i].ID);
-                if (!updateDate.Equals(openTickets[i].Date) && updateDate != "error")
-                {
-                    openTickets[i].Image = "https://cdn.pixabay.com/photo/2015/12/16/17/41/bell-1096280_640.png";
-                    openTickets[i].Date = updateDate;
-                    await App.Database.UpdateTicket(openTickets[i]);
-                }
-                else
-                    openTickets[i].Image = "";
-
-
-                bool open = await server.getOpenTicket(openTickets[i].ID);
-                Console.WriteLine("Recibiendo del sevidor: "+ open.ToString());
-                if (!open)
-                {
-                    openTickets[i].OpenImage = "https://cdn.pixabay.com/photo/2015/12/08/19/08/castle-1083570_960_720.png";
-                    openTickets[i].Open = open;
-                    await App.Database.UpdateTicket(openTickets[i]);
-                }
-                else
-                    openTickets[i].OpenImage = "";
-
-                var exists = tickets.FirstOrDefault(t => t.ID == openTickets[i].ID);
-
-                if (exists == null) // if no ticket was found with that id
-                {
-                    tickets.Add(openTickets[i]);
-                }
-                else
-                {
-                    exists.Image = openTickets[i].Image;
-
-                    exists.OpenImage = openTickets[i].OpenImage;
-
-
-                    if (!updateDate.Equals(exists))
-                    {
-                        exists.Date = updateDate;
-                    }
-
-                }
-            }
+            //Modificar parametros del request para obtener tickets ordenados por columna
+            requestURI = @"http://138.197.198.67/admin/show_tickets.php?status=6&sort=subject&category=0&s_my=1&s_ot=1&s_un=1&limit=10&asc=1";
+            var res2 = await httpClient.GetAsync(requestURI);
+            contents = await res2.Content.ReadAsStringAsync();
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(contents);
+            var table = htmlDoc.DocumentNode.SelectSingleNode("//table[@class=\"white\"]");
             tickets = new ObservableCollection<Ticket>();
-            //Tickets de prueba para verificar que el listado funciona
-            //--------------------------------------------------------
-            // Ticket t1 = new Ticket();
-            // t1.Subject = "Hola";
-            // t1.Priority = 1;
-            // t1.Message = "ASasdad";
-            // t1.Date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            // Ticket t2 = new Ticket();
-            // t2.Subject = "Adios";
-            // t2.Priority = 2;
-            // t2.Message = "aver";
-            // t2.Date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            // tickets.Add(t1);
-            // tickets.Add(t2);
-            TicketsListViewAdminAssign.ItemsSource = null;
-            TicketsListViewAdminAssign.ItemsSource = tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss", 
-                        System.Globalization.CultureInfo.InvariantCulture));
+            int hcount = 0;
+            //Ciclar rows y crear tickets en la ObservableList
+            foreach (HtmlNode row in table.SelectNodes("tr")) {
+                if(hcount > 0){ //Ignore headers
+                    Console.WriteLine("row");
+                    int column = 0;
+                    Ticket ticket = new Ticket();
+                    foreach (HtmlNode cell in row.SelectNodes("th|td")) {
+                        //Por ahora solo se puede obtener ID, fecha de actualización y tema
+                        //Los otros atributos están al ver un ticket específico, se necesita hacer otro request por cada
+                        //ticket usando el ID para obtenerlos.
+                        switch(column){
+                            case 1: 
+                                ticket.ID = cell.InnerText;
+                                break;
+                            case 2:
+                                ticket.Date = cell.InnerText;
+                                break;
+                            case 4:
+                                ticket.Subject = cell.InnerText;
+                                break;
+                            default:
+                                break;
+                        }
+                        column++;
+                        
+                    }
+                    tickets.Add(ticket);
+                }else{
+                    hcount = 1;
+                }
+            }
+            TicketsListViewAdminAssign.ItemsSource = tickets;
         }
     }
 }
