@@ -29,6 +29,8 @@ namespace tickets
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
         public string stateText {get;set;}
+        private List<DateTime> dateMessagesList;
+        private ToolbarItem openTicket,openBrowserTool;
 
         public chatViewModel chatVM;
         public chatTicket()
@@ -38,7 +40,8 @@ namespace tickets
                 InitializeComponent();
                 this.BindingContext = this;
                 chatVM = new chatViewModel(ticketID, files);
-                stateText = "Probando";
+                dateMessagesList = new List<DateTime>();
+                
                 chatVM.ListMessages.CollectionChanged += (sender, e) =>
                 {
                     var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
@@ -49,20 +52,28 @@ namespace tickets
                 };
                 ListMessages = new ObservableRangeCollection<Message>();
                 
-               var openTicket = new ToolbarItem
+               openTicket = new ToolbarItem
                 {
-                    Text = "prueba",
+                    Text = "Abrir Ticket",
                     Command = new Command(execute: () => switchState()),
 
                     Order = ToolbarItemOrder.Secondary
 
                 };
-            
+
+                openBrowserTool = new ToolbarItem
+                {
+                    Text = "Abrir en el navegador",
+                    Command = new Command(execute: () => openBrowser()),
+                    Order = ToolbarItemOrder.Secondary
+                };
+
 
                 switch (Device.RuntimePlatform)
                 {
                     case Device.Android:
                         ToolbarItems.Add(openTicket);
+                        ToolbarItems.Add(openBrowserTool);
                         break;
                     case Device.UWP:
                         ToolbarItems.Add(openTicket);
@@ -227,29 +238,9 @@ namespace tickets
                     Title = "Ticket No. " + ticketID;
                 }
                 BindingContext = chatVM = new chatViewModel(ticketID, files);
-                ToolbarItems.Clear();
-                var openTicket = new ToolbarItem
-                {
-                    Text = await getSateText(),
-                    Command = new Command(execute: () => switchState()),
-
-                    Order = ToolbarItemOrder.Secondary
-
-                };
-                var openBrowserTool = new ToolbarItem
-                {
-                    Text = "Abrir en el navegador",
-                    Command = new Command(execute: () => openBrowser()),
-                    Order = ToolbarItemOrder.Secondary
-                };
-                ToolbarItems.Add(openTicket);
-                ToolbarItems.Add(openBrowserTool);
+                openTicket.Text = await getSateText();
+                dateMessagesList = await server.getDateMessage(ticketID);
                 readTicket();
-                
- 
-
-                
-
             }
             catch (Exception ex)
             {
@@ -264,6 +255,7 @@ namespace tickets
             string myName = null;
             int position = html.IndexOf(autorRef + "N");
             int index = position + autorRef.Count();
+            int posFecha = 0;
             while (position != -1)
             {
                 html = html.Substring(index);
@@ -289,14 +281,16 @@ namespace tickets
                     {
                         autor += ":\n";
                     }
+                   
                     var mymessage = new Message
                     {
                         Text = autor + message,
                         IsTextIn = typeText,
                         //need to correct the time message
-                        MessageDateTime = DateTime.Now
+                        MessageDateTime = dateMessagesList[posFecha]
                     };
                     chatVM.ListMessages.Add(mymessage);
+                    posFecha++;
                 }
                 position = html.IndexOf(autorRef + "N");
                 index = position + autorRef.Count();
@@ -385,16 +379,7 @@ namespace tickets
                 //Loading.IsVisible = false;
                 string open = close == "abrir" ? "abierto" : "cerrado"; 
                 await DisplayAlert("Operanción exitosa", "El estado del ticket " + ticketID + " ha sido " + open, "OK");
-                ToolbarItems.Clear();
-                var openTicket = new ToolbarItem
-                {
-                    Text = await getSateText(),
-                    Command = new Command(execute: () => switchState()),
-
-                    Order = ToolbarItemOrder.Secondary
-
-                };
-                ToolbarItems.Add(openTicket);
+                openTicket.Text = await getSateText();
             }
             UserDialogs.Instance.HideLoading();
         }

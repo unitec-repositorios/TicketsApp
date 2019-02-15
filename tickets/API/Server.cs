@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
+
 namespace tickets.API
 {
     public class Server
@@ -18,6 +19,30 @@ namespace tickets.API
         public Server()
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+        }
+
+        public async Task<List<DateTime>> getDateMessage(string id)
+        {
+            List<DateTime> fechas= new List<DateTime>();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            int posFecha = 0;
+            int pos = 0;
+            while (pos != -1)
+            {
+                string search = "<td class=\"tickettd\">2";
+                pos = html.IndexOf(search);
+                posFecha = pos - 1 + search.Length;
+                if (pos > -1)
+                {
+                    string fecha = getTextAux('<', html, posFecha);
+                    fechas.Add(DateTime.Parse(fecha));
+                    pos = posFecha + 1;
+                    html = html.Substring(pos);
+                }
+            }
+            return fechas;
         }
 
         public string GetBaseAdress()
