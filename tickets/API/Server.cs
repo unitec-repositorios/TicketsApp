@@ -8,15 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
-
-
 namespace tickets.API
 {
     public class Server
     {
         //const string BASE_ADDRESS = "https://cap.unitec.edu/";
         const string BASE_ADDRESS = "http://138.197.198.67";
-        const string BASE_ADDRESS_ADMIN = "http://138.197.198.67/admin";
+
         public Server()
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
@@ -132,76 +130,10 @@ namespace tickets.API
             string value = await response.Content.ReadAsStringAsync();
             return value;
         }
-        //Funcion Devuleve la Cookie
-        public async Task<string> GetCookieAdmin()
-        {
-            var html = @"" + BASE_ADDRESS_ADMIN + "/index.php";
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage capture = await httpClient.GetAsync(html);
-            MultipartFormDataContent form = new MultipartFormDataContent();
 
-            String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
-            String[] tokens = res.Split(';');
-            String cookie = tokens[0];
-
-            return cookie;
-
-        }
-        //Funcion Login
-        /*public async Task<string> loginAdmins(string username ,string password)
-        {
-            var html = @"" + BASE_ADDRESS_ADMIN + "/index.php";
-            string temporal_response;
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage capture = await httpClient.GetAsync(html);
-            MultipartFormDataContent form = new MultipartFormDataContent();
-
-            String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
-            String[] tokens = res.Split(';');
-            String cookie = tokens[0];
-            String[] tokensValue = cookie.Split('=');
-            String valueCookie = tokensValue[1];
-
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(await capture.Content.ReadAsStringAsync());
-
-
-            Encoding encoder = Encoding.GetEncoding("ISO-8859-1");
-            string no_thanks = "NOTHANKS";
-            string do_login = "do_login";
-            form.Headers.Add("Cookie", cookie);
-            form.Headers.ContentType.CharSet = "ISO-8859-1";
-            form.Add(new StringContent(username), "user");
-            form.Add(new StringContent(password), "pass");
-            form.Add(new StringContent(no_thanks), "remember_user");
-            form.Add(new StringContent(do_login), "a");
-            HttpResponseMessage response = await httpClient.PostAsync(BASE_ADDRESS_ADMIN + "/index.php", form);
-
-            response.EnsureSuccessStatusCode();
-
-            httpClient.Dispose();
-            string sd = await response.Content.ReadAsStringAsync();
-            var result = new HtmlDocument();
-            result.LoadHtml(sd);
-
-            var success = result.DocumentNode.SelectSingleNode("//div[@class='error']");
-            if (success == null)
-            {
-                temporal_response =  "sucess";
-
-            }
-            else
-            {
-                temporal_response =  "error";
-
-;            }
-            return temporal_response;
-
-        }*/
         public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, List<(string, byte[])> files)
         {
             User user = await App.Database.GetCurrentUser();
-            
 
             var html = @"" + BASE_ADDRESS + "/index.php?a=add";
             //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
@@ -212,16 +144,11 @@ namespace tickets.API
             MultipartFormDataContent form = new MultipartFormDataContent();
 
             String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
-            Console.WriteLine("Res "+ res);
             String[] tokens = res.Split(';');
-            Console.WriteLine("token" + tokens);
             String cookie = tokens[0];
-            Console.WriteLine("cookie" + cookie);
+
             String[] tokensValue = cookie.Split('=');
-            Console.WriteLine(tokensValue);
             String valueCookie = tokensValue[1];
-            Console.WriteLine(valueCookie);
-            Console.WriteLine("Aqui va");
 
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(await capture.Content.ReadAsStringAsync());
@@ -255,11 +182,12 @@ namespace tickets.API
             }
             form.Add(new StringContent(token, encoder), "token");
             HttpResponseMessage response = await httpClient.PostAsync(BASE_ADDRESS + "/submit_ticket.php", form);
+            //response.Headers.Add(
 
             response.EnsureSuccessStatusCode();
-           
             httpClient.Dispose();
             string sd = await response.Content.ReadAsStringAsync();
+
             var result = new HtmlDocument();
             result.LoadHtml(sd);
 
@@ -388,8 +316,7 @@ namespace tickets.API
             }
         }
     }
-    //Clase Parte Login
-    public class Login_Admin
+	    public class Login_Admin
     {
         public Login_Admin()
         {
