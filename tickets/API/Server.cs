@@ -17,8 +17,6 @@ namespace tickets.API
         //const string BASE_ADDRESS = "https://cap.unitec.edu/";
         const string BASE_ADDRESS = "http://138.197.198.67";
         const string BASE_ADDRESS_ADMIN = "http://138.197.198.67/admin";
-        public string User_name = null;
-        public string Password = null;
         public Server()
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
@@ -150,7 +148,7 @@ namespace tickets.API
 
         }
         //Funcion Login
-        public async Task<string> loginAdmins(string username ,string password)
+        /*public async Task<string> loginAdmins(string username ,string password)
         {
             var html = @"" + BASE_ADDRESS_ADMIN + "/index.php";
             string temporal_response;
@@ -199,7 +197,7 @@ namespace tickets.API
 ;            }
             return temporal_response;
 
-        }
+        }*/
         public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, List<(string, byte[])> files)
         {
             User user = await App.Database.GetCurrentUser();
@@ -389,5 +387,65 @@ namespace tickets.API
                 return "error";
             }
         }
+    }
+    //Clase Parte Login
+    public class Login_Admin
+    {
+        public Login_Admin()
+        {
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+        }
+        public async Task<string> loginAdmins(string username, string password)
+        {
+            const string BASE_ADDRESS_ADMIN = "http://138.197.198.67/admin";
+            var html = @"" + BASE_ADDRESS_ADMIN + "/index.php";
+            string temporal_response;
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage capture = await httpClient.GetAsync(html);
+            MultipartFormDataContent form = new MultipartFormDataContent();
+
+            String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
+            String[] tokens = res.Split(';');
+            String cookie = tokens[0];
+            String[] tokensValue = cookie.Split('=');
+            String valueCookie = tokensValue[1];
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(await capture.Content.ReadAsStringAsync());
+
+
+            Encoding encoder = Encoding.GetEncoding("ISO-8859-1");
+            string no_thanks = "NOTHANKS";
+            string do_login = "do_login";
+            form.Headers.Add("Cookie", cookie);
+            form.Headers.ContentType.CharSet = "ISO-8859-1";
+            form.Add(new StringContent(username), "user");
+            form.Add(new StringContent(password), "pass");
+            form.Add(new StringContent(no_thanks), "remember_user");
+            form.Add(new StringContent(do_login), "a");
+            HttpResponseMessage response = await httpClient.PostAsync(BASE_ADDRESS_ADMIN + "/index.php", form);
+
+            response.EnsureSuccessStatusCode();
+
+            httpClient.Dispose();
+            string sd = await response.Content.ReadAsStringAsync();
+            var result = new HtmlDocument();
+            result.LoadHtml(sd);
+
+            var success = result.DocumentNode.SelectSingleNode("//div[@class='error']");
+            if (success == null)
+            {
+                temporal_response = "sucess";
+
+            }
+            else
+            {
+                temporal_response = "error";
+
+                ;
+            }
+            return temporal_response;
+        }
+
     }
 }

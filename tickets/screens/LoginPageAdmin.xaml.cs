@@ -22,7 +22,7 @@ namespace tickets.screens
     public partial class LoginPageAdmin : ContentPage
     {
         private Server server = new Server();
-
+        private Login_Admin login_ = new Login_Admin();
         public LoginPageAdmin()
         {
             InitializeComponent();
@@ -38,7 +38,7 @@ namespace tickets.screens
 
                 try
                 {
-                    string response = await server.loginAdmins(usuario.Text, contrasena.Text);
+                    string response = await login_.loginAdmins(usuario.Text, contrasena.Text);
                     if (response == " error")
                     {
                         await DisplayAlert("No se ha podido Acceder como Admin", "Revise por favor", "OK");
@@ -73,7 +73,7 @@ namespace tickets.screens
             else
             {
                     await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
-                    }
+            }
 
             }
 
@@ -81,6 +81,7 @@ namespace tickets.screens
             else
             {
                 await DisplayAlert("Error", "Ingrese Datos", "OK");
+
             }
         }
         public bool CheckInternetConnection()
