@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
-
 namespace tickets.API
 {
     public class Server
@@ -19,46 +18,6 @@ namespace tickets.API
         public Server()
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-        }
-
-        public async Task<List<DateTime>> getDateMessage(string id)
-        {
-            List<DateTime> fechas= new List<DateTime>();
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
-            string html = await response.Content.ReadAsStringAsync();
-            int posFecha = 0;
-            int pos = 0;
-            while (pos != -1)
-            {
-                string search = "<td class=\"tickettd\">2";
-                pos = html.IndexOf(search);
-                posFecha = pos - 1 + search.Length;
-                if (pos > -1)
-                {
-                    string fecha = getTextAux('<', html, posFecha);
-                    fechas.Add(DateTime.Parse(fecha));
-                    pos = posFecha + 1;
-                    html = html.Substring(pos);
-                }
-            }
-            return fechas;
-        }
-
-        public string GetBaseAdress()
-        {
-            return BASE_ADDRESS;
-        }
-
-        public async Task<string> getRefresh()
-        {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php");
-            string html = await response.Content.ReadAsStringAsync();
-            string search = "\"Refresh\" value=" + '"';
-            int posRefresh = html.IndexOf(search) + search.Length;
-            string refresh = getTextAux('"', html, posRefresh);
-            return refresh;
         }
 
         public async Task<int> countResponse(string id)
@@ -356,5 +315,64 @@ namespace tickets.API
                 return "error";
             }
         }
+    }
+	    public class Login_Admin
+    {
+        public Login_Admin()
+        {
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+        }
+        public async Task<string> loginAdmins(string username, string password)
+        {
+            const string BASE_ADDRESS_ADMIN = "http://138.197.198.67/admin";
+            var html = @"" + BASE_ADDRESS_ADMIN + "/index.php";
+            string temporal_response;
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage capture = await httpClient.GetAsync(html);
+            MultipartFormDataContent form = new MultipartFormDataContent();
+
+            String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
+            String[] tokens = res.Split(';');
+            String cookie = tokens[0];
+            String[] tokensValue = cookie.Split('=');
+            String valueCookie = tokensValue[1];
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(await capture.Content.ReadAsStringAsync());
+
+
+            Encoding encoder = Encoding.GetEncoding("ISO-8859-1");
+            string no_thanks = "NOTHANKS";
+            string do_login = "do_login";
+            form.Headers.Add("Cookie", cookie);
+            form.Headers.ContentType.CharSet = "ISO-8859-1";
+            form.Add(new StringContent(username), "user");
+            form.Add(new StringContent(password), "pass");
+            form.Add(new StringContent(no_thanks), "remember_user");
+            form.Add(new StringContent(do_login), "a");
+            HttpResponseMessage response = await httpClient.PostAsync(BASE_ADDRESS_ADMIN + "/index.php", form);
+
+            response.EnsureSuccessStatusCode();
+
+            httpClient.Dispose();
+            string sd = await response.Content.ReadAsStringAsync();
+            var result = new HtmlDocument();
+            result.LoadHtml(sd);
+
+            var success = result.DocumentNode.SelectSingleNode("//div[@class='error']");
+            if (success == null)
+            {
+                temporal_response = "sucess";
+
+            }
+            else
+            {
+                temporal_response = "error";
+
+                ;
+            }
+            return temporal_response;
+        }
+
     }
 }

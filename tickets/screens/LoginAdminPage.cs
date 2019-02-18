@@ -1,54 +1,96 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using tickets.API;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Net.Http.Headers;
+using Microsoft.Graph;
+using Microsoft.Identity.Client;
+using Xamarin.Forms;
+using Xamarin.Essentials;
+
+using Xamarin.Forms.Xaml;
 using Xamarin.Forms;
 
 
-using System.Text;
-
-using Xamarin.Forms.Xaml;
-
-
-namespace tickets
+namespace tickets.screens
 {
+	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LoginAdminPage : ContentPage
-	{
+	{        private Server server = new Server();
+        private Login_Admin login_ = new Login_Admin();
 		public LoginAdminPage ()
 		{
 			InitializeComponent();
 		}
 
-		async void OnLoginButtonClicked (object sender, EventArgs e)
-		{
-			var user = new AdminUser {
-				Username = usernameEntry.Text,
-				Password = passwordEntry.Text
-			};
+		public async void SendRequest(object sender, System.EventArgs e)
+        {
+            var valid = !String.IsNullOrWhiteSpace(usernameEntry.Text) && !String.IsNullOrWhiteSpace(passwordEntry.Text);
+            if (valid)
+            {
 
-			var isValid = AreCredentialsCorrect (user);
-			if (isValid) {
-				App.IsUserLoggedIn = true;
-				MyTicketsAdmin home = new MyTicketsAdmin();
-            	App.Current.MainPage = new NavigationPage(home);
-                switch (Xamarin.Forms.Device.RuntimePlatform)
+            if (CheckInternetConnection())
+            {
+
+                try
                 {
-                    case Xamarin.Forms.Device.iOS:
-                        App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
-                        break;
-                    case Xamarin.Forms.Device.Android:
-                        App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
-                        break;
+                    string response = await login_.loginAdmins(usernameEntry.Text, passwordEntry.Text);
+                    if (response == " error")
+                    {
+                        await DisplayAlert("No se ha podido Acceder como Admin", "Revise por favor", "OK");
+                    }
+                    else if(response == "sucess")
+                    {
 
+                        switch (Xamarin.Forms.Device.RuntimePlatform)
+                        {
+                            case Xamarin.Forms.Device.iOS:
+                                App.Current.MainPage = new NavigationPage(new HomeScreen());
+                                break;
+                            case Xamarin.Forms.Device.Android:
+                                App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
+                                break;
+
+                        }
+
+                    }
                 }
-            } else {
-				messageLabel.Text = "Login failed";
-				passwordEntry.Text = string.Empty;
-			}
-		}
+                catch
+                {
+                    await DisplayAlert("Error", "Revise el Admin", "OK");
+                }
+            }
+            else
+            {
+                    await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
+            }
 
-		bool AreCredentialsCorrect (AdminUser user)
-		{
-			string userRequest = "";
-			string passRequest = "";
-			return !(user.Username == userRequest) && !(user.Password == passRequest);
+            }
+
+
+            else
+            {
+                await DisplayAlert("Error", "Ingrese Datos", "OK");
+
+            }
+        }
+        public bool CheckInternetConnection()
+        {
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
 		}
-	}
 }
