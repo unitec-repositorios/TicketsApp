@@ -106,9 +106,9 @@ namespace tickets
         private async void TicketsListView_RefreshingAdmin(object sender, EventArgs e)
         {
             GetTickets();
-            TicketsListViewAdmin.ItemsSource = null;
-            TicketsListViewAdmin.ItemsSource = tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss", 
-                        System.Globalization.CultureInfo.InvariantCulture));
+            // TicketsListViewAdmin.ItemsSource = null;
+            // TicketsListViewAdmin.ItemsSource = tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss", 
+            //             System.Globalization.CultureInfo.InvariantCulture));
             TicketsListViewAdmin.EndRefresh();
         }
 
