@@ -1,7 +1,5 @@
 using System;
 using Xamarin.Forms;
-
-
 using System.Text;
 
 using Xamarin.Forms.Xaml;
@@ -14,41 +12,52 @@ namespace tickets
 		public LoginAdminPage ()
 		{
 			InitializeComponent();
+			usernameEntry.Text = App.UserEmail;
 		}
 
 		async void OnLoginButtonClicked (object sender, EventArgs e)
 		{
-			var user = new AdminUser {
+			string password = passwordEntry.Text;
+            string encryptedPassword = App.Database.encryptPassword(password);
+            var admin = new AdminUser {
 				Username = usernameEntry.Text,
-				Password = passwordEntry.Text
+				Password = encryptedPassword
 			};
-
-			var isValid = AreCredentialsCorrect (user);
+			var isValid = AreCredentialsCorrect (admin);
 			if (isValid) {
-				App.IsUserLoggedIn = true;
 				MyTicketsAdmin home = new MyTicketsAdmin();
             	App.Current.MainPage = new NavigationPage(home);
-                switch (Xamarin.Forms.Device.RuntimePlatform)
-                {
-                    case Xamarin.Forms.Device.iOS:
-                        App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
-                        break;
-                    case Xamarin.Forms.Device.Android:
-                        App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
-                        break;
-
-                }
             } else {
-				messageLabel.Text = "Login failed";
+				messageLabel.Text = "Contraseña incorrecta";
 				passwordEntry.Text = string.Empty;
 			}
 		}
-
-		bool AreCredentialsCorrect (AdminUser user)
+		
+		private void  SignInButtonClicked(object sender, EventArgs e)
+        {
+			User usr = App.Database.GetUserAsync(App.UserEmail);
+			if((usr.Profile).Equals("Administrativo")){
+                SignInAdminPage signIn = new SignInAdminPage();
+            	App.Current.MainPage = new NavigationPage(signIn);
+			}else{
+                DisplayAlert("Error", "Su no tiene permisos para esta operacion", "Aceptar");
+			}
+        }
+        bool AreCredentialsCorrect (AdminUser admin)
 		{
-			string userRequest = "";
-			string passRequest = "";
-			return !(user.Username == userRequest) && !(user.Password == passRequest);
+			AdminUser findUser = App.Database.GetCurrentAdminUserNotAsync();
+			if(findUser != null){
+				if (!admin.Password.Equals("")){
+					return (findUser.Password).Equals(admin.Password);
+				}
+			}
+			return false;
 		}
+
+		async void OnCancelTouched(object sender, System.EventArgs e)
+        {
+            AppSettingsPage settings = new AppSettingsPage();
+            App.Current.MainPage = new NavigationPage(settings);
+        }
 	}
 }

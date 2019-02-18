@@ -25,26 +25,12 @@
             <Button
             x:Name="SignInSignOutBtn" 
             Margin="70,20"
-			Text="INICIAR SESIÓN" 
+			Text="INICIAR SESIï¿½N" 
 			TextColor="White"
             FontSize="20"
             BorderRadius="20"
 			BackgroundColor="#01265A"
             Clicked="OnSignInSignOut"
-                VerticalOptions="CenterAndExpand"
-               
-               
-           />
-
-            <Button
-            x:Name="SignInSignOutBtnAdmin" 
-            Margin="80,20"
-			Text="INICIAR SESIÓN ADMIN" 
-			TextColor="White"
-            FontSize="10"
-            BorderRadius="20"
-			BackgroundColor="#01265A"
-            Clicked="OnSignInSignOutAdmin"
                 VerticalOptions="CenterAndExpand"
                
                

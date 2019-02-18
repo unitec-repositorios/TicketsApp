@@ -19,7 +19,7 @@
                                         </OnPlatform>
                                     </Image.Source>
                                 </Image>
-                                <Label Text="Configuración de Cuenta" VerticalOptions="Center" FontSize="Large" />
+                                <Label Text="Configuraciï¿½n de Cuenta" VerticalOptions="Center" FontSize="Large" />
                             </StackLayout>
                         </ViewCell>
                     </TableSection>
@@ -67,6 +67,23 @@
                         </EntryCell>
                     </TableSection>
                     <TableSection>
+                        <ViewCell Tapped="SignInAdminClicked" StyleId="disclosure">
+                            <StackLayout Orientation="Horizontal" Margin="10,5,0,5" Spacing="20">
+                                <Image>
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="FileImageSource">
+                                            <OnPlatform.Platforms>
+                                                <On Platform="iOS" Value="baseline_settings_black_36pt" />
+                                                <On Platform="Android" Value="baseline_settings_black_36.png" />
+                                            </OnPlatform.Platforms>
+                                        </OnPlatform>
+                                    </Image.Source>
+                                </Image>
+                                <Label Text="Sesion Administrador" VerticalOptions="Center" FontSize="Large" />
+                            </StackLayout>
+                        </ViewCell>
+                    </TableSection>
+                    <TableSection>
                         <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
                             <StackLayout Orientation="Horizontal" Margin="10,5,0,5" Spacing="20">
                                 <Image>
@@ -79,7 +96,7 @@
                                         </OnPlatform>
                                     </Image.Source>
                                 </Image>
-                                <Label Text="Cerrar Sesión" VerticalOptions="Center" FontSize="Large" />
+                                <Label Text="Cerrar Sesiï¿½n" VerticalOptions="Center" FontSize="Large" />
                             </StackLayout>
                         </ViewCell>
                     </TableSection>
