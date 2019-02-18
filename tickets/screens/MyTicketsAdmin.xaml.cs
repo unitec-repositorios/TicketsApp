@@ -174,7 +174,7 @@ namespace tickets
             }            
 
             //Modificar parametros del request para obtener tickets ordenados por columna
-            requestURI = @"http://138.197.198.67/admin/show_tickets.php?status=6&sort=subject&category=0&s_my=1&s_ot=1&s_un=1&limit=10&asc=1";
+            requestURI = @"http://138.197.198.67/admin/show_tickets.php?status=6&sort=lastchange&category=0&s_my=1&s_ot=1&s_un=1&limit=10&asc=0";
             var res2 = await httpClient.GetAsync(requestURI);
             contents = await res2.Content.ReadAsStringAsync();
             var htmlDoc = new HtmlDocument();
