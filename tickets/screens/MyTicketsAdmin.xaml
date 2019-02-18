@@ -19,11 +19,7 @@
                                     <Label Text="{Binding Message}" LineBreakMode="TailTruncation" />
                                 </StackLayout>
                                 <Image x:Name="notification" Source="{Binding Image}" />
-
                                 <Image x:Name="open" Source="{Binding OpenImage}" />
-
-                                
-                                
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
@@ -35,8 +31,8 @@
     <ContentPage Title="Asignados">
         <ContentPage.Content>
             <StackLayout>
-                <SearchBar Placeholder="Buscar" TextChanged="SearchBar_TextChangedAdminAsign" HeightRequest="40"/>
-                <ListView x:Name="TicketsListViewAdminAsign" IsPullToRefreshEnabled="True" Refreshing="TicketsListView_RefreshingAdminAsign" ItemSelected="goToViewTicketAdmin" SeparatorVisibility="Default" RowHeight="70">
+                <SearchBar Placeholder="Buscar" TextChanged="SearchBar_TextChangedAdminAssign" HeightRequest="40"/>
+                <ListView x:Name="TicketsListViewAdminAssign" IsPullToRefreshEnabled="True" Refreshing="TicketsListView_RefreshingAdminAssign" ItemSelected="goToViewTicketAdmin" SeparatorVisibility="Default" RowHeight="70">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell StyleId="disclosure">
@@ -46,7 +42,6 @@
                                         <Label Text="{Binding Message}" LineBreakMode="TailTruncation" />
                                     </StackLayout>
                                     <Image x:Name="notification" Source="{Binding Image}" />
-
                                     <Image x:Name="open" Source="{Binding OpenImage}" />
                                 </StackLayout>
                             </ViewCell>
