@@ -13,6 +13,7 @@ using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using MvvmHelpers;
 using Acr.UserDialogs;
+using Xamarin.Essentials;
 
 namespace tickets
 {
@@ -28,6 +29,8 @@ namespace tickets
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
         public string stateText {get;set;}
+        private List<DateTime> dateMessagesList;
+        private ToolbarItem openTicket,openBrowserTool;
 
         public chatViewModel chatVM;
         public chatTicket()
@@ -37,7 +40,8 @@ namespace tickets
                 InitializeComponent();
                 this.BindingContext = this;
                 chatVM = new chatViewModel(ticketID, files);
-                stateText = "Probando";
+                dateMessagesList = new List<DateTime>();
+                
                 chatVM.ListMessages.CollectionChanged += (sender, e) =>
                 {
                     var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
@@ -48,20 +52,28 @@ namespace tickets
                 };
                 ListMessages = new ObservableRangeCollection<Message>();
                 
-               var openTicket = new ToolbarItem
+               openTicket = new ToolbarItem
                 {
-                    Text = "prueba",
+                    Text = "Abrir Ticket",
                     Command = new Command(execute: () => switchState()),
 
                     Order = ToolbarItemOrder.Secondary
 
                 };
-            
+
+                openBrowserTool = new ToolbarItem
+                {
+                    Text = "Abrir en el navegador",
+                    Command = new Command(execute: () => openBrowser()),
+                    Order = ToolbarItemOrder.Secondary
+                };
+
 
                 switch (Device.RuntimePlatform)
                 {
                     case Device.Android:
                         ToolbarItems.Add(openTicket);
+                        ToolbarItems.Add(openBrowserTool);
                         break;
                     case Device.UWP:
                         ToolbarItems.Add(openTicket);
@@ -78,6 +90,63 @@ namespace tickets
            
         }
 
+        private async void openBrowser()
+        {
+            string refresh = await server.getRefresh();
+            string uri = server.GetBaseAdress() + "/ticket.php?track=" + ticketID + "&Refresh=" + refresh;
+            await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+        }
+
+        /*
+             private async void enviarMensaje(object sender, EventArgs args)
+             {           
+
+                 if (!String.IsNullOrWhiteSpace(mensajeChat.Text))
+                 {
+                     var message = new Message
+                     {
+                         Text = mensajeChat.Text,
+                         Files = files,
+                         IsTextIn = false,
+                         MessageDateTime = DateTime.Now
+                     };
+
+                     //await DisplayAlert("Notificacion", "Enviando mensaje...", "Ok");
+
+                     sendMessage(message);
+
+
+                 }
+                 else
+                 {
+                     await DisplayAlert("Notificacion", "Ingrese mensaje", "Ok");
+                 }
+
+             }
+
+             public async void sendMessage(Message message)
+             {
+                 Loading.IsVisible = true;
+                 string status = await server.replyTicket(message.Text, message.Files, ticketID);
+                 //await DisplayAlert("Notificacion del server", status, "Ok");
+                 if (status.Equals("ok"))
+                 {
+
+                     mensajeChat.Text = "";
+                     await DisplayAlert("Notificacion", "Mensaje Enviado!", "Ok");
+                     Loading.IsVisible = false;
+
+                     ListMessages.Add(message);
+
+                 }
+                 else
+                 {
+                     await DisplayAlert("Notificacion", "No se pudo enviar el mensaje...", "Ok");
+                     //OutText = this.ticketID;
+                 }
+             }
+
+         */
 
         private async void take_Photo(object sender, EventArgs args)
         {
@@ -169,22 +238,9 @@ namespace tickets
                     Title = "Ticket No. " + ticketID;
                 }
                 BindingContext = chatVM = new chatViewModel(ticketID, files);
-                ToolbarItems.Clear();
-                var openTicket = new ToolbarItem
-                {
-                    Text = await getSateText(),
-                    Command = new Command(execute: () => switchState()),
-
-                    Order = ToolbarItemOrder.Secondary
-
-                };
-                ToolbarItems.Add(openTicket);
+                openTicket.Text = await getSateText();
+                dateMessagesList = await server.getDateMessage(ticketID);
                 readTicket();
-                
- 
-
-                
-
             }
             catch (Exception ex)
             {
@@ -199,6 +255,7 @@ namespace tickets
             string myName = null;
             int position = html.IndexOf(autorRef + "N");
             int index = position + autorRef.Count();
+            int posFecha = 0;
             while (position != -1)
             {
                 html = html.Substring(index);
@@ -224,14 +281,16 @@ namespace tickets
                     {
                         autor += ":\n";
                     }
+                   
                     var mymessage = new Message
                     {
                         Text = autor + message,
                         IsTextIn = typeText,
-                        //aqui es donde esta el problema de la fecha en chat!!!!!!!!
-                        MessageDateTime = DateTime.Now
+                        //need to correct the time message
+                        MessageDateTime = dateMessagesList[posFecha]
                     };
                     chatVM.ListMessages.Add(mymessage);
+                    posFecha++;
                 }
                 position = html.IndexOf(autorRef + "N");
                 index = position + autorRef.Count();
@@ -320,16 +379,7 @@ namespace tickets
                 //Loading.IsVisible = false;
                 string open = close == "abrir" ? "abierto" : "cerrado"; 
                 await DisplayAlert("Operanción exitosa", "El estado del ticket " + ticketID + " ha sido " + open, "OK");
-                ToolbarItems.Clear();
-                var openTicket = new ToolbarItem
-                {
-                    Text = await getSateText(),
-                    Command = new Command(execute: () => switchState()),
-
-                    Order = ToolbarItemOrder.Secondary
-
-                };
-                ToolbarItems.Add(openTicket);
+                openTicket.Text = await getSateText();
             }
             UserDialogs.Instance.HideLoading();
         }
