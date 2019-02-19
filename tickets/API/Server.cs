@@ -26,20 +26,11 @@ namespace tickets.API
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/print.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
+            if(html.IndexOf("<b>Error:</b>")!=-1)
+            {
+                return "Error";
+            }
             return html;
-        }
-
-        public async Task<string> getAccountTicket(string id)
-        {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
-            string html = await response.Content.ReadAsStringAsync();
-            string search = "<td valign=\"top\" class=\"tickettd\">Numero de cuenta / No. de talento humano:</td>";
-            int pos = html.IndexOf(search) + search.Length;
-            html = html.Substring(pos);
-            search = "<td valign=\"top\" class=\"tickettd\">";
-            pos = html.IndexOf(search) + search.Length;
-            return getTextAux('<', html, pos);
         }
 
         public async Task<List<DateTime>> getDateMessage(string id)
