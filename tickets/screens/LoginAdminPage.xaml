@@ -6,12 +6,15 @@
     Title="Login">
 	<ContentPage.Content>
 		<StackLayout VerticalOptions="StartAndExpand">
-			<Label Text="Username" />
-			<Entry x:Name="usernameEntry" Placeholder="username" />
-			<Label Text="Password" />
-			<Entry x:Name="passwordEntry" IsPassword="true" />
-			<Button Text="Login" Clicked="OnLoginButtonClicked" />
+			<Label Text="Todavia no tienes usuario?" />
+			<Button Text="Crear Cuenta" Clicked="SignInButtonClicked" />
+			<Label Text="Usuario:" />
+			<Entry x:Name="usernameEntry" Placeholder="Usuario" />
+			<Label Text="Contraseña:" />
+			<Entry x:Name="passwordEntry" Placeholder="Contraseña" IsPassword="true" />
 			<Label x:Name="messageLabel" />
+			<Button Text="Login" Clicked="OnLoginButtonClicked" />
+			<Button Text="Cancelar" Clicked="OnCancelTouched" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
