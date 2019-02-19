@@ -119,8 +119,19 @@ namespace tickets
         /// <param name="ticket">Ticket.</param>
         public Task<int> CreateNewTicket(Ticket ticket)
         {
-            ticket.PrintData();
-            return database.InsertAsync(ticket);
+            try
+            {
+                ticket.PrintData();
+                return database.InsertAsync(ticket);
+            }
+            catch(SQLiteException e)
+            {
+                throw e;
+            }
+                
+          
+          
+            
         }
 
         /// <summary>
@@ -153,5 +164,7 @@ namespace tickets
         {
             return database.QueryAsync<Comment>("SELECT * FROM Comment WHERE TicketID = ?", TicketID);
         }
+
+       
     }
 }

@@ -21,9 +21,30 @@ namespace tickets.API
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
+        public async Task<string> getDetailsTicket(string id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/print.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            return html;
+        }
+
+        public async Task<string> getAccountTicket(string id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            string search = "<td valign=\"top\" class=\"tickettd\">Numero de cuenta / No. de talento humano:</td>";
+            int pos = html.IndexOf(search) + search.Length;
+            html = html.Substring(pos);
+            search = "<td valign=\"top\" class=\"tickettd\">";
+            pos = html.IndexOf(search) + search.Length;
+            return getTextAux('<', html, pos);
+        }
+
         public async Task<List<DateTime>> getDateMessage(string id)
         {
-            List<DateTime> fechas= new List<DateTime>();
+            List<DateTime> fechas = new List<DateTime>();
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
@@ -123,7 +144,7 @@ namespace tickets.API
             return "error";
         }
 
-//HEAD
+        //HEAD
         public async Task<bool> getOpenTicket(string id)
         {
             HttpClient _client = new HttpClient();
@@ -138,15 +159,15 @@ namespace tickets.API
             HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
             int posRefresh = html.IndexOf("Refresh=");
-            int posToken =  html.IndexOf("token=");
+            int posToken = html.IndexOf("token=");
             string refresh = getTextAux('a', html, posRefresh);
-            string token = getTextAux('"',html,posToken);
+            string token = getTextAux('"', html, posToken);
             string s = await getOpenTicket(id) ? "3" : "1"; // 1 to open and 3 to close
             string link = BASE_ADDRESS + "/change_status.php?track=" + id + "&s=" + s + "&" + refresh + "&" + token;
             response = await client.GetAsync(link);
         }
 
-        private string getTextAux(char delimiter,string text,int pos)
+        public string getTextAux(char delimiter,string text,int pos)
         {
             string txt = "";
             char val = text[pos];

@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Timers;
 using Acr.UserDialogs;
+using SQLite;
 
 namespace tickets
 {
@@ -42,6 +43,16 @@ namespace tickets
                    
                 };
 
+                var addTicketTool = new ToolbarItem
+                {
+
+                    Text = "Agregar Ticket",
+                    Command  = new Command(execute: () => addTicketId()),
+
+                    Order = ToolbarItemOrder.Secondary
+
+                };
+
                 switch (Device.RuntimePlatform)
                 {
                     case Device.iOS:
@@ -50,6 +61,7 @@ namespace tickets
                     case Device.Android:
                         ToolbarItems.Add(newTicket);
                         ToolbarItems.Add(settings);
+                        ToolbarItems.Add(addTicketTool);
                         break;
                     case Device.UWP:
                         ToolbarItems.Add(newTicket);
@@ -64,6 +76,107 @@ namespace tickets
             {
                 throw ex;
             }
+        }
+
+
+        private void addTicketId()
+        {
+            popupAddTicketId.IsVisible = true;
+        }
+
+        private void cancel_Popup(object sender, EventArgs e)
+        {
+            popupAddTicketId.IsVisible = false;
+        }
+
+        private string getDetailTicket(string html,string search)
+        {
+            int pos = html.IndexOf(search) + search.Length;
+            html = html.Substring(pos);
+            pos = 0;
+            string detail = "";
+            if (search == "Tema")
+            {
+                search = "<b>";
+                pos = html.IndexOf(search) + search.Length;
+            }
+            else if (search == "<b>Mensaje:</b>")
+            {
+                search = "<br />";
+                pos = html.IndexOf(search) + search.Length;
+            }
+            else
+            {
+                pos = pos + 1;
+            }
+            detail = server.getTextAux('<', html, pos);
+            Console.WriteLine("Detalle: " + detail);
+            return detail;
+        }
+
+        private async void addTicketID_Popup(object sender, EventArgs e)
+        {
+            User current = await App.Database.GetCurrentUser();
+            Console.WriteLine("ID del entry del pop-up: " + entryId.Text);
+            string html = await server.getDetailsTicket(entryId.Text);
+            string account = getDetailTicket(html,"Numero de cuenta / No. de talento humano:");
+            string error = "No se agrergo el ticket,los numeros de cuentas no coinciden";
+            Console.WriteLine("Id ticket del server: " + account);
+            Console.WriteLine("Id ticket de la base de datos local: " + current.Account);
+            if (account==current.Account)
+            {
+                string date = await server.getInitDate(entryId.Text);
+                string c = getDetailTicket(html, "Clasificacion:");
+                int clas = 5;
+                if (c == "Solicitud")
+                {
+                    clas = 1;
+                }
+                else if(c== "Información")
+                {
+                    clas = 2;
+                }
+                else if (c == "Queja")
+                {
+                    clas = 3;
+                }
+                else if (c == "Reclamo")
+                {
+                    clas = 4;
+                }
+                string prioridad = getDetailTicket(html, "Prioridad:");
+                int p = 3;
+                if(prioridad=="Alto")
+                {
+                    p = 1;
+                }
+                else if(prioridad=="Medio")
+                {
+                    p = 2;
+                }
+                try
+                {
+                    await App.Database.CreateNewTicket(new Ticket()
+                    {
+                        ID = entryId.Text,
+                        UserID = current.ID,
+                        Affected = int.Parse(getDetailTicket(html, "Cantidad de usuarios afectados:")),
+                        Classification = clas,
+                        Priority = p,
+                        Subject = getDetailTicket(html, "Tema"),
+                        Message = getDetailTicket(html, "<b>Mensaje:</b>"),
+                        Date = date,
+                    });
+                    error = "El ticket se agrego exitosamente";
+                }
+                catch (SQLiteException )
+                {
+                    error = "No se agrergo el ticket,porque ya existe en la aplicacion";
+                }
+            }
+            popupAddTicketId.IsVisible = false;
+            await DisplayAlert("Agregar Ticket", error,"OK");
+            entryId.Text = "";
         }
 
         protected override async void OnAppearing()
