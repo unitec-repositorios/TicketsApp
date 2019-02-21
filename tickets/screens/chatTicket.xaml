@@ -25,17 +25,15 @@
 
                 <StackLayout x:Name="messageComponent" Orientation="Vertical" Grid.Row="1" BackgroundColor="White" VerticalOptions="EndAndExpand">
                     <Label Text="Archivos adjuntos:" x:Name="Adjun"></Label >
-                    <Entry 
-                        HorizontalOptions="FillAndExpand"  
-                        Placeholder="Mensaje"  
-                        Text="{Binding OutText}" Keyboard="Chat" Margin="4"/>
+                    <Label Text="Mensaje"  Font="Bold, 24"></Label>
+                    <Editor x:Name="message" class="editor"></Editor>
                     <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="EndAndExpand">
 
                         <!--Enviar Mensaje -->
                         <Image Source="enviarIcono.png" WidthRequest="40" HeightRequest="40" Margin="4">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer
-                                Command="{Binding SendCommand}"                                                  
+                                Tapped="OnReply"                                             
                                 />
 
                             </Image.GestureRecognizers>

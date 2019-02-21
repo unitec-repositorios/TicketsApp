@@ -41,7 +41,6 @@ namespace tickets
                 this.BindingContext = this;
                 chatVM = new chatViewModel(ticketID, files);
                 dateMessagesList = new List<DateTime>();
-                
                 chatVM.ListMessages.CollectionChanged += (sender, e) =>
                 {
                     var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
@@ -97,57 +96,6 @@ namespace tickets
             await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
         }
 
-        /*
-             private async void enviarMensaje(object sender, EventArgs args)
-             {           
-
-                 if (!String.IsNullOrWhiteSpace(mensajeChat.Text))
-                 {
-                     var message = new Message
-                     {
-                         Text = mensajeChat.Text,
-                         Files = files,
-                         IsTextIn = false,
-                         MessageDateTime = DateTime.Now
-                     };
-
-                     //await DisplayAlert("Notificacion", "Enviando mensaje...", "Ok");
-
-                     sendMessage(message);
-
-
-                 }
-                 else
-                 {
-                     await DisplayAlert("Notificacion", "Ingrese mensaje", "Ok");
-                 }
-
-             }
-
-             public async void sendMessage(Message message)
-             {
-                 Loading.IsVisible = true;
-                 string status = await server.replyTicket(message.Text, message.Files, ticketID);
-                 //await DisplayAlert("Notificacion del server", status, "Ok");
-                 if (status.Equals("ok"))
-                 {
-
-                     mensajeChat.Text = "";
-                     await DisplayAlert("Notificacion", "Mensaje Enviado!", "Ok");
-                     Loading.IsVisible = false;
-
-                     ListMessages.Add(message);
-
-                 }
-                 else
-                 {
-                     await DisplayAlert("Notificacion", "No se pudo enviar el mensaje...", "Ok");
-                     //OutText = this.ticketID;
-                 }
-             }
-
-         */
-
         private async void take_Photo(object sender, EventArgs args)
         {
             await CrossMedia.Current.Initialize();
@@ -181,18 +129,6 @@ namespace tickets
             }
             Adjun.Text = temp;
             //await DisplayAlert("File Location", filePath, "OK");
-        }
-
-
-
-        byte[] MediaFileBytes(Plugin.Media.Abstractions.MediaFile file)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                file.GetStream().CopyTo(memoryStream);
-                file.Dispose();
-                return memoryStream.ToArray();
-            }
         }
 
         private async void searchFile(object sender, EventArgs e)
@@ -245,6 +181,57 @@ namespace tickets
             catch (Exception ex)
             {
             }
+        }
+
+        byte[] MediaFileBytes(Plugin.Media.Abstractions.MediaFile file)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                file.GetStream().CopyTo(memoryStream);
+                file.Dispose();
+                return memoryStream.ToArray();
+            }
+        }
+
+        async void OnReply(object sender, System.EventArgs e)
+        {
+            var valid = !String.IsNullOrWhiteSpace(message.Text);
+            var msg = new Message
+            {
+                Text = message.Text,
+                Files = files,
+                IsTextIn = false,
+                MessageDateTime = DateTime.Now
+            };
+
+            if (valid)
+            {
+                try
+                {
+                    UserDialogs.Instance.ShowLoading("Enviando Respuesta...");
+                    string response = await server.replyTicket(message.Text, files, ticketID);
+
+                    if (response.Equals("error"))
+                    {
+                        await DisplayAlert("No se ha podido enviar la respuesta!", "Revise por favor", "OK");
+                    }
+                    else
+                    {
+                        UserDialogs.Instance.ShowSuccess("Respuesta Enviada!");
+                        ListMessages.Add(msg);
+                        message.Text = "";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Error", "Error= " + ex, "OK");
+                }
+            }
+            else
+            {
+                await DisplayAlert("Advertencia", "La respuesta no puede estar vacia.", "OK");
+            }
+
         }
 
         public async void readTicket()
