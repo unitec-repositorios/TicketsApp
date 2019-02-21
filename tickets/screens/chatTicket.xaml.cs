@@ -13,6 +13,7 @@ using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using MvvmHelpers;
 using Acr.UserDialogs;
+using Xamarin.Essentials;
 
 namespace tickets
 {
@@ -27,7 +28,9 @@ namespace tickets
         public string ticketID = null;
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
-        public string stateText {get;set;}
+        public string stateText { get; set; }
+        private List<DateTime> dateMessagesList;
+        private ToolbarItem openTicket, openBrowserTool,transfer,menpre;
 
         public chatViewModel chatVM;
         public chatTicket()
@@ -37,7 +40,8 @@ namespace tickets
                 InitializeComponent();
                 this.BindingContext = this;
                 chatVM = new chatViewModel(ticketID, files);
-                stateText = "Probando";
+                dateMessagesList = new List<DateTime>();
+
                 chatVM.ListMessages.CollectionChanged += (sender, e) =>
                 {
                     var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
@@ -47,87 +51,110 @@ namespace tickets
 
                 };
                 ListMessages = new ObservableRangeCollection<Message>();
-                
-               var openTicket = new ToolbarItem
+
+                openTicket = new ToolbarItem
                 {
-                    Text = "prueba",
+                    Text = "Abrir Ticket",
                     Command = new Command(execute: () => switchState()),
 
                     Order = ToolbarItemOrder.Secondary
 
                 };
-            
+
+                openBrowserTool = new ToolbarItem
+                {
+                    Text = "Abrir en el navegador",
+                    //Command = new Command(execute: () => openBrowser()),
+                    Order = ToolbarItemOrder.Secondary
+                };
+
+                menpre = new ToolbarItem
+                {
+                    Text = "Respuestas Predeterminadas",
+                    Order = ToolbarItemOrder.Secondary
+                };
+
+                transfer = new ToolbarItem
+                {
+                    Text = "Transferir Ticket",
+                    Command = new Command(execute: () => transferir()),
+                    Order = ToolbarItemOrder.Secondary
+                };
+
 
                 switch (Device.RuntimePlatform)
                 {
                     case Device.Android:
                         ToolbarItems.Add(openTicket);
+                        ToolbarItems.Add(openBrowserTool);
+                        ToolbarItems.Add(menpre);
+                        ToolbarItems.Add(transfer);
                         break;
                     case Device.UWP:
                         ToolbarItems.Add(openTicket);
                         break;
                 }//*/
-                
+
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            
 
-           
-        }
 
-   /*
-        private async void enviarMensaje(object sender, EventArgs args)
-        {           
-
-            if (!String.IsNullOrWhiteSpace(mensajeChat.Text))
-            {
-                var message = new Message
-                {
-                    Text = mensajeChat.Text,
-                    Files = files,
-                    IsTextIn = false,
-                    MessageDateTime = DateTime.Now
-                };
-
-                //await DisplayAlert("Notificacion", "Enviando mensaje...", "Ok");
-               
-                sendMessage(message);
-                
-
-            }
-            else
-            {
-                await DisplayAlert("Notificacion", "Ingrese mensaje", "Ok");
-            }
 
         }
-
-        public async void sendMessage(Message message)
+        private void transferir()
         {
-            Loading.IsVisible = true;
-            string status = await server.replyTicket(message.Text, message.Files, ticketID);
-            //await DisplayAlert("Notificacion del server", status, "Ok");
-            if (status.Equals("ok"))
-            {
-               
-                mensajeChat.Text = "";
-                await DisplayAlert("Notificacion", "Mensaje Enviado!", "Ok");
-                Loading.IsVisible = false;
-
-                ListMessages.Add(message);
-                
-            }
-            else
-            {
-                await DisplayAlert("Notificacion", "No se pudo enviar el mensaje...", "Ok");
-                //OutText = this.ticketID;
-            }
+            DisplayActionSheet("Transferir A?", "Cancelar", null, "Credito y Cobranza", "Registro", "Administracion", "Direccion Academica","CAP","IT","Adminisiones");
         }
 
-    */
+       /* private async void openBrowser()
+        {
+            string refresh = await server.getRefresh();
+            string uri = server.GetBaseAdress() + "/ticket.php?track=" + ticketID + "&Refresh=" + refresh;
+            await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+        }
+
+        /*
+             private async void enviarMensaje(object sender, EventArgs args)
+             {           
+                 if (!String.IsNullOrWhiteSpace(mensajeChat.Text))
+                 {
+                     var message = new Message
+                     {
+                         Text = mensajeChat.Text,
+                         Files = files,
+                         IsTextIn = false,
+                         MessageDateTime = DateTime.Now
+                     };
+                     //await DisplayAlert("Notificacion", "Enviando mensaje...", "Ok");
+                     sendMessage(message);
+                 }
+                 else
+                 {
+                     await DisplayAlert("Notificacion", "Ingrese mensaje", "Ok");
+                 }
+             }
+             public async void sendMessage(Message message)
+             {
+                 Loading.IsVisible = true;
+                 string status = await server.replyTicket(message.Text, message.Files, ticketID);
+                 //await DisplayAlert("Notificacion del server", status, "Ok");
+                 if (status.Equals("ok"))
+                 {
+                     mensajeChat.Text = "";
+                     await DisplayAlert("Notificacion", "Mensaje Enviado!", "Ok");
+                     Loading.IsVisible = false;
+                     ListMessages.Add(message);
+                 }
+                 else
+                 {
+                     await DisplayAlert("Notificacion", "No se pudo enviar el mensaje...", "Ok");
+                     //OutText = this.ticketID;
+                 }
+             }
+         */
 
         private async void take_Photo(object sender, EventArgs args)
         {
@@ -219,22 +246,9 @@ namespace tickets
                     Title = "Ticket No. " + ticketID;
                 }
                 BindingContext = chatVM = new chatViewModel(ticketID, files);
-                ToolbarItems.Clear();
-                var openTicket = new ToolbarItem
-                {
-                    Text = await getSateText(),
-                    Command = new Command(execute: () => switchState()),
-
-                    Order = ToolbarItemOrder.Secondary
-
-                };
-                ToolbarItems.Add(openTicket);
+                openTicket.Text = await getSateText();
+                dateMessagesList = await server.getDateMessage(ticketID);
                 readTicket();
-                
- 
-
-                
-
             }
             catch (Exception ex)
             {
@@ -249,6 +263,7 @@ namespace tickets
             string myName = null;
             int position = html.IndexOf(autorRef + "N");
             int index = position + autorRef.Count();
+            int posFecha = 0;
             while (position != -1)
             {
                 html = html.Substring(index);
@@ -274,14 +289,16 @@ namespace tickets
                     {
                         autor += ":\n";
                     }
+
                     var mymessage = new Message
                     {
                         Text = autor + message,
                         IsTextIn = typeText,
                         //need to correct the time message
-                        MessageDateTime = DateTime.Now
+                        MessageDateTime = dateMessagesList[posFecha]
                     };
                     chatVM.ListMessages.Add(mymessage);
+                    posFecha++;
                 }
                 position = html.IndexOf(autorRef + "N");
                 index = position + autorRef.Count();
@@ -359,34 +376,25 @@ namespace tickets
         }
 
         async void switchState()
-        {           
+        {
             string close = await server.getOpenTicket(ticketID) ? "cerrar" : "abrir";
-            bool answer = await DisplayAlert("Alerta!", "¿Estas seguro que deseas " + close +" el ticket?", "Yes","No");
+            bool answer = await DisplayAlert("Alerta!", "¿Estas seguro que deseas " + close + " el ticket?", "Yes", "No");
             UserDialogs.Instance.ShowLoading("");
             if (answer)
             {
                 messageComponent.IsVisible = close == "abrir";
                 await server.changeStatusTicket(ticketID);
                 //Loading.IsVisible = false;
-                string open = close == "abrir" ? "abierto" : "cerrado"; 
+                string open = close == "abrir" ? "abierto" : "cerrado";
                 await DisplayAlert("Operanción exitosa", "El estado del ticket " + ticketID + " ha sido " + open, "OK");
-                ToolbarItems.Clear();
-                var openTicket = new ToolbarItem
-                {
-                    Text = await getSateText(),
-                    Command = new Command(execute: () => switchState()),
-
-                    Order = ToolbarItemOrder.Secondary
-
-                };
-                ToolbarItems.Add(openTicket);
+                openTicket.Text = await getSateText();
             }
             UserDialogs.Instance.HideLoading();
         }
 
         async Task<string> getSateText()
         {
-            return  await server.getOpenTicket(ticketID) ? "Cerrar Ticket" : "Abrir Ticket";
+            return await server.getOpenTicket(ticketID) ? "Cerrar Ticket" : "Abrir Ticket";
         }
 
 
