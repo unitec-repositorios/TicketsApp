@@ -50,6 +50,7 @@ namespace tickets
         private void  SignInAdminClicked(object sender, EventArgs e)
         {
             LoginAdminPage login = new LoginAdminPage();
+
             App.Current.MainPage = new NavigationPage(login);
         }
 

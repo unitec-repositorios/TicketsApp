@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Timers;
 using Acr.UserDialogs;
 using HtmlAgilityPack;
+using tickets.Models;
 using System.Net.Http;
 
 namespace tickets
@@ -17,6 +18,7 @@ namespace tickets
     public partial class MyTicketsAdmin : TabbedPage
     {
         private Server server = new Server();
+        private AdminLogin login = AdminLogin.Instance;
         ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
         private Timer refreshTicketsTimer;
         
@@ -24,6 +26,8 @@ namespace tickets
         {
             try
             {
+                Console.WriteLine("ACA ESTA LA COOKIE");
+                Console.WriteLine(login.cookies);
                 InitializeComponent();
                 this.BindingContext = this;
 
@@ -155,13 +159,13 @@ namespace tickets
            
             User user = await App.Database.GetCurrentUser();
 
-            var requestURI = @"http://138.197.198.67/admin/index.php";
+            //var requestURI = @"http://138.197.198.67/admin/index.php";
             HttpClient httpClient = new HttpClient();
             var parameters = new Dictionary<string, string>();
 
             //Aquí se debe obtener la cookie en lugar de la sesión de login hardcoded que se realiza
-            parameters["user"] = "administrator";
-            parameters["pass"] = "admin";
+            /*parameters["user"] = login.username;
+            parameters["pass"] = login.password;
             parameters["remember_user"] = "NOTHANKS";
             parameters["a"] = "do_login";
             var response = await httpClient.PostAsync(requestURI, new FormUrlEncodedContent(parameters));
@@ -171,17 +175,34 @@ namespace tickets
             if (response.Headers.TryGetValues("Set-Cookie", out headerVals))
             {
                 session = headerVals.First();
-            }    
-                   
+            } */
+            
+
             //Modificar parametros del request para obtener tickets ordenados por columna
-            requestURI = @"http://138.197.198.67/admin/show_tickets.php?status=6&sort=lastchange&category=0&s_my=1&s_ot=1&s_un=1&limit=10&asc=0";
-            var res2 = await httpClient.GetAsync(requestURI);
-            contents = await res2.Content.ReadAsStringAsync();
+           // requestURI = @"http://138.197.198.67/admin/show_tickets.php?status=6&sort=lastchange&category=0&s_my=1&s_ot=1&s_un=1&limit=10&asc=0";
+
+
+            var requestURI = new Uri("http://138.197.198.67");
+            using (var handler = new HttpClientHandler { UseCookies = false })
+            using (var client = new HttpClient(handler) { BaseAddress = requestURI })
+            {
+                var message = new HttpRequestMessage(HttpMethod.Get, "/admin/show_tickets.php?status=6&sort=lastchange&category=0&s_my=1&s_ot=1&s_un=1&limit=10&asc=0");
+                message.Headers.Add("Cookie","Set-Cookie="+login.cookies);
+                var result = await client.SendAsync(message);
+            
+
+            //var message = new HttpRequestMessage(HttpMethod.Get,requestURI);
+            //message.Headers.Add("Cookie",login.cookies);
+            //var res2 = await httpClient.SendAsync(message);
+            var contents = await result.Content.ReadAsStringAsync();
+            Console.WriteLine("ES NULO SI O NO: " + contents != null ? "NO" : "SI");
+            Console.WriteLine(contents);
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(contents);
             var table = htmlDoc.DocumentNode.SelectSingleNode("//table[@class=\"white\"]");
             tickets = new ObservableCollection<Ticket>();
             int hcount = 0;
+            
             //Ciclar rows y crear tickets en la ObservableList
             foreach (HtmlNode row in table.SelectNodes("tr")) {
                 if(hcount > 0){ //Ignore headers
@@ -214,6 +235,7 @@ namespace tickets
                 }
             }
             TicketsListViewAdminAssign.ItemsSource = tickets;
+            }
         }
     }
 }
