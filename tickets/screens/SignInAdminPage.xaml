@@ -13,7 +13,7 @@
 			<Entry x:Name="passwordEntry2" Placeholder="Contraseña" IsPassword="true" />
 			<Entry x:Name="passwordEntry" Placeholder="Repetir Contraseña" IsPassword="true" />
 			<Label x:Name="messageLabel" />
-			<Button Text="Crear Cuenta" Clicked="OnSignInButtonClicked" />
+			<Button Text="Crear Cuenta hola ivan" Clicked="OnSignInButtonClicked" />
 			<Button Text="Cancelar" Clicked="OnCancelTouched" />
 		</StackLayout>
 	</ContentPage.Content>

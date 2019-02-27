@@ -4,7 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="tickets.LoginAdminPage" 
     Title="Login">
-	<ContentPage.Content>
+    <ContentPage.Resources>
+        <StyleSheet Source="../styles/style.css">
+        </StyleSheet>
+    </ContentPage.Resources>
+    <ContentPage.Content>
 		<StackLayout VerticalOptions="StartAndExpand">
 			<Label Text="Todavia no tienes usuario?" />
 			<Button Text="Crear Cuenta" Clicked="SignInButtonClicked" />
@@ -13,8 +17,8 @@
 			<Label Text="Contraseña:" />
 			<Entry x:Name="passwordEntry" Placeholder="Contraseña" IsPassword="true" />
 			<Label x:Name="messageLabel" />
-			<Button Text="Login" Clicked="OnLoginButtonClicked" />
-			<Button Text="Cancelar" Clicked="OnCancelTouched" />
+            <Button Text="Login" class="btn_blue" Clicked="OnLoginButtonClicked" />
+            <Button Text="Cancelar" class="btn_red" Clicked="OnCancelTouched" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
