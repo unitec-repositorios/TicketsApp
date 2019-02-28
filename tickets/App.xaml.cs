@@ -17,6 +17,8 @@ namespace tickets
         public static string[] Scopes = { "User.Read" };
         public static string Username = string.Empty;
         public static string UserEmail = string.Empty;
+
+        public static bool IsUserLoggedIn = false;
         public static UIParent UiParent;
         static Database database;
 

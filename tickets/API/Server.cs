@@ -98,7 +98,7 @@ namespace tickets.API
 
             }
 
-            return "error";
+            return "error al recibir la fecha";
         }
 
         public async Task<string> getUpdateDate(string id)

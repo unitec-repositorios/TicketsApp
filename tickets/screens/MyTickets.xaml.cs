@@ -14,15 +14,22 @@ namespace tickets
     public partial class MyTickets : ContentPage
     {
         private Server server = new Server();
-        ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
+        Ticket t;
+        //ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
+        List<Ticket> tickets = new List<Ticket>();
+
 
         public MyTickets()
         {
             try
             {
                 InitializeComponent();
-                this.BindingContext = this;
                 
+                TicketsListView.ItemsSource = tickets;
+                this.BindingContext = this;
+                GetTickets();
+
+
                 var newTicket = new ToolbarItem
                 {
                     Icon = "nuevo.jpg",
@@ -137,11 +144,13 @@ namespace tickets
         public async void GetTickets()
         {
             try {
+               
+                //List<Ticket> dbtickets = await App.Database.GetTicketsAsync(App.Database.GetCurrentUserNotAsync());
+                List<Ticket> dbtickets;
+                dbtickets = await App.Database.GetTicketsAsync();
+                //dbtickets = new List<Ticket>(dbtickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
+                //                                                                                System.Globalization.CultureInfo.InvariantCulture)));
                 
-                List<Ticket> dbtickets = await App.Database.GetTicketsAsync(App.Database.GetCurrentUserNotAsync());
-                dbtickets = new List<Ticket>(dbtickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                                                                                                  System.Globalization.CultureInfo.InvariantCulture)));
-
                 for (int i = 0; i < dbtickets.Count; i++)
                 {
                     String updateDate = await server.getUpdateDate(dbtickets[i].ID);
@@ -186,9 +195,13 @@ namespace tickets
 
                     }
                 }
+               
+                //foreach (var t in dbtickets)
+                //tickets.Add(t);
                 TicketsListView.ItemsSource = null;
-                TicketsListView.ItemsSource = tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                            System.Globalization.CultureInfo.InvariantCulture));
+                TicketsListView.ItemsSource = tickets;
+                //TicketsListView.ItemsSource = tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
+                //           System.Globalization.CultureInfo.InvariantCulture));
                 //tickets = new ObservableCollection<Ticket>(
                 //        tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
                 //            System.Globalization.CultureInfo.InvariantCulture))

@@ -2,6 +2,10 @@
 using System.Threading.Tasks;
 using SQLite;
 using System.Diagnostics;
+using System.Security.Cryptography;
+using System.IO;
+using System;
+using System.Text;
 
 namespace tickets
 {
@@ -15,6 +19,7 @@ namespace tickets
             database.CreateTableAsync<User>().Wait();
             database.CreateTableAsync<Ticket>().Wait();
             database.CreateTableAsync<Comment>().Wait();
+            database.CreateTableAsync<AdminUser>().Wait();
         }
 
         public SQLiteAsyncConnection GetConnection()
@@ -30,7 +35,39 @@ namespace tickets
             database.ExecuteAsync("DELETE FROM User").Wait();
             database.ExecuteAsync("DELETE FROM Ticket").Wait();
             database.ExecuteAsync("DELETE FROM Comment").Wait();
+            database.ExecuteAsync("DELETE FROM AdminUser").Wait();
         }
+        
+        /// <summary>
+        /// Gets the current Admin user.
+        /// </summary>
+        /// <returns>The current user not async.</returns>
+
+        public AdminUser GetCurrentAdminUserNotAsync()
+        {
+            try
+            {
+                return database.FindWithQueryAsync<AdminUser>("SELECT * from AdminUser WHERE IsCurrent = 1").Result;
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
+        }
+
+
+        public AdminUser GetAdminUserAsync(string email)
+        {
+            try
+            {
+                return database.FindWithQueryAsync<AdminUser>("SELECT * from AdminUser WHERE Email LIKE ?", email).Result;
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Gets the current user not async.
         /// </summary>
@@ -95,6 +132,38 @@ namespace tickets
         }
 
         /// <summary>
+        /// Creates a new Admin User and sets it as the current user 
+        /// (setting all others IsCurrent to false)
+        /// </summary>
+        /// <param name="admin">
+        /// Admin User to add and set as current
+        /// </param>
+        public async Task<int> CreateNewCurrentAdminUser(AdminUser admin)
+        {
+            await database.ExecuteAsync("UPDATE AdminUser SET IsCurrent = 1");
+            admin.IsCurrent = true;
+            return await SaveAdminUserAsync(admin);
+        }
+
+        /// <summary>
+        /// Inserts or updates the AdminUser especified by id
+        /// </summary>
+        /// <param name="user">
+        /// AdminUser to add or update
+        /// </param>
+        public Task<int> SaveAdminUserAsync(AdminUser admin)
+        {
+            if (admin.ID != 0)
+            {
+                return database.UpdateAsync(admin);
+            }
+            else
+            {
+                return database.InsertAsync(admin);
+            }
+        }
+
+        /// <summary>
         /// Inserts or updates the user especified by id
         /// </summary>
         /// <param name="user">
@@ -138,10 +207,16 @@ namespace tickets
         /// Gets the tickets async.
         /// </summary>
         /// <returns>The tickets async.</returns>
-        public Task<List<Ticket>> GetTicketsAsync(User user)
+        //public Task<List<Ticket>> GetTicketsAsync(User user)
+        //{
+        //    return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = ? ORDER BY Image DESC", user.ID);
+        //}
+        public Task<List<Ticket>> GetTicketsAsync()
         {
-            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = ? ORDER BY Image DESC", user.ID);
+            //return database.Table<Ticket>().ToListAsync();
+            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = 1 ORDER BY Image DESC");
         }
+
 
 
         /// <summary>
@@ -152,6 +227,47 @@ namespace tickets
         public Task<List<Comment>> GetCommentsForTicketAsync(string TicketID)
         {
             return database.QueryAsync<Comment>("SELECT * FROM Comment WHERE TicketID = ?", TicketID);
+        }
+
+        public string encryptPassword (string textToEncrypt){
+            string encriptionKey = "ticketsApp";
+			var algorithm = GetAlgorithm(encriptionKey);
+
+            //Anything to process?
+            if (textToEncrypt==null || textToEncrypt=="") return "";
+
+            byte[] encryptedBytes;
+            using (ICryptoTransform encryptor = algorithm.CreateEncryptor(algorithm.Key, algorithm.IV))
+            {
+                byte[] bytesToEncrypt = Encoding.UTF8.GetBytes(textToEncrypt);
+                encryptedBytes = InMemoryCrypt(bytesToEncrypt, encryptor);
+            }
+            return Convert.ToBase64String(encryptedBytes);
+		}
+
+        private static RijndaelManaged GetAlgorithm(string encryptionPassword)
+        {
+            // Create an encryption key from the encryptionPassword and salt.
+            byte[] salt = Encoding.ASCII.GetBytes("0820222251");
+            var key = new Rfc2898DeriveBytes(encryptionPassword, salt);
+
+            // Declare that we are going to use the Rijndael algorithm with the key that we've just got.
+            var algorithm = new RijndaelManaged();
+            int bytesForKey = algorithm.KeySize / 8;
+            int bytesForIV = algorithm.BlockSize / 8;
+            algorithm.Key = key.GetBytes(bytesForKey);
+            algorithm.IV = key.GetBytes(bytesForIV);
+            return algorithm;
+        }
+
+        private static byte[] InMemoryCrypt(byte[] data, ICryptoTransform transform)
+        {
+            MemoryStream memory = new MemoryStream();
+            using (Stream stream = new CryptoStream(memory, transform, CryptoStreamMode.Write))
+            {
+                stream.Write(data, 0, data.Length);
+            }
+            return memory.ToArray();
         }
     }
 }
