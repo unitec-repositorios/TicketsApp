@@ -1,0 +1,1 @@
+C:\Users\cfvel\Documents\GitHub\TicketsApp\tickets.UWP\tickets.UWP.csproj;x86
