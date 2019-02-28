@@ -207,10 +207,16 @@ namespace tickets
         /// Gets the tickets async.
         /// </summary>
         /// <returns>The tickets async.</returns>
-        public Task<List<Ticket>> GetTicketsAsync(User user)
+        //public Task<List<Ticket>> GetTicketsAsync(User user)
+        //{
+        //    return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = ? ORDER BY Image DESC", user.ID);
+        //}
+        public Task<List<Ticket>> GetTicketsAsync()
         {
-            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = ? ORDER BY Image DESC", user.ID);
+            //return database.Table<Ticket>().ToListAsync();
+            return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = 1 ORDER BY Image DESC");
         }
+
 
 
         /// <summary>

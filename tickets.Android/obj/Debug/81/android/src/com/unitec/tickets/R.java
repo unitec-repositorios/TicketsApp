@@ -3209,13 +3209,13 @@ containing a value of this type.
         public static final int adjuntaricono=0x7f020054;
         public static final int adjuntariconomini=0x7f020055;
         public static final int avd_hide_password=0x7f020056;
-        public static final int avd_hide_password_1=0x7f020149;
-        public static final int avd_hide_password_2=0x7f02014a;
-        public static final int avd_hide_password_3=0x7f02014b;
+        public static final int avd_hide_password_1=0x7f020148;
+        public static final int avd_hide_password_2=0x7f020149;
+        public static final int avd_hide_password_3=0x7f02014a;
         public static final int avd_show_password=0x7f020057;
-        public static final int avd_show_password_1=0x7f02014c;
-        public static final int avd_show_password_2=0x7f02014d;
-        public static final int avd_show_password_3=0x7f02014e;
+        public static final int avd_show_password_1=0x7f02014b;
+        public static final int avd_show_password_2=0x7f02014c;
+        public static final int avd_show_password_3=0x7f02014d;
         public static final int baseline_camera_alt_white_18=0x7f020058;
         public static final int baseline_camera_alt_white_24=0x7f020059;
         public static final int baseline_camera_alt_white_36=0x7f02005a;
@@ -3445,8 +3445,8 @@ containing a value of this type.
         public static final int notification_bg_normal=0x7f02013a;
         public static final int notification_bg_normal_pressed=0x7f02013b;
         public static final int notification_icon_background=0x7f02013c;
-        public static final int notification_template_icon_bg=0x7f020147;
-        public static final int notification_template_icon_low_bg=0x7f020148;
+        public static final int notification_template_icon_bg=0x7f020146;
+        public static final int notification_template_icon_low_bg=0x7f020147;
         public static final int notification_tile_bg=0x7f02013d;
         public static final int notify_panel_notification_icon_bg=0x7f02013e;
         public static final int nuevo=0x7f02013f;
@@ -3454,9 +3454,8 @@ containing a value of this type.
         public static final int roundedbg=0x7f020141;
         public static final int roundedbgdark=0x7f020142;
         public static final int send1=0x7f020143;
-        public static final int settings_icon=0x7f020144;
-        public static final int tooltip_frame_dark=0x7f020145;
-        public static final int tooltip_frame_light=0x7f020146;
+        public static final int tooltip_frame_dark=0x7f020144;
+        public static final int tooltip_frame_light=0x7f020145;
     }
     public static final class id {
         public static final int ALT=0x7f0a0032;
