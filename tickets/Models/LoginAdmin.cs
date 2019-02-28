@@ -15,7 +15,7 @@ namespace tickets
         private static LoginAdmin  _instance;
      private LoginAdmin()
         {
-            _instance = new LoginAdmin()
+            _instance = new LoginAdmin();
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
         }
@@ -62,7 +62,7 @@ namespace tickets
             HttpResponseMessage response = await httpClient.PostAsync(BASE_ADDRESS_ADMIN + "/index.php", form);
 
             string cookie_response = response.Headers.ElementAt(3).Value.ElementAt(0).ToString();
-            String[] tokens = cookie_response.Split(';');
+            tokens = cookie_response.Split(';');
             String cookie_ = tokens[0];
             cookie = cookie_;
             response.EnsureSuccessStatusCode();

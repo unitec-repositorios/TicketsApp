@@ -39,7 +39,6 @@ namespace tickets
             if (CheckInternetConnection())
             {
                 SignInSignOutBtn.IsVisible = false;
-                SignInSignOutBtnAdmin.IsVisible = false;
                 Loading.IsVisible = true;
                 try
                 {
@@ -154,7 +153,6 @@ namespace tickets
         {
             if (CheckInternetConnection())
             {
-                SignInSignOutBtnAdmin.IsVisible = false;
                 SignInSignOutBtn.IsVisible = false;
                 Loading.IsVisible = true;
 
@@ -171,37 +169,6 @@ namespace tickets
                         break;
                     case Xamarin.Forms.Device.Android:
                         App.Current.MainPage = new NavigationPage(new LoginPageAdmin());
-                        break;
-
-                }
-            }
-            else
-            {
-                await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
-                SignInSignOutBtn.IsVisible = true;
-                Loading.IsVisible = false;
-            }
-
-        }
-        async void OnSignInSignOutAdmin(object sender, EventArgs e)
-        {
-            if (CheckInternetConnection())
-            {
-                SignInSignOutBtn.IsVisible = false;
-                Loading.IsVisible = true;
-
-                /* Aqui va la conexion al ADMIN del hesk */
-
-                LoginAdminPage home = new LoginAdminPage();
-                App.Current.MainPage = new NavigationPage(home);
-
-                switch (Xamarin.Forms.Device.RuntimePlatform)
-                {
-                    case Xamarin.Forms.Device.iOS:
-                        App.Current.MainPage = new NavigationPage(new LoginAdminPage());
-                        break;
-                    case Xamarin.Forms.Device.Android:
-                        App.Current.MainPage = new NavigationPage(new LoginAdminPage());
                         break;
 
                 }

@@ -21,68 +21,12 @@ namespace tickets
 	public partial class LoginAdminPage : ContentPage
 	{
         private Server server = new Server();
-        private Login_Admin login_ = new Login_Admin();
+        private LoginAdmin login_ = LoginAdmin.Instance;
         public LoginAdminPage ()
 		{
 			InitializeComponent();
           usernameEntry.Text = App.UserEmail;
 		}
-        public async void SendRequest(object sender, System.EventArgs e)
-        {
-            var valid = !String.IsNullOrWhiteSpace(usuario.Text) && !String.IsNullOrWhiteSpace(contrasena.Text);
-            if (valid)
-            {
-
-                if (CheckInternetConnection())
-                {
-                    try
-                    {
-                        string response = await login_.loginAdmins(usernameEntry.Text, passwordEntry.Text);
-                        if (response == " error")
-                        {
-                            await DisplayAlert("No se ha podido Acceder como Admin", "Revise por favor", "OK");
-                        }
-                        else if (response == "sucess")
-                        {
-                            label_contrasena.IsVisible = false;
-                            usuario.IsVisible = false;
-                            contrasena.IsVisible = false;
-                            label_usuario.IsVisible = false;
-                            login.IsVisible = false;
-                            Loading.IsVisible = true;
-
-                            switch (Xamarin.Forms.Device.RuntimePlatform)
-                            {
-                                case Xamarin.Forms.Device.iOS:
-                                    App.Current.MainPage = new NavigationPage(new HomeScreen());
-                                    break;
-                                case Xamarin.Forms.Device.Android:
-                                    App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
-                                    break;
-
-                            }
-
-                        }
-                    }
-                    catch
-                    {
-                        await DisplayAlert("Error", "Revise el Admin", "OK");
-                    }
-                }
-                else
-                {
-                    await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
-                }
-
-            }
-
-
-            else
-            {
-                await DisplayAlert("Error", "Ingrese Datos", "OK");
-
-            }
-        }
 
 		async void OnLoginButtonClicked (object sender, EventArgs e)
 		{

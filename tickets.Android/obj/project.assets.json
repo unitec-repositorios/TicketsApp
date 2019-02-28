@@ -931,10 +931,12 @@
       ]
     },
     "Plugin.CurrentActivity/2.1.0.4": {
-      "sha512": "m8xaXvXUzBSqP6xRe5PeIG347WxsG/VWrZta7MnPpSvNuPf0RLB/S49UCCQyBKSsfu053+apvYm14BC7GU6Zzg==",
+      "sha512": "mwUaRnl5KyIAJbhqQzL/ZIFuRcqsa0lMyCHuJs8wer+pSjYDH5cJR9X8yoB9BV5j6ccogGxyb5VkUUhvRUemTA==",
       "type": "package",
       "path": "plugin.currentactivity/2.1.0.4",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/monoandroid44/Plugin.CurrentActivity.dll",
         "lib/monoandroid44/Plugin.CurrentActivity.xml",
         "plugin.currentactivity.2.1.0.4.nupkg.sha512",
@@ -978,10 +980,12 @@
       ]
     },
     "Refractored.MvvmHelpers/1.3.2.47-beta": {
-      "sha512": "b6RFOBZDMSE8FaNZwXVY9Yts/EoEyLefO9WiE+4APWn3rA1HOw/pNJ/Wcn7pplfJNcW3SSPC6RGbP2Jahe3b0Q==",
+      "sha512": "dbJVlS9zB2EKFzyotM0BHsvGN5NY6McUyHcFewg6+TYKg5JiI9js22fpMwP2NhHrgJRADy7JE0dnQL4GG8rehg==",
       "type": "package",
       "path": "refractored.mvvmhelpers/1.3.2.47-beta",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/netstandard1.0/MvvmHelpers.deps.json",
         "lib/netstandard1.0/MvvmHelpers.dll",
         "lib/netstandard1.0/MvvmHelpers.pdb",
@@ -1133,10 +1137,11 @@
       ]
     },
     "System.Net.Http/4.3.3": {
-      "sha512": "K8Bf1xc41hhxmOp1X3W/y1eRyCwTD5JdEua97gn+7FXCwUeWKK9joR/bTbud07Via/S4W4oYewyzmFeIbt5w4A==",
+      "sha512": "/3Rpbezfj/lz+Qv/55bdKso16KhZF38gHW9wX0g0R4GfK5vr9z9WjDcF8SrVN/AK0A9sdh/AOC3YnCdX+UGKpw==",
       "type": "package",
       "path": "system.net.http/4.3.3",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -1174,10 +1179,11 @@
       ]
     },
     "System.Numerics.Vectors/4.5.0": {
-      "sha512": "AK4wVgiJqQQCALZ+2ZFY3UqEyIunVlNSBLAHNyI8bJfLT5c9kHZH3nVF2KUWYd1/2POvaz3xx9K6nSKo6m78Ew==",
+      "sha512": "nATsBTD2CKr4AYN6eRszhX4sptImWmBJwB/U6XKCWWfnCcrTBw8XSCm3QA9gjppkHTr8OkXUY21MR91D3QZXsw==",
       "type": "package",
       "path": "system.numerics.vectors/4.5.0",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
@@ -1220,10 +1226,11 @@
       ]
     },
     "System.Xml.XmlDocument/4.3.0": {
-      "sha512": "xsnq6w3/S+NeYkUtxoCEDAn2Z+AkgvGLvJnslrTRte4jEU+fkR3DVG+s0sBmQYQ4c3r8949PaGg8AnRb9bBc2w==",
+      "sha512": "IiUbPxbemqBuCRskuuobjJV1Lw0iJm+vNOH7drNHsj95EM2vVnBY4j0GtweZYQkMpwgFBwokka3V2k0Cca/RMw==",
       "type": "package",
       "path": "system.xml.xmldocument/4.3.0",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -1258,10 +1265,11 @@
       ]
     },
     "System.Xml.XPath/4.3.0": {
-      "sha512": "8Eo7vuasWRqXfiBRCIKz20Rq1h6n+NMp6nW2RmyUwF4VDekg8xbRZu8S3N21P5XGAhv+kaqUwI3xydEkcw+D5w==",
+      "sha512": "K9CXmiAgV5+zKtN0uJkponLnY+4SM+2aIVQIwKH5+Cpf23QzDBxVphAuDf24t7We0l/fZFS/PeFGFS6nefNm4A==",
       "type": "package",
       "path": "system.xml.xpath/4.3.0",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -1333,10 +1341,12 @@
       ]
     },
     "Xam.Plugin.FilePicker/1.1.0": {
-      "sha512": "ORzNG6dEgdBZnIdmbQCpNB4LSSTjBebwGjb1XZrgfbBGjX9muHBfZeQwOnNRvcGlm6fkylzTj2rDslDA1E/JFA==",
+      "sha512": "qjPQ+MF5FDObArKr6snS95TBPcK2PmNoiXpjXY5c53tiWCGpTvUcbVccFAiruNiUpYBa/yGa50r9or/UsvlRaA==",
       "type": "package",
       "path": "xam.plugin.filepicker/1.1.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.dll",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.dll.mdb",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.pdb",
@@ -1385,10 +1395,12 @@
       ]
     },
     "Xam.Plugin.Media/4.0.1.5": {
-      "sha512": "a5l/M2Tl06BqBX/uhM/pr+q1jDkh2tRQr5Ne9rjAuD9VYn5STE+7kVFTzIUNPMnMr9PZLJkWP5WAr/tBN5oepw==",
+      "sha512": "PxL0vcTXpS79l2KgtaJBShcPVMRK2HC5J08vG6hKTC7hk5+3RjgFrdX0N6Gd4oF8pxVxV2ia7rhYnjxRCMWZtw==",
       "type": "package",
       "path": "xam.plugin.media/4.0.1.5",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/monoandroid71/Plugin.Media.dll",
         "lib/monoandroid71/Plugin.Media.xml",
         "lib/netstandard1.0/Plugin.Media.dll",
@@ -1676,10 +1688,11 @@
       ]
     },
     "Xamarin.Essentials/0.10.0-preview": {
-      "sha512": "oA8oAHIHf4ymPPQoi7sLKF0704fFgwoqmQDy1G1kOxXrEZF0W5XpTXS2y2h4/RC/7bn0DzhTS6wiC90Om4YSHA==",
+      "sha512": "ope8kxiddTv3o/GTqaqpWoWiyVuh/suZqftBRoPhbx564lhAZeqjxcdKanmzjBWgL92w9lcmaKOvlg9BuNGnQg==",
       "type": "package",
       "path": "xamarin.essentials/0.10.0-preview",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "lib/monoandroid71/Xamarin.Essentials.dll",
         "lib/monoandroid71/Xamarin.Essentials.xml",
@@ -1847,10 +1860,12 @@
       ]
     },
     "Xamarin.Plugins.Clipboard/2.2.1": {
-      "sha512": "+CxPFOQqy/UA/XuXUhz5Ktr4C2rLh4QpYouDX8VM4CDvtr9cN9SLsCIJ5IZvn5ufcQPla8ABPCe+nE/qUF423A==",
+      "sha512": "0R2fgAarrqWsnYhHswWedy+Pp0klRldHgJe78gW6drEDog7U0YvInQHTV0EfDiN8wF2C8WxU3eSxuhpNipEkjg==",
       "type": "package",
       "path": "xamarin.plugins.clipboard/2.2.1",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid10/Plugin.Clipboard.Abstractions.dll",
         "lib/MonoAndroid10/Plugin.Clipboard.Abstractions.pdb",
         "lib/MonoAndroid10/Plugin.Clipboard.XML",
@@ -1905,20 +1920,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {}
+    "C:\\Users\\damas\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\Soft\\TicketsApp\\tickets.Android\\tickets.Android.csproj",
+      "projectUniqueName": "D:\\Proyectos\\TicketsApp\\tickets.Android\\tickets.Android.csproj",
       "projectName": "tickets.Android",
-      "projectPath": "C:\\Users\\Administrator\\Desktop\\Soft\\TicketsApp\\tickets.Android\\tickets.Android.csproj",
-      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Administrator\\Desktop\\Soft\\TicketsApp\\tickets.Android\\obj\\",
+      "projectPath": "D:\\Proyectos\\TicketsApp\\tickets.Android\\tickets.Android.csproj",
+      "packagesPath": "C:\\Users\\damas\\.nuget\\packages\\",
+      "outputPath": "D:\\Proyectos\\TicketsApp\\tickets.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
-        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\damas\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1931,8 +1946,8 @@
       "frameworks": {
         "monoandroid81": {
           "projectReferences": {
-            "C:\\Users\\Administrator\\Desktop\\Soft\\TicketsApp\\tickets\\tickets.csproj": {
-              "projectPath": "C:\\Users\\Administrator\\Desktop\\Soft\\TicketsApp\\tickets\\tickets.csproj"
+            "D:\\Proyectos\\TicketsApp\\tickets\\tickets.csproj": {
+              "projectPath": "D:\\Proyectos\\TicketsApp\\tickets\\tickets.csproj"
             }
           }
         }
