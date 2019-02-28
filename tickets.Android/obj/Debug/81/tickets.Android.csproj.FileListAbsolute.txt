@@ -94,6 +94,7 @@ C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\res\drawable-xh
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\res\drawable-xhdpi\adjuntaricono.png
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\res\drawable-xhdpi\adjuntariconomini.png
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\res\drawable-xhdpi\camaraiconomini.png
+C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\res\drawable-xhdpi\lock.png
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\FormsViewGroup.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\HtmlAgilityPack.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Mono.Android.pdb
@@ -170,6 +171,8 @@ C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Xamarin.Forms.Core.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Xamarin.Forms.Platform.Android.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Xamarin.Forms.Xaml.pdb
+C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\res\drawable-xhdpi\campana.png
+C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\res\drawable-xhdpi\bell.png
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\bin\Debug\tickets.Android.dll
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\tickets.Android.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Acr.Support.Android.dll.mdb

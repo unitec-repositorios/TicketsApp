@@ -19,7 +19,7 @@
                                         </OnPlatform>
                                     </Image.Source>
                                 </Image>
-                                <Label Text="ConfiguraciÃ³n de Cuenta" VerticalOptions="Center" FontSize="Large" />
+                                <Label Text="Configuración de Cuenta" VerticalOptions="Center" FontSize="Large" />
                             </StackLayout>
                         </ViewCell>
                     </TableSection>
@@ -96,7 +96,7 @@
                                         </OnPlatform>
                                     </Image.Source>
                                 </Image>
-                                <Label Text="Cerrar SesiÃ³n" VerticalOptions="Center" FontSize="Large" />
+                                <Label Text="Cerrar Sesión" VerticalOptions="Center" FontSize="Large" />
                             </StackLayout>
                         </ViewCell>
                     </TableSection>
