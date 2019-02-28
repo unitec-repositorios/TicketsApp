@@ -1,4 +1,3 @@
-﻿ 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,7 +18,6 @@ namespace tickets
         private Server server = new Server();
         ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
         private Timer refreshTicketsTimer;
-        
         public MyTicketsAdmin()
         {
             try
@@ -34,7 +32,6 @@ namespace tickets
                     Order = ToolbarItemOrder.Primary
 
                 };
-                
                 var settings = new ToolbarItem
                 {
 
@@ -134,7 +131,7 @@ namespace tickets
         private async void TicketsListView_RefreshingAdminAssign(object sender, EventArgs e)
         {
             GetTickets();
-            TicketsListViewAdminAssign.EndRefresh();
+            TicketsListViewAdminAsign.EndRefresh();
         }
 
         private async void SearchBar_TextChangedAdminAssign(object sender, TextChangedEventArgs e)
@@ -142,11 +139,11 @@ namespace tickets
             if (!String.IsNullOrWhiteSpace(e.NewTextValue))
             {
                 var showTickets = tickets.Where(t => t.Subject.Contains(e.NewTextValue)).ToList();
-                TicketsListViewAdminAssign.ItemsSource = showTickets;
+                TicketsListViewAdminAsign.ItemsSource = showTickets;
             }
             else
             {
-                TicketsListViewAdminAssign.ItemsSource = tickets;
+                TicketsListViewAdminAsign.ItemsSource = tickets;
             }
         }
 
@@ -213,7 +210,7 @@ namespace tickets
                     hcount = 1;
                 }
             }
-            TicketsListViewAdminAssign.ItemsSource = tickets;
+            TicketsListViewAdminAsign.ItemsSource = tickets;
         }
     }
 }

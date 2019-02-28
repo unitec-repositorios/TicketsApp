@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Net.Http.Headers;
+using tickets.screens;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -143,7 +144,7 @@ namespace tickets
             else
             {
                 await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
-                SignInSignOutBtn.IsVisible =true;
+                SignInSignOutBtn.IsVisible = true;
                 Loading.IsVisible = false;
             }
 
@@ -157,16 +158,17 @@ namespace tickets
 
                 /* Aqui va la conexion al ADMIN del hesk */
 
-                LoginAdminPage home = new LoginAdminPage();
-                App.Current.MainPage = new NavigationPage(home);
+                /*  HomeScreen home = new HomeScreen();
+                  App.Current.MainPage = new NavigationPage(home);*/
+
 
                 switch (Xamarin.Forms.Device.RuntimePlatform)
                 {
                     case Xamarin.Forms.Device.iOS:
-                        App.Current.MainPage = new NavigationPage(new LoginAdminPage());
+                        App.Current.MainPage = new NavigationPage(new HomeScreen());
                         break;
                     case Xamarin.Forms.Device.Android:
-                        App.Current.MainPage = new NavigationPage(new LoginAdminPage());
+                        App.Current.MainPage = new NavigationPage(new LoginPageAdmin());
                         break;
 
                 }
@@ -191,7 +193,7 @@ namespace tickets
             {
                 return false;
             }
-            
+
         }
 
         public static GraphServiceClient GetAuthenticatedClient()
@@ -255,7 +257,7 @@ namespace tickets
             TokenForUser = null;
             username = null;
             email = null;
-            
+
         }
 
     }

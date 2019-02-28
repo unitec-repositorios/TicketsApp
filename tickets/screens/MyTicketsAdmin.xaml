@@ -32,7 +32,7 @@
         <ContentPage.Content>
             <StackLayout>
                 <SearchBar Placeholder="Buscar" TextChanged="SearchBar_TextChangedAdminAssign" HeightRequest="40"/>
-                <ListView x:Name="TicketsListViewAdminAssign" IsPullToRefreshEnabled="True" Refreshing="TicketsListView_RefreshingAdminAssign" ItemSelected="goToViewTicketAdmin" SeparatorVisibility="Default" RowHeight="70">
+                <ListView x:Name="TicketsListViewAdminAsign" IsPullToRefreshEnabled="True" Refreshing="TicketsListView_RefreshingAdminAssign" ItemSelected="goToViewTicketAdmin" SeparatorVisibility="Default" RowHeight="70">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell StyleId="disclosure">

@@ -1,18 +1,31 @@
 using System;
-using Xamarin.Forms;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using tickets.API;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Net.Http.Headers;
+using Microsoft.Graph;
+using Microsoft.Identity.Client;
+using Xamarin.Forms;
+using Xamarin.Essentials;
 
 using Xamarin.Forms.Xaml;
+using Xamarin.Forms;
 
 
 namespace tickets
 {
 	public partial class LoginAdminPage : ContentPage
 	{
-		public LoginAdminPage ()
+        private Server server = new Server();
+        private LoginAdmin login_ = LoginAdmin.Instance;
+        public LoginAdminPage ()
 		{
 			InitializeComponent();
-			usernameEntry.Text = App.UserEmail;
+          usernameEntry.Text = App.UserEmail;
 		}
 
 		async void OnLoginButtonClicked (object sender, EventArgs e)
