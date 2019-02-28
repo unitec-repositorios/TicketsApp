@@ -150,6 +150,28 @@ namespace tickets
             }
         }
 
+        public async void changeTicketStatus(string id){
+            var requestURI = @"http://138.197.198.67/admin/index.php";
+            HttpClient httpClient = new HttpClient();
+            var parameters = new Dictionary<string, string>();
+
+            //Aquí se debe obtener la cookie en lugar de la sesión de login hardcoded que se realiza
+            parameters["user"] = "administrator";
+            parameters["pass"] = "admin";
+            parameters["remember_user"] = "NOTHANKS";
+            parameters["a"] = "do_login";
+            var response = await httpClient.PostAsync(requestURI, new FormUrlEncodedContent(parameters));
+            var contents = await response.Content.ReadAsStringAsync();
+            IEnumerable<String> headerVals;
+            string session = string.Empty;
+            if (response.Headers.TryGetValues("Set-Cookie", out headerVals))
+            {
+                session = headerVals.First();
+            }
+            await server.changeStatusTicket(id);
+
+        }
+
         public async void GetTickets()
         {
            
@@ -213,6 +235,7 @@ namespace tickets
                     hcount = 1;
                 }
             }
+            
             TicketsListViewAdminAssign.ItemsSource = tickets;
         }
     }
