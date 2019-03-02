@@ -56,8 +56,9 @@ namespace tickets
 
         async void OnCancelTouched(object sender, System.EventArgs e)
         {
-            AppSettingsPage settings = new AppSettingsPage();
-            App.Current.MainPage = new NavigationPage(settings);
+            /*AppSettingsPage settings = new AppSettingsPage();
+            App.Current.MainPage = new NavigationPage(settings);*/
+            await Navigation.PopAsync();
         }
 	}
 }
