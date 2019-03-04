@@ -38,15 +38,11 @@ namespace tickets
 
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
-<<<<<<< HEAD
-                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
-=======
 
                     DisplayAlert("No Camera", ":( No camera available.", "OK");
 
                     //await DisplayAlert("No Camera", ":( No camera available.", "OK");
 
->>>>>>> Samuel
                     return;
                 }
 
@@ -72,13 +68,8 @@ namespace tickets
                     temp += "\n";
                 }
                 Adjun.Text = temp;
-<<<<<<< HEAD
-
-                await DisplayAlert("File Location", filePath, "OK");
-=======
                 await DisplayAlert("File Location", filePath, "OK");
 
->>>>>>> Samuel
             };
             */
 
@@ -165,6 +156,7 @@ namespace tickets
                     if (response.Equals("error"))
                     {
                         await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
+                        UserDialogs.Instance.HideLoading ();
                     }
                     else
                     {
@@ -200,11 +192,13 @@ namespace tickets
                 catch (Exception ex)
                 {
                     await DisplayAlert("Error", "Error= " + ex, "OK");
+                    UserDialogs.Instance.HideLoading ();
                 }
             }
             else
             {
                 await DisplayAlert("Advertencia", "Favor llene todos los campos", "OK");
+                UserDialogs.Instance.HideLoading ();
             }
         }
 
