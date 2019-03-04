@@ -15,7 +15,7 @@ namespace tickets
     {
         private Server server = new Server();
         Ticket t;
-        //ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
+        
         List<Ticket> tickets = new List<Ticket>();
 
 
@@ -63,9 +63,7 @@ namespace tickets
                         ToolbarItems.Add(settings);
                         break;
                 }
-                //TicketsListView.BeginRefresh();
-                //GetTickets();
-                //TicketsListView.ItemsSource = tickets;
+                
             }
             catch(Exception ex)
             {
@@ -145,18 +143,17 @@ namespace tickets
         {
             try {
                
-                //List<Ticket> dbtickets = await App.Database.GetTicketsAsync(App.Database.GetCurrentUserNotAsync());
+                
                 List<Ticket> dbtickets;
                 dbtickets = await App.Database.GetTicketsAsync();
-                //dbtickets = new List<Ticket>(dbtickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                //                                                                                System.Globalization.CultureInfo.InvariantCulture)));
+                                                                                            
                 
                 for (int i = 0; i < dbtickets.Count; i++)
                 {
                     String updateDate = await server.getUpdateDate(dbtickets[i].ID);
                     if (!updateDate.Equals(dbtickets[i].Date) && updateDate != "error")
                     {
-                        dbtickets[i].Image = "https://cdn.pixabay.com/photo/2015/12/16/17/41/bell-1096280_640.png";
+                        dbtickets[i].OpenImage = "bell.png";
                         dbtickets[i].Date = updateDate;
                         await App.Database.UpdateTicket(dbtickets[i]);
                     }
@@ -168,7 +165,7 @@ namespace tickets
                     Console.WriteLine("Recibiendo del sevidor: "+ open.ToString());
                     if (!open)
                     {
-                        dbtickets[i].OpenImage = "https://cdn.pixabay.com/photo/2015/12/08/19/08/castle-1083570_960_720.png";
+                        dbtickets[i].OpenImage = "lock.png";
                         dbtickets[i].Open = open;
                         await App.Database.UpdateTicket(dbtickets[i]);
                     }
@@ -196,16 +193,10 @@ namespace tickets
                     }
                 }
                
-                //foreach (var t in dbtickets)
-                //tickets.Add(t);
+                
                 TicketsListView.ItemsSource = null;
                 TicketsListView.ItemsSource = tickets;
-                //TicketsListView.ItemsSource = tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                //           System.Globalization.CultureInfo.InvariantCulture));
-                //tickets = new ObservableCollection<Ticket>(
-                //        tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                //            System.Globalization.CultureInfo.InvariantCulture))
-                //        );
+               
 
             }
             catch (Exception ex)
