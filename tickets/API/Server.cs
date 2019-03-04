@@ -21,6 +21,18 @@ namespace tickets.API
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
+        public async Task<string> getDetailsTicket(string id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/print.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            if (html.IndexOf("<b>Error:</b>") != -1)
+            {
+                return "Error";
+            }
+            return html;
+        }
+
         public async Task<List<DateTime>> getDateMessage(string id)
         {
             List<DateTime> fechas= new List<DateTime>();

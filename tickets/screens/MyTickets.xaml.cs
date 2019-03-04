@@ -15,7 +15,7 @@ namespace tickets
     {
         private Server server = new Server();
         Ticket t;
-        //ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
+       
         List<Ticket> tickets = new List<Ticket>();
 
 
@@ -63,9 +63,7 @@ namespace tickets
                         ToolbarItems.Add(settings);
                         break;
                 }
-                //TicketsListView.BeginRefresh();
-                //GetTickets();
-                //TicketsListView.ItemsSource = tickets;
+               
             }
             catch(Exception ex)
             {
@@ -144,12 +142,11 @@ namespace tickets
         public async void GetTickets()
         {
             try {
-               
-                //List<Ticket> dbtickets = await App.Database.GetTicketsAsync(App.Database.GetCurrentUserNotAsync());
+
+                UserDialogs.Instance.ShowLoading("Cargando Tickets...");
                 List<Ticket> dbtickets;
                 dbtickets = await App.Database.GetTicketsAsync();
-                //dbtickets = new List<Ticket>(dbtickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                //                                                                                System.Globalization.CultureInfo.InvariantCulture)));
+                                                                           
                 
                 for (int i = 0; i < dbtickets.Count; i++)
                 {
@@ -196,16 +193,11 @@ namespace tickets
                     }
                 }
                
-                //foreach (var t in dbtickets)
-                //tickets.Add(t);
+
                 TicketsListView.ItemsSource = null;
                 TicketsListView.ItemsSource = tickets;
-                //TicketsListView.ItemsSource = tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                //           System.Globalization.CultureInfo.InvariantCulture));
-                //tickets = new ObservableCollection<Ticket>(
-                //        tickets.Where(t => t.Date != "error").OrderByDescending(t => DateTime.ParseExact(t.Date, "yyyy-MM-dd HH:mm:ss",
-                //            System.Globalization.CultureInfo.InvariantCulture))
-                //        );
+
+                UserDialogs.Instance.HideLoading();
 
             }
             catch (Exception ex)
