@@ -41,12 +41,13 @@ namespace tickets
                     {
                         string response = await admin_log.loginAdmins();
 
-                        if (response == " error")
+                        if (response == "error")
                         {
-                            await DisplayAlert("No se ha podido Acceder como Admin", "Revise por favor", "OK");
+                            await DisplayAlert("Error", "Usuario o Contraseña de Administrador incorrecto.", "OK");
                         }
                         else if (response == "sucess")
                         {
+                            await DisplayAlert("Inicio de Sesión Exitoso!", "Sera redireccionado a la pagina principal de Admin.", "OK");
 
                             switch (Xamarin.Forms.Device.RuntimePlatform)
                             {
