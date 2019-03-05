@@ -63,7 +63,7 @@ namespace tickets
 
                 openBrowserTool = new ToolbarItem
                 {
-                    Text = "Abrir en el navegador",
+                    Text = "Mas detalles",
                     Command = new Command(execute: () => openBrowser()),
                     Order = ToolbarItemOrder.Secondary
                 };
