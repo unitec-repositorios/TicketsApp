@@ -125,6 +125,8 @@ class MonoPackageManager_Resources {
 		"Plugin.FilePicker.dll",
 		"Plugin.Media.dll",
 		"Plugin.Permissions.dll",
+		"Rg.Plugins.Popup.dll",
+		"Rg.Plugins.Popup.Droid.dll",
 		"Splat.dll",
 		"SQLite-net.dll",
 		"SQLitePCLRaw.batteries_green.dll",

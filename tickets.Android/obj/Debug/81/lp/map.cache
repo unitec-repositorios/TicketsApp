@@ -16,6 +16,8 @@ Plugin.FilePicker.Abstractions
 Plugin.FilePicker
 Plugin.Media
 Plugin.Permissions
+Rg.Plugins.Popup
+Rg.Plugins.Popup.Droid
 Splat
 SQLite-net
 SQLitePCLRaw.batteries_green

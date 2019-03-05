@@ -158,7 +158,7 @@ namespace tickets.API
             response = await client.GetAsync(link);
         }
 
-        private string getTextAux(char delimiter,string text,int pos)
+        public string getTextAux(char delimiter,string text,int pos)
         {
             string txt = "";
             char val = text[pos];

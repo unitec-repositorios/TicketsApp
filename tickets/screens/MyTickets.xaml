@@ -5,7 +5,6 @@
              x:Class="tickets.MyTickets" 
              Title="Mis Tickets" Icon="baseline_home_white_36pt" >
     <ContentPage.Content>
-        <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <StackLayout>
             <SearchBar Placeholder="Buscar" TextChanged="SearchBar_TextChanged" HeightRequest="40"/>
             <ListView x:Name="TicketsListView" IsPullToRefreshEnabled="True" Refreshing="TicketsListView_Refreshing" ItemSelected="goToViewTicket" SeparatorVisibility="Default" RowHeight="70">
@@ -27,21 +26,5 @@
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
-
-        <!--Popup Area-->
-        <ContentView x:Name="popupAddTicketId" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                <StackLayout Orientation="Vertical" HeightRequest="200" WidthRequest="300" BackgroundColor="White">
-                    <Entry x:Name="entryId"  Margin="20,20,20,10" Placeholder="ID"></Entry>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                        <Button Text="Cancelar" TextColor="White" BackgroundColor="#276EBB" Clicked="cancel_Popup" HorizontalOptions="Center" BorderRadius="4"/>
-                        <Button Text="Agregar" TextColor="White" BackgroundColor="#276EBB"  Clicked="addTicketID_Popup" HorizontalOptions="Center" BorderRadius="4"/>
-                    </StackLayout>
-                </StackLayout>
-            </StackLayout>
-        </ContentView>
-
-
-        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,10 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Paths>
   <ManifestDocuments>
-    <ManifestDocument>obj\Debug\81\lp\29\jl\AndroidManifest.xml</ManifestDocument>
-    <ManifestDocument>obj\Debug\81\lp\30\jl\AndroidManifest.xml</ManifestDocument>
+    <ManifestDocument>obj\Debug\81\lp\31\jl\AndroidManifest.xml</ManifestDocument>
     <ManifestDocument>obj\Debug\81\lp\32\jl\AndroidManifest.xml</ManifestDocument>
-    <ManifestDocument>obj\Debug\81\lp\33\jl\AndroidManifest.xml</ManifestDocument>
     <ManifestDocument>obj\Debug\81\lp\34\jl\AndroidManifest.xml</ManifestDocument>
     <ManifestDocument>obj\Debug\81\lp\35\jl\AndroidManifest.xml</ManifestDocument>
     <ManifestDocument>obj\Debug\81\lp\36\jl\AndroidManifest.xml</ManifestDocument>
@@ -18,16 +16,16 @@
     <ManifestDocument>obj\Debug\81\lp\44\jl\AndroidManifest.xml</ManifestDocument>
     <ManifestDocument>obj\Debug\81\lp\45\jl\AndroidManifest.xml</ManifestDocument>
     <ManifestDocument>obj\Debug\81\lp\46\jl\AndroidManifest.xml</ManifestDocument>
+    <ManifestDocument>obj\Debug\81\lp\47\jl\AndroidManifest.xml</ManifestDocument>
+    <ManifestDocument>obj\Debug\81\lp\48\jl\AndroidManifest.xml</ManifestDocument>
   </ManifestDocuments>
   <NativeLibraries />
   <Jars>
-    <Jar>obj\Debug\81\lp\27\jl\arch-core-common.jar</Jar>
-    <Jar>obj\Debug\81\lp\28\jl\arch-lifecycle-common.jar</Jar>
-    <Jar>obj\Debug\81\lp\29\jl\bin\classes.jar</Jar>
-    <Jar>obj\Debug\81\lp\30\jl\bin\classes.jar</Jar>
-    <Jar>obj\Debug\81\lp\31\jl\support-annotations.jar</Jar>
+    <Jar>obj\Debug\81\lp\29\jl\arch-core-common.jar</Jar>
+    <Jar>obj\Debug\81\lp\30\jl\arch-lifecycle-common.jar</Jar>
+    <Jar>obj\Debug\81\lp\31\jl\bin\classes.jar</Jar>
     <Jar>obj\Debug\81\lp\32\jl\bin\classes.jar</Jar>
-    <Jar>obj\Debug\81\lp\33\jl\bin\classes.jar</Jar>
+    <Jar>obj\Debug\81\lp\33\jl\support-annotations.jar</Jar>
     <Jar>obj\Debug\81\lp\34\jl\bin\classes.jar</Jar>
     <Jar>obj\Debug\81\lp\35\jl\bin\classes.jar</Jar>
     <Jar>obj\Debug\81\lp\36\jl\bin\classes.jar</Jar>
@@ -42,5 +40,7 @@
     <Jar>obj\Debug\81\lp\44\jl\bin\classes.jar</Jar>
     <Jar>obj\Debug\81\lp\45\jl\bin\classes.jar</Jar>
     <Jar>obj\Debug\81\lp\46\jl\bin\classes.jar</Jar>
+    <Jar>obj\Debug\81\lp\47\jl\bin\classes.jar</Jar>
+    <Jar>obj\Debug\81\lp\48\jl\bin\classes.jar</Jar>
   </Jars>
 </Paths>

@@ -20,6 +20,8 @@ C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Plugin.FilePicker.dll
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Plugin.Media.dll
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Plugin.Permissions.dll
+C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Rg.Plugins.Popup.dll
+C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Rg.Plugins.Popup.Droid.dll
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Splat.dll
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\SQLite-net.dll
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\SQLitePCLRaw.batteries_green.dll
