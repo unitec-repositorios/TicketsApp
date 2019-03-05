@@ -36,12 +36,6 @@ namespace tickets
 		private void  SignInButtonClicked(object sender, EventArgs e)
         {
 			User usr = App.Database.GetUserAsync(App.UserEmail);
-			if((usr.Profile).Equals("Administrativo")){
-                SignInAdminPage signIn = new SignInAdminPage();
-            	App.Current.MainPage = new NavigationPage(signIn);
-			}else{
-                DisplayAlert("Error", "Su no tiene permisos para esta operacion", "Aceptar");
-			}
         }
         bool AreCredentialsCorrect (AdminUser admin)
 		{
