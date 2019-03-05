@@ -1,41 +1,108 @@
 using System;
-using Xamarin.Forms;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using tickets.API;
+using tickets.Models;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Net.Http.Headers;
+using Microsoft.Graph;
+using Microsoft.Identity.Client;
+using Xamarin.Forms;
+using Xamarin.Essentials;
 
 using Xamarin.Forms.Xaml;
+using Xamarin.Forms;
 
 
 namespace tickets
 {
 	public partial class LoginAdminPage : ContentPage
 	{
-		public LoginAdminPage ()
+        private AdminLogin admin_log = AdminLogin.Instance;
+        public LoginAdminPage ()
 		{
 			InitializeComponent();
-			usernameEntry.Text = App.UserEmail;
 		}
 
 		async void OnLoginButtonClicked (object sender, EventArgs e)
 		{
-			string password = passwordEntry.Text;
-            string encryptedPassword = App.Database.encryptPassword(password);
-            var admin = new AdminUser {
-				Username = usernameEntry.Text,
-				Password = encryptedPassword
-			};
-			var isValid = AreCredentialsCorrect (admin);
-			if (isValid) {
-				MyTicketsAdmin home = new MyTicketsAdmin();
-            	App.Current.MainPage = new NavigationPage(home);
-            } else {
-				messageLabel.Text = "Contraseña incorrecta";
-				passwordEntry.Text = string.Empty;
-			}
-		}
-		
-		private void  SignInButtonClicked(object sender, EventArgs e)
+            admin_log.username = usernameEntry.Text;
+            admin_log.password = passwordEntry.Text;
+            var valid = !String.IsNullOrWhiteSpace(usernameEntry.Text) && !String.IsNullOrWhiteSpace(passwordEntry.Text);
+            if (valid)
+            {
+
+                if (CheckInternetConnection())
+                {
+                    try
+                    {
+                        string response = await admin_log.loginAdmins();
+
+                        if (response == " error")
+                        {
+                            await DisplayAlert("No se ha podido Acceder como Admin", "Revise por favor", "OK");
+                        }
+                        else if (response == "sucess")
+                        {
+
+                            switch (Xamarin.Forms.Device.RuntimePlatform)
+                            {
+                                case Xamarin.Forms.Device.iOS:
+                                    App.Current.MainPage = new NavigationPage(new HomeScreen());
+                                    break;
+                                case Xamarin.Forms.Device.Android:
+                                    App.Current.MainPage = new NavigationPage(new MyTicketsAdmin());
+                                    break;
+
+                            }
+
+                        }
+                    }
+                    catch
+                    {
+                        await DisplayAlert("Error", "Revise el Admin", "OK");
+                    }
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Ingrese Datos", "OK");
+                }
+
+            }
+
+
+            else
+            {
+                await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
+
+            }
+        }
+        public bool CheckInternetConnection()
+        {
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        private void  SignInButtonClicked(object sender, EventArgs e)
         {
 			User usr = App.Database.GetUserAsync(App.UserEmail);
+			if((usr.Profile).Equals("Administrativo")){
+                SignInAdminPage signIn = new SignInAdminPage();
+            	App.Current.MainPage = new NavigationPage(signIn);
+			}else{
+                DisplayAlert("Error", "Su no tiene permisos para esta operacion", "Aceptar");
+			}
         }
         bool AreCredentialsCorrect (AdminUser admin)
 		{
