@@ -96,7 +96,7 @@
                                         </OnPlatform>
                                     </Image.Source>
                                 </Image>
-                                <Label Text="Cerrar SesiÃ³n" VerticalOptions="Center" FontSize="Large" />
+                                <Label Text="Cerrar Sesión" VerticalOptions="Center" FontSize="Large" />
                             </StackLayout>
                         </ViewCell>
                     </TableSection>

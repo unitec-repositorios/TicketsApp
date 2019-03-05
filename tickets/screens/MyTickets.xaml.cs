@@ -98,6 +98,7 @@ namespace tickets
                 if (result.Text == "")
                 {
                     error = "Ingrese un id";
+                    UserDialogs.Instance.ShowError("Ingrese un id.");
                 }
                 else
                 {
@@ -109,6 +110,7 @@ namespace tickets
                     if (html == "Error")
                     {
                         error = "No existe un ticket con ese numero de ID: " + result.Text;
+                        UserDialogs.Instance.ShowError("No existe un ticket con ese number de ID: "+result.Text);
                     }
                     else
                     {
@@ -157,17 +159,19 @@ namespace tickets
                                     Date = date,
                                 });
                                 error = "El ticket se agrego exitosamente";
+                                UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
                             }
                             catch (SQLiteException)
                             {
                                 error = "No se agrergo el ticket, porque ya existe en la aplicacion";
+                                UserDialogs.Instance.ShowError("No se agrego el ticket, porque ya existe en la base de datos.");
                             }
                         }
                         
                     }
                 }
 
-                UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
+                UserDialogs.Instance.ShowError(error);
             }
         }
 
