@@ -159,12 +159,12 @@ namespace tickets
                                     Date = date,
                                 });
                                 error = "El ticket se agrego exitosamente";
-                                UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
+                                //UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
                             }
                             catch (SQLiteException)
                             {
                                 error = "No se agrergo el ticket, porque ya existe en la aplicacion";
-                                UserDialogs.Instance.ShowError("No se agrego el ticket, porque ya existe en la base de datos.");
+                                //UserDialogs.Instance.ShowError("No se agrego el ticket, porque ya existe en la base de datos.");
                             }
                         }
                         
@@ -172,6 +172,7 @@ namespace tickets
                 }
 
                 UserDialogs.Instance.ShowError(error);
+                GetTickets();
             }
         }
 
