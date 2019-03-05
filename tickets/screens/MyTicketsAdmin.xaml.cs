@@ -241,7 +241,8 @@ namespace tickets
                     hcount = 1;
                 }
             }
-            TicketsListViewAdminAssign.ItemsSource = tickets;
+
+            TicketsListViewAdminAsign.ItemsSource = tickets;
         }
     }
 }
