@@ -25,12 +25,12 @@ namespace tickets
             try
             {
                 InitializeComponent();
-                
+                //UserDialogs.Instance.ShowLoading("Cargando Tickets...");
                 TicketsListView.ItemsSource = tickets;
                 this.BindingContext = this;
                 GetTickets();
 
-
+                //UserDialogs.Instance.HideLoading();
                 var newTicket = new ToolbarItem
                 {
                     Icon = "nuevo.jpg",
@@ -94,10 +94,10 @@ namespace tickets
             var result = await UserDialogs.Instance.PromptAsync(promptConfig);
             if (result.Ok)
             {
-                string error = "No se agrego el ticket, su numero de cuenta no coincide con el numero de cuenta enlazado al ticket";
+                //string error = "No se agrego el ticket, su numero de cuenta no coincide con el numero de cuenta enlazado al ticket";
                 if (result.Text == "")
                 {
-                    error = "Ingrese un id";
+                    //error = "Ingrese un id";
                     UserDialogs.Instance.ShowError("Ingrese un id.");
                 }
                 else
@@ -109,7 +109,7 @@ namespace tickets
                     UserDialogs.Instance.HideLoading();
                     if (html == "Error")
                     {
-                        error = "No existe un ticket con ese numero de ID: " + result.Text;
+                        //error = "No existe un ticket con ese numero de ID: " + result.Text;
                         UserDialogs.Instance.ShowError("No existe un ticket con ese number de ID: "+result.Text);
                     }
                     else
@@ -158,21 +158,25 @@ namespace tickets
                                     Message = getDetailTicket(html, "<b>Mensaje:</b>"),
                                     Date = date,
                                 });
-                                error = "El ticket se agrego exitosamente";
-                                //UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
+                                //error = "El ticket se agrego exitosamente";
+                                UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
+                                
+                                GetTickets();
                             }
                             catch (SQLiteException)
                             {
-                                error = "No se agrergo el ticket, porque ya existe en la aplicacion";
-                                //UserDialogs.Instance.ShowError("No se agrego el ticket, porque ya existe en la base de datos.");
+                                //error = "No se agrergo el ticket, porque ya existe en la aplicacion";
+                                UserDialogs.Instance.ShowError("No se agrego el ticket, porque ya existe en la base de datos.");
                             }
                         }
+                        else
+                        {
+                            UserDialogs.Instance.ShowError("No se agrego el ticket, su numero de cuenta no coincide con el numero de cuenta enlazado al ticket");
+                        }
                         
-                    }
-                }
 
-                UserDialogs.Instance.ShowError(error);
-                GetTickets();
+                    }
+                }               
             }
         }
 
@@ -278,7 +282,7 @@ namespace tickets
         {
             try {
 
-                UserDialogs.Instance.ShowLoading("Cargando Tickets...");
+                
                 List<Ticket> dbtickets;
                 dbtickets = await App.Database.GetTicketsAsync();
                                                                            
@@ -327,12 +331,9 @@ namespace tickets
 
                     }
                 }
-               
-
+              
                 TicketsListView.ItemsSource = null;
-                TicketsListView.ItemsSource = tickets;
-
-                UserDialogs.Instance.HideLoading();
+                TicketsListView.ItemsSource = tickets;               
 
             }
             catch (Exception ex)
