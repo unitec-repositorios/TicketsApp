@@ -39,6 +39,7 @@ namespace tickets
             if (CheckInternetConnection())
             {
                 SignInSignOutBtn.IsVisible = false;
+                SignInSignOutBtnAdmin.IsVisible = false;
                 Loading.IsVisible = true;
                 try
                 {
@@ -153,6 +154,7 @@ namespace tickets
         {
             if (CheckInternetConnection())
             {
+                SignInSignOutBtnAdmin.IsVisible = false;
                 SignInSignOutBtn.IsVisible = false;
                 Loading.IsVisible = true;
 

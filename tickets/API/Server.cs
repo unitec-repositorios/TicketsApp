@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
+
+
 namespace tickets.API
 {
     public class Server
@@ -18,46 +20,6 @@ namespace tickets.API
         public Server()
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-        }
-
-        public async Task<List<DateTime>> getDateMessage(string id)
-        {
-            List<DateTime> fechas= new List<DateTime>();
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
-            string html = await response.Content.ReadAsStringAsync();
-            int posFecha = 0;
-            int pos = 0;
-            while (pos != -1)
-            {
-                string search = "<td class=\"tickettd\">2";
-                pos = html.IndexOf(search);
-                posFecha = pos - 1 + search.Length;
-                if (pos > -1)
-                {
-                    string fecha = getTextAux('<', html, posFecha);
-                    fechas.Add(DateTime.Parse(fecha));
-                    pos = posFecha + 1;
-                    html = html.Substring(pos);
-                }
-            }
-            return fechas;
-        }
-
-        public string GetBaseAdress()
-        {
-            return BASE_ADDRESS;
-        }
-
-        public async Task<string> getRefresh()
-        {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php");
-            string html = await response.Content.ReadAsStringAsync();
-            string search = "\"Refresh\" value=" + '"';
-            int posRefresh = html.IndexOf(search) + search.Length;
-            string refresh = getTextAux('"', html, posRefresh);
-            return refresh;
         }
 
         public async Task<int> countResponse(string id)
@@ -208,7 +170,7 @@ namespace tickets.API
 
             string token = node.GetAttributeValue("value", "0");
 
-            Encoding encoder = Encoding.GetEncoding("utf-8");
+            Encoding encoder = Encoding.GetEncoding("ISO-8859-1");
 
             form.Headers.Add("Cookie", cookie);
             form.Headers.ContentType.CharSet = "ISO-8859-1";
