@@ -9,17 +9,56 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 
 
-
 namespace tickets.API
 {
     public class Server
     {
         //const string BASE_ADDRESS = "https://cap.unitec.edu/";
         const string BASE_ADDRESS = "http://138.197.198.67";
-       
+
         public Server()
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+        }
+
+        public async Task<List<DateTime>> getDateMessage(string id)
+        {
+            List<DateTime> fechas= new List<DateTime>();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            int posFecha = 0;
+            int pos = 0;
+            while (pos != -1)
+            {
+                string search = "<td class=\"tickettd\">2";
+                pos = html.IndexOf(search);
+                posFecha = pos - 1 + search.Length;
+                if (pos > -1)
+                {
+                    string fecha = getTextAux('<', html, posFecha);
+                    fechas.Add(DateTime.Parse(fecha));
+                    pos = posFecha + 1;
+                    html = html.Substring(pos);
+                }
+            }
+            return fechas;
+        }
+
+        public string GetBaseAdress()
+        {
+            return BASE_ADDRESS;
+        }
+
+        public async Task<string> getRefresh()
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php");
+            string html = await response.Content.ReadAsStringAsync();
+            string search = "\"Refresh\" value=" + '"';
+            int posRefresh = html.IndexOf(search) + search.Length;
+            string refresh = getTextAux('"', html, posRefresh);
+            return refresh;
         }
 
         public async Task<int> countResponse(string id)
@@ -84,7 +123,7 @@ namespace tickets.API
             return "error";
         }
 
-        //HEAD
+//HEAD
         public async Task<bool> getOpenTicket(string id)
         {
             HttpClient _client = new HttpClient();
@@ -99,15 +138,15 @@ namespace tickets.API
             HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
             int posRefresh = html.IndexOf("Refresh=");
-            int posToken = html.IndexOf("token=");
+            int posToken =  html.IndexOf("token=");
             string refresh = getTextAux('a', html, posRefresh);
-            string token = getTextAux('"', html, posToken);
+            string token = getTextAux('"',html,posToken);
             string s = await getOpenTicket(id) ? "3" : "1"; // 1 to open and 3 to close
             string link = BASE_ADDRESS + "/change_status.php?track=" + id + "&s=" + s + "&" + refresh + "&" + token;
             response = await client.GetAsync(link);
         }
 
-        private string getTextAux(char delimiter, string text, int pos)
+        private string getTextAux(char delimiter,string text,int pos)
         {
             string txt = "";
             char val = text[pos];
@@ -121,9 +160,9 @@ namespace tickets.API
         }
 
 
-        //>>>>>>> David
-        //=======
-        //>>>>>>> CEscobar
+//>>>>>>> David
+//=======
+//>>>>>>> CEscobar
 
         public async Task<string> getTicket(string id)
         {
@@ -132,14 +171,10 @@ namespace tickets.API
             string value = await response.Content.ReadAsStringAsync();
             return value;
         }
-        //Funcion Devuleve la Cookie
-
-        //Funcion Login
 
         public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, List<(string, byte[])> files)
         {
             User user = await App.Database.GetCurrentUser();
-
 
             var html = @"" + BASE_ADDRESS + "/index.php?a=add";
             //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
@@ -150,16 +185,11 @@ namespace tickets.API
             MultipartFormDataContent form = new MultipartFormDataContent();
 
             String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
-            Console.WriteLine("Res " + res);
             String[] tokens = res.Split(';');
-            Console.WriteLine("token" + tokens);
             String cookie = tokens[0];
-            Console.WriteLine("cookie" + cookie);
+
             String[] tokensValue = cookie.Split('=');
-            Console.WriteLine(tokensValue);
             String valueCookie = tokensValue[1];
-            Console.WriteLine(valueCookie);
-            Console.WriteLine("Aqui va");
 
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(await capture.Content.ReadAsStringAsync());
@@ -193,11 +223,12 @@ namespace tickets.API
             }
             form.Add(new StringContent(token, encoder), "token");
             HttpResponseMessage response = await httpClient.PostAsync(BASE_ADDRESS + "/submit_ticket.php", form);
+            //response.Headers.Add(
 
             response.EnsureSuccessStatusCode();
-
             httpClient.Dispose();
             string sd = await response.Content.ReadAsStringAsync();
+
             var result = new HtmlDocument();
             result.LoadHtml(sd);
 

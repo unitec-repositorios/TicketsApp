@@ -5048,11 +5048,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\Soft\\TicketsApp\\tickets\\tickets.csproj",
+      "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\TicketsApp\\TicketsApp\\tickets\\tickets.csproj",
       "projectName": "tickets",
-      "projectPath": "C:\\Users\\Administrator\\Desktop\\Soft\\TicketsApp\\tickets\\tickets.csproj",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\TicketsApp\\TicketsApp\\tickets\\tickets.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Administrator\\Desktop\\Soft\\TicketsApp\\tickets\\obj\\",
+      "outputPath": "C:\\Users\\Administrator\\Desktop\\TicketsApp\\TicketsApp\\tickets\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

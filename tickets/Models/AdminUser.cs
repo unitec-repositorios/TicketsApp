@@ -12,7 +12,6 @@ namespace tickets
         public int ID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-
         public bool IsCurrent { get; set; }
         public AdminUser() {}
 
@@ -27,6 +26,7 @@ namespace tickets
                 Debug.WriteLine("{0}={1}", name, value);
             }
         }
+
         public bool IsValid()
         {
             return !(string.IsNullOrEmpty(Username)

@@ -12,10 +12,22 @@ namespace tickets.Models
 {
     class AdminLogin
     {
+        private static AdminLogin instance = null;
         public string username { get; set; }
         public string password { get; set; }
         public string cookies { get; set; }
-
+       
+        public static AdminLogin Instance
+        {
+            get
+            {
+                if(instance == null)
+                {
+                    instance = new AdminLogin();
+                }
+                return instance;
+            }
+        }
         public async Task<string> loginAdmins()
         {
             const string BASE_ADDRESS_ADMIN = "http://138.197.198.67/admin";
@@ -45,12 +57,16 @@ namespace tickets.Models
             form.Add(new StringContent(no_thanks), "remember_user");
             form.Add(new StringContent(do_login), "a");
             HttpResponseMessage response = await httpClient.PostAsync(BASE_ADDRESS_ADMIN + "/index.php", form);
-            response.Headers.ElementAt(3).Value.ElementAt(0).ToString();
-            String[] tokens2 = res.Split(';');
-            String cookie2 = tokens[0];
-            cookies = cookie2;
-            response.EnsureSuccessStatusCode();
 
+            string res2 =   response.Headers.ElementAt(6).Value.ElementAt(0).ToString();
+            String[] tokens2 = res2.Split(';');
+            String cookie2 = tokens2[0];
+
+            String[] tokensValue2 = cookie2.Split('=');
+            String valueCookie2 = tokensValue[1];
+            cookies = valueCookie2;
+
+            response.EnsureSuccessStatusCode();
             httpClient.Dispose();
             string sd = await response.Content.ReadAsStringAsync();
             var result = new HtmlDocument();
