@@ -122,13 +122,26 @@ namespace tickets.API
             return "error";
         }
 
-        //HEAD
         public async Task<bool> getOpenTicket(string id)
         {
             HttpClient _client = new HttpClient();
             HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
             return html.IndexOf("resolved") == -1;
+        }
+
+        public async Task changeStatusTicketAdmin(string id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/admin/admin_ticket.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            int posRefresh = html.IndexOf("Refresh=");
+            int posToken = html.IndexOf("token=");
+            string refresh = getTextAux('a', html, posRefresh);
+            string token = getTextAux('"', html, posToken);
+            string s = await getOpenTicket(id) ? "3" : "1"; // 1 to open and 3 to close
+            string link = BASE_ADDRESS + "/admin/change_status.php?track=" + id + "&s=" + s + "&" + refresh + "&" + token;
+            response = await client.GetAsync(link);
         }
 
         public async Task changeStatusTicket(string id)
@@ -157,11 +170,6 @@ namespace tickets.API
             }
             return txt;
         }
-
-
-        //>>>>>>> David
-        //=======
-        //>>>>>>> CEscobar
 
         public async Task<string> getTicket(string id)
         {
@@ -250,6 +258,16 @@ namespace tickets.API
                 Console.WriteLine("TICKET ENVIADO, SU ID = " + ticketId.InnerText);
                 return ticketId.InnerText;
             }
+        }
+
+        public async Task<string> replyTicketAdmin(string message, List<(string, byte[])> files, string ticketID)
+        {
+            HttpClient _client = new HttpClient();
+            HttpResponseMessage capture = await _client.GetAsync(BASE_ADDRESS + "admin/admin_ticket.php?track=" + ticketID);
+            MultipartFormDataContent form = new MultipartFormDataContent();
+
+            return "";
+
         }
 
 
