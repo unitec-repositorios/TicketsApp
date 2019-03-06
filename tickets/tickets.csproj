@@ -88,11 +88,5 @@
     <None Update="screens\UserSettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
-    <None Update="screens\SignInAdminPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Update="screens\LoginAdminPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
   </ItemGroup>
 </Project>

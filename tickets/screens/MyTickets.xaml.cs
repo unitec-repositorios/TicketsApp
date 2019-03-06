@@ -15,6 +15,7 @@ namespace tickets
     {
         private Server server = new Server();
         ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
+        private Timer refreshTicketsTimer;
 
         public MyTickets()
         {
@@ -58,7 +59,7 @@ namespace tickets
                 }
                 //TicketsListView.BeginRefresh();
                 //GetTickets();
-                //TicketsListView.ItemsSource = tickets;
+                TicketsListView.ItemsSource = tickets;
             }
             catch(Exception ex)
             {
@@ -66,20 +67,34 @@ namespace tickets
             }
         }
 
+        private void TimerFunction(object source, ElapsedEventArgs e)
+        {
+            GetTickets();
+        }
+
+        private void SetTimer()
+        {
+            refreshTicketsTimer = new Timer(AppSettings.RefreshTicketsTimeout * 1000);
+            refreshTicketsTimer.Elapsed += TimerFunction;
+            refreshTicketsTimer.AutoReset = true;
+            refreshTicketsTimer.Enabled = true;
+            GetTickets();
+        }
+
+        private void ClearTimer()
+        {
+            refreshTicketsTimer.Stop();
+            refreshTicketsTimer.Dispose();
+        }
+
         protected override async void OnAppearing()
         {
-            base.OnAppearing();
-            Device.StartTimer(new TimeSpan(0, 0, AppSettings.RefreshTicketsTimeout), () =>
-              {
-                  //Get tickets every 1 minute.
-                  GetTickets();
-                  return true;
-              });
+            SetTimer();
         }
 
         protected override async void OnDisappearing()
         {
-            base.OnDisappearing();
+            ClearTimer();
         }
 
         async void goToViewTicket(object sender, SelectedItemChangedEventArgs e)

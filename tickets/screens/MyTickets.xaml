@@ -20,6 +20,8 @@
 
                                 <Image x:Name="open" Source="{Binding OpenImage}" />
 
+                                
+                                
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
