@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 
 
-
 namespace tickets.API
 {
     public class Server
     {
         //const string BASE_ADDRESS = "https://cap.unitec.edu/";
         const string BASE_ADDRESS = "http://138.197.198.67";
-       
+
         public Server()
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
@@ -61,7 +60,6 @@ namespace tickets.API
             string refresh = getTextAux('"', html, posRefresh);
             return refresh;
         }
-
 
         public async Task<int> countResponse(string id)
         {
@@ -125,26 +123,13 @@ namespace tickets.API
             return "error";
         }
 
+        //HEAD
         public async Task<bool> getOpenTicket(string id)
         {
             HttpClient _client = new HttpClient();
             HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
             return html.IndexOf("resolved") == -1;
-        }
-
-        public async Task changeStatusTicketAdmin(string id)
-        {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/admin/admin_ticket.php?track=" + id);
-            string html = await response.Content.ReadAsStringAsync();
-            int posRefresh = html.IndexOf("Refresh=");
-            int posToken = html.IndexOf("token=");
-            string refresh = getTextAux('a', html, posRefresh);
-            string token = getTextAux('"', html, posToken);
-            string s = await getOpenTicket(id) ? "3" : "1"; // 1 to open and 3 to close
-            string link = BASE_ADDRESS + "/admin/change_status.php?track=" + id + "&s=" + s + "&" + refresh + "&" + token;
-            response = await client.GetAsync(link);
         }
 
         public async Task changeStatusTicket(string id)
@@ -174,6 +159,11 @@ namespace tickets.API
             return txt;
         }
 
+
+        //>>>>>>> David
+        //=======
+        //>>>>>>> CEscobar
+
         public async Task<string> getTicket(string id)
         {
             HttpClient _client = new HttpClient();
@@ -181,14 +171,10 @@ namespace tickets.API
             string value = await response.Content.ReadAsStringAsync();
             return value;
         }
-        //Funcion Devuleve la Cookie
-
-        //Funcion Login
 
         public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, List<(string, byte[])> files)
         {
             User user = await App.Database.GetCurrentUser();
-
 
             var html = @"" + BASE_ADDRESS + "/index.php?a=add";
             //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
@@ -199,16 +185,11 @@ namespace tickets.API
             MultipartFormDataContent form = new MultipartFormDataContent();
 
             String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
-            Console.WriteLine("Res " + res);
             String[] tokens = res.Split(';');
-            Console.WriteLine("token" + tokens);
             String cookie = tokens[0];
-            Console.WriteLine("cookie" + cookie);
+
             String[] tokensValue = cookie.Split('=');
-            Console.WriteLine(tokensValue);
             String valueCookie = tokensValue[1];
-            Console.WriteLine(valueCookie);
-            Console.WriteLine("Aqui va");
 
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(await capture.Content.ReadAsStringAsync());
@@ -242,11 +223,12 @@ namespace tickets.API
             }
             form.Add(new StringContent(token, encoder), "token");
             HttpResponseMessage response = await httpClient.PostAsync(BASE_ADDRESS + "/submit_ticket.php", form);
+            //response.Headers.Add(
 
             response.EnsureSuccessStatusCode();
-
             httpClient.Dispose();
             string sd = await response.Content.ReadAsStringAsync();
+
             var result = new HtmlDocument();
             result.LoadHtml(sd);
 
@@ -260,117 +242,6 @@ namespace tickets.API
                 var ticketId = success.SelectSingleNode("//b[2]");
                 Console.WriteLine("TICKET ENVIADO, SU ID = " + ticketId.InnerText);
                 return ticketId.InnerText;
-            }
-        }
-
-        public async Task<string> replyTicketAdmin(string message, List<(string, byte[])> files, string ticketID)
-        {
-            HttpClient _client = new HttpClient();
-            HttpResponseMessage capture = await _client.GetAsync(BASE_ADDRESS + "admin/admin_ticket.php?track=" + ticketID);
-
-            String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
-            String[] tokens = res.Split(';');
-            String cookie = tokens[0];
-
-            //catch the token
-            String html = await capture.Content.ReadAsStringAsync();
-            string searchSS = "name=\"token\" value=\"";
-            int size = searchSS.Count();
-            int begin = size + html.IndexOf(searchSS);
-            string token = "";
-            char val = html[begin];
-            while (val != '\"')
-            {
-                token += val;
-                begin++;
-                val = html[begin];
-            }
-
-            //value cookie
-            String[] tokensValue = cookie.Split('=');
-            String valueCookie = tokensValue[1];
-
-            //headers
-            HttpWebRequest requestToServer = (HttpWebRequest)WebRequest.Create(BASE_ADDRESS + "admin/admin_reply_ticket.php");
-            String boundaryString = "----WebKitFormBoundary" + valueCookie;
-            requestToServer.AllowReadStreamBuffering = false;
-            requestToServer.Method = WebRequestMethods.Http.Post;
-            requestToServer.Headers.Add("Cookie", cookie);
-            requestToServer.ContentType = "multipart/form-data; boundary=" + boundaryString;
-
-            //generate body
-            ASCIIEncoding ascii = new ASCIIEncoding();
-            MultipartFormDataContent form = new MultipartFormDataContent();
-            //boundary
-            string boundaryStringLine = "\r\n--" + boundaryString + "\r\n";
-            byte[] boundaryStringLineBytes = ascii.GetBytes(boundaryStringLine);
-            //message
-            string messageInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "message", message);
-            byte[] messageInputBytes = ascii.GetBytes(messageInput);
-            //files
-            for (int x = 0; x < files.Count; x++)
-            {
-                form.Add(new ByteArrayContent(files[x].Item2, 0, files[x].Item2.Length), "attachment[" + (x + 1) + "]", files[x].Item1);
-            }
-            /* string filesInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "attachments", files);
-             byte[] filesInputBytes = ascii.GetBytes(filesInput);*/
-            //ticketID
-            string ticketInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "orig_track", ticketID);
-            byte[] ticketInputBytes = ascii.GetBytes(ticketInput);
-            //token
-            string tokenInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "token", token);
-            byte[] tokenInputBytes = ascii.GetBytes(tokenInput);
-            //boundary final
-            string lastBoundaryStringLine = "\r\n--" + boundaryString + "--";
-            byte[] lastBoundaryStringLineBytes = ascii.GetBytes(lastBoundaryStringLine);
-
-            //size buffer
-            long totalRequestBodySize = boundaryStringLineBytes.Length * 3
-                + messageInputBytes.Length
-                //+ filesInputBytes.Length
-                + ticketInputBytes.Length
-                + tokenInputBytes.Length
-                + lastBoundaryStringLineBytes.Length;
-
-            requestToServer.ContentLength = totalRequestBodySize;
-
-            //white body
-            using (Stream s = requestToServer.GetRequestStream())
-            {
-                s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
-                s.Write(messageInputBytes, 0, messageInputBytes.Length);
-                s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
-                //s.Write(filesInputBytes, 0, filesInputBytes.Length);
-                //s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
-                s.Write(ticketInputBytes, 0, ticketInputBytes.Length);
-                s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
-                s.Write(tokenInputBytes, 0, tokenInputBytes.Length);
-                s.Write(lastBoundaryStringLineBytes, 0, lastBoundaryStringLineBytes.Length);
-            }
-
-            //response 
-            WebResponse response = requestToServer.GetResponse();
-            StreamReader responseReader = new StreamReader(response.GetResponseStream());
-            HttpResponseMessage responsee = await _client.PostAsync(BASE_ADDRESS + "admin/admin_reply_ticket.php", form);
-
-            //response.Headers.Add(
-
-            responsee.EnsureSuccessStatusCode();
-            _client.Dispose();
-            string sd = await responsee.Content.ReadAsStringAsync();
-
-            var result = new HtmlDocument();
-            result.LoadHtml(sd);
-            //catch ticketID
-            String responseHtml = responseReader.ReadToEnd();
-            string searchR = "�xito:</b>";
-            if (responseHtml.IndexOf(searchR) > -1)
-            {
-                return "ok";
-            }
-            else
-            {
-                return "error";
             }
         }
 
