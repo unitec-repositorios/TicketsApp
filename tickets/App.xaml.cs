@@ -49,13 +49,15 @@ namespace tickets
             }
             else
             {
-                switch(Device.RuntimePlatform)
+                tickets.screens.ChatTicketAdmin chat = new tickets.screens.ChatTicketAdmin();
+                chat.ticketID = "VD7MMV9ENZ";
+                switch (Device.RuntimePlatform)
                 {
                     case Device.iOS:
                         MainPage = new NavigationPage(new HomeScreen());
                         break;
                     case Device.Android:
-                        MainPage = new NavigationPage(new MyTickets());
+                        MainPage = new NavigationPage(chat);
                         break;
                     case Device.UWP:
                         MainPage = new NavigationPage(new HomeScreen());

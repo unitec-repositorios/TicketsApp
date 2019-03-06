@@ -22,12 +22,12 @@ namespace tickets
         {
             AppSettings.ImagesQuality = Convert.ToInt32(pictureQualitySetting.Value);
         }
-        
+
         private void Timeout_ValueChanged(object sender, EventArgs e)
         {
             AppSettings.RefreshTicketsTimeout = Convert.ToInt32(ticketsTimeoutSetting.Text);
         }
-        
+
         public async void goToUserSettings(object sender, System.EventArgs e)
         {
             await Navigation.PushAsync(new UserSettingsPage());
@@ -39,12 +39,18 @@ namespace tickets
             if (answer)
             {
                 App.Database.Logout();
-            LoginPage.SignOut();
-            LoginPage login = new LoginPage();
-            App.Current.MainPage = new NavigationPage(login);
+                LoginPage.SignOut();
+                LoginPage login = new LoginPage();
+                App.Current.MainPage = new NavigationPage(login);
             }
-            
 
+
+        }
+
+        private void SignInAdminClicked(object sender, EventArgs e)
+        {
+            LoginAdminPage login = new LoginAdminPage();
+            App.Current.MainPage = new NavigationPage(login);
         }
 
         private void ViewCell_Tapped(object sender, EventArgs e)

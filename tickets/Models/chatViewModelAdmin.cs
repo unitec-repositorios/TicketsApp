@@ -52,7 +52,7 @@ namespace tickets.Models
         public async void sendMessage(Message message)
         {
             UserDialogs.Instance.ShowLoading("Enviando Mensaje...");
-            string status = await server.replyTicket(message.Text, message.Files, this.ticketID);
+            string status = await server.replyTicketAdmin(message.Text, message.Files, this.ticketID);
             Console.WriteLine(status);
             if (status.Equals("ok"))
             {

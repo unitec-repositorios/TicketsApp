@@ -40,7 +40,7 @@
                 <controls:CheckBox x:Name="chkClose" DefaultText="Cerrar este Ticket" HorizontalOptions="FillAndExpand"  />
                 <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="EndAndExpand">
                     <controls:CheckBox x:Name="chkCambiarPrioridad"  DefaultText="Cambiar prioridad a" HorizontalOptions="FillAndExpand"  />
-                    <Picker x:Name="pickerPrioridades" Title="Seleccionar respuesta predeterminada:" SelectedItem="{Binding Campus}">
+                    <Picker x:Name="pickerPrioridades" Title="Seleccionar prioridad:" SelectedItem="{Binding Campus}">
                         <Picker.ItemsSource>
                             <x:Array x:Name="arrayPrioridad" Type="{x:Type x:String}">
 
