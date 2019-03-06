@@ -1794,7 +1794,7 @@
   },
   "libraries": {
     "Acr.UserDialogs/6.2.4": {
-      "sha512": "1+jHH75Jb2pWlA6ZmCyYOZMz/7XUqD0cvl9diyjwWdLdvWtz1G3rnlhX/0ScFd7ogf0bENyQOknpCshUHFtbXQ==",
+      "sha512": "UADd0/v7aRzo5AmsQGGvhEdzk8CaAvk/ur4/jtZWFq7/J5GkgB/E422/qNLTlO6BSUAnZHnfcl7svNv3dlVYLw==",
       "type": "package",
       "path": "acr.userdialogs/6.2.4",
       "files": [
@@ -1833,7 +1833,7 @@
       ]
     },
     "AsyncUsageAnalyzers/1.0.0-alpha003": {
-      "sha512": "rj0BLCPLI0QF6/fDswekUtavjj2g6uA4vsASOZ0g6N/w77XQTQgzSqhiJ/6Py6R5HhdpQ3HfkjUpR+KSvWq3nQ==",
+      "sha512": "nSB1RZsd7gy1grLjuZ5VX73c3T0Qrp2iLzGgKxUjs1BPgLtT4SdDM2MVC9BtEywPHsALXFgLRzVLfQTt1zOMpA==",
       "type": "package",
       "path": "asyncusageanalyzers/1.0.0-alpha003",
       "hasTools": true,
@@ -1848,7 +1848,7 @@
       ]
     },
     "HtmlAgilityPack/1.8.7": {
-      "sha512": "BHAehz9emDbk6XeSeSV3/UcIj64/o2SMfprRbG7f/EsVqEkkHNPMXpsKhxfOed9h1lVl78Y+3p2q5ET2NByKOw==",
+      "sha512": "QmqP8JX60GOuylTkbCRJXrzQA10xE0ufdEghbaUbVJcqM7hGikB4VgpUl17cTznbVvRW7WtcJZHovLk6AVQzcA==",
       "type": "package",
       "path": "htmlagilitypack/1.8.7",
       "files": [
@@ -1896,7 +1896,7 @@
       ]
     },
     "Microsoft.Graph/1.10.0": {
-      "sha512": "jJxXPWXGGXJvjWaQkOR8nGeUZKb77HHnlH+gzweNzy7CNGkgirdpT9ZFFpYfAi45cdypUzAdXF0/QfBqYZRnnQ==",
+      "sha512": "+yhk7/PYVg+ozM4lGmXgqxShi/CdAbMNzsGDhftTBcSGSTJPWLf6Yrkk/Z4o+izYjfD+DSN763zhGCxpfJBV4Q==",
       "type": "package",
       "path": "microsoft.graph/1.10.0",
       "files": [
@@ -1911,7 +1911,7 @@
       ]
     },
     "Microsoft.Graph.Core/1.10.0": {
-      "sha512": "DwPKU8O0ULX45T9l0wckUD1ueV6ZyzL+NK6EvlaRyWV+XNmQf78sVB2+kV1E+o2NT9/mRgYRef/KIklaIqlp2A==",
+      "sha512": "aahFyFYKPX0VPT+vyU1V/C8Surv96iEtAZb+a+d/gbDpoMl8+oSu1+GW0w+erY1YzRCReyIvbjikDvICHINDwA==",
       "type": "package",
       "path": "microsoft.graph.core/1.10.0",
       "files": [
@@ -1926,7 +1926,7 @@
       ]
     },
     "Microsoft.Identity.Client/1.1.4-preview0002": {
-      "sha512": "k3HCZUfiaa5qGTm+EyFO+acK4yDiDkvfXuDvSYiY5jGHYtV6EmMnAQhlX6tOVQ3RGrneb5XwQrydWQ30WY3JOw==",
+      "sha512": "3JXQAu4adS/3w3IYpmK6PK8dGHaAehUXODcTQ3Xn4Fp2bU95KQ1YsqGu/euv6ak2x6ZC/HftpyWxa9h2qMdR9A==",
       "type": "package",
       "path": "microsoft.identity.client/1.1.4-preview0002",
       "files": [
@@ -1950,7 +1950,7 @@
       ]
     },
     "Newtonsoft.Json/11.0.2": {
-      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "sha512": "znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
       "type": "package",
       "path": "newtonsoft.json/11.0.2",
       "files": [
@@ -1980,7 +1980,7 @@
       ]
     },
     "NUnit/3.10.1": {
-      "sha512": "E3ii6+VLdeIxTQ5gPjk/7g/xl+aCifbfcIkiGayZCuos+22FEdtKGrxMe6SzoXCQCcL7gdqhfNIFTaZ1+dS18g==",
+      "sha512": "+qPe5OscM2hvV496Tym/RVa8H3yUHg7WDcV0UjxHnWshmzh/V9h36MMkrYfom2Sxb/zIJ1c8NGqTg8biGaoxZA==",
       "type": "package",
       "path": "nunit/3.10.1",
       "files": [
@@ -2014,7 +2014,7 @@
       ]
     },
     "Plugin.Permissions/3.0.0.12": {
-      "sha512": "VrYqI/ufk3bH6gTP1JJlLByjhS0CHu3riKmdozhX9/qXA9hlvLolmcqKJdyAqpzmrVC74m3ZtirUBIrBxvT1Lw==",
+      "sha512": "R8Rlzfci1byoPBGOiJfCMzu0HhhN6Q4Vq4YizlF41W946NEmoL/Mb8U5caP5t5KfSbdPQpzdQ9JfM8fxPG8pfw==",
       "type": "package",
       "path": "plugin.permissions/3.0.0.12",
       "files": [
@@ -2037,7 +2037,7 @@
       ]
     },
     "Plugin.UserDialogs/1.0.0": {
-      "sha512": "NbpdynjP4jWyyiS/IhUHAraW3XUyk+RyCD79P9rp6wgUR1MHRsGSBfLild+O2gB2hH3CIkRGY0rHTV2AstEP+w==",
+      "sha512": "eSM/ZwzNUHz5JfSZLpPAW0YVq9K+GxqM1UFzUpdEFqtk8Qe7SK9M9BXPCffO11ZBwtrPeXy5388QSUUT/K3dwQ==",
       "type": "package",
       "path": "plugin.userdialogs/1.0.0",
       "files": [
@@ -2051,11 +2051,12 @@
       ]
     },
     "Refractored.MvvmHelpers/1.3.0": {
-      "sha512": "IBBHbITCvULc5f5/QH4qB7WBgiGg7BdeKtA5nsBeAXDlhOBWwNt50TBjQOK/s5cm3O+0puDB8n68Yyd9m3JHWQ==",
+      "sha512": "/6+kdA5x7jjYQ4Z/jRO7KdqF7bTW+Uh3GASpjTbJx6e3S1ujqbWew+5QHAMmLsiFMDc/0uNG1Zzdp/rZOobC0g==",
       "type": "package",
       "path": "refractored.mvvmhelpers/1.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/netstandard1.0/MvvmHelpers.deps.json",
         "lib/netstandard1.0/MvvmHelpers.dll",
         "lib/netstandard1.0/MvvmHelpers.pdb",
@@ -2065,13 +2066,14 @@
       ]
     },
     "Rg.Plugins.Popup/1.1.5.188": {
-      "sha512": "PE7uHJ/LuI5pSO1HpgjJ+v2KhNfftzqt/L1AoGH/5mX0fP7pcW6lG4FbUHuCFKolrzJfLLotuuET+hfN50Whpg==",
+      "sha512": "3z5Q6Bdvhi8J2e5Cj0lEQ3rseZXXYTCFd3FjWjDlRbBnJ2vtNPRui5DE8bwWjA2PiDyK+GNj/bhvy+enEzISBA==",
       "type": "package",
       "path": "rg.plugins.popup/1.1.5.188",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/MonoAndroid/Rg.Plugins.Popup.Droid.dll",
+        "lib/MonoAndroid/Rg.Plugins.Popup.Droid.dll.mdb",
         "lib/MonoAndroid/Rg.Plugins.Popup.Droid.pdb",
         "lib/MonoAndroid/Rg.Plugins.Popup.dll",
         "lib/MonoAndroid/Rg.Plugins.Popup.pdb",
@@ -2095,7 +2097,7 @@
       ]
     },
     "Splat/1.6.2": {
-      "sha512": "DeH0MxPU+D4JchkIDPYG4vUT+hsWs9S41cFle0/4K5EJMXWurx5DzAkj2366DfK14/XKNhsu6tCl4dZXJ3CD4w==",
+      "sha512": "INLeF+SrOl0wmKN2EIyNQiYt67cWjyunCzOS/VZOk8jZCH/Sw7JZfjDajFWkcqgXC3ZLD8gc3LnLD3F9yP+GQg==",
       "type": "package",
       "path": "splat/1.6.2",
       "files": [
@@ -2128,7 +2130,7 @@
       ]
     },
     "sqlite-net-pcl/1.5.166-beta": {
-      "sha512": "a7VbroGBauEKY+UJeP1Z5UyrSHagigKgJGa5pVOyKDOI5/cPuCN2YUP4lhLReZdn73CrPqz2U7jsmZBoyZ0kXA==",
+      "sha512": "xINH/NJWuaZhQyCNNA3AVmDqbxDXQvyY1LHzti1QD/NiQj81ODdAA5XpUevIGxeE6NoHxsyzp1H+lWf+qcMttw==",
       "type": "package",
       "path": "sqlite-net-pcl/1.5.166-beta",
       "files": [
@@ -2146,7 +2148,7 @@
       ]
     },
     "SQLitePCLRaw.bundle_green/1.1.8": {
-      "sha512": "He+XMpqLXzpvZtjVfeaqxXXQzq5H4OuDEdUYwXXOJ7rQHQiF8b8BQzS+kuxCdsaDnMsrksdFVmAeXx2nNcAsjw==",
+      "sha512": "NA7WDIM1KBwQwS7zz0Oux5tM/LU+8LPFw2n6s1H79MzEQsOVtYIwJ3AAGWJ1G6FyCIc8pkVmWCQqxyFG65TAZQ==",
       "type": "package",
       "path": "sqlitepclraw.bundle_green/1.1.8",
       "files": [
@@ -2193,7 +2195,7 @@
       ]
     },
     "SQLitePCLRaw.core/1.1.8": {
-      "sha512": "JTvlAlVHeMW9QaTcu+3iLB9ZEGtceb+uM1MOlfyAnEocShSacHEzwPNsden7MlWb0QjPX3Y3sDMW0ymGhH8Jtg==",
+      "sha512": "m9dCUYulwjbZqKE2J+YZTEFhfSs8WT804BnhMf6OCS7K0PHFVDpY13dILFkcKnmNXazhqFwO2rWwDc/CJc8THw==",
       "type": "package",
       "path": "sqlitepclraw.core/1.1.8",
       "files": [
@@ -2219,7 +2221,7 @@
       ]
     },
     "SQLitePCLRaw.lib.e_sqlite3.linux/1.1.8": {
-      "sha512": "tfZaLUswTk47ohpgU2W54SJzQc10amYkxvyBB5cMP94Dn2zwMOt242LFa+t6IiurPGS1x5sdeumlRUecyT4cEQ==",
+      "sha512": "hCuuyzOGABUcIMG+iVz15zq8bZLbHwTk2sW7pynoBMUJffJTq65h/xyCOao35eHPb564KTRFs9/wHapbjbF24Q==",
       "type": "package",
       "path": "sqlitepclraw.lib.e_sqlite3.linux/1.1.8",
       "files": [
@@ -2238,7 +2240,7 @@
       ]
     },
     "SQLitePCLRaw.lib.e_sqlite3.osx/1.1.8": {
-      "sha512": "VaK65hDU1RloW+wT28H/XRu/RDYU5BSoP0DQ0upzF9mbGRnvDiuyGcX0g05hFXaFde5p1Fv9MWvE3LuBdm/Fxg==",
+      "sha512": "+HfL/vH3pgTinoiUZzO3b4ybcfWs5jPuWrMI3grZ53dk61v86EscLmTvrm1PGDKzbYnX9o+QQPQ0RTAwuC0oqw==",
       "type": "package",
       "path": "sqlitepclraw.lib.e_sqlite3.osx/1.1.8",
       "files": [
@@ -2254,7 +2256,7 @@
       ]
     },
     "SQLitePCLRaw.lib.e_sqlite3.v110_xp/1.1.8": {
-      "sha512": "w42b0xR0pFcNG+0gcnmldBXHK9ORXPvkWEG7gY49C8zaNmVbKEsFNfqNVwVQzZC1k+Dj1/7f2eLV+cN5BCvz5Q==",
+      "sha512": "G2/NSz0zl7PUBv1Cp8rtSPSy0RRjm4Ax7dzFoFvfuD/3nZQ5rHI/VQddvdV9d8i4+XZwkRewAz4lmbh1JdU8wg==",
       "type": "package",
       "path": "sqlitepclraw.lib.e_sqlite3.v110_xp/1.1.8",
       "files": [
@@ -2272,7 +2274,7 @@
       ]
     },
     "SQLitePCLRaw.provider.e_sqlite3.net45/1.1.8": {
-      "sha512": "bwcppjLNMjL130YkayMMz1NbzKXiXFK6Fyx9vFbST4kEM+5hmiPwrgonbHYFi5nKblhWCTSJXBp/80HJpuCRug==",
+      "sha512": "a80/usTPFXqLOSuY2f91mD3EKxH7Q0kODipnKIJTpMHRZWaShRQWX5okmQHyfRB6DZwQ510v4LlqoJWY2dUwYQ==",
       "type": "package",
       "path": "sqlitepclraw.provider.e_sqlite3.net45/1.1.8",
       "files": [
@@ -2284,7 +2286,7 @@
       ]
     },
     "System.Net.Http/4.3.3": {
-      "sha512": "7rCqIbkC/P2+A00NoDH5gnvFhADmX7Dc4INvsOajbU1MVhktE9vZNrjPtF82N6Uo7obK+yzlrPUv/M+snnN/9w==",
+      "sha512": "/3Rpbezfj/lz+Qv/55bdKso16KhZF38gHW9wX0g0R4GfK5vr9z9WjDcF8SrVN/AK0A9sdh/AOC3YnCdX+UGKpw==",
       "type": "package",
       "path": "system.net.http/4.3.3",
       "files": [
@@ -2326,7 +2328,7 @@
       ]
     },
     "System.Numerics.Vectors/4.5.0": {
-      "sha512": "QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "sha512": "nATsBTD2CKr4AYN6eRszhX4sptImWmBJwB/U6XKCWWfnCcrTBw8XSCm3QA9gjppkHTr8OkXUY21MR91D3QZXsw==",
       "type": "package",
       "path": "system.numerics.vectors/4.5.0",
       "files": [
@@ -2373,7 +2375,7 @@
       ]
     },
     "System.Security.Cryptography.Algorithms/4.3.0": {
-      "sha512": "W1kd2Y8mYSCgc3ULTAZ0hOP2dSdG5YauTb1089T0/kRcN2MpSAW1izOFROrJgxSlMn3ArsgHXagigyi+ibhevg==",
+      "sha512": "dkHXDCum83v0KdXZSb2kJ/B4CYwty4kk/XmyO7IsS5Vu8UI1Qi2LHMVyDLvMbP7olD1f+Hznq/DVTF6Lziql4g==",
       "type": "package",
       "path": "system.security.cryptography.algorithms/4.3.0",
       "files": [
@@ -2414,7 +2416,7 @@
       ]
     },
     "System.Security.Cryptography.Encoding/4.3.0": {
-      "sha512": "1DEWjZZly9ae9C79vFwqaO5kaOlI5q+3/55ohmq/7dpDyDfc8lYe7YVxJUZ5MF/NtbkRjwFRo14yM4OEo9EmDw==",
+      "sha512": "XCat0j5jVC83UG9fofcuiYDwN0PVKc2OWD0QVLjYpXn7dz+gNaANkHPbhNtr5PR8rDQNHrxtI912Hb29YAB14A==",
       "type": "package",
       "path": "system.security.cryptography.encoding/4.3.0",
       "files": [
@@ -2455,7 +2457,7 @@
       ]
     },
     "System.Security.Cryptography.Primitives/4.3.0": {
-      "sha512": "7bDIyVFNL/xKeFHjhobUAQqSpJq9YTOpbEs6mR233Et01STBMXNAc/V+BM6dwYGc95gVh/Zf+iVXWzj3mE8DWg==",
+      "sha512": "WtgnP5mOu5zKL3vQMUPT9tV7XVYGV7Jtb0540DgBD7MMN5ojonwIcw8VybZvS6VloGmE7CRt/Hms8adBsN1DRw==",
       "type": "package",
       "path": "system.security.cryptography.primitives/4.3.0",
       "files": [
@@ -2484,7 +2486,7 @@
       ]
     },
     "System.Security.Cryptography.X509Certificates/4.3.0": {
-      "sha512": "t2Tmu6Y2NtJ2um0RtcuhP7ZdNNxXEgUm2JeoA/0NvlMjAhKCnM1NX07TDl3244mVp3QU6LPEhT3HTtH1uF7IYw==",
+      "sha512": "MY2Gq1Uo4rRE7D5LmCTBvoK7k9tRPqs0sjjkhviGxNdDEO2CwhEEAf5c15Dk2X9KAjoLLVwuKZUtP9AuQnNNAA==",
       "type": "package",
       "path": "system.security.cryptography.x509certificates/4.3.0",
       "files": [
@@ -2540,11 +2542,12 @@
       ]
     },
     "Xam.Plugin.FilePicker/1.1.0": {
-      "sha512": "ORzNG6dEgdBZnIdmbQCpNB4LSSTjBebwGjb1XZrgfbBGjX9muHBfZeQwOnNRvcGlm6fkylzTj2rDslDA1E/JFA==",
+      "sha512": "qjPQ+MF5FDObArKr6snS95TBPcK2PmNoiXpjXY5c53tiWCGpTvUcbVccFAiruNiUpYBa/yGa50r9or/UsvlRaA==",
       "type": "package",
       "path": "xam.plugin.filepicker/1.1.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.dll",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.dll.mdb",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.pdb",
@@ -2593,11 +2596,12 @@
       ]
     },
     "Xam.Plugin.Media/4.0.1.5": {
-      "sha512": "a5l/M2Tl06BqBX/uhM/pr+q1jDkh2tRQr5Ne9rjAuD9VYn5STE+7kVFTzIUNPMnMr9PZLJkWP5WAr/tBN5oepw==",
+      "sha512": "PxL0vcTXpS79l2KgtaJBShcPVMRK2HC5J08vG6hKTC7hk5+3RjgFrdX0N6Gd4oF8pxVxV2ia7rhYnjxRCMWZtw==",
       "type": "package",
       "path": "xam.plugin.media/4.0.1.5",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/monoandroid71/Plugin.Media.dll",
         "lib/monoandroid71/Plugin.Media.xml",
         "lib/netstandard1.0/Plugin.Media.dll",
@@ -2617,7 +2621,7 @@
       ]
     },
     "Xamarin.Essentials/0.10.0-preview": {
-      "sha512": "99C772+GQ/LOyy3kqYJ0N6o84PFbF59dFGfIL0yE5hJgfT1lMISago9MSZoUnF662/h1wbOEp+zweH1EENvQYg==",
+      "sha512": "ope8kxiddTv3o/GTqaqpWoWiyVuh/suZqftBRoPhbx564lhAZeqjxcdKanmzjBWgL92w9lcmaKOvlg9BuNGnQg==",
       "type": "package",
       "path": "xamarin.essentials/0.10.0-preview",
       "files": [
@@ -2644,7 +2648,7 @@
       ]
     },
     "Xamarin.Forms/3.4.0.1008975": {
-      "sha512": "tM9syeev45u92OFENGjq+Zw8WiEwLJFiXe317XpL9SY2RRk9sm2fc1lDVjzwz0da+5ZP5fi24NAPsPQdxBdMwQ==",
+      "sha512": "036/h8HtzRFgTrfhY57IeHoYRsPTO2XTA6uUFdmZzw2QR1sdszfofhI9HrCJTRx6fCzmjPg5Cxk5chYrjKarNw==",
       "type": "package",
       "path": "xamarin.forms/3.4.0.1008975",
       "files": [
@@ -2790,11 +2794,12 @@
       ]
     },
     "Xamarin.Plugins.Clipboard/2.2.1": {
-      "sha512": "+CxPFOQqy/UA/XuXUhz5Ktr4C2rLh4QpYouDX8VM4CDvtr9cN9SLsCIJ5IZvn5ufcQPla8ABPCe+nE/qUF423A==",
+      "sha512": "0R2fgAarrqWsnYhHswWedy+Pp0klRldHgJe78gW6drEDog7U0YvInQHTV0EfDiN8wF2C8WxU3eSxuhpNipEkjg==",
       "type": "package",
       "path": "xamarin.plugins.clipboard/2.2.1",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid10/Plugin.Clipboard.Abstractions.dll",
         "lib/MonoAndroid10/Plugin.Clipboard.Abstractions.pdb",
         "lib/MonoAndroid10/Plugin.Clipboard.XML",
@@ -2827,7 +2832,7 @@
       ]
     },
     "Xamarin.UITest/2.2.5": {
-      "sha512": "QPHNNgvP0KP8OS6I1LwHnFF4fIw6L93wZqbUoPHH3E0jTqESAMI3CkGhtO1fpi7XeU5BUcGG1Cogi1PLILWiWg==",
+      "sha512": "1TVmeTQ6NisXk+lxmoCQI8tA/hV5434QjT+X8q73e7eht1r5Wd4k0ufrFvaqByueL1JeK2OhxgBWv7AuyRAnpQ==",
       "type": "package",
       "path": "xamarin.uitest/2.2.5",
       "hasTools": true,
@@ -2864,20 +2869,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Samuel Borjas\\.nuget\\packages\\": {}
+    "C:\\Users\\damas\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets.UITests\\tickets.UITests.csproj",
+      "projectUniqueName": "D:\\Proyectos\\TicketsApp\\tickets.UITests\\tickets.UITests.csproj",
       "projectName": "tickets.UITests",
-      "projectPath": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets.UITests\\tickets.UITests.csproj",
-      "packagesPath": "C:\\Users\\Samuel Borjas\\.nuget\\packages\\",
-      "outputPath": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets.UITests\\obj\\",
+      "projectPath": "D:\\Proyectos\\TicketsApp\\tickets.UITests\\tickets.UITests.csproj",
+      "packagesPath": "C:\\Users\\damas\\.nuget\\packages\\",
+      "outputPath": "D:\\Proyectos\\TicketsApp\\tickets.UITests\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
-        "C:\\Users\\Samuel Borjas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\damas\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2890,8 +2895,8 @@
       "frameworks": {
         "net461": {
           "projectReferences": {
-            "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets\\tickets.csproj": {
-              "projectPath": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets\\tickets.csproj"
+            "D:\\Proyectos\\TicketsApp\\tickets\\tickets.csproj": {
+              "projectPath": "D:\\Proyectos\\TicketsApp\\tickets\\tickets.csproj"
             }
           }
         }
@@ -2944,7 +2949,7 @@
       "code": "NU1605",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Degradación del paquete detectada: Refractored.MvvmHelpers de 1.3.2.47-beta a 1.3.0. Haga referencia al paquete directamente desde el proyecto para seleccionar una versión diferente. \r\n tickets.UITests -> tickets -> Refractored.MvvmHelpers (>= 1.3.2.47-beta) \r\n tickets.UITests -> Refractored.MvvmHelpers (>= 1.3.0)",
+      "message": "Detected package downgrade: Refractored.MvvmHelpers from 1.3.2.47-beta to 1.3.0. Reference the package directly from the project to select a different version. \r\n tickets.UITests -> tickets -> Refractored.MvvmHelpers (>= 1.3.2.47-beta) \r\n tickets.UITests -> Refractored.MvvmHelpers (>= 1.3.0)",
       "libraryId": "Refractored.MvvmHelpers",
       "targetGraphs": [
         ".NETFramework,Version=v4.6.1",
