@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using tickets.API;
+using tickets.Models;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Timers;
@@ -16,6 +17,7 @@ namespace tickets
     public partial class MyTicketsAdmin : TabbedPage
     {
         private Server server = new Server();
+        private AdminLogin admin_log = AdminLogin.Instance;
         ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
         private Timer refreshTicketsTimer;
         public MyTicketsAdmin()
@@ -92,7 +94,7 @@ namespace tickets
 
         protected override async void OnDisappearing()
         {
-           // ClearTimer();
+            // ClearTimer();
         }
         //Tickets Enviados
         async void goToViewTicketAdmin(object sender, SelectedItemChangedEventArgs e)
@@ -125,7 +127,7 @@ namespace tickets
         //Tickets Asignados
         async void goToViewTicketAdminAssign(object sender, SelectedItemChangedEventArgs e)
         {
-            
+
         }
 
         private async void TicketsListView_RefreshingAdminAssign(object sender, EventArgs e)
@@ -147,18 +149,15 @@ namespace tickets
             }
         }
 
-        public async void GetTickets()
+        public async void changeTicketStatus(string id)
         {
-           
-            User user = await App.Database.GetCurrentUser();
-
             var requestURI = @"http://138.197.198.67/admin/index.php";
             HttpClient httpClient = new HttpClient();
             var parameters = new Dictionary<string, string>();
 
             //Aquí se debe obtener la cookie en lugar de la sesión de login hardcoded que se realiza
-            parameters["user"] = "administrator";
-            parameters["pass"] = "admin";
+            parameters["user"] = admin_log.username;
+            parameters["pass"] = admin_log.password;
             parameters["remember_user"] = "NOTHANKS";
             parameters["a"] = "do_login";
             var response = await httpClient.PostAsync(requestURI, new FormUrlEncodedContent(parameters));
@@ -168,8 +167,34 @@ namespace tickets
             if (response.Headers.TryGetValues("Set-Cookie", out headerVals))
             {
                 session = headerVals.First();
-            }    
-                   
+            }
+            await server.changeStatusTicket(id);
+
+        }
+
+        public async void GetTickets()
+        {
+
+            User user = await App.Database.GetCurrentUser();
+
+            var requestURI = @"http://138.197.198.67/admin/index.php";
+            HttpClient httpClient = new HttpClient();
+            var parameters = new Dictionary<string, string>();
+
+            //Aquí se debe obtener la cookie en lugar de la sesión de login hardcoded que se realiza
+            parameters["user"] = admin_log.username;
+            parameters["pass"] = admin_log.password;
+            parameters["remember_user"] = "NOTHANKS";
+            parameters["a"] = "do_login";
+            var response = await httpClient.PostAsync(requestURI, new FormUrlEncodedContent(parameters));
+            var contents = await response.Content.ReadAsStringAsync();
+            IEnumerable<String> headerVals;
+            string session = string.Empty;
+            if (response.Headers.TryGetValues("Set-Cookie", out headerVals))
+            {
+                session = headerVals.First();
+            }
+
             //Modificar parametros del request para obtener tickets ordenados por columna
             requestURI = @"http://138.197.198.67/admin/show_tickets.php?status=6&sort=lastchange&category=0&s_my=1&s_ot=1&s_un=1&limit=10&asc=0";
             var res2 = await httpClient.GetAsync(requestURI);
@@ -180,17 +205,21 @@ namespace tickets
             tickets = new ObservableCollection<Ticket>();
             int hcount = 0;
             //Ciclar rows y crear tickets en la ObservableList
-            foreach (HtmlNode row in table.SelectNodes("tr")) {
-                if(hcount > 0){ //Ignore headers
+            foreach (HtmlNode row in table.SelectNodes("tr"))
+            {
+                if (hcount > 0)
+                { //Ignore headers
                     Console.WriteLine("row");
                     int column = 0;
                     Ticket ticket = new Ticket();
-                    foreach (HtmlNode cell in row.SelectNodes("th|td")) {
+                    foreach (HtmlNode cell in row.SelectNodes("th|td"))
+                    {
                         //Por ahora solo se puede obtener ID, fecha de actualización y tema
                         //Los otros atributos están al ver un ticket específico, se necesita hacer otro request por cada
                         //ticket usando el ID para obtenerlos.
-                        switch(column){
-                            case 1: 
+                        switch (column)
+                        {
+                            case 1:
                                 ticket.ID = cell.InnerText;
                                 break;
                             case 2:
@@ -203,13 +232,16 @@ namespace tickets
                                 break;
                         }
                         column++;
-                        
+
                     }
                     tickets.Add(ticket);
-                }else{
+                }
+                else
+                {
                     hcount = 1;
                 }
             }
+
             TicketsListViewAdminAsign.ItemsSource = tickets;
         }
     }
