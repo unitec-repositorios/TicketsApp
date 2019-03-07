@@ -38,9 +38,11 @@ namespace tickets
             var answer = await DisplayAlert("Cerrar Sesión", "Esta seguro de cerrar sesión?", "Si", "No");
             if (answer)
             {
-                /*App.Database.Logout();*/
-                MyTickets tickets = new MyTickets();
-                App.Current.MainPage = new NavigationPage(tickets);
+                /*App.Database.Logout();
+                LoginAdminPage login = new LoginAdminPage();
+                App.Current.MainPage = new NavigationPage(login);*/
+                await Navigation.PushAsync(new MyTickets());
+
             }
 
 

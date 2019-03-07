@@ -41,7 +41,7 @@ namespace tickets
                     {
                         string response = await admin_log.loginAdmins();
 
-                        if (response == " error")
+                        if (response == "error")
                         {
                             await DisplayAlert("No se ha podido Acceder como Admin", "Revise por favor", "OK");
                         }
@@ -68,7 +68,7 @@ namespace tickets
                 }
                 else
                 {
-                    await DisplayAlert("Error", "Ingrese Datos", "OK");
+                    await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
                 }
 
             }
@@ -76,7 +76,7 @@ namespace tickets
 
             else
             {
-                await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
+                await DisplayAlert("Error", "Ingrese Datos", "OK");
 
             }
         }
