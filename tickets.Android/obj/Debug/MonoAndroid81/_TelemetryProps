@@ -1,5 +1,5 @@
 AndroidUseAapt2=False
-UseSharedRuntime=false
+UseSharedRuntime=true
 UseFastDeployment=false
 EnableMultidex=False
 EnableProGuard=

@@ -47,11 +47,11 @@ namespace tickets
 
         }
 
-        private async void  SignInAdminClicked(object sender, EventArgs e)
+        private void  SignInAdminClicked(object sender, EventArgs e)
         {
-            //LoginAdminPage login = new LoginAdminPage();
-            //App.Current.MainPage = new NavigationPage(login);
-            await Navigation.PushAsync(new LoginAdminPage());
+            LoginAdminPage login = new LoginAdminPage();
+
+            App.Current.MainPage = new NavigationPage(login);
         }
 
         private void ViewCell_Tapped(object sender, EventArgs e)

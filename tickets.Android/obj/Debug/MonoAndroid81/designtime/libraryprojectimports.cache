@@ -1,49 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Paths>
   <Jars>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\27\jl\arch-core-common.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\28\jl\arch-lifecycle-common.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\29\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\30\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\31\jl\support-annotations.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\32\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\33\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\34\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\35\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\36\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\37\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\38\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\39\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\40\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\41\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\42\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\43\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\44\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\45\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\46\jl\bin\classes.jar</Jar>
-    <Jar>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\6\jl\formsviewgroup.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\27\jl\arch-core-common.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\28\jl\arch-lifecycle-common.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\29\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\30\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\31\jl\support-annotations.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\32\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\33\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\34\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\35\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\36\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\37\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\38\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\39\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\40\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\41\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\42\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\43\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\44\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\45\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\46\jl\bin\classes.jar</Jar>
+    <Jar>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\6\jl\formsviewgroup.jar</Jar>
   </Jars>
   <ResolvedResourceDirectories>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\2\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\3\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\5\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\10\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\17\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\20\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\22\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\23\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\24\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\25\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\26\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\32\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\36\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\38\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\39\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\40\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\41\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\42\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\43\jl\res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\45\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\2\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\3\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\5\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\10\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\17\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\20\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\22\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\23\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\24\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\25\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\26\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\32\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\36\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\38\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\39\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\40\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\41\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\42\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\43\jl\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\45\jl\res</ResolvedResourceDirectory>
   </ResolvedResourceDirectories>
   <ResolvedAssetDirectories>
     <ResolvedAssetDirectory>obj\\Debug\MonoAndroid81\lp\2\jl\assets</ResolvedAssetDirectory>
@@ -61,25 +61,25 @@
   </ResolvedAssetDirectories>
   <ResolvedEnvironmentFiles />
   <ResolvedResourceDirectoryStamps>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\2.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\3.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\5.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\10.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\17.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\20.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\22.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\23.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\24.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\25.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\26.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\32.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\36.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\38.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\39.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\40.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\41.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\42.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\43.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\Soft\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\45.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\2.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\3.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\5.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\10.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\17.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\20.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\22.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\23.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\24.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\25.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\26.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\32.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\36.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\38.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\39.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\40.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\41.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\42.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\43.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Users\Administrator\Desktop\TicketsApp\TicketsApp\tickets.Android\obj\Debug\MonoAndroid81\lp\45.stamp</ResolvedResourceDirectoryStamp>
   </ResolvedResourceDirectoryStamps>
 </Paths>

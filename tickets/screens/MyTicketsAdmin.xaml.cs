@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -20,6 +20,7 @@ namespace tickets
         private AdminLogin admin_log = AdminLogin.Instance;
         ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
         private Timer refreshTicketsTimer;
+
         public MyTicketsAdmin()
         {
             try
@@ -34,11 +35,12 @@ namespace tickets
                     Order = ToolbarItemOrder.Primary
 
                 };
+
                 var settings = new ToolbarItem
                 {
 
                     Text = "Ajustes",
-                    Command = new Command(async (s) => await Navigation.PushAsync(new AppSettingsPage())),
+                    Command = new Command(async (s) => await Navigation.PushAsync(new AppSettingsPageAdmin())),
 
                     Order = ToolbarItemOrder.Secondary
 
@@ -133,7 +135,7 @@ namespace tickets
         private async void TicketsListView_RefreshingAdminAssign(object sender, EventArgs e)
         {
             GetTickets();
-            TicketsListViewAdminAsign.EndRefresh();
+            TicketsListViewAdminAssign.EndRefresh();
         }
 
         private async void SearchBar_TextChangedAdminAssign(object sender, TextChangedEventArgs e)
@@ -141,11 +143,11 @@ namespace tickets
             if (!String.IsNullOrWhiteSpace(e.NewTextValue))
             {
                 var showTickets = tickets.Where(t => t.Subject.Contains(e.NewTextValue)).ToList();
-                TicketsListViewAdminAsign.ItemsSource = showTickets;
+                TicketsListViewAdminAssign.ItemsSource = showTickets;
             }
             else
             {
-                TicketsListViewAdminAsign.ItemsSource = tickets;
+                TicketsListViewAdminAssign.ItemsSource = tickets;
             }
         }
 
@@ -203,13 +205,13 @@ namespace tickets
             htmlDoc.LoadHtml(contents);
             var table = htmlDoc.DocumentNode.SelectSingleNode("//table[@class=\"white\"]");
             tickets = new ObservableCollection<Ticket>();
+
             int hcount = 0;
             //Ciclar rows y crear tickets en la ObservableList
             foreach (HtmlNode row in table.SelectNodes("tr"))
             {
                 if (hcount > 0)
                 { //Ignore headers
-                    Console.WriteLine("row");
                     int column = 0;
                     Ticket ticket = new Ticket();
                     foreach (HtmlNode cell in row.SelectNodes("th|td"))
@@ -242,7 +244,7 @@ namespace tickets
                 }
             }
 
-            TicketsListViewAdminAsign.ItemsSource = tickets;
+            TicketsListViewAdminAssign.ItemsSource = tickets;
         }
     }
 }

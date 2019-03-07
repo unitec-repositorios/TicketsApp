@@ -17,16 +17,16 @@ namespace tickets {
     public partial class MyTicketsAdmin : global::Xamarin.Forms.TabbedPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
-        private global::Xamarin.Forms.ListView TicketsListViewAdmin;
+        private global::Xamarin.Forms.ListView TicketsListViewAdminAssign;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
-        private global::Xamarin.Forms.ListView TicketsListViewAdminAsign;
+        private global::Xamarin.Forms.ListView TicketsListViewAdmin;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(MyTicketsAdmin));
+            TicketsListViewAdminAssign = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.ListView>(this, "TicketsListViewAdminAssign");
             TicketsListViewAdmin = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.ListView>(this, "TicketsListViewAdmin");
-            TicketsListViewAdminAsign = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.ListView>(this, "TicketsListViewAdminAsign");
         }
     }
 }
