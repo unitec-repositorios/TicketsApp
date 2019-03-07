@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace tickets
 {
-    public partial class AppSettingsPage : ContentPage
+    public partial class AppSettingsPageAdmin : ContentPage
     {
-        public AppSettingsPage()
+        public AppSettingsPageAdmin()
         {
             InitializeComponent();
 
@@ -22,12 +22,12 @@ namespace tickets
         {
             AppSettings.ImagesQuality = Convert.ToInt32(pictureQualitySetting.Value);
         }
-        
+
         private void Timeout_ValueChanged(object sender, EventArgs e)
         {
             AppSettings.RefreshTicketsTimeout = Convert.ToInt32(ticketsTimeoutSetting.Text);
         }
-        
+
         public async void goToUserSettings(object sender, System.EventArgs e)
         {
             await Navigation.PushAsync(new UserSettingsPage());
@@ -38,16 +38,15 @@ namespace tickets
             var answer = await DisplayAlert("Cerrar Sesión", "Esta seguro de cerrar sesión?", "Si", "No");
             if (answer)
             {
-                App.Database.Logout();
-            LoginPage.SignOut();
-            LoginPage login = new LoginPage();
-            App.Current.MainPage = new NavigationPage(login);
+                /*App.Database.Logout();*/
+                MyTickets tickets = new MyTickets();
+                App.Current.MainPage = new NavigationPage(tickets);
             }
-            
+
 
         }
 
-        private void  SignInAdminClicked(object sender, EventArgs e)
+        private void SignInAdminClicked(object sender, EventArgs e)
         {
             LoginAdminPage login = new LoginAdminPage();
 
