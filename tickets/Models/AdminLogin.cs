@@ -76,13 +76,10 @@ namespace tickets.Models
             if (success == null)
             {
                 temporal_response = "sucess";
-
             }
             else
             {
                 temporal_response = "error";
-
-                ;
             }
             return temporal_response;
 
