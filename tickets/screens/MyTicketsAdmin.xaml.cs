@@ -40,7 +40,7 @@ namespace tickets
                 {
 
                     Text = "Ajustes",
-                    Command = new Command(async (s) => await Navigation.PushAsync(new AppSettingsPage())),
+                    Command = new Command(async (s) => await Navigation.PushAsync(new AppSettingsPageAdmin())),
 
                     Order = ToolbarItemOrder.Secondary
 
@@ -205,13 +205,13 @@ namespace tickets
             htmlDoc.LoadHtml(contents);
             var table = htmlDoc.DocumentNode.SelectSingleNode("//table[@class=\"white\"]");
             tickets = new ObservableCollection<Ticket>();
+
             int hcount = 0;
             //Ciclar rows y crear tickets en la ObservableList
             foreach (HtmlNode row in table.SelectNodes("tr"))
             {
                 if (hcount > 0)
                 { //Ignore headers
-                    Console.WriteLine("row");
                     int column = 0;
                     Ticket ticket = new Ticket();
                     foreach (HtmlNode cell in row.SelectNodes("th|td"))
