@@ -1,0 +1,6 @@
+EnableLLVM=False
+UseConcurrentGC=False
+LinkerBehavior=None
+AdditionalSupportedEncodings=
+HttpClientImplementation=HttpClientHandler
+SupportedArchitectures=x86_64
