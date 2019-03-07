@@ -29,9 +29,10 @@ namespace tickets.screens
         public string stateText { get; set; }
         private List<DateTime> dateMessagesList;
         private ToolbarItem openTicket, openBrowserTool;
+        string cookie;
 
         public chatViewModelAdmin chatVM;
-        public ChatTicketAdmin()
+        public ChatTicketAdmin(string cook)
         {
             try
             {
@@ -39,6 +40,7 @@ namespace tickets.screens
                 this.BindingContext = this;
                 chatVM = new chatViewModelAdmin(ticketID, files);
                 dateMessagesList = new List<DateTime>();
+                this.cookie = cook;
 
                 chatVM.ListMessages.CollectionChanged += (sender, e) =>
                 {
@@ -61,7 +63,7 @@ namespace tickets.screens
 
                 openBrowserTool = new ToolbarItem
                 {
-                    Text = "Abrir en el navegador",
+                    Text = "Mas detalles",
                     Command = new Command(execute: () => openBrowser()),
                     Order = ToolbarItemOrder.Secondary
                 };
@@ -71,7 +73,7 @@ namespace tickets.screens
                 {
                     case Device.Android:
                         ToolbarItems.Add(openTicket);
-                        ToolbarItems.Add(openBrowserTool);
+                        //ToolbarItems.Add(openBrowserTool);
                         break;
                     case Device.UWP:
                         ToolbarItems.Add(openTicket);
@@ -88,9 +90,10 @@ namespace tickets.screens
 
         }
 
-        private async void sendMessage(object sender, EventArgs args)
+        private void sendMessage(object sender, EventArgs args)
         {
-            if (!String.IsNullOrWhiteSpace(this.chatVM.OutText))
+           
+           /* if (!String.IsNullOrWhiteSpace(this.chatVM.OutText))
             {
                 var message = new Message
                 {
@@ -99,12 +102,12 @@ namespace tickets.screens
                     IsTextIn = false,
                     MessageDateTime = DateTime.Now
                 };
-                this.chatVM.sendMessage(message);
+                this.chatVM.sendMessage(message,cookie);
             }
             else
             {
                 UserDialogs.Instance.Alert("Ingresar el mensaje", "Chat Ticket");
-            }
+            }*/
 
 
         }

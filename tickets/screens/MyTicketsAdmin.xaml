@@ -3,8 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="tickets.MyTicketsAdmin"
             Title="Mis Tickets" Icon="baseline_home_white_36pt">
-
-    <!--Pages can be added as references or inline-->
+    
+  <!--Pages can be added as references or inline-->
+    <ContentPage Title="Asignados">
+        <ContentPage.Content>
+            <StackLayout>
+                <SearchBar Placeholder="Buscar" TextChanged="SearchBar_TextChangedAdminAssign" HeightRequest="40"/>
+                <ListView x:Name="TicketsListViewAdminAssign" IsPullToRefreshEnabled="True" Refreshing="TicketsListView_RefreshingAdminAssign" ItemSelected="goToViewTicketAdmin" SeparatorVisibility="Default" RowHeight="70">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell StyleId="disclosure">
+                                <StackLayout Orientation="Horizontal" Padding="10">
+                                    <StackLayout HorizontalOptions="StartAndExpand">
+                                        <Label Text="{Binding Subject}" TextColor="#0e2456" FontSize="20" LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding Message}" LineBreakMode="TailTruncation" />
+                                    </StackLayout>
+                                    <Image x:Name="notification" Source="{Binding Image}" />
+                                    <Image x:Name="open" Source="{Binding OpenImage}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ContentPage.Content>
+    </ContentPage>
     <ContentPage Title="Enviados" >
         <ContentPage.Content>
             <StackLayout>
@@ -19,34 +42,6 @@
                                         <Label Text="{Binding Message}" LineBreakMode="TailTruncation" />
                                     </StackLayout>
                                     <Image x:Name="notification" Source="{Binding Image}" />
-
-                                    <Image x:Name="open" Source="{Binding OpenImage}" />
-
-
-
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
-        </ContentPage.Content>
-    </ContentPage>
-    <ContentPage Title="Asignados">
-        <ContentPage.Content>
-            <StackLayout>
-                <SearchBar Placeholder="Buscar" TextChanged="SearchBar_TextChangedAdminAsign" HeightRequest="40"/>
-                <ListView x:Name="TicketsListViewAdminAsign" IsPullToRefreshEnabled="True" Refreshing="TicketsListView_RefreshingAdminAsign" ItemSelected="goToViewTicketAdmin" SeparatorVisibility="Default" RowHeight="70">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell StyleId="disclosure">
-                                <StackLayout Orientation="Horizontal" Padding="10">
-                                    <StackLayout HorizontalOptions="StartAndExpand">
-                                        <Label Text="{Binding Subject}" TextColor="#0e2456" FontSize="20" LineBreakMode="TailTruncation" />
-                                        <Label Text="{Binding Message}" LineBreakMode="TailTruncation" />
-                                    </StackLayout>
-                                    <Image x:Name="notification" Source="{Binding Image}" />
-
                                     <Image x:Name="open" Source="{Binding OpenImage}" />
                                 </StackLayout>
                             </ViewCell>

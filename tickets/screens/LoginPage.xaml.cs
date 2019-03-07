@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Net.Http.Headers;
-using tickets.screens;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -39,7 +38,6 @@ namespace tickets
             if (CheckInternetConnection())
             {
                 SignInSignOutBtn.IsVisible = false;
-                SignInSignOutBtnAdmin.IsVisible = false;
                 Loading.IsVisible = true;
                 try
                 {
@@ -145,7 +143,7 @@ namespace tickets
             else
             {
                 await DisplayAlert("No hay conexión", "No se detecto una conexión a Internet. Por favor vuelta a intentarlo", "Ok");
-                SignInSignOutBtn.IsVisible = true;
+                SignInSignOutBtn.IsVisible =true;
                 Loading.IsVisible = false;
             }
 
@@ -154,23 +152,21 @@ namespace tickets
         {
             if (CheckInternetConnection())
             {
-                SignInSignOutBtnAdmin.IsVisible = false;
                 SignInSignOutBtn.IsVisible = false;
                 Loading.IsVisible = true;
 
                 /* Aqui va la conexion al ADMIN del hesk */
 
-                /*  HomeScreen home = new HomeScreen();
-                  App.Current.MainPage = new NavigationPage(home);*/
-
+                LoginAdminPage home = new LoginAdminPage();
+                App.Current.MainPage = new NavigationPage(home);
 
                 switch (Xamarin.Forms.Device.RuntimePlatform)
                 {
                     case Xamarin.Forms.Device.iOS:
-                        App.Current.MainPage = new NavigationPage(new HomeScreen());
+                        App.Current.MainPage = new NavigationPage(new LoginAdminPage());
                         break;
                     case Xamarin.Forms.Device.Android:
-                        App.Current.MainPage = new NavigationPage(new LoginPageAdmin());
+                        App.Current.MainPage = new NavigationPage(new LoginAdminPage());
                         break;
 
                 }
@@ -195,7 +191,7 @@ namespace tickets
             {
                 return false;
             }
-
+            
         }
 
         public static GraphServiceClient GetAuthenticatedClient()
@@ -259,7 +255,7 @@ namespace tickets
             TokenForUser = null;
             username = null;
             email = null;
-
+            
         }
 
     }

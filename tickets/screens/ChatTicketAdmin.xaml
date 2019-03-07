@@ -25,30 +25,6 @@
 
             <StackLayout x:Name="messageComponentAdmin" Orientation="Vertical" Grid.Row="1" BackgroundColor="White" VerticalOptions="EndAndExpand">
                 <Label Text="Archivos adjuntos:" x:Name="Adjun"></Label >
-                
-                <Picker x:Name="pickerSelectRespuesta" Title="Seleccionar respuesta predeterminada:" SelectedItem="{Binding Campus}">
-                    <Picker.ItemsSource>
-                        <x:Array x:Name="arrayRespuesta" Type="{x:Type x:String}">
-                           
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-                <controls:BindableRadioGroup>
-                    <controls:CustomRadioButton x:Name="radioReemplazar"  Text="Reemplazar mensaje existente"></controls:CustomRadioButton>
-                    <controls:CustomRadioButton x:Name="radioInferior"  Text="Añadir a la parte inferior"></controls:CustomRadioButton>
-                </controls:BindableRadioGroup>
-                <controls:CheckBox x:Name="chkClose" DefaultText="Cerrar este Ticket" HorizontalOptions="FillAndExpand"  />
-                <StackLayout Orientation="Horizontal" Grid.Row="1" BackgroundColor="White" HorizontalOptions="EndAndExpand">
-                    <controls:CheckBox x:Name="chkCambiarPrioridad"  DefaultText="Cambiar prioridad a" HorizontalOptions="FillAndExpand"  />
-                    <Picker x:Name="pickerPrioridades" Title="Seleccionar prioridad:" SelectedItem="{Binding Campus}">
-                        <Picker.ItemsSource>
-                            <x:Array x:Name="arrayPrioridad" Type="{x:Type x:String}">
-
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
-                </StackLayout>
-                <controls:CheckBox x:Name="chkAgregarFirma"  DefaultText="Agregar firma" HorizontalOptions="FillAndExpand"  />
                 <Entry 
                         HorizontalOptions="FillAndExpand"  
                         Placeholder="Mensaje"  
