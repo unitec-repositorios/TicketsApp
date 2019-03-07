@@ -161,6 +161,20 @@
           "lib/netstandard1.0/MvvmHelpers.dll": {}
         }
       },
+      "Rg.Plugins.Popup/1.1.5.188": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.0.121934"
+        },
+        "compile": {
+          "lib/MonoAndroid/Rg.Plugins.Popup.Droid.dll": {},
+          "lib/MonoAndroid/Rg.Plugins.Popup.dll": {}
+        },
+        "runtime": {
+          "lib/MonoAndroid/Rg.Plugins.Popup.Droid.dll": {},
+          "lib/MonoAndroid/Rg.Plugins.Popup.dll": {}
+        }
+      },
       "Splat/1.6.2": {
         "type": "package",
         "compile": {
@@ -707,6 +721,7 @@
           "Newtonsoft.Json": "11.0.2",
           "Plugin.UserDialogs": "1.0.0",
           "Refractored.MvvmHelpers": "1.3.2.47-beta",
+          "Rg.Plugins.Popup": "1.1.5.188",
           "Xam.Plugin.FilePicker": "1.1.0",
           "Xam.Plugin.Media": "4.0.1.5",
           "Xamarin.Essentials": "0.10.0-preview",
@@ -725,7 +740,7 @@
   },
   "libraries": {
     "Acr.Support/2.1.0": {
-      "sha512": "Kq/+sDIUxyEcDxwIB6ijtaUWzp/KV68rdYVLHQ26au7q3Y+7fqiqE0571VALlbYHlXMtFRd8ap3VeLw4lf/GWQ==",
+      "sha512": "sxuarKBd5s1rDN3D4FvUaP4aYtubYf8QMkX8jdfyu7Ovzsp3v63cgWqkxkwaFr0k34r0B7UVA/svz752IvSCVQ==",
       "type": "package",
       "path": "acr.support/2.1.0",
       "files": [
@@ -743,7 +758,7 @@
       ]
     },
     "Acr.UserDialogs/6.2.4": {
-      "sha512": "1+jHH75Jb2pWlA6ZmCyYOZMz/7XUqD0cvl9diyjwWdLdvWtz1G3rnlhX/0ScFd7ogf0bENyQOknpCshUHFtbXQ==",
+      "sha512": "UADd0/v7aRzo5AmsQGGvhEdzk8CaAvk/ur4/jtZWFq7/J5GkgB/E422/qNLTlO6BSUAnZHnfcl7svNv3dlVYLw==",
       "type": "package",
       "path": "acr.userdialogs/6.2.4",
       "files": [
@@ -782,7 +797,7 @@
       ]
     },
     "AndHUD/1.2.0": {
-      "sha512": "EfAMAEwupi2STP/xyvqRSKHmCoJA3HG7He0cv1qKAoFi7NWvmJkLqlZS7lwYtNYQ37gb1T5fIfvMJjNJAZ/TEQ==",
+      "sha512": "BdYzLHh3XNZIfhU7rQYUX5Oi3EfEQnlJV7EAEGZalmqx4/r8wnQFwhZmVZXow8ysdlec71Xsm5n+7VLh+w/o5Q==",
       "type": "package",
       "path": "andhud/1.2.0",
       "files": [
@@ -794,7 +809,7 @@
       ]
     },
     "AsyncUsageAnalyzers/1.0.0-alpha003": {
-      "sha512": "rj0BLCPLI0QF6/fDswekUtavjj2g6uA4vsASOZ0g6N/w77XQTQgzSqhiJ/6Py6R5HhdpQ3HfkjUpR+KSvWq3nQ==",
+      "sha512": "nSB1RZsd7gy1grLjuZ5VX73c3T0Qrp2iLzGgKxUjs1BPgLtT4SdDM2MVC9BtEywPHsALXFgLRzVLfQTt1zOMpA==",
       "type": "package",
       "path": "asyncusageanalyzers/1.0.0-alpha003",
       "hasTools": true,
@@ -809,7 +824,7 @@
       ]
     },
     "HtmlAgilityPack/1.8.7": {
-      "sha512": "BHAehz9emDbk6XeSeSV3/UcIj64/o2SMfprRbG7f/EsVqEkkHNPMXpsKhxfOed9h1lVl78Y+3p2q5ET2NByKOw==",
+      "sha512": "QmqP8JX60GOuylTkbCRJXrzQA10xE0ufdEghbaUbVJcqM7hGikB4VgpUl17cTznbVvRW7WtcJZHovLk6AVQzcA==",
       "type": "package",
       "path": "htmlagilitypack/1.8.7",
       "files": [
@@ -857,7 +872,7 @@
       ]
     },
     "Microsoft.Graph/1.10.0": {
-      "sha512": "jJxXPWXGGXJvjWaQkOR8nGeUZKb77HHnlH+gzweNzy7CNGkgirdpT9ZFFpYfAi45cdypUzAdXF0/QfBqYZRnnQ==",
+      "sha512": "+yhk7/PYVg+ozM4lGmXgqxShi/CdAbMNzsGDhftTBcSGSTJPWLf6Yrkk/Z4o+izYjfD+DSN763zhGCxpfJBV4Q==",
       "type": "package",
       "path": "microsoft.graph/1.10.0",
       "files": [
@@ -872,7 +887,7 @@
       ]
     },
     "Microsoft.Graph.Core/1.10.0": {
-      "sha512": "DwPKU8O0ULX45T9l0wckUD1ueV6ZyzL+NK6EvlaRyWV+XNmQf78sVB2+kV1E+o2NT9/mRgYRef/KIklaIqlp2A==",
+      "sha512": "aahFyFYKPX0VPT+vyU1V/C8Surv96iEtAZb+a+d/gbDpoMl8+oSu1+GW0w+erY1YzRCReyIvbjikDvICHINDwA==",
       "type": "package",
       "path": "microsoft.graph.core/1.10.0",
       "files": [
@@ -887,7 +902,7 @@
       ]
     },
     "Microsoft.Identity.Client/1.1.4-preview0002": {
-      "sha512": "k3HCZUfiaa5qGTm+EyFO+acK4yDiDkvfXuDvSYiY5jGHYtV6EmMnAQhlX6tOVQ3RGrneb5XwQrydWQ30WY3JOw==",
+      "sha512": "3JXQAu4adS/3w3IYpmK6PK8dGHaAehUXODcTQ3Xn4Fp2bU95KQ1YsqGu/euv6ak2x6ZC/HftpyWxa9h2qMdR9A==",
       "type": "package",
       "path": "microsoft.identity.client/1.1.4-preview0002",
       "files": [
@@ -911,7 +926,7 @@
       ]
     },
     "Newtonsoft.Json/11.0.2": {
-      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "sha512": "znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
       "type": "package",
       "path": "newtonsoft.json/11.0.2",
       "files": [
@@ -941,11 +956,12 @@
       ]
     },
     "Plugin.CurrentActivity/2.1.0.4": {
-      "sha512": "m8xaXvXUzBSqP6xRe5PeIG347WxsG/VWrZta7MnPpSvNuPf0RLB/S49UCCQyBKSsfu053+apvYm14BC7GU6Zzg==",
+      "sha512": "mwUaRnl5KyIAJbhqQzL/ZIFuRcqsa0lMyCHuJs8wer+pSjYDH5cJR9X8yoB9BV5j6ccogGxyb5VkUUhvRUemTA==",
       "type": "package",
       "path": "plugin.currentactivity/2.1.0.4",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/monoandroid44/Plugin.CurrentActivity.dll",
         "lib/monoandroid44/Plugin.CurrentActivity.xml",
         "plugin.currentactivity.2.1.0.4.nupkg.sha512",
@@ -954,7 +970,7 @@
       ]
     },
     "Plugin.Permissions/3.0.0.12": {
-      "sha512": "VrYqI/ufk3bH6gTP1JJlLByjhS0CHu3riKmdozhX9/qXA9hlvLolmcqKJdyAqpzmrVC74m3ZtirUBIrBxvT1Lw==",
+      "sha512": "R8Rlzfci1byoPBGOiJfCMzu0HhhN6Q4Vq4YizlF41W946NEmoL/Mb8U5caP5t5KfSbdPQpzdQ9JfM8fxPG8pfw==",
       "type": "package",
       "path": "plugin.permissions/3.0.0.12",
       "files": [
@@ -977,7 +993,7 @@
       ]
     },
     "Plugin.UserDialogs/1.0.0": {
-      "sha512": "NbpdynjP4jWyyiS/IhUHAraW3XUyk+RyCD79P9rp6wgUR1MHRsGSBfLild+O2gB2hH3CIkRGY0rHTV2AstEP+w==",
+      "sha512": "eSM/ZwzNUHz5JfSZLpPAW0YVq9K+GxqM1UFzUpdEFqtk8Qe7SK9M9BXPCffO11ZBwtrPeXy5388QSUUT/K3dwQ==",
       "type": "package",
       "path": "plugin.userdialogs/1.0.0",
       "files": [
@@ -991,11 +1007,12 @@
       ]
     },
     "Refractored.MvvmHelpers/1.3.2.47-beta": {
-      "sha512": "b6RFOBZDMSE8FaNZwXVY9Yts/EoEyLefO9WiE+4APWn3rA1HOw/pNJ/Wcn7pplfJNcW3SSPC6RGbP2Jahe3b0Q==",
+      "sha512": "dbJVlS9zB2EKFzyotM0BHsvGN5NY6McUyHcFewg6+TYKg5JiI9js22fpMwP2NhHrgJRADy7JE0dnQL4GG8rehg==",
       "type": "package",
       "path": "refractored.mvvmhelpers/1.3.2.47-beta",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/netstandard1.0/MvvmHelpers.deps.json",
         "lib/netstandard1.0/MvvmHelpers.dll",
         "lib/netstandard1.0/MvvmHelpers.pdb",
@@ -1004,8 +1021,39 @@
         "refractored.mvvmhelpers.nuspec"
       ]
     },
+    "Rg.Plugins.Popup/1.1.5.188": {
+      "sha512": "3z5Q6Bdvhi8J2e5Cj0lEQ3rseZXXYTCFd3FjWjDlRbBnJ2vtNPRui5DE8bwWjA2PiDyK+GNj/bhvy+enEzISBA==",
+      "type": "package",
+      "path": "rg.plugins.popup/1.1.5.188",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/MonoAndroid/Rg.Plugins.Popup.Droid.dll",
+        "lib/MonoAndroid/Rg.Plugins.Popup.Droid.dll.mdb",
+        "lib/MonoAndroid/Rg.Plugins.Popup.Droid.pdb",
+        "lib/MonoAndroid/Rg.Plugins.Popup.dll",
+        "lib/MonoAndroid/Rg.Plugins.Popup.pdb",
+        "lib/MonoTouch/Rg.Plugins.Popup.IOS.dll",
+        "lib/MonoTouch/Rg.Plugins.Popup.IOS.pdb",
+        "lib/MonoTouch/Rg.Plugins.Popup.dll",
+        "lib/MonoTouch/Rg.Plugins.Popup.pdb",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.pdb",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.dll",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.pdb",
+        "lib/netstandard1.0/Rg.Plugins.Popup.dll",
+        "lib/netstandard1.0/Rg.Plugins.Popup.pdb",
+        "lib/uap10.0/Rg.Plugins.Popup.UWP.dll",
+        "lib/uap10.0/Rg.Plugins.Popup.UWP.pdb",
+        "lib/uap10.0/Rg.Plugins.Popup.dll",
+        "lib/uap10.0/Rg.Plugins.Popup.pdb",
+        "readme.txt",
+        "rg.plugins.popup.1.1.5.188.nupkg.sha512",
+        "rg.plugins.popup.nuspec"
+      ]
+    },
     "Splat/1.6.2": {
-      "sha512": "DeH0MxPU+D4JchkIDPYG4vUT+hsWs9S41cFle0/4K5EJMXWurx5DzAkj2366DfK14/XKNhsu6tCl4dZXJ3CD4w==",
+      "sha512": "INLeF+SrOl0wmKN2EIyNQiYt67cWjyunCzOS/VZOk8jZCH/Sw7JZfjDajFWkcqgXC3ZLD8gc3LnLD3F9yP+GQg==",
       "type": "package",
       "path": "splat/1.6.2",
       "files": [
@@ -1038,7 +1086,7 @@
       ]
     },
     "sqlite-net-pcl/1.5.166-beta": {
-      "sha512": "a7VbroGBauEKY+UJeP1Z5UyrSHagigKgJGa5pVOyKDOI5/cPuCN2YUP4lhLReZdn73CrPqz2U7jsmZBoyZ0kXA==",
+      "sha512": "xINH/NJWuaZhQyCNNA3AVmDqbxDXQvyY1LHzti1QD/NiQj81ODdAA5XpUevIGxeE6NoHxsyzp1H+lWf+qcMttw==",
       "type": "package",
       "path": "sqlite-net-pcl/1.5.166-beta",
       "files": [
@@ -1056,7 +1104,7 @@
       ]
     },
     "SQLitePCLRaw.bundle_green/1.1.8": {
-      "sha512": "He+XMpqLXzpvZtjVfeaqxXXQzq5H4OuDEdUYwXXOJ7rQHQiF8b8BQzS+kuxCdsaDnMsrksdFVmAeXx2nNcAsjw==",
+      "sha512": "NA7WDIM1KBwQwS7zz0Oux5tM/LU+8LPFw2n6s1H79MzEQsOVtYIwJ3AAGWJ1G6FyCIc8pkVmWCQqxyFG65TAZQ==",
       "type": "package",
       "path": "sqlitepclraw.bundle_green/1.1.8",
       "files": [
@@ -1103,7 +1151,7 @@
       ]
     },
     "SQLitePCLRaw.core/1.1.8": {
-      "sha512": "JTvlAlVHeMW9QaTcu+3iLB9ZEGtceb+uM1MOlfyAnEocShSacHEzwPNsden7MlWb0QjPX3Y3sDMW0ymGhH8Jtg==",
+      "sha512": "m9dCUYulwjbZqKE2J+YZTEFhfSs8WT804BnhMf6OCS7K0PHFVDpY13dILFkcKnmNXazhqFwO2rWwDc/CJc8THw==",
       "type": "package",
       "path": "sqlitepclraw.core/1.1.8",
       "files": [
@@ -1129,7 +1177,7 @@
       ]
     },
     "SQLitePCLRaw.lib.e_sqlite3.android/1.1.8": {
-      "sha512": "teHGbA/4m5Sr+4lv/V/6Hb9oRG9mqZrxvzS/wHIp2zkF5R5nJXHdHoH6vj127JeyRwn24KoxGIRe0MOKGdswMQ==",
+      "sha512": "nUv3NDqIA9ipLcbH7aH1YRVY1e39gaqL5d06F9djhEnW/wB09fRPNSO60fP8IY5BmPRFYfdUXQ+VAjuuYitV6A==",
       "type": "package",
       "path": "sqlitepclraw.lib.e_sqlite3.android/1.1.8",
       "files": [
@@ -1141,7 +1189,7 @@
       ]
     },
     "SQLitePCLRaw.provider.e_sqlite3.android/1.1.8": {
-      "sha512": "xR+zbuXjrRix0CzPntxfasACvdCTqsmsLHS5Z6KgjnlB1ZGi2/7hOt/AsSFH2N4Le2zKJwf/jYYJRJUqnSbGYg==",
+      "sha512": "9IsyIF/gM6ILym+ilpX0rdPU+2+3Fjhw6YuEs8obj6XJYC9nMKQffjrOIa6SvUD5+nCsrKkFJhxXAYGIC0lcpA==",
       "type": "package",
       "path": "sqlitepclraw.provider.e_sqlite3.android/1.1.8",
       "files": [
@@ -1153,7 +1201,7 @@
       ]
     },
     "System.Net.Http/4.3.3": {
-      "sha512": "7rCqIbkC/P2+A00NoDH5gnvFhADmX7Dc4INvsOajbU1MVhktE9vZNrjPtF82N6Uo7obK+yzlrPUv/M+snnN/9w==",
+      "sha512": "/3Rpbezfj/lz+Qv/55bdKso16KhZF38gHW9wX0g0R4GfK5vr9z9WjDcF8SrVN/AK0A9sdh/AOC3YnCdX+UGKpw==",
       "type": "package",
       "path": "system.net.http/4.3.3",
       "files": [
@@ -1195,7 +1243,7 @@
       ]
     },
     "System.Numerics.Vectors/4.5.0": {
-      "sha512": "QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "sha512": "nATsBTD2CKr4AYN6eRszhX4sptImWmBJwB/U6XKCWWfnCcrTBw8XSCm3QA9gjppkHTr8OkXUY21MR91D3QZXsw==",
       "type": "package",
       "path": "system.numerics.vectors/4.5.0",
       "files": [
@@ -1242,7 +1290,7 @@
       ]
     },
     "System.Xml.XmlDocument/4.3.0": {
-      "sha512": "lJ8AxvkX7GQxpC6GFCeBj8ThYVyQczx2+f/cWHJU8tjS7YfI6Cv6bon70jVEgs2CiFbmmM8b9j1oZVx0dSI2Ww==",
+      "sha512": "IiUbPxbemqBuCRskuuobjJV1Lw0iJm+vNOH7drNHsj95EM2vVnBY4j0GtweZYQkMpwgFBwokka3V2k0Cca/RMw==",
       "type": "package",
       "path": "system.xml.xmldocument/4.3.0",
       "files": [
@@ -1281,7 +1329,7 @@
       ]
     },
     "System.Xml.XPath/4.3.0": {
-      "sha512": "v1JQ5SETnQusqmS3RwStF7vwQ3L02imIzl++sewmt23VGygix04pEH+FCj1yWb+z4GDzKiljr1W7Wfvrx0YwgA==",
+      "sha512": "K9CXmiAgV5+zKtN0uJkponLnY+4SM+2aIVQIwKH5+Cpf23QzDBxVphAuDf24t7We0l/fZFS/PeFGFS6nefNm4A==",
       "type": "package",
       "path": "system.xml.xpath/4.3.0",
       "files": [
@@ -1320,7 +1368,7 @@
       ]
     },
     "System.Xml.XPath.XmlDocument/4.3.0": {
-      "sha512": "A/uxsWi/Ifzkmd4ArTLISMbfFs6XpRPsXZonrIqyTY70xi8t+mDtvSM5Os0RqyRDobjMBwIDHDL4NOIbkDwf7A==",
+      "sha512": "91tvfHWHSrYFPolCwWYqbpo1YaoBUCQ3uNZ/O/zr0ev5BnkoATJoie16ywlMVUaXZtfSfNELxhtG3aqpTfwR4w==",
       "type": "package",
       "path": "system.xml.xpath.xmldocument/4.3.0",
       "files": [
@@ -1358,11 +1406,12 @@
       ]
     },
     "Xam.Plugin.FilePicker/1.1.0": {
-      "sha512": "ORzNG6dEgdBZnIdmbQCpNB4LSSTjBebwGjb1XZrgfbBGjX9muHBfZeQwOnNRvcGlm6fkylzTj2rDslDA1E/JFA==",
+      "sha512": "qjPQ+MF5FDObArKr6snS95TBPcK2PmNoiXpjXY5c53tiWCGpTvUcbVccFAiruNiUpYBa/yGa50r9or/UsvlRaA==",
       "type": "package",
       "path": "xam.plugin.filepicker/1.1.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.dll",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.dll.mdb",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.pdb",
@@ -1411,11 +1460,12 @@
       ]
     },
     "Xam.Plugin.Media/4.0.1.5": {
-      "sha512": "a5l/M2Tl06BqBX/uhM/pr+q1jDkh2tRQr5Ne9rjAuD9VYn5STE+7kVFTzIUNPMnMr9PZLJkWP5WAr/tBN5oepw==",
+      "sha512": "PxL0vcTXpS79l2KgtaJBShcPVMRK2HC5J08vG6hKTC7hk5+3RjgFrdX0N6Gd4oF8pxVxV2ia7rhYnjxRCMWZtw==",
       "type": "package",
       "path": "xam.plugin.media/4.0.1.5",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/monoandroid71/Plugin.Media.dll",
         "lib/monoandroid71/Plugin.Media.xml",
         "lib/netstandard1.0/Plugin.Media.dll",
@@ -1435,7 +1485,7 @@
       ]
     },
     "Xamarin.Android.Arch.Core.Common/1.0.0.1": {
-      "sha512": "skWc2Kobu11hCiH1WM2Hh77ftO8QQNn423jFDqz3alvfrPUMRS0PoP5N1FW/Hq+y36/qrFoBp2Z/FNliJ2yI1A==",
+      "sha512": "UiWrWginObSSfmhKMTnRthhAWuH9yPhqP5ZCCCI9tTWl+XS/+sqcDjd84vP+dr1ve2h/AVZo9NgCbE1Xgktw2g==",
       "type": "package",
       "path": "xamarin.android.arch.core.common/1.0.0.1",
       "files": [
@@ -1449,7 +1499,7 @@
       ]
     },
     "Xamarin.Android.Arch.Lifecycle.Common/1.0.3.1": {
-      "sha512": "+BpdSZesODEAy8WREDJrBNxWbTW1bVlLcwPIqUk6/dlIQ+cGWDXdnpMzhRvGBy03IYBDjhXukymX8WEMxjjNNw==",
+      "sha512": "y+qfAAGWCYAqCkJ/JpFjjoBMC6PwYB1Ji3Dfu7PYWCwab412RrqbMVz3BdMEvhfInCHMqDGG0IyYgd148xdDVw==",
       "type": "package",
       "path": "xamarin.android.arch.lifecycle.common/1.0.3.1",
       "files": [
@@ -1463,7 +1513,7 @@
       ]
     },
     "Xamarin.Android.Arch.Lifecycle.Runtime/1.0.3.1": {
-      "sha512": "GAjv067BgAmNVtlle6NklEHPb1xrb9bZ8VSk3zTqTKHJZser36DdnOz6i+EstdbTLhahAmmcrcQMoBHOuf7AlA==",
+      "sha512": "+jIPk2XOQ5FRGHERH+nZDYSiuUoopsyNVby1rxtwrgEaOz28JccHdK1IVdGL169+5SFGyO7JpbKhZUZTG2Zdeg==",
       "type": "package",
       "path": "xamarin.android.arch.lifecycle.runtime/1.0.3.1",
       "files": [
@@ -1478,7 +1528,7 @@
       ]
     },
     "Xamarin.Android.Support.Animated.Vector.Drawable/27.0.2.1": {
-      "sha512": "HMVYg9zZyB2QJXkANIyyDiZOWQGvnOFQvaMQ/aHAOhxJ1Dh8DncYlrs+VqOVMMqFcx07/CePw1AL8fxeDOqG3Q==",
+      "sha512": "xaz2MjrV45FTveaCAzIepz/g/YIVBg3FQJJKLzg3ODtw7yu2CbbWyp3mvKtdyXpeE7rWwFPccHQH/2gD3aj3OQ==",
       "type": "package",
       "path": "xamarin.android.support.animated.vector.drawable/27.0.2.1",
       "files": [
@@ -1493,7 +1543,7 @@
       ]
     },
     "Xamarin.Android.Support.Annotations/27.0.2.1": {
-      "sha512": "9qE92DneRWNfc1X8g+DIqSet545ISoapYrlMFefRUbJuKFAGkFnIoFxKbjJFxXmdKbTDSPAMPGVJr8lFKfKj+g==",
+      "sha512": "YBMPR/+FWss9S84cKtiPtXrb6eNScy5sKzhUFVtwf+DaH9L05PmzarerZkmMjB4cr87+/pzIxEEJlJWhRf9fQg==",
       "type": "package",
       "path": "xamarin.android.support.annotations/27.0.2.1",
       "files": [
@@ -1507,7 +1557,7 @@
       ]
     },
     "Xamarin.Android.Support.Compat/27.0.2.1": {
-      "sha512": "mMP4Hni9dG57pgFN5EQsm3Tr9nCRWI0gwIZBf148AeLuO+k1JLGrIA5r9aqHkxX8pM70zzSCGpx0anJ/vljXiw==",
+      "sha512": "TQQhsUxvAwZTkFdTTD97JcfrJx5xe/WK+tAI1CZyqzMEGpX/gjqcfjDO2SzBne+B0x5u9xC2VBYzvJN9OV3Mqg==",
       "type": "package",
       "path": "xamarin.android.support.compat/27.0.2.1",
       "files": [
@@ -1521,7 +1571,7 @@
       ]
     },
     "Xamarin.Android.Support.Core.UI/27.0.2.1": {
-      "sha512": "3LSUdUyFZ9anlu+G79UhoZSzpcy1BNfaxec7Wh03/0PH9QF2YR7k74dZ3ix+OjzAGi05+QBxuNqsJMervRhWsw==",
+      "sha512": "HfpQEghgxnT+VgJa2LDFUraDMj+sHtq3oIkO0IWNc/Ii/A2Kl9jpmidoVzfbLk7++KWsNsRBTOb3dNXYZePoXA==",
       "type": "package",
       "path": "xamarin.android.support.core.ui/27.0.2.1",
       "files": [
@@ -1536,7 +1586,7 @@
       ]
     },
     "Xamarin.Android.Support.Core.Utils/27.0.2.1": {
-      "sha512": "2h6Y6/SbjZEC4kLS0Sa2g44bOFuUEDtcN/45rCyi4dA2LnIzuurR3Xui9BYbKrHVo/Jti9Zu8dUCybOF2McWeQ==",
+      "sha512": "2dtlWrVtDzuBNGy0JZ6bnZp92rlOWjts7qnG1cniSSWQ5AlPYbfq1qIDaWQTrd50OGoXHh6Db1oBk6PVgWvOHg==",
       "type": "package",
       "path": "xamarin.android.support.core.utils/27.0.2.1",
       "files": [
@@ -1550,7 +1600,7 @@
       ]
     },
     "Xamarin.Android.Support.CustomTabs/27.0.2.1": {
-      "sha512": "BXG6gEMwR6McB5ae+ekPWwiAVRMI3XlGSIT+C8bvysV2zw1nXcLR1DSqVzvBvshBmdSFxRFGJjY2qX8cfSUdFg==",
+      "sha512": "yeteAnglnc3+COUR0giwb7HGGTRTXTu+zl1ju1qTtgWjI3Va57sTaLaMWV+aBIHyBc2U7XURnUGA6BcQ960yQA==",
       "type": "package",
       "path": "xamarin.android.support.customtabs/27.0.2.1",
       "files": [
@@ -1564,7 +1614,7 @@
       ]
     },
     "Xamarin.Android.Support.Design/27.0.2.1": {
-      "sha512": "0VTL0Hg4f+tWYlMI8tqfWOnm0usbhTRK3O/qMQMLeT1pY1LpZxmuLID/Vvehp8TrpIrTpt3fJFejHfkCmyvfMw==",
+      "sha512": "Lc7sN6n4XQexZEnRm1Q+HGA+5xNPttM8vw/BNLsoKZy6Ao0uEzUbk+HDdYQwH9UAEJ01MBe0hp4sd0Uy7y/m4A==",
       "type": "package",
       "path": "xamarin.android.support.design/27.0.2.1",
       "files": [
@@ -1579,7 +1629,7 @@
       ]
     },
     "Xamarin.Android.Support.Fragment/27.0.2.1": {
-      "sha512": "qYqioZMgM0XQd+Hzt13Fp3V2I860xmUKFHQcc8v3LKl6Q4F3D8szn+HJX2/S7HqfyNkPWN+rPOsXAGMMsKo99w==",
+      "sha512": "W217/JM+t+H4+bKc+LBIhblnLW4sZc8HABak9eTv5yJl3FlTfq0cNt7aMNOKxUxy2/wt0Uo8YNSZK6YVHYsVhg==",
       "type": "package",
       "path": "xamarin.android.support.fragment/27.0.2.1",
       "files": [
@@ -1593,7 +1643,7 @@
       ]
     },
     "Xamarin.Android.Support.Media.Compat/27.0.2.1": {
-      "sha512": "WJ59xt5YopGcuJgI9RTc9c0cg8YafshLI0K+5H17eOvxOE6/cx02SNHcy/3pWWtnSC3cj4tTznQZO0fa3duKjw==",
+      "sha512": "BbVt10cN+Adk6mlPT4MYPR7fB46laGqEV2//1AMDkLYk5PKbHNcmRXJQUnYPWQRjgBJ0k6QQq5fCHqxP3W9mbQ==",
       "type": "package",
       "path": "xamarin.android.support.media.compat/27.0.2.1",
       "files": [
@@ -1608,7 +1658,7 @@
       ]
     },
     "Xamarin.Android.Support.Transition/27.0.2.1": {
-      "sha512": "8wCs+rcM5pts/ZaKbAfGfSlbmJz9FFMtl4hzS8wgl8g2ecJ0l4nEiG0Q7QfM251rR762M4jMQ9BfCNwGZiAkCg==",
+      "sha512": "PpHN79/lhUw+F2xiUkoPsDuglZGm8p1HfjYnOA1yJV/4CBkE8i6Ia6PZTqEWsy9bOfkoxe+shScAJXsKy4V89w==",
       "type": "package",
       "path": "xamarin.android.support.transition/27.0.2.1",
       "files": [
@@ -1623,7 +1673,7 @@
       ]
     },
     "Xamarin.Android.Support.v4/27.0.2.1": {
-      "sha512": "UlLIbPj1aOMANtP7eKPaD5Nktl58C2+fb8tTuSJeo8TW4wTdhebbNx1LLnIlA5AsDTSCI4TTRJQo8OF5V9IXQg==",
+      "sha512": "cK4ixeeIPSF1xl371Rb2CiEMrSCXa5kXaehsSkeAFGtgpAQvbt6FbEKk501fzVi/HzNkETzajEtsQ9PMttZi9A==",
       "type": "package",
       "path": "xamarin.android.support.v4/27.0.2.1",
       "files": [
@@ -1637,7 +1687,7 @@
       ]
     },
     "Xamarin.Android.Support.v7.AppCompat/27.0.2.1": {
-      "sha512": "Tz0VmlR8TqvZ7crtymV2tQu8f2LZyDB7IGsnt3dj0/qfzPRmH6VkqoofxjyXM0sxqO5hFiR0VxhZdnsNYj0T3Q==",
+      "sha512": "MumW84Eb14Lt+nXFWzDaDEn2y4MtDJHGDZcSAtXtLwt8QbG5wU0HNX1DGM1qNtanFltIwoyiDNEuqGxYPthhyw==",
       "type": "package",
       "path": "xamarin.android.support.v7.appcompat/27.0.2.1",
       "files": [
@@ -1651,7 +1701,7 @@
       ]
     },
     "Xamarin.Android.Support.v7.CardView/27.0.2.1": {
-      "sha512": "+XkyezmEz25kB6zzRkinozceKWjoOJa400FmdT7wVqqpijJkanS4lO/2+//dLvSrV2qTpfijVOhvHeGpGi4Z6g==",
+      "sha512": "nxNiwRl+ALOoXD3tT+jo3yoTr/oTY6aPKbJnAPpA/qqB/Uq+HqbQeWwwMXjLiTCytTpOOpwmIRJQnuq1uu4xIQ==",
       "type": "package",
       "path": "xamarin.android.support.v7.cardview/27.0.2.1",
       "files": [
@@ -1665,7 +1715,7 @@
       ]
     },
     "Xamarin.Android.Support.v7.MediaRouter/27.0.2.1": {
-      "sha512": "P2dwA6mUYSFM7y+LhYQ1mluhNyNev0k+A5n/6XydExXkv7GTrOownvj2TsgOjb7iXV2Oz/KhR8YhJuxSdLeEjw==",
+      "sha512": "2k9ocolcyaxqzLInOEbzW+VjgJL7ruv9WFaKSj4OMnChw8ih53skPyun2q/9lnQV/c+/qNq8cvYipPtYr9bFCg==",
       "type": "package",
       "path": "xamarin.android.support.v7.mediarouter/27.0.2.1",
       "files": [
@@ -1679,7 +1729,7 @@
       ]
     },
     "Xamarin.Android.Support.v7.Palette/27.0.2.1": {
-      "sha512": "zhwsIL2jTYQ+hjOgfi1n+5YgAUR7xbp7h90PJya9D4bShM5At2whnFmB6ljb0otqqzPYmVyWMxBag5sxskQzjw==",
+      "sha512": "vlcBuVGg3uQL/RBqUEXAqjUNCPt3ougteZWSASUKqDg8BobI8dVrf7wEpOexKLW8eqUblAPjnfJMCF2F3Gcj3g==",
       "type": "package",
       "path": "xamarin.android.support.v7.palette/27.0.2.1",
       "files": [
@@ -1693,7 +1743,7 @@
       ]
     },
     "Xamarin.Android.Support.v7.RecyclerView/27.0.2.1": {
-      "sha512": "Xai8QN62zwQq+tX0tp5MkQxtS1RZoaESO0o/JJUwfHSFImYpcfz7r0uwdvT497DZFMFvvVT1FqpZY4kNlbAVdA==",
+      "sha512": "ze4MYJlicTnIUGP37fVcrhgPfF47dG7TcRv1jkExBBqHoMk68kcrpg0cCNvCjIAhGdMtgEv3i+CiUC5QWLYQwA==",
       "type": "package",
       "path": "xamarin.android.support.v7.recyclerview/27.0.2.1",
       "files": [
@@ -1708,7 +1758,7 @@
       ]
     },
     "Xamarin.Android.Support.Vector.Drawable/27.0.2.1": {
-      "sha512": "vIQzPNd4zMgu6h5zsjCV3MC41zGfwAZ0nklAG1GpRyf0R1AlIzhD/Y0XDmX1crz58g9OJIvFUnCRmcBohLsRVA==",
+      "sha512": "l7cInRhTODLzM6CLCXzqGiD+zstS7lYOWJxCZP5aIhsdBjSrv6oCqLPA50jK2ceaOu/6aG8/9NX18DHJy4mHFg==",
       "type": "package",
       "path": "xamarin.android.support.vector.drawable/27.0.2.1",
       "files": [
@@ -1723,7 +1773,7 @@
       ]
     },
     "Xamarin.Essentials/0.10.0-preview": {
-      "sha512": "99C772+GQ/LOyy3kqYJ0N6o84PFbF59dFGfIL0yE5hJgfT1lMISago9MSZoUnF662/h1wbOEp+zweH1EENvQYg==",
+      "sha512": "ope8kxiddTv3o/GTqaqpWoWiyVuh/suZqftBRoPhbx564lhAZeqjxcdKanmzjBWgL92w9lcmaKOvlg9BuNGnQg==",
       "type": "package",
       "path": "xamarin.essentials/0.10.0-preview",
       "files": [
@@ -1750,7 +1800,7 @@
       ]
     },
     "Xamarin.Forms/3.4.0.1008975": {
-      "sha512": "tM9syeev45u92OFENGjq+Zw8WiEwLJFiXe317XpL9SY2RRk9sm2fc1lDVjzwz0da+5ZP5fi24NAPsPQdxBdMwQ==",
+      "sha512": "036/h8HtzRFgTrfhY57IeHoYRsPTO2XTA6uUFdmZzw2QR1sdszfofhI9HrCJTRx6fCzmjPg5Cxk5chYrjKarNw==",
       "type": "package",
       "path": "xamarin.forms/3.4.0.1008975",
       "files": [
@@ -1896,11 +1946,12 @@
       ]
     },
     "Xamarin.Plugins.Clipboard/2.2.1": {
-      "sha512": "+CxPFOQqy/UA/XuXUhz5Ktr4C2rLh4QpYouDX8VM4CDvtr9cN9SLsCIJ5IZvn5ufcQPla8ABPCe+nE/qUF423A==",
+      "sha512": "0R2fgAarrqWsnYhHswWedy+Pp0klRldHgJe78gW6drEDog7U0YvInQHTV0EfDiN8wF2C8WxU3eSxuhpNipEkjg==",
       "type": "package",
       "path": "xamarin.plugins.clipboard/2.2.1",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid10/Plugin.Clipboard.Abstractions.dll",
         "lib/MonoAndroid10/Plugin.Clipboard.Abstractions.pdb",
         "lib/MonoAndroid10/Plugin.Clipboard.XML",
@@ -1942,6 +1993,7 @@
     "MonoAndroid,Version=v8.1": [
       "Plugin.CurrentActivity >= 2.1.0.4",
       "Plugin.UserDialogs >= 1.0.0",
+      "Rg.Plugins.Popup >= 1.1.5.188",
       "Xam.Plugin.FilePicker >= 1.1.0",
       "Xamarin.Android.Support.CustomTabs >= 27.0.2.1",
       "Xamarin.Android.Support.Design >= 27.0.2.1",
@@ -1955,20 +2007,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Samuel Borjas\\.nuget\\packages\\": {}
+    "C:\\Users\\damas\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets.Android\\tickets.Android.csproj",
+      "projectUniqueName": "D:\\Proyectos\\TicketsApp\\tickets.Android\\tickets.Android.csproj",
       "projectName": "tickets.Android",
-      "projectPath": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets.Android\\tickets.Android.csproj",
-      "packagesPath": "C:\\Users\\Samuel Borjas\\.nuget\\packages\\",
-      "outputPath": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets.Android\\obj\\",
+      "projectPath": "D:\\Proyectos\\TicketsApp\\tickets.Android\\tickets.Android.csproj",
+      "packagesPath": "C:\\Users\\damas\\.nuget\\packages\\",
+      "outputPath": "D:\\Proyectos\\TicketsApp\\tickets.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
-        "C:\\Users\\Samuel Borjas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\damas\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1981,8 +2033,8 @@
       "frameworks": {
         "monoandroid81": {
           "projectReferences": {
-            "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets\\tickets.csproj": {
-              "projectPath": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets\\tickets.csproj"
+            "D:\\Proyectos\\TicketsApp\\tickets\\tickets.csproj": {
+              "projectPath": "D:\\Proyectos\\TicketsApp\\tickets\\tickets.csproj"
             }
           }
         }
@@ -1998,6 +2050,10 @@
           "Plugin.UserDialogs": {
             "target": "Package",
             "version": "[1.0.0, )"
+          },
+          "Rg.Plugins.Popup": {
+            "target": "Package",
+            "version": "[1.1.5.188, )"
           },
           "Xam.Plugin.FilePicker": {
             "target": "Package",
@@ -2044,7 +2100,7 @@
       "code": "NU1608",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Se detectó una versión del paquete fuera de la restricción de dependencia: Acr.UserDialogs 6.2.4 requiere Xamarin.Android.Support.Design (>= 23.3.0 && < 24.0.0), pero la versión Xamarin.Android.Support.Design 27.0.2.1 ya se resolvió.",
+      "message": "Detected package version outside of dependency constraint: Acr.UserDialogs 6.2.4 requires Xamarin.Android.Support.Design (>= 23.3.0 && < 24.0.0) but version Xamarin.Android.Support.Design 27.0.2.1 was resolved.",
       "libraryId": "Xamarin.Android.Support.Design",
       "targetGraphs": [
         "MonoAndroid,Version=v8.1"

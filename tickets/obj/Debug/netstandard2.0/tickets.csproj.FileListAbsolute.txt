@@ -16,9 +16,9 @@ C:\XamarinApps\CapApp2.0\TicketsApp\tickets\obj\Debug\netstandard2.0\styles\styl
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets\obj\Debug\netstandard2.0\tickets.csproj.CoreCompileInputs.cache
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets\obj\Debug\netstandard2.0\tickets.AssemblyInfoInputs.cache
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets\obj\Debug\netstandard2.0\tickets.AssemblyInfo.cs
-C:\XamarinApps\CapApp2.0\TicketsApp\tickets\obj\Debug\netstandard2.0\XamlC.stamp
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets\obj\Debug\netstandard2.0\tickets.dll
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets\obj\Debug\netstandard2.0\tickets.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets\obj\Debug\netstandard2.0\screens\LoginAdminPage.xaml.g.cs
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets\obj\Debug\netstandard2.0\screens\MyTicketsAdmin.xaml.g.cs
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets\obj\Debug\netstandard2.0\screens\SignInAdminPage.xaml.g.cs
+C:\XamarinApps\CapApp2.0\TicketsApp\tickets\obj\Debug\netstandard2.0\XamlC.stamp

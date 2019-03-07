@@ -8,13 +8,13 @@ using Xamarin.Forms;
 using System.Collections.ObjectModel;
 using System.Timers;
 using Acr.UserDialogs;
+using SQLite;
 
 namespace tickets
 {
     public partial class MyTickets : ContentPage
     {
         private Server server = new Server();
-        Ticket t;
         
         List<Ticket> tickets = new List<Ticket>();
 
@@ -24,12 +24,12 @@ namespace tickets
             try
             {
                 InitializeComponent();
-                
+                //UserDialogs.Instance.ShowLoading("Cargando Tickets...");
                 TicketsListView.ItemsSource = tickets;
                 this.BindingContext = this;
                 GetTickets();
 
-
+                //UserDialogs.Instance.HideLoading();
                 var newTicket = new ToolbarItem
                 {
                     Icon = "nuevo.jpg",
@@ -49,6 +49,17 @@ namespace tickets
                    
                 };
 
+                var addTicketTool = new ToolbarItem
+                {
+
+                    Text = "Agregar Ticket",
+                    Command = new Command(execute: () => addTicketIdAsync()),
+
+                    Order = ToolbarItemOrder.Secondary
+
+                };
+
+
                 switch (Device.RuntimePlatform)
                 {
                     case Device.iOS:
@@ -57,19 +68,146 @@ namespace tickets
                     case Device.Android:
                         ToolbarItems.Add(newTicket);
                         ToolbarItems.Add(settings);
+                        ToolbarItems.Add(addTicketTool);
                         break;
                     case Device.UWP:
                         ToolbarItems.Add(newTicket);
                         ToolbarItems.Add(settings);
                         break;
                 }
-                
+               
             }
             catch(Exception ex)
             {
                 throw ex;
             }
         }
+
+        private async Task addTicketIdAsync()
+        {
+            Console.WriteLine("ADD TICKET FROM ID");
+            var promptConfig = new PromptConfig();
+            promptConfig.InputType = InputType.Name;
+            promptConfig.IsCancellable = true;
+            promptConfig.Message = "INGRESE ID DE TICKET";
+            var result = await UserDialogs.Instance.PromptAsync(promptConfig);
+            if (result.Ok)
+            {
+                //string error = "No se agrego el ticket, su numero de cuenta no coincide con el numero de cuenta enlazado al ticket";
+                if (result.Text == "")
+                {
+                    //error = "Ingrese un id";
+                    UserDialogs.Instance.ShowError("Ingrese un id.");
+                }
+                else
+                {
+                    UserDialogs.Instance.ShowLoading("Por favor espere");
+                    User current = await App.Database.GetCurrentUser();
+                    string html = await server.getDetailsTicket(result.Text);
+                    string date = await server.getInitDate(result.Text);
+                    UserDialogs.Instance.HideLoading();
+                    if (html == "Error")
+                    {
+                        //error = "No existe un ticket con ese numero de ID: " + result.Text;
+                        UserDialogs.Instance.ShowError("No existe un ticket con ese number de ID: "+result.Text);
+                    }
+                    else
+                    {
+                        string account = getDetailTicket(html, "Numero de cuenta / No. de talento humano:");
+                        if (account == current.Account)
+                        {
+                            string c = getDetailTicket(html, "Clasificacion:");
+                            int clas = 5;
+                            if (c == "Solicitud")
+                            {
+                                clas = 1;
+                            }
+                            else if (c == "Información")
+                            {
+                                clas = 2;
+                            }
+                            else if (c == "Queja")
+                            {
+                                clas = 3;
+                            }
+                            else if (c == "Reclamo")
+                            {
+                                clas = 4;
+                            }
+                            string prioridad = getDetailTicket(html, "Prioridad:");
+                            int p = 3;
+                            if (prioridad == "Alto")
+                            {
+                                p = 1;
+                            }
+                            else if (prioridad == "Medio")
+                            {
+                                p = 2;
+                            }
+                            try
+                            {
+                                await App.Database.CreateNewTicket(new Ticket()
+                                {
+                                    ID = result.Text,
+                                    UserID = current.ID,
+                                    Affected = int.Parse(getDetailTicket(html, "Cantidad de usuarios afectados:")),
+                                    Classification = clas,
+                                    Priority = p,
+                                    Subject = getDetailTicket(html, "Tema"),
+                                    Message = getDetailTicket(html, "<b>Mensaje:</b>"),
+                                    Date = date,
+                                });
+                                //error = "El ticket se agrego exitosamente";
+                                UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
+                                
+                                GetTickets();
+                            }
+                            catch (SQLiteException)
+                            {
+                                //error = "No se agrergo el ticket, porque ya existe en la aplicacion";
+                                UserDialogs.Instance.ShowError("No se agrego el ticket, porque ya existe en la base de datos.");
+                            }
+                        }
+                        else
+                        {
+                            UserDialogs.Instance.ShowError("No se agrego el ticket, su numero de cuenta no coincide con el numero de cuenta enlazado al ticket");
+                        }
+                        
+
+                    }
+                }               
+            }
+        }
+
+        //FUNCIONES AGREGAR TICKET DESDE ID
+        private string getDetailTicket(string html, string search)
+        {
+            int pos = html.IndexOf(search) + search.Length;
+            html = html.Substring(pos);
+            pos = 0;
+            string detail = "";
+            if (search == "Tema")
+            {
+                search = "<b>";
+                pos = html.IndexOf(search) + search.Length;
+            }
+            else if (search == "<b>Mensaje:</b>")
+            {
+                search = "<br />";
+                pos = html.IndexOf(search) + search.Length;
+            }
+            else
+            {
+                pos = pos + 1;
+            }
+            detail = server.getTextAux('<', html, pos);
+            Console.WriteLine("Detalle: " + detail);
+            return detail;
+        }
+
+       
+        //TERMINAN FUNCIONES
+
 
         protected override async void OnAppearing()
         {
@@ -142,11 +280,11 @@ namespace tickets
         public async void GetTickets()
         {
             try {
-               
+
                 
                 List<Ticket> dbtickets;
                 dbtickets = await App.Database.GetTicketsAsync();
-                                                                                            
+                                                                           
                 
                 for (int i = 0; i < dbtickets.Count; i++)
                 {
@@ -192,11 +330,9 @@ namespace tickets
 
                     }
                 }
-               
-                
+              
                 TicketsListView.ItemsSource = null;
-                TicketsListView.ItemsSource = tickets;
-               
+                TicketsListView.ItemsSource = tickets;               
 
             }
             catch (Exception ex)

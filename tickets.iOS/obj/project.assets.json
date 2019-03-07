@@ -127,6 +127,20 @@
           "lib/netstandard1.0/MvvmHelpers.dll": {}
         }
       },
+      "Rg.Plugins.Popup/1.1.5.188": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.0.121934"
+        },
+        "compile": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        }
+      },
       "Splat/1.6.2": {
         "type": "package",
         "compile": {
@@ -430,6 +444,7 @@
           "Newtonsoft.Json": "11.0.2",
           "Plugin.UserDialogs": "1.0.0",
           "Refractored.MvvmHelpers": "1.3.2.47-beta",
+          "Rg.Plugins.Popup": "1.1.5.188",
           "Xam.Plugin.FilePicker": "1.1.0",
           "Xam.Plugin.Media": "4.0.1.5",
           "Xamarin.Essentials": "0.10.0-preview",
@@ -569,6 +584,20 @@
         },
         "runtime": {
           "lib/netstandard1.0/MvvmHelpers.dll": {}
+        }
+      },
+      "Rg.Plugins.Popup/1.1.5.188": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.0.121934"
+        },
+        "compile": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
         }
       },
       "Splat/1.6.2": {
@@ -864,6 +893,7 @@
           "Newtonsoft.Json": "11.0.2",
           "Plugin.UserDialogs": "1.0.0",
           "Refractored.MvvmHelpers": "1.3.2.47-beta",
+          "Rg.Plugins.Popup": "1.1.5.188",
           "Xam.Plugin.FilePicker": "1.1.0",
           "Xam.Plugin.Media": "4.0.1.5",
           "Xamarin.Essentials": "0.10.0-preview",
@@ -1005,6 +1035,20 @@
           "lib/netstandard1.0/MvvmHelpers.dll": {}
         }
       },
+      "Rg.Plugins.Popup/1.1.5.188": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.0.121934"
+        },
+        "compile": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        }
+      },
       "Splat/1.6.2": {
         "type": "package",
         "compile": {
@@ -1298,6 +1342,7 @@
           "Newtonsoft.Json": "11.0.2",
           "Plugin.UserDialogs": "1.0.0",
           "Refractored.MvvmHelpers": "1.3.2.47-beta",
+          "Rg.Plugins.Popup": "1.1.5.188",
           "Xam.Plugin.FilePicker": "1.1.0",
           "Xam.Plugin.Media": "4.0.1.5",
           "Xamarin.Essentials": "0.10.0-preview",
@@ -1439,6 +1484,20 @@
           "lib/netstandard1.0/MvvmHelpers.dll": {}
         }
       },
+      "Rg.Plugins.Popup/1.1.5.188": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Forms": "2.5.0.121934"
+        },
+        "compile": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        },
+        "runtime": {
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll": {},
+          "lib/Xamarin.IOS/Rg.Plugins.Popup.dll": {}
+        }
+      },
       "Splat/1.6.2": {
         "type": "package",
         "compile": {
@@ -1732,6 +1791,7 @@
           "Newtonsoft.Json": "11.0.2",
           "Plugin.UserDialogs": "1.0.0",
           "Refractored.MvvmHelpers": "1.3.2.47-beta",
+          "Rg.Plugins.Popup": "1.1.5.188",
           "Xam.Plugin.FilePicker": "1.1.0",
           "Xam.Plugin.Media": "4.0.1.5",
           "Xamarin.Essentials": "0.10.0-preview",
@@ -1750,7 +1810,7 @@
   },
   "libraries": {
     "Acr.Support/2.1.0": {
-      "sha512": "Kq/+sDIUxyEcDxwIB6ijtaUWzp/KV68rdYVLHQ26au7q3Y+7fqiqE0571VALlbYHlXMtFRd8ap3VeLw4lf/GWQ==",
+      "sha512": "sxuarKBd5s1rDN3D4FvUaP4aYtubYf8QMkX8jdfyu7Ovzsp3v63cgWqkxkwaFr0k34r0B7UVA/svz752IvSCVQ==",
       "type": "package",
       "path": "acr.support/2.1.0",
       "files": [
@@ -1768,7 +1828,7 @@
       ]
     },
     "Acr.UserDialogs/6.2.4": {
-      "sha512": "1+jHH75Jb2pWlA6ZmCyYOZMz/7XUqD0cvl9diyjwWdLdvWtz1G3rnlhX/0ScFd7ogf0bENyQOknpCshUHFtbXQ==",
+      "sha512": "UADd0/v7aRzo5AmsQGGvhEdzk8CaAvk/ur4/jtZWFq7/J5GkgB/E422/qNLTlO6BSUAnZHnfcl7svNv3dlVYLw==",
       "type": "package",
       "path": "acr.userdialogs/6.2.4",
       "files": [
@@ -1807,7 +1867,7 @@
       ]
     },
     "AsyncUsageAnalyzers/1.0.0-alpha003": {
-      "sha512": "rj0BLCPLI0QF6/fDswekUtavjj2g6uA4vsASOZ0g6N/w77XQTQgzSqhiJ/6Py6R5HhdpQ3HfkjUpR+KSvWq3nQ==",
+      "sha512": "nSB1RZsd7gy1grLjuZ5VX73c3T0Qrp2iLzGgKxUjs1BPgLtT4SdDM2MVC9BtEywPHsALXFgLRzVLfQTt1zOMpA==",
       "type": "package",
       "path": "asyncusageanalyzers/1.0.0-alpha003",
       "hasTools": true,
@@ -1822,7 +1882,7 @@
       ]
     },
     "HtmlAgilityPack/1.8.7": {
-      "sha512": "BHAehz9emDbk6XeSeSV3/UcIj64/o2SMfprRbG7f/EsVqEkkHNPMXpsKhxfOed9h1lVl78Y+3p2q5ET2NByKOw==",
+      "sha512": "QmqP8JX60GOuylTkbCRJXrzQA10xE0ufdEghbaUbVJcqM7hGikB4VgpUl17cTznbVvRW7WtcJZHovLk6AVQzcA==",
       "type": "package",
       "path": "htmlagilitypack/1.8.7",
       "files": [
@@ -1870,7 +1930,7 @@
       ]
     },
     "Microsoft.Graph/1.10.0": {
-      "sha512": "jJxXPWXGGXJvjWaQkOR8nGeUZKb77HHnlH+gzweNzy7CNGkgirdpT9ZFFpYfAi45cdypUzAdXF0/QfBqYZRnnQ==",
+      "sha512": "+yhk7/PYVg+ozM4lGmXgqxShi/CdAbMNzsGDhftTBcSGSTJPWLf6Yrkk/Z4o+izYjfD+DSN763zhGCxpfJBV4Q==",
       "type": "package",
       "path": "microsoft.graph/1.10.0",
       "files": [
@@ -1885,7 +1945,7 @@
       ]
     },
     "Microsoft.Graph.Core/1.10.0": {
-      "sha512": "DwPKU8O0ULX45T9l0wckUD1ueV6ZyzL+NK6EvlaRyWV+XNmQf78sVB2+kV1E+o2NT9/mRgYRef/KIklaIqlp2A==",
+      "sha512": "aahFyFYKPX0VPT+vyU1V/C8Surv96iEtAZb+a+d/gbDpoMl8+oSu1+GW0w+erY1YzRCReyIvbjikDvICHINDwA==",
       "type": "package",
       "path": "microsoft.graph.core/1.10.0",
       "files": [
@@ -1900,7 +1960,7 @@
       ]
     },
     "Microsoft.Identity.Client/1.1.4-preview0002": {
-      "sha512": "k3HCZUfiaa5qGTm+EyFO+acK4yDiDkvfXuDvSYiY5jGHYtV6EmMnAQhlX6tOVQ3RGrneb5XwQrydWQ30WY3JOw==",
+      "sha512": "3JXQAu4adS/3w3IYpmK6PK8dGHaAehUXODcTQ3Xn4Fp2bU95KQ1YsqGu/euv6ak2x6ZC/HftpyWxa9h2qMdR9A==",
       "type": "package",
       "path": "microsoft.identity.client/1.1.4-preview0002",
       "files": [
@@ -1924,7 +1984,7 @@
       ]
     },
     "Newtonsoft.Json/11.0.2": {
-      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "sha512": "znZGbws7E4BA9jxNZ7FuiIRI3C9hrgatVQSTKhIYZYNOud4M5VfGlTYi6RdYO5sQrebFuF/g9UEV3hOxDMXF6Q==",
       "type": "package",
       "path": "newtonsoft.json/11.0.2",
       "files": [
@@ -1954,7 +2014,7 @@
       ]
     },
     "Plugin.Permissions/3.0.0.12": {
-      "sha512": "VrYqI/ufk3bH6gTP1JJlLByjhS0CHu3riKmdozhX9/qXA9hlvLolmcqKJdyAqpzmrVC74m3ZtirUBIrBxvT1Lw==",
+      "sha512": "R8Rlzfci1byoPBGOiJfCMzu0HhhN6Q4Vq4YizlF41W946NEmoL/Mb8U5caP5t5KfSbdPQpzdQ9JfM8fxPG8pfw==",
       "type": "package",
       "path": "plugin.permissions/3.0.0.12",
       "files": [
@@ -1977,7 +2037,7 @@
       ]
     },
     "Plugin.UserDialogs/1.0.0": {
-      "sha512": "NbpdynjP4jWyyiS/IhUHAraW3XUyk+RyCD79P9rp6wgUR1MHRsGSBfLild+O2gB2hH3CIkRGY0rHTV2AstEP+w==",
+      "sha512": "eSM/ZwzNUHz5JfSZLpPAW0YVq9K+GxqM1UFzUpdEFqtk8Qe7SK9M9BXPCffO11ZBwtrPeXy5388QSUUT/K3dwQ==",
       "type": "package",
       "path": "plugin.userdialogs/1.0.0",
       "files": [
@@ -1991,11 +2051,12 @@
       ]
     },
     "Refractored.MvvmHelpers/1.3.0": {
-      "sha512": "IBBHbITCvULc5f5/QH4qB7WBgiGg7BdeKtA5nsBeAXDlhOBWwNt50TBjQOK/s5cm3O+0puDB8n68Yyd9m3JHWQ==",
+      "sha512": "/6+kdA5x7jjYQ4Z/jRO7KdqF7bTW+Uh3GASpjTbJx6e3S1ujqbWew+5QHAMmLsiFMDc/0uNG1Zzdp/rZOobC0g==",
       "type": "package",
       "path": "refractored.mvvmhelpers/1.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/netstandard1.0/MvvmHelpers.deps.json",
         "lib/netstandard1.0/MvvmHelpers.dll",
         "lib/netstandard1.0/MvvmHelpers.pdb",
@@ -2004,8 +2065,39 @@
         "refractored.mvvmhelpers.nuspec"
       ]
     },
+    "Rg.Plugins.Popup/1.1.5.188": {
+      "sha512": "3z5Q6Bdvhi8J2e5Cj0lEQ3rseZXXYTCFd3FjWjDlRbBnJ2vtNPRui5DE8bwWjA2PiDyK+GNj/bhvy+enEzISBA==",
+      "type": "package",
+      "path": "rg.plugins.popup/1.1.5.188",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/MonoAndroid/Rg.Plugins.Popup.Droid.dll",
+        "lib/MonoAndroid/Rg.Plugins.Popup.Droid.dll.mdb",
+        "lib/MonoAndroid/Rg.Plugins.Popup.Droid.pdb",
+        "lib/MonoAndroid/Rg.Plugins.Popup.dll",
+        "lib/MonoAndroid/Rg.Plugins.Popup.pdb",
+        "lib/MonoTouch/Rg.Plugins.Popup.IOS.dll",
+        "lib/MonoTouch/Rg.Plugins.Popup.IOS.pdb",
+        "lib/MonoTouch/Rg.Plugins.Popup.dll",
+        "lib/MonoTouch/Rg.Plugins.Popup.pdb",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.dll",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.IOS.pdb",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.dll",
+        "lib/Xamarin.IOS/Rg.Plugins.Popup.pdb",
+        "lib/netstandard1.0/Rg.Plugins.Popup.dll",
+        "lib/netstandard1.0/Rg.Plugins.Popup.pdb",
+        "lib/uap10.0/Rg.Plugins.Popup.UWP.dll",
+        "lib/uap10.0/Rg.Plugins.Popup.UWP.pdb",
+        "lib/uap10.0/Rg.Plugins.Popup.dll",
+        "lib/uap10.0/Rg.Plugins.Popup.pdb",
+        "readme.txt",
+        "rg.plugins.popup.1.1.5.188.nupkg.sha512",
+        "rg.plugins.popup.nuspec"
+      ]
+    },
     "Splat/1.6.2": {
-      "sha512": "DeH0MxPU+D4JchkIDPYG4vUT+hsWs9S41cFle0/4K5EJMXWurx5DzAkj2366DfK14/XKNhsu6tCl4dZXJ3CD4w==",
+      "sha512": "INLeF+SrOl0wmKN2EIyNQiYt67cWjyunCzOS/VZOk8jZCH/Sw7JZfjDajFWkcqgXC3ZLD8gc3LnLD3F9yP+GQg==",
       "type": "package",
       "path": "splat/1.6.2",
       "files": [
@@ -2038,7 +2130,7 @@
       ]
     },
     "sqlite-net-pcl/1.5.166-beta": {
-      "sha512": "a7VbroGBauEKY+UJeP1Z5UyrSHagigKgJGa5pVOyKDOI5/cPuCN2YUP4lhLReZdn73CrPqz2U7jsmZBoyZ0kXA==",
+      "sha512": "xINH/NJWuaZhQyCNNA3AVmDqbxDXQvyY1LHzti1QD/NiQj81ODdAA5XpUevIGxeE6NoHxsyzp1H+lWf+qcMttw==",
       "type": "package",
       "path": "sqlite-net-pcl/1.5.166-beta",
       "files": [
@@ -2056,7 +2148,7 @@
       ]
     },
     "SQLitePCLRaw.bundle_green/1.1.8": {
-      "sha512": "He+XMpqLXzpvZtjVfeaqxXXQzq5H4OuDEdUYwXXOJ7rQHQiF8b8BQzS+kuxCdsaDnMsrksdFVmAeXx2nNcAsjw==",
+      "sha512": "NA7WDIM1KBwQwS7zz0Oux5tM/LU+8LPFw2n6s1H79MzEQsOVtYIwJ3AAGWJ1G6FyCIc8pkVmWCQqxyFG65TAZQ==",
       "type": "package",
       "path": "sqlitepclraw.bundle_green/1.1.8",
       "files": [
@@ -2103,7 +2195,7 @@
       ]
     },
     "SQLitePCLRaw.core/1.1.8": {
-      "sha512": "JTvlAlVHeMW9QaTcu+3iLB9ZEGtceb+uM1MOlfyAnEocShSacHEzwPNsden7MlWb0QjPX3Y3sDMW0ymGhH8Jtg==",
+      "sha512": "m9dCUYulwjbZqKE2J+YZTEFhfSs8WT804BnhMf6OCS7K0PHFVDpY13dILFkcKnmNXazhqFwO2rWwDc/CJc8THw==",
       "type": "package",
       "path": "sqlitepclraw.core/1.1.8",
       "files": [
@@ -2129,7 +2221,7 @@
       ]
     },
     "SQLitePCLRaw.provider.sqlite3.ios_unified/1.1.8": {
-      "sha512": "DCjvMCRcltZHtH3fnOpJBJWyDstyPora10VaU6WAw51ZpLcwhII1ahQvMGfemAyeokajLxIDCEm/VM0Prn1bPw==",
+      "sha512": "v8rZv4gbA6CmI8Iit1GIJODs4GdPb5Pvp+pMlIAwU8vRuCGnMnnpcPjb7o7PTIDCIvoRp14m/rDV8SR0IeNiyA==",
       "type": "package",
       "path": "sqlitepclraw.provider.sqlite3.ios_unified/1.1.8",
       "files": [
@@ -2141,7 +2233,7 @@
       ]
     },
     "System.Net.Http/4.3.3": {
-      "sha512": "7rCqIbkC/P2+A00NoDH5gnvFhADmX7Dc4INvsOajbU1MVhktE9vZNrjPtF82N6Uo7obK+yzlrPUv/M+snnN/9w==",
+      "sha512": "/3Rpbezfj/lz+Qv/55bdKso16KhZF38gHW9wX0g0R4GfK5vr9z9WjDcF8SrVN/AK0A9sdh/AOC3YnCdX+UGKpw==",
       "type": "package",
       "path": "system.net.http/4.3.3",
       "files": [
@@ -2183,7 +2275,7 @@
       ]
     },
     "System.Numerics.Vectors/4.5.0": {
-      "sha512": "QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "sha512": "nATsBTD2CKr4AYN6eRszhX4sptImWmBJwB/U6XKCWWfnCcrTBw8XSCm3QA9gjppkHTr8OkXUY21MR91D3QZXsw==",
       "type": "package",
       "path": "system.numerics.vectors/4.5.0",
       "files": [
@@ -2230,7 +2322,7 @@
       ]
     },
     "System.Xml.XmlDocument/4.3.0": {
-      "sha512": "lJ8AxvkX7GQxpC6GFCeBj8ThYVyQczx2+f/cWHJU8tjS7YfI6Cv6bon70jVEgs2CiFbmmM8b9j1oZVx0dSI2Ww==",
+      "sha512": "IiUbPxbemqBuCRskuuobjJV1Lw0iJm+vNOH7drNHsj95EM2vVnBY4j0GtweZYQkMpwgFBwokka3V2k0Cca/RMw==",
       "type": "package",
       "path": "system.xml.xmldocument/4.3.0",
       "files": [
@@ -2269,7 +2361,7 @@
       ]
     },
     "System.Xml.XPath/4.3.0": {
-      "sha512": "v1JQ5SETnQusqmS3RwStF7vwQ3L02imIzl++sewmt23VGygix04pEH+FCj1yWb+z4GDzKiljr1W7Wfvrx0YwgA==",
+      "sha512": "K9CXmiAgV5+zKtN0uJkponLnY+4SM+2aIVQIwKH5+Cpf23QzDBxVphAuDf24t7We0l/fZFS/PeFGFS6nefNm4A==",
       "type": "package",
       "path": "system.xml.xpath/4.3.0",
       "files": [
@@ -2308,7 +2400,7 @@
       ]
     },
     "System.Xml.XPath.XmlDocument/4.3.0": {
-      "sha512": "A/uxsWi/Ifzkmd4ArTLISMbfFs6XpRPsXZonrIqyTY70xi8t+mDtvSM5Os0RqyRDobjMBwIDHDL4NOIbkDwf7A==",
+      "sha512": "91tvfHWHSrYFPolCwWYqbpo1YaoBUCQ3uNZ/O/zr0ev5BnkoATJoie16ywlMVUaXZtfSfNELxhtG3aqpTfwR4w==",
       "type": "package",
       "path": "system.xml.xpath.xmldocument/4.3.0",
       "files": [
@@ -2346,11 +2438,12 @@
       ]
     },
     "Xam.Plugin.FilePicker/1.1.0": {
-      "sha512": "ORzNG6dEgdBZnIdmbQCpNB4LSSTjBebwGjb1XZrgfbBGjX9muHBfZeQwOnNRvcGlm6fkylzTj2rDslDA1E/JFA==",
+      "sha512": "qjPQ+MF5FDObArKr6snS95TBPcK2PmNoiXpjXY5c53tiWCGpTvUcbVccFAiruNiUpYBa/yGa50r9or/UsvlRaA==",
       "type": "package",
       "path": "xam.plugin.filepicker/1.1.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.dll",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.dll.mdb",
         "lib/MonoAndroid10/Plugin.FilePicker.Abstractions.pdb",
@@ -2399,11 +2492,12 @@
       ]
     },
     "Xam.Plugin.Media/4.0.1.5": {
-      "sha512": "a5l/M2Tl06BqBX/uhM/pr+q1jDkh2tRQr5Ne9rjAuD9VYn5STE+7kVFTzIUNPMnMr9PZLJkWP5WAr/tBN5oepw==",
+      "sha512": "PxL0vcTXpS79l2KgtaJBShcPVMRK2HC5J08vG6hKTC7hk5+3RjgFrdX0N6Gd4oF8pxVxV2ia7rhYnjxRCMWZtw==",
       "type": "package",
       "path": "xam.plugin.media/4.0.1.5",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/monoandroid71/Plugin.Media.dll",
         "lib/monoandroid71/Plugin.Media.xml",
         "lib/netstandard1.0/Plugin.Media.dll",
@@ -2423,7 +2517,7 @@
       ]
     },
     "Xamarin.Essentials/0.10.0-preview": {
-      "sha512": "99C772+GQ/LOyy3kqYJ0N6o84PFbF59dFGfIL0yE5hJgfT1lMISago9MSZoUnF662/h1wbOEp+zweH1EENvQYg==",
+      "sha512": "ope8kxiddTv3o/GTqaqpWoWiyVuh/suZqftBRoPhbx564lhAZeqjxcdKanmzjBWgL92w9lcmaKOvlg9BuNGnQg==",
       "type": "package",
       "path": "xamarin.essentials/0.10.0-preview",
       "files": [
@@ -2450,7 +2544,7 @@
       ]
     },
     "Xamarin.Forms/3.4.0.1008975": {
-      "sha512": "tM9syeev45u92OFENGjq+Zw8WiEwLJFiXe317XpL9SY2RRk9sm2fc1lDVjzwz0da+5ZP5fi24NAPsPQdxBdMwQ==",
+      "sha512": "036/h8HtzRFgTrfhY57IeHoYRsPTO2XTA6uUFdmZzw2QR1sdszfofhI9HrCJTRx6fCzmjPg5Cxk5chYrjKarNw==",
       "type": "package",
       "path": "xamarin.forms/3.4.0.1008975",
       "files": [
@@ -2596,11 +2690,12 @@
       ]
     },
     "Xamarin.Plugins.Clipboard/2.2.1": {
-      "sha512": "+CxPFOQqy/UA/XuXUhz5Ktr4C2rLh4QpYouDX8VM4CDvtr9cN9SLsCIJ5IZvn5ufcQPla8ABPCe+nE/qUF423A==",
+      "sha512": "0R2fgAarrqWsnYhHswWedy+Pp0klRldHgJe78gW6drEDog7U0YvInQHTV0EfDiN8wF2C8WxU3eSxuhpNipEkjg==",
       "type": "package",
       "path": "xamarin.plugins.clipboard/2.2.1",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "lib/MonoAndroid10/Plugin.Clipboard.Abstractions.dll",
         "lib/MonoAndroid10/Plugin.Clipboard.Abstractions.pdb",
         "lib/MonoAndroid10/Plugin.Clipboard.XML",
@@ -2633,7 +2728,7 @@
       ]
     },
     "Xamarin.TestCloud.Agent/0.21.6": {
-      "sha512": "iO/4BSLJkADr+gknGF51QzCv776fWRQexjARRf2WP06iHZiAlG7pjRf8VG6bR+JevGYxNogzSf/304yKDXV50w==",
+      "sha512": "yvrMaRnoxC9piZDlDBHnBI2jKLhqvZiZGuDR2MylNd8mQiVCZASRJO71JbxxCU4OPNsquL3LNn/mMS+ezqgKiQ==",
       "type": "package",
       "path": "xamarin.testcloud.agent/0.21.6",
       "files": [
@@ -2656,6 +2751,7 @@
     "Xamarin.iOS,Version=v1.0": [
       "Plugin.UserDialogs >= 1.0.0",
       "Refractored.MvvmHelpers >= 1.3.0",
+      "Rg.Plugins.Popup >= 1.1.5.188",
       "Xamarin.Essentials >= 0.10.0-preview",
       "Xamarin.Forms >= 3.4.0.1008975",
       "Xamarin.Plugins.Clipboard >= 2.2.1",
@@ -2664,20 +2760,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Samuel Borjas\\.nuget\\packages\\": {}
+    "C:\\Users\\damas\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets.iOS\\tickets.iOS.csproj",
+      "projectUniqueName": "D:\\Proyectos\\TicketsApp\\tickets.iOS\\tickets.iOS.csproj",
       "projectName": "tickets.iOS",
-      "projectPath": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets.iOS\\tickets.iOS.csproj",
-      "packagesPath": "C:\\Users\\Samuel Borjas\\.nuget\\packages\\",
-      "outputPath": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets.iOS\\obj\\",
+      "projectPath": "D:\\Proyectos\\TicketsApp\\tickets.iOS\\tickets.iOS.csproj",
+      "packagesPath": "C:\\Users\\damas\\.nuget\\packages\\",
+      "outputPath": "D:\\Proyectos\\TicketsApp\\tickets.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
-        "C:\\Users\\Samuel Borjas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\damas\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2690,8 +2786,8 @@
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets\\tickets.csproj": {
-              "projectPath": "C:\\XamarinApps\\CapApp2.0\\TicketsApp\\tickets\\tickets.csproj"
+            "D:\\Proyectos\\TicketsApp\\tickets\\tickets.csproj": {
+              "projectPath": "D:\\Proyectos\\TicketsApp\\tickets\\tickets.csproj"
             }
           }
         }
@@ -2707,6 +2803,10 @@
           "Refractored.MvvmHelpers": {
             "target": "Package",
             "version": "[1.3.0, )"
+          },
+          "Rg.Plugins.Popup": {
+            "target": "Package",
+            "version": "[1.1.5.188, )"
           },
           "Xamarin.Essentials": {
             "target": "Package",
@@ -2744,7 +2844,7 @@
       "code": "NU1605",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Degradación del paquete detectada: Refractored.MvvmHelpers de 1.3.2.47-beta a 1.3.0. Haga referencia al paquete directamente desde el proyecto para seleccionar una versión diferente. \r\n tickets.iOS -> tickets -> Refractored.MvvmHelpers (>= 1.3.2.47-beta) \r\n tickets.iOS -> Refractored.MvvmHelpers (>= 1.3.0)",
+      "message": "Detected package downgrade: Refractored.MvvmHelpers from 1.3.2.47-beta to 1.3.0. Reference the package directly from the project to select a different version. \r\n tickets.iOS -> tickets -> Refractored.MvvmHelpers (>= 1.3.2.47-beta) \r\n tickets.iOS -> Refractored.MvvmHelpers (>= 1.3.0)",
       "libraryId": "Refractored.MvvmHelpers",
       "targetGraphs": [
         "Xamarin.iOS,Version=v1.0",

@@ -101,6 +101,7 @@ C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Mono.An
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\mscorlib.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\MvvmHelpers.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Plugin.Clipboard.Abstractions.pdb
+C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Rg.Plugins.Popup.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\SQLite-net.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\System.Core.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\System.pdb
@@ -125,6 +126,7 @@ C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Mono.Se
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\System.ServiceModel.Internals.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\I18N.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\I18N.West.pdb
+C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\bin\Debug\Rg.Plugins.Popup.Droid.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\tickets.Android.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Acr.Support.Android.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Acr.UserDialogs.dll.mdb
@@ -132,6 +134,7 @@ C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Acr.Use
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Plugin.Clipboard.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Plugin.FilePicker.Abstractions.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Plugin.FilePicker.dll.mdb
+C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Rg.Plugins.Popup.Droid.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\linksrc\Splat.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Acr.Support.Android.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Acr.UserDialogs.dll.mdb
@@ -139,6 +142,7 @@ C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Plugin.Clipboard.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Plugin.FilePicker.Abstractions.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Plugin.FilePicker.dll.mdb
+C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Rg.Plugins.Popup.Droid.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Splat.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\tickets.Android.dll.mdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\FormsViewGroup.pdb
@@ -150,6 +154,7 @@ C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\mscorlib.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\MvvmHelpers.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Plugin.Clipboard.Abstractions.pdb
+C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\Rg.Plugins.Popup.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\SQLite-net.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\System.ComponentModel.Composition.pdb
 C:\XamarinApps\CapApp2.0\TicketsApp\tickets.Android\obj\Debug\81\android\assets\System.Core.pdb

@@ -28,59 +28,9 @@ namespace tickets
         public SendTicket()
         {
             InitializeComponent();
-            //Adjun.HasUnevenRows = true;
-            //Append.Clicked += searchFile;
+ 
             this.BindingContext = new Ticket();
-            /*
-            take_photo.Clicked += async (sender, args) =>
-            {
-                await CrossMedia.Current.Initialize();
 
-                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-                {
-<<<<<<< HEAD
-                    await DisplayAlert("No Camera", ":( No camera available.", "OK");
-=======
-
-                    DisplayAlert("No Camera", ":( No camera available.", "OK");
-
-                    //await DisplayAlert("No Camera", ":( No camera available.", "OK");
-
->>>>>>> Samuel
-                    return;
-                }
-
-                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
-                {
-                    Directory = "photo",
-                    Name = "photo" + files.Count + ".jpg",
-                    CompressionQuality = AppSettings.ImagesQuality
-                });
-
-                if (file == null)
-                    return;
-
-
-                string filePath = file.Path;
-                byte[] data = MediaFileBytes(file);
-
-                files.Add(("photo" + files.Count + ".jpg", data));
-                string temp = "";
-                for (int i = 0; i < files.Count(); i++)
-                {
-                    temp += files[i].Item1;
-                    temp += "\n";
-                }
-                Adjun.Text = temp;
-<<<<<<< HEAD
-
-                await DisplayAlert("File Location", filePath, "OK");
-=======
-                await DisplayAlert("File Location", filePath, "OK");
-
->>>>>>> Samuel
-            };
-            */
 
         }
 
@@ -165,6 +115,7 @@ namespace tickets
                     if (response.Equals("error"))
                     {
                         await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
+                        UserDialogs.Instance.HideLoading();
                     }
                     else
                     {
