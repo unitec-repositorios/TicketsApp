@@ -15,7 +15,6 @@ namespace tickets
     public partial class MyTickets : ContentPage
     {
         private Server server = new Server();
-
         
         List<Ticket> tickets = new List<Ticket>();
 
@@ -292,7 +291,7 @@ namespace tickets
                     String updateDate = await server.getUpdateDate(dbtickets[i].ID);
                     if (!updateDate.Equals(dbtickets[i].Date) && updateDate != "error")
                     {
-                        dbtickets[i].Image = "https://cdn.pixabay.com/photo/2015/12/16/17/41/bell-1096280_640.png";
+                        dbtickets[i].OpenImage = "bell.png";
                         dbtickets[i].Date = updateDate;
                         await App.Database.UpdateTicket(dbtickets[i]);
                     }
@@ -304,7 +303,7 @@ namespace tickets
                     Console.WriteLine("Recibiendo del sevidor: "+ open.ToString());
                     if (!open)
                     {
-                        dbtickets[i].OpenImage = "https://cdn.pixabay.com/photo/2015/12/08/19/08/castle-1083570_960_720.png";
+                        dbtickets[i].OpenImage = "lock.png";
                         dbtickets[i].Open = open;
                         await App.Database.UpdateTicket(dbtickets[i]);
                     }
