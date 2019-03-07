@@ -21,6 +21,18 @@ namespace tickets.API
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
+        public async Task<string> getDetailsTicket(string id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/print.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            if (html.IndexOf("<b>Error:</b>") != -1)
+            {
+                return "Error";
+            }
+            return html;
+        }
+
         public async Task<List<DateTime>> getDateMessage(string id)
         {
             List<DateTime> fechas= new List<DateTime>();
@@ -98,7 +110,7 @@ namespace tickets.API
 
             }
 
-            return "error";
+            return "error al recibir la fecha";
         }
 
         public async Task<string> getUpdateDate(string id)
@@ -146,7 +158,7 @@ namespace tickets.API
             response = await client.GetAsync(link);
         }
 
-        private string getTextAux(char delimiter,string text,int pos)
+        public string getTextAux(char delimiter,string text,int pos)
         {
             string txt = "";
             char val = text[pos];
