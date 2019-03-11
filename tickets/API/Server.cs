@@ -212,7 +212,7 @@ namespace tickets.API
 
             string token = node.GetAttributeValue("value", "0");
 
-            Encoding encoder = Encoding.GetEncoding("utf-8");
+            Encoding encoder = Encoding.GetEncoding("UTF-8");
 
             form.Headers.Add("Cookie", cookie);
             form.Headers.ContentType.CharSet = "ISO-8859-1";
