@@ -29,10 +29,10 @@ namespace tickets.screens
         public string stateText { get; set; }
         private List<DateTime> dateMessagesList;
         private ToolbarItem openTicket, openBrowserTool;
-        string cookie;
+        string cookie,autorLogin;
 
         public chatViewModelAdmin chatVM;
-        public ChatTicketAdmin(string cook)
+        public ChatTicketAdmin(string cook,string autLogin)
         {
             try
             {
@@ -41,6 +41,7 @@ namespace tickets.screens
                 chatVM = new chatViewModelAdmin(ticketID, files);
                 dateMessagesList = new List<DateTime>();
                 this.cookie = cook;
+                this.autorLogin = autLogin;
 
                 chatVM.ListMessages.CollectionChanged += (sender, e) =>
                 {
@@ -239,7 +240,7 @@ namespace tickets.screens
                     message = getMessage(html);
                     bool typeText = true;
                     //add new message to the chat
-                    if (autor.Equals(myName))
+                    if (autor.Equals(autorLogin))
                     {
                         autor = "";
                         typeText = false;
@@ -248,7 +249,7 @@ namespace tickets.screens
                     {
                         autor += ":\n";
                     }
-
+              
                     var mymessage = new Message
                     {
                         Text = autor + message,
