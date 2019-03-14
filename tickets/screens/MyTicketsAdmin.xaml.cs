@@ -128,6 +128,33 @@ namespace tickets
         //Tickets Asignados
         async void goToViewTicketAdminAssign(object sender, SelectedItemChangedEventArgs e)
         {
+           
+                if (e.SelectedItem != null)
+                {
+                    var ticket = tickets.FirstOrDefault(t => t.ID == ((Ticket)e.SelectedItem).ID);
+                    if (ticket != null)
+                    {
+                        UserDialogs.Instance.ShowLoading("Cargando Ticket...");
+                        Debug.WriteLine("Opening messages for ticket with id = " + ticket.ID);
+                        ticket.Date = await server.getUpdateDate(ticket.ID);
+                        ticket.Image = "";
+
+                        ticket.OpenImage = "";
+
+                        await App.Database.UpdateTicket(ticket);
+                        await Navigation.PushAsync(new chatTicket()
+                        {
+                            BindingContext = ticket.ID
+                        });
+                        TicketsListViewAdminAssign.SelectedItem = null;
+                        UserDialogs.Instance.HideLoading();
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Ticket is null");
+                    }
+                }
+            
 
         }
 
