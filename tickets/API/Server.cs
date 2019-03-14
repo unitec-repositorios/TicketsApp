@@ -479,5 +479,121 @@ namespace tickets.API
                 return "error";
             }
         }
+
+        public async Task<string> replyTicketAdmin(string message, List<(string, byte[])> files, string ticketID)
+        {
+            HttpClient _client = new HttpClient();
+            HttpResponseMessage capture = await _client.GetAsync(BASE_ADDRESS + "admin/admin_ticket.php?track=" + ticketID);
+
+            String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
+            String[] tokens = res.Split(';');
+            String cookie = tokens[0];
+
+            //catch the token
+            String html = await capture.Content.ReadAsStringAsync();
+            string searchSS = "name=\"token\" value=\"";
+            int size = searchSS.Count();
+            int begin = size + html.IndexOf(searchSS);
+            string token = "";
+            char val = html[begin];
+            while (val != '\"')
+            {
+                token += val;
+                begin++;
+                val = html[begin];
+            }
+
+            //value cookie
+            String[] tokensValue = cookie.Split('=');
+            String valueCookie = tokensValue[1];
+
+            //headers
+            HttpWebRequest requestToServer = (HttpWebRequest)WebRequest.Create(BASE_ADDRESS + "admin/admin_reply_ticket.php");
+            String boundaryString = "----WebKitFormBoundary" + valueCookie;
+            requestToServer.AllowReadStreamBuffering = false;
+            requestToServer.Method = WebRequestMethods.Http.Post;
+            requestToServer.Headers.Add("Cookie", cookie);
+            requestToServer.ContentType = "multipart/form-data; boundary=" + boundaryString;
+
+            //generate body
+            ASCIIEncoding ascii = new ASCIIEncoding();
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            //boundary
+            string boundaryStringLine = "\r\n--" + boundaryString + "\r\n";
+            byte[] boundaryStringLineBytes = ascii.GetBytes(boundaryStringLine);
+            //message
+            string messageInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "message", message);
+            byte[] messageInputBytes = ascii.GetBytes(messageInput);
+            //files
+            for (int x = 0; x < files.Count; x++)
+            {
+                form.Add(new ByteArrayContent(files[x].Item2, 0, files[x].Item2.Length), "attachment[" + (x + 1) + "]", files[x].Item1);
+            }
+            /* string filesInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "attachments", files);
+             byte[] filesInputBytes = ascii.GetBytes(filesInput);*/
+            //ticketID
+            string ticketInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "orig_track", ticketID);
+            byte[] ticketInputBytes = ascii.GetBytes(ticketInput);
+            //token
+            string tokenInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "token", token);
+            byte[] tokenInputBytes = ascii.GetBytes(tokenInput);
+            //boundary final
+            string lastBoundaryStringLine = "\r\n--" + boundaryString + "--";
+            byte[] lastBoundaryStringLineBytes = ascii.GetBytes(lastBoundaryStringLine);
+
+            //size buffer
+            long totalRequestBodySize = boundaryStringLineBytes.Length * 3
+                + messageInputBytes.Length
+                //+ filesInputBytes.Length
+                + ticketInputBytes.Length
+                + tokenInputBytes.Length
+                + lastBoundaryStringLineBytes.Length;
+
+            requestToServer.ContentLength = totalRequestBodySize;
+
+            //white body
+            using (Stream s = requestToServer.GetRequestStream())
+            {
+                s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
+                s.Write(messageInputBytes, 0, messageInputBytes.Length);
+                s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
+                //s.Write(filesInputBytes, 0, filesInputBytes.Length);
+                //s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
+                s.Write(ticketInputBytes, 0, ticketInputBytes.Length);
+                s.Write(boundaryStringLineBytes, 0, boundaryStringLineBytes.Length);
+                s.Write(tokenInputBytes, 0, tokenInputBytes.Length);
+                s.Write(lastBoundaryStringLineBytes, 0, lastBoundaryStringLineBytes.Length);
+            }
+
+            //response 
+            WebResponse response = requestToServer.GetResponse();
+            StreamReader responseReader = new StreamReader(response.GetResponseStream());
+            HttpResponseMessage responsee = await _client.PostAsync(BASE_ADDRESS + "admin/admin_reply_ticket.php", form);
+
+            //response.Headers.Add(
+
+            responsee.EnsureSuccessStatusCode();
+            _client.Dispose();
+            string sd = await responsee.Content.ReadAsStringAsync();
+
+            var result = new HtmlDocument();
+            result.LoadHtml(sd);
+            //catch ticketID
+            String responseHtml = responseReader.ReadToEnd();
+            string searchR = "�xito:</b>";
+            if (responseHtml.IndexOf(searchR) > -1)
+            {
+                return "ok";
+            }
+            else
+            {
+                return "error";
+            }
+        }
+
+
+
+
+
     }
 }
