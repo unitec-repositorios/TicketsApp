@@ -129,6 +129,7 @@ namespace tickets
                 temp += "\n";
             }
             Adjun.Text = temp;
+            this.chatVM.Files.Add(files[files.Count-1]);
             //await DisplayAlert("File Location", filePath, "OK");
         }
 

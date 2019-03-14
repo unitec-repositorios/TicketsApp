@@ -288,10 +288,12 @@ namespace tickets
                 
                 for (int i = 0; i < dbtickets.Count; i++)
                 {
+                    Console.WriteLine("DBTICKETS COUNT: " +dbtickets.Count);
                     String updateDate = await server.getUpdateDate(dbtickets[i].ID);
+                    Console.WriteLine("Recibiendo del sevidor para notificacion: " + updateDate.ToString());
                     if (!updateDate.Equals(dbtickets[i].Date) && updateDate != "error")
                     {
-                        dbtickets[i].OpenImage = "bell.png";
+                        dbtickets[i].Image = "bell.png";
                         dbtickets[i].Date = updateDate;
                         await App.Database.UpdateTicket(dbtickets[i]);
                     }

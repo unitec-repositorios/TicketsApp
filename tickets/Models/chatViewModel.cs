@@ -35,7 +35,7 @@ namespace tickets.Models
                     var message = new Message
                     {
                         Text = OutText,
-                        Files = Files,
+                        Files = files,
                         IsTextIn = false,
                         MessageDateTime = DateTime.Now
                     };
@@ -62,7 +62,7 @@ namespace tickets.Models
         public async void sendMessage(Message message)
         {
             UserDialogs.Instance.ShowLoading("Enviando Mensaje...");
-            string status = await server.replyTicket(message.Text, message.Files, this.ticketID);
+            string status = await server.replyTicket(message.Text, Files, this.ticketID);
             Console.WriteLine(status);
             if (status.Equals("ok"))
             {

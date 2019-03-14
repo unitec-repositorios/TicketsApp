@@ -66,7 +66,7 @@
                         <EntryCell x:Name="ticketsTimeoutSetting" Label="Segundos" Keyboard="Numeric" XAlign="Start">
                         </EntryCell>
                     </TableSection>
-                    <TableSection>
+                    <!--<TableSection>
                         <ViewCell Tapped="SignInAdminClicked" StyleId="disclosure">
                             <StackLayout Orientation="Horizontal" Margin="10,5,0,5" Spacing="20">
                                 <Image>
@@ -82,7 +82,7 @@
                                 <Label Text="Sesión Administrador" VerticalOptions="Center" FontSize="Large" />
                             </StackLayout>
                         </ViewCell>
-                    </TableSection>
+                    </TableSection>-->
                     <TableSection>
                         <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
                             <StackLayout Orientation="Horizontal" Margin="10,5,0,5" Spacing="20">
