@@ -21,6 +21,18 @@ namespace tickets.API
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
+        public async Task<string> getDetailsTicket(string id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/print.php?track=" + id);
+            string html = await response.Content.ReadAsStringAsync();
+            if (html.IndexOf("<b>Error:</b>") != -1)
+            {
+                return "Error";
+            }
+            return html;
+        }
+
         public async Task<List<DateTime>> getDateMessage(string id)
         {
             List<DateTime> fechas= new List<DateTime>();
@@ -106,12 +118,16 @@ namespace tickets.API
             HttpClient _client = new HttpClient();
             HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
-            string search = "Última actualizacion: </td>";
+            //Console.WriteLine("HTMLLLLLLL: " + html);
+            string search = "�ltima actualizacion: </td>";
             int size = search.Count();
+            Console.WriteLine("INT SIZE: " + size);
             int begin = size + html.IndexOf(search);
+            Console.WriteLine("INT BEGIN: " + begin);
             string date = "";
             char val = html[begin];
-            if (html.IndexOf(search) > -1)
+            Console.WriteLine("HTML INDEX OF SEARCH: "+html.IndexOf(search));
+            if (html.IndexOf(search,0) > -1)
             {
                 date = getTextAux('/', html, begin);
                 string[] array = date.Split('>');
@@ -120,10 +136,12 @@ namespace tickets.API
                 return date;
 
             }
-            return "error";
+            else
+            {
+               return "error";
+            }
+            
         }
-
-//HEAD
         public async Task<bool> getOpenTicket(string id)
         {
             HttpClient _client = new HttpClient();
@@ -146,7 +164,7 @@ namespace tickets.API
             response = await client.GetAsync(link);
         }
 
-        private string getTextAux(char delimiter,string text,int pos)
+        public string getTextAux(char delimiter,string text,int pos)
         {
             string txt = "";
             char val = text[pos];
@@ -159,10 +177,6 @@ namespace tickets.API
             return txt;
         }
 
-
-//>>>>>>> David
-//=======
-//>>>>>>> CEscobar
 
         public async Task<string> getTicket(string id)
         {
@@ -200,7 +214,7 @@ namespace tickets.API
 
             string token = node.GetAttributeValue("value", "0");
 
-            Encoding encoder = Encoding.GetEncoding("ISO-8859-1");
+            Encoding encoder = Encoding.GetEncoding("UTF-8");
 
             form.Headers.Add("Cookie", cookie);
             form.Headers.ContentType.CharSet = "ISO-8859-1";

@@ -4,8 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="tickets.SignInAdminPage" 
     Title="SignInHesk">
-	<ContentPage.Content>
-		<StackLayout VerticalOptions="StartAndExpand">
+    <ContentPage.Resources>
+        <StyleSheet Source="../styles/style.css">
+        </StyleSheet>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="StartAndExpand">
 			<Label Text="Crear cuenta de hesk para resolucion de Tickets" />
 			<Label Text="Email/Username:" />
 			<Entry x:Name="usernameEntry" Placeholder="Usuario" />

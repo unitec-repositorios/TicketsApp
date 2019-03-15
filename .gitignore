@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/visualstudio,xamarinstudio
 # Edit at https://www.gitignore.io/?templates=visualstudio,xamarinstudio
 
@@ -352,3 +351,27 @@ ASALocalRun/
 healthchecksdb
 
 # End of https://www.gitignore.io/api/visualstudio,xamarinstudio
+=======
+tickets\.Android/bin/Debug/
+
+tickets\.Android/obj/Debug/81/
+
+tickets\.iOS/obj/
+
+tickets/obj/Debug/netstandard2\.0/
+
+*.htm
+
+tickets\.Android/obj/
+
+\.vs/tickets/v15/Server/sqlite3/
+
+\.vs/tickets/v15/
+
+tickets\.UITests/obj/Debug/
+
+tickets/bin/Debug/netstandard2\.0/
+
+tickets/obj/
+
+tickets\.UITests/obj/

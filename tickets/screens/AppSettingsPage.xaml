@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.AppSettingsPage" Title="Ajustes" Icon="baseline_settings_black_36pt">
     <ContentPage.Content>
@@ -66,7 +66,7 @@
                         <EntryCell x:Name="ticketsTimeoutSetting" Label="Segundos" Keyboard="Numeric" XAlign="Start">
                         </EntryCell>
                     </TableSection>
-                    <TableSection>
+                    <!--<TableSection>
                         <ViewCell Tapped="SignInAdminClicked" StyleId="disclosure">
                             <StackLayout Orientation="Horizontal" Margin="10,5,0,5" Spacing="20">
                                 <Image>
@@ -79,10 +79,10 @@
                                         </OnPlatform>
                                     </Image.Source>
                                 </Image>
-                                <Label Text="Sesion Administrador" VerticalOptions="Center" FontSize="Large" />
+                                <Label Text="Sesión Administrador" VerticalOptions="Center" FontSize="Large" />
                             </StackLayout>
                         </ViewCell>
-                    </TableSection>
+                    </TableSection>-->
                     <TableSection>
                         <ViewCell Tapped="SignInSignOutBtn_Clicked" StyleId="disclosure">
                             <StackLayout Orientation="Horizontal" Margin="10,5,0,5" Spacing="20">
@@ -91,7 +91,8 @@
                                         <OnPlatform x:TypeArguments="FileImageSource">
                                             <OnPlatform.Platforms>
                                                 <On Platform="iOS" Value="baseline_settings_black_36pt" />
-                                                <On Platform="Android" Value="baseline_settings_black_36.png" />
+                                                <!--On Platform="Android" Value="baseline_settings_black_36.png" />-->
+                                                <On Platform="Android" Value="ic_logout.png" />
                                             </OnPlatform.Platforms>
                                         </OnPlatform>
                                     </Image.Source>
