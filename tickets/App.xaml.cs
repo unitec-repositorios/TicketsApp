@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using tickets.Models;
 using Microsoft.Identity.Client;
 using System.Diagnostics;
 
@@ -11,6 +12,8 @@ namespace tickets
 {
     public partial class App : Application
     {
+
+        private AdminLogin admin_log = AdminLogin.Instance;
         public static PublicClientApplication IdentityClientApp;
         public static string ClientID = "d0297af7-d0ed-4331-8d16-eddb448252d9";
         public static string RedirectUri = "msal" + ClientID + "://auth";
@@ -51,6 +54,11 @@ namespace tickets
             }
             else
             {
+                if(admin_log.Log_admin == true)
+                {
+                    MainPage = new NavigationPage(new MyTicketsAdmin());
+                }
+                else if(admin_log.Log_admin == false) { 
                 switch(Device.RuntimePlatform)
                 {
                     case Device.iOS:
@@ -62,6 +70,7 @@ namespace tickets
                     case Device.UWP:
                         MainPage = new NavigationPage(new HomeScreen());
                         break;
+                }
                 }
             }
 

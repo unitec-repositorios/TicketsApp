@@ -16,6 +16,8 @@ namespace tickets.Models
         public string username { get; set; }
         public string password { get; set; }
         public string cookies { get; set; }
+
+        public bool Log_admin;
        
         public static AdminLogin Instance
         {
@@ -76,10 +78,12 @@ namespace tickets.Models
             if (success == null)
             {
                 temporal_response = "sucess";
+                Log_admin = true;
             }
             else
             {
                 temporal_response = "error";
+                Log_admin = false;
             }
             return temporal_response;
 
