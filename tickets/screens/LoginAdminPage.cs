@@ -16,22 +16,35 @@ using Xamarin.Essentials;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms;
 using Acr.UserDialogs;
-
+using SQLite;
 
 namespace tickets
 {
 	public partial class LoginAdminPage : ContentPage
 	{
-        private AdminLogin admin_log = AdminLogin.Instance;
+        private AdminLogin admin_log;// = AdminLogin.Instance;
         public LoginAdminPage ()
 		{
 			InitializeComponent();
-		}
+            admin_log = App.Database.GetAdminLogin();
+            if (admin_log != null)
+            {
+                usernameEntry.Text = admin_log.username;
+                passwordEntry.Text = admin_log.password;
+            }
+        }
 
 		async void OnLoginButtonClicked (object sender, EventArgs e)
 		{
-            admin_log.username = usernameEntry.Text;
-            admin_log.password = passwordEntry.Text;
+            if (admin_log == null)
+            {
+                admin_log = AdminLogin.Instance;
+                admin_log.username = usernameEntry.Text;
+                admin_log.password = passwordEntry.Text;
+            }
+        
+        
+          
             var valid = !String.IsNullOrWhiteSpace(usernameEntry.Text) && !String.IsNullOrWhiteSpace(passwordEntry.Text);
             if (valid)
             {

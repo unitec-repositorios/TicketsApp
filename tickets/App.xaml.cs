@@ -54,24 +54,27 @@ namespace tickets
             }
             else
             {
-                if(admin_log.Log_admin == true)
+                if(!Database.GetAdminLogin().islog_admin)
                 {
-                    MainPage = new NavigationPage(new MyTicketsAdmin());
-                }
-                else if(admin_log.Log_admin == false) { 
-                switch(Device.RuntimePlatform)
+                        switch (Device.RuntimePlatform)
+                        {
+                            case Device.iOS:
+                                MainPage = new NavigationPage(new HomeScreen());
+                                break;
+                            case Device.Android:
+                                MainPage = new NavigationPage(new MyTickets());
+                                break;
+                            case Device.UWP:
+                                MainPage = new NavigationPage(new HomeScreen());
+                                break;
+                        }
+                    }
+                else
                 {
-                    case Device.iOS:
-                        MainPage = new NavigationPage(new HomeScreen());
-                        break;
-                    case Device.Android:
-                        MainPage = new NavigationPage(new MyTickets());
-                        break;
-                    case Device.UWP:
-                        MainPage = new NavigationPage(new HomeScreen());
-                        break;
+                   MainPage = new NavigationPage(new MyTicketsAdmin());
                 }
-                }
+               
+            
             }
 
         }
