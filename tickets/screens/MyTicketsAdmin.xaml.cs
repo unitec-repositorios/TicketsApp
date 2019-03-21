@@ -18,7 +18,7 @@ namespace tickets
     public partial class MyTicketsAdmin : TabbedPage
     {
         private Server server = new Server();
-        private AdminLogin admin_log = AdminLogin.Instance;
+        private AdminLogin admin_log;// = AdminLogin.Instance;
         List<Ticket> tickets = new List<Ticket>();
         ObservableCollection<Ticket> tickets_assign = new ObservableCollection<Ticket>();
         private Timer refreshTicketsTimer;
@@ -31,7 +31,9 @@ namespace tickets
                 //UserDialogs.Instance.ShowLoading("Cargando Tickets...");
                 TicketsListView.ItemsSource = tickets;
                 this.BindingContext = this;
-
+                admin_log = App.Database.GetAdminLogin();
+                if(admin_log==null)
+                    admin_log = AdminLogin.Instance;
                 GetTickets();
 
                 //UserDialogs.Instance.HideLoading();
