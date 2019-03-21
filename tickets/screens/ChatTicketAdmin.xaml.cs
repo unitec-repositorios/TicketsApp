@@ -93,7 +93,7 @@ namespace tickets.screens
 
         private void sendMessage(object sender, EventArgs args)
         {
-
+            UserDialogs.Instance.ShowSuccess("No esta disponible el envio de mensajes");
             /* if (!String.IsNullOrWhiteSpace(this.chatVM.OutText))
              {
                  var message = new Message
@@ -123,7 +123,8 @@ namespace tickets.screens
 
         private async void take_Photo(object sender, EventArgs args)
         {
-            await CrossMedia.Current.Initialize();
+            UserDialogs.Instance.ShowSuccess("No esta disponible adjuntar foto");
+            /*await CrossMedia.Current.Initialize();
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
@@ -193,7 +194,12 @@ namespace tickets.screens
             {
                 System.Console.WriteLine("Exception choosing file: " + ex.ToString());
                 await DisplayAlert("Aviso", "Se produjo un error", "OK");
-            }
+            }*/
+        }
+
+        private async void searchFile(object sender, EventArgs e)
+        {
+            UserDialogs.Instance.ShowSuccess("No esta disponible adjuntar archivos");
         }
 
         protected override async void OnAppearing()
@@ -240,9 +246,10 @@ namespace tickets.screens
                     message = getMessage(html);
                     bool typeText = true;
                     //add new message to the chat
-                    if (autor.Equals(autorLogin))
+                    if (!autor.Equals(myName))
                     {
-                        autor = "";
+                        autor = "Tu";
+                        autor += ":\n";
                         typeText = false;
                     }
                     else
