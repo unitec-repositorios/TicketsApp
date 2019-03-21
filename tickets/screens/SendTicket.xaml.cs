@@ -30,6 +30,8 @@ namespace tickets
             InitializeComponent();
  
             this.BindingContext = new Ticket();
+
+
         }
 
         private async void take_Photo(object sender, EventArgs args)

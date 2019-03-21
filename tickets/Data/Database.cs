@@ -5,10 +5,9 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.IO;
 using System;
-
 using System.Text;
 
-namespace tickets.Models
+namespace tickets
 {
     public class Database
     {
@@ -21,7 +20,6 @@ namespace tickets.Models
             database.CreateTableAsync<Ticket>().Wait();
             database.CreateTableAsync<Comment>().Wait();
             database.CreateTableAsync<AdminUser>().Wait();
-            database.CreateTableAsync<AdminLogin>().Wait();
         }
 
         public SQLiteAsyncConnection GetConnection()
@@ -38,7 +36,6 @@ namespace tickets.Models
             database.ExecuteAsync("DELETE FROM Ticket").Wait();
             database.ExecuteAsync("DELETE FROM Comment").Wait();
             database.ExecuteAsync("DELETE FROM AdminUser").Wait();
-            database.ExecuteAsync("DELETE FROM AdminLogin").Wait();
         }
         
         /// <summary>
@@ -97,12 +94,6 @@ namespace tickets.Models
             {
                 return null;
             }
-        }
-
-        public async void LogoutAdmin()
-        {
-            await database.ExecuteAsync("Update AdminLogin SET islog_admin = 0");
-
         }
 
         public async void Logout()
@@ -199,28 +190,6 @@ namespace tickets.Models
         {
             ticket.PrintData();
             return database.InsertAsync(ticket);
-        }
-
-        public Task<int>InsertAdminLoginAsync(AdminLogin login)
-        {
-            if (GetAdminLogin() != null)
-            {
-                database.DropTableAsync<AdminLogin>();
-                database.CreateTableAsync<AdminLogin>().Wait();
-            }
-            return  database.InsertAsync(login);
-        }
-
-        public AdminLogin GetAdminLogin()
-        {
-            try
-            {
-                return database.FindWithQueryAsync<AdminLogin>("SELECT * FROM AdminLogin").Result;
-            }
-            catch (System.Exception ex)
-            {
-                return null;
-            }
         }
 
         /// <summary>
