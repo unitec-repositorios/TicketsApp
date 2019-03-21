@@ -79,9 +79,35 @@ namespace tickets
             base.OnDisappearing();
         }
         //Tickets Enviados
-        async void goToViewTicketAdmin(object sender, SelectedItemChangedEventArgs e)
+        private async void goToViewTicketAdmin(object sender, SelectedItemChangedEventArgs e)
         {
+            if (e.SelectedItem != null)
+            {
+                var ticket = tickets.FirstOrDefault(t => t.ID == ((Ticket)e.SelectedItem).ID);
+                if (ticket != null)
+                {
+                    UserDialogs.Instance.ShowLoading("Cargando Ticket...");
+                    Debug.WriteLine("Opening messages for ticket with id = " + ticket.ID);
+                    ticket.Date = await server.getUpdateDate(ticket.ID);
+                    ticket.Image = "";
 
+                    ticket.OpenImage = "";
+
+                    await App.Database.UpdateTicket(ticket);
+                    Console.WriteLine("Username de login: " + admin_log.username);
+                    Console.WriteLine("Cookie de login: " + admin_log.cookies);
+                    await Navigation.PushAsync(new tickets.screens.ChatTicketAdmin(admin_log.cookies,admin_log.username)
+                    {
+                        BindingContext = ticket.ID
+                    });
+                    TicketsListViewAdmin.SelectedItem = null;
+                    UserDialogs.Instance.HideLoading();
+                }
+                else
+                {
+                    Debug.WriteLine("Ticket is null");
+                }
+            }
         }
 
         private async void TicketsListView_RefreshingAdmin(object sender, EventArgs e)
@@ -106,11 +132,6 @@ namespace tickets
             }
         }
 
-        //Tickets Asignados
-        async void goToViewTicketAdminAssign(object sender, SelectedItemChangedEventArgs e)
-        {
-
-        }
 
         private async void TicketsListView_RefreshingAdminAssign(object sender, EventArgs e)
         {
