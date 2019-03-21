@@ -6,14 +6,15 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout VerticalOptions="StartAndExpand" Margin="10,20,10,10" BackgroundColor="{DynamicResource backgroundColor}">
-            <Label Text="Usuario:" Font="Bold, 24" />
+            <Label x:Name="labelusers" Text="Usuario:" Font="Bold, 24" />
             <Entry x:Name="usernameEntry" Placeholder="Usuario" />
-            <Label Text="Contraseña:" Font="Bold, 24" />
+            <Label x:Name="labelpasss" Text="Contraseña:" Font="Bold, 24" />
             <Entry x:Name="passwordEntry" Placeholder="Contraseña" IsPassword="true" />
             <Label x:Name="messageLabel" Font="Bold, 24" />
             <StackLayout VerticalOptions="EndAndExpand">
-                <Button Text="Login" class="btn_blue" Clicked="OnLoginButtonClicked" />
+                <Button x:Name="button_login" Text="Login" class="btn_blue" Clicked="OnLoginButtonClicked" />
             </StackLayout>
+   
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

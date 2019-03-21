@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using tickets.Models;
 using Xamarin.Forms;
 
 namespace tickets
 {
     public partial class AppSettingsPageAdmin : ContentPage
     {
+        private AdminLogin admin_log = AdminLogin.Instance;
         public AppSettingsPageAdmin()
         {
             InitializeComponent();
@@ -38,11 +39,9 @@ namespace tickets
             var answer = await DisplayAlert("Cerrar Sesión", "Esta seguro de cerrar sesión?", "Si", "No");
             if (answer)
             {
-                /*App.Database.Logout();
-                LoginAdminPage login = new LoginAdminPage();
-                App.Current.MainPage = new NavigationPage(login);*/
-                await Navigation.PushAsync(new MyTickets());
 
+                await Navigation.PushAsync(new MyTickets());
+                App.Database.LogoutAdmin();
             }
 
 

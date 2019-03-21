@@ -10,6 +10,7 @@ using System.Timers;
 using Acr.UserDialogs;
 using SQLite;
 
+
 namespace tickets
 {
     public partial class MyTickets : ContentPage

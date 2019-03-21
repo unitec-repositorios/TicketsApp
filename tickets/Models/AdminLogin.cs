@@ -10,18 +10,19 @@ using HtmlAgilityPack;
 
 namespace tickets.Models
 {
-    class AdminLogin
+    public class AdminLogin
     {
-        private static AdminLogin instance = null;
+        public static AdminLogin instance = null;
         public string username { get; set; }
         public string password { get; set; }
         public string cookies { get; set; }
-       
+        public bool islog_admin { get; set; }
+
         public static AdminLogin Instance
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     instance = new AdminLogin();
                 }
@@ -58,7 +59,7 @@ namespace tickets.Models
             form.Add(new StringContent(do_login), "a");
             HttpResponseMessage response = await httpClient.PostAsync(BASE_ADDRESS_ADMIN + "/index.php", form);
 
-            string res2 =   response.Headers.ElementAt(6).Value.ElementAt(0).ToString();
+            string res2 = response.Headers.ElementAt(6).Value.ElementAt(0).ToString();
             String[] tokens2 = res2.Split(';');
             String cookie2 = tokens2[0];
 
@@ -75,7 +76,15 @@ namespace tickets.Models
             var success = result.DocumentNode.SelectSingleNode("//div[@class='error']");
             if (success == null)
             {
+
                 temporal_response = "sucess";
+                AdminLogin logTemp = new AdminLogin();
+                logTemp.username = username;
+                logTemp.password = password;
+                logTemp.islog_admin = true;
+                logTemp.cookies = cookies;
+                await App.Database.InsertAdminLoginAsync(logTemp);
+               
             }
             else
             {
