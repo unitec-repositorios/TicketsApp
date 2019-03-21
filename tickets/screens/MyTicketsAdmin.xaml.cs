@@ -108,6 +108,7 @@ namespace tickets
             refreshTicketsTimer.Dispose();
         }
 
+
         public async void changeTicketStatus(string id)
         {
             var requestURI = @"http://138.197.198.67/admin/index.php";
@@ -128,8 +129,39 @@ namespace tickets
                 session = headerVals.First();
             }
             await server.changeStatusTicket(id);
+         }
+        //Tickets Enviados
+        private async void goToViewTicketAdmin(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem != null)
+            {
+                var ticket = tickets.FirstOrDefault(t => t.ID == ((Ticket)e.SelectedItem).ID);
+                if (ticket != null)
+                {
+                    UserDialogs.Instance.ShowLoading("Cargando Ticket...");
+                    Debug.WriteLine("Opening messages for ticket with id = " + ticket.ID);
+                    ticket.Date = await server.getUpdateDate(ticket.ID);
+                    ticket.Image = "";
 
+                    ticket.OpenImage = "";
+
+                    await App.Database.UpdateTicket(ticket);
+                    Console.WriteLine("Username de login: " + admin_log.username);
+                    Console.WriteLine("Cookie de login: " + admin_log.cookies);
+                    await Navigation.PushAsync(new tickets.screens.ChatTicketAdmin(admin_log.cookies,admin_log.username)
+                    {
+                        BindingContext = ticket.ID
+                    });
+                    TicketsListViewAdmin.SelectedItem = null;
+                    UserDialogs.Instance.HideLoading();
+                }
+                else
+                {
+                    Debug.WriteLine("Ticket is null");
+                }
+            }
         }
+
         private async Task addTicketIdAsync()
         {
             Console.WriteLine("ADD TICKET FROM ID");
@@ -253,9 +285,6 @@ namespace tickets
         }
 
 
-        //TERMINAN FUNCIONES
-
-
         protected override async void OnAppearing()
         {
             GetTicketsAsign();
@@ -266,10 +295,6 @@ namespace tickets
                 GetTickets();
                 return true;
             });
-        }
-        async void goToViewTicketAdmin(object sender, SelectedItemChangedEventArgs e)
-        {
-
         }
         /*protected override async void OnAppearingS()
         {
