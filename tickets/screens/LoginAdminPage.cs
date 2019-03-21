@@ -22,26 +22,24 @@ namespace tickets
 {
 	public partial class LoginAdminPage : ContentPage
 	{
-        private AdminLogin admin_log;// = AdminLogin.Instance;
+        private AdminLogin admin_log = AdminLogin.Instance;
         public LoginAdminPage ()
 		{
 			InitializeComponent();
-            admin_log = App.Database.GetAdminLogin();
-            if (admin_log != null)
+            //admin_log = App.Database.GetAdminLogin();
+            /*if (admin_log != null)
             {
                 usernameEntry.Text = admin_log.username;
                 passwordEntry.Text = admin_log.password;
-            }
+            }*/
         }
 
 		async void OnLoginButtonClicked (object sender, EventArgs e)
 		{
-            if (admin_log == null)
-            {
-                admin_log = AdminLogin.Instance;
+        
                 admin_log.username = usernameEntry.Text;
                 admin_log.password = passwordEntry.Text;
-            }
+            
         
         
           
