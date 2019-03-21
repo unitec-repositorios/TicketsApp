@@ -15,8 +15,7 @@ using Xamarin.Essentials;
 
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms;
-using Acr.UserDialogs;
-using SQLite;
+
 
 namespace tickets
 {
@@ -26,27 +25,16 @@ namespace tickets
         public LoginAdminPage ()
 		{
 			InitializeComponent();
-            //admin_log = App.Database.GetAdminLogin();
-            /*if (admin_log != null)
-            {
-                usernameEntry.Text = admin_log.username;
-                passwordEntry.Text = admin_log.password;
-            }*/
-        }
+		}
 
 		async void OnLoginButtonClicked (object sender, EventArgs e)
 		{
-        
-                admin_log.username = usernameEntry.Text;
-                admin_log.password = passwordEntry.Text;
-            
-        
-        
-          
+            admin_log.username = usernameEntry.Text;
+            admin_log.password = passwordEntry.Text;
             var valid = !String.IsNullOrWhiteSpace(usernameEntry.Text) && !String.IsNullOrWhiteSpace(passwordEntry.Text);
             if (valid)
             {
-                UserDialogs.Instance.ShowLoading();
+
                 if (CheckInternetConnection())
                 {
                     try
@@ -56,19 +44,11 @@ namespace tickets
                         if (response == "error")
                         {
                             await DisplayAlert("Error", "Usuario o Contraseña de Administrador incorrecto.", "OK");
-                            UserDialogs.Instance.HideLoading();
                         }
                         else if (response == "sucess")
                         {
-                            
-                            usernameEntry.IsVisible = false;
-                            passwordEntry.IsVisible = false;
-                            labelusers.IsVisible = false;
-                            labelpasss.IsVisible = false;
-                            button_login.IsVisible = false;
-                            //Loading.IsVisible = true;
-                            UserDialogs.Instance.HideLoading();
-                            UserDialogs.Instance.ShowSuccess("Acceso Correcto");
+                            await DisplayAlert("Inicio de Sesión Exitoso!", "Sera redireccionado a la pagina principal de Admin.", "OK");
+
                             switch (Xamarin.Forms.Device.RuntimePlatform)
                             {
                                 case Xamarin.Forms.Device.iOS:
