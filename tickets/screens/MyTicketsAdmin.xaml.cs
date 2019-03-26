@@ -369,47 +369,50 @@ namespace tickets
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(contents);
             var table = htmlDoc.DocumentNode.SelectSingleNode("//table[@class=\"white\"]");
-            tickets_assign = new ObservableCollection<Ticket>();
 
             int hcount = 0;
-            //Ciclar rows y crear tickets en la ObservableList
-            foreach (HtmlNode row in table.SelectNodes("tr"))
-            {
-                if (hcount > 0)
-                { //Ignore headers
-                    int column = 0;
-                    Ticket ticket = new Ticket();
-                    foreach (HtmlNode cell in row.SelectNodes("th|td"))
-                    {
-                        //Por ahora solo se puede obtener ID, fecha de actualización y tema
-                        //Los otros atributos están al ver un ticket específico, se necesita hacer otro request por cada
-                        //ticket usando el ID para obtenerlos.
-                        switch (column)
-                        {
-                            case 1:
-                                ticket.ID = cell.InnerText;
-                                break;
-                            case 2:
-                                ticket.Date = cell.InnerText;
-                                break;
-                            case 4:
-                                ticket.Subject = cell.InnerText;
-                                break;
-                            default:
-                                break;
-                        }
-                        column++;
 
-                    }
-                    tickets_assign.Add(ticket);
-                }
-                else
+            if (table != null)
+            {
+                //Ciclar rows y crear tickets en la ObservableList
+                foreach (HtmlNode row in table.SelectNodes("tr"))
                 {
-                    hcount = 1;
+                    if (hcount > 0)
+                    { //Ignore headers
+                        int column = 0;
+                        Ticket ticket = new Ticket();
+                        foreach (HtmlNode cell in row.SelectNodes("th|td"))
+                        {
+                            //Por ahora solo se puede obtener ID, fecha de actualización y tema
+                            //Los otros atributos están al ver un ticket específico, se necesita hacer otro request por cada
+                            //ticket usando el ID para obtenerlos.
+                            switch (column)
+                            {
+                                case 1:
+                                    ticket.ID = cell.InnerText;
+                                    break;
+                                case 2:
+                                    ticket.Date = cell.InnerText;
+                                    break;
+                                case 4:
+                                    ticket.Subject = cell.InnerText;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            column++;
+
+                        }
+                        tickets.Add(ticket);
+                    }
+                    else
+                    {
+                        hcount = 1;
+                    }
                 }
             }
 
-            TicketsListViewAdminAssign.ItemsSource = tickets_assign;
+            TicketsListViewAdminAssign.ItemsSource = tickets;
         }
         private async void SearchBar_TextChangedAdminAssign(object sender, TextChangedEventArgs e)
         {
