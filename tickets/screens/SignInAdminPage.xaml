@@ -8,18 +8,18 @@
         <StyleSheet Source="../styles/style.css">
         </StyleSheet>
     </ContentPage.Resources>
-    
+
     <ContentPage.Content>
         <StackLayout VerticalOptions="StartAndExpand">
-			<Label Text="Crear cuenta de hesk para resolucion de Tickets" />
-			<Label Text="Email/Username:" />
-			<Entry x:Name="usernameEntry" Placeholder="Usuario" />
-			<Label Text="Ingresar Contraseña:" />
-			<Entry x:Name="passwordEntry2" Placeholder="Contraseña" IsPassword="true" />
-			<Entry x:Name="passwordEntry" Placeholder="Repetir Contraseña" IsPassword="true" />
-			<Label x:Name="messageLabel" />
-			<Button Text="Crear Cuenta" Clicked="OnSignInButtonClicked" />
-			<Button Text="Cancelar" Clicked="OnCancelTouched" />
-		</StackLayout>
-	</ContentPage.Content>
+            <Label Text="Crear cuenta de hesk para resolucion de Tickets" />
+            <Label Text="Email/Username:" />
+            <Entry x:Name="usernameEntry" Placeholder="Usuario" />
+            <Label Text="Ingresar Contraseña:" />
+            <Entry x:Name="passwordEntry2" Placeholder="Contraseña" IsPassword="true" />
+            <Entry x:Name="passwordEntry" Placeholder="Repetir Contraseña" IsPassword="true" />
+            <Label x:Name="messageLabel" />
+            <Button Text="Crear Cuenta" Clicked="OnSignInButtonClicked" />
+            <Button Text="Cancelar" Clicked="OnCancelTouched" />
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

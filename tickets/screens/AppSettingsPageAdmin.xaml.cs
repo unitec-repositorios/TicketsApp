@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using tickets.Models;
 using Xamarin.Forms;
 
 namespace tickets
 {
     public partial class AppSettingsPageAdmin : ContentPage
     {
+        private AdminLogin admin_log = AdminLogin.Instance;
         public AppSettingsPageAdmin()
         {
             InitializeComponent();
@@ -42,7 +43,7 @@ namespace tickets
                 LoginAdminPage login = new LoginAdminPage();
                 App.Current.MainPage = new NavigationPage(login);*/
                 await Navigation.PushAsync(new MyTickets());
-
+                admin_log.Log_admin = false;
             }
 
 

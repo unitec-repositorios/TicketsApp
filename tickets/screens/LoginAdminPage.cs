@@ -15,26 +15,27 @@ using Xamarin.Essentials;
 
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms;
+using Acr.UserDialogs;
 
 
 namespace tickets
 {
-	public partial class LoginAdminPage : ContentPage
-	{
+    public partial class LoginAdminPage : ContentPage
+    {
         private AdminLogin admin_log = AdminLogin.Instance;
-        public LoginAdminPage ()
-		{
-			InitializeComponent();
-		}
+        public LoginAdminPage()
+        {
+            InitializeComponent();
+        }
 
-		async void OnLoginButtonClicked (object sender, EventArgs e)
-		{
+        async void OnLoginButtonClicked(object sender, EventArgs e)
+        {
             admin_log.username = usernameEntry.Text;
             admin_log.password = passwordEntry.Text;
             var valid = !String.IsNullOrWhiteSpace(usernameEntry.Text) && !String.IsNullOrWhiteSpace(passwordEntry.Text);
             if (valid)
             {
-
+                UserDialogs.Instance.ShowLoading();
                 if (CheckInternetConnection())
                 {
                     try
@@ -44,11 +45,19 @@ namespace tickets
                         if (response == "error")
                         {
                             await DisplayAlert("Error", "Usuario o Contraseña de Administrador incorrecto.", "OK");
+                            UserDialogs.Instance.HideLoading();
                         }
                         else if (response == "sucess")
                         {
-                            await DisplayAlert("Inicio de Sesión Exitoso!", "Sera redireccionado a la pagina principal de Admin.", "OK");
 
+                            usernameEntry.IsVisible = false;
+                            passwordEntry.IsVisible = false;
+                            labelusers.IsVisible = false;
+                            labelpasss.IsVisible = false;
+                            button_login.IsVisible = false;
+                            //Loading.IsVisible = true;
+                            UserDialogs.Instance.HideLoading();
+                            UserDialogs.Instance.ShowSuccess("Acceso Correcto");
                             switch (Xamarin.Forms.Device.RuntimePlatform)
                             {
                                 case Xamarin.Forms.Device.iOS:
@@ -95,31 +104,36 @@ namespace tickets
 
         }
 
-        private void  SignInButtonClicked(object sender, EventArgs e)
+        private void SignInButtonClicked(object sender, EventArgs e)
         {
-			User usr = App.Database.GetUserAsync(App.UserEmail);
-			if((usr.Profile).Equals("Administrativo")){
+            User usr = App.Database.GetUserAsync(App.UserEmail);
+            if ((usr.Profile).Equals("Administrativo"))
+            {
                 SignInAdminPage signIn = new SignInAdminPage();
-            	App.Current.MainPage = new NavigationPage(signIn);
-			}else{
+                App.Current.MainPage = new NavigationPage(signIn);
+            }
+            else
+            {
                 DisplayAlert("Error", "Su no tiene permisos para esta operacion", "Aceptar");
-			}
+            }
         }
-        bool AreCredentialsCorrect (AdminUser admin)
-		{
-			AdminUser findUser = App.Database.GetCurrentAdminUserNotAsync();
-			if(findUser != null){
-				if (!admin.Password.Equals("")){
-					return (findUser.Password).Equals(admin.Password);
-				}
-			}
-			return false;
-		}
+        bool AreCredentialsCorrect(AdminUser admin)
+        {
+            AdminUser findUser = App.Database.GetCurrentAdminUserNotAsync();
+            if (findUser != null)
+            {
+                if (!admin.Password.Equals(""))
+                {
+                    return (findUser.Password).Equals(admin.Password);
+                }
+            }
+            return false;
+        }
 
-		async void OnCancelTouched(object sender, System.EventArgs e)
+        async void OnCancelTouched(object sender, System.EventArgs e)
         {
             AppSettingsPage settings = new AppSettingsPage();
             App.Current.MainPage = new NavigationPage(settings);
         }
-	}
+    }
 }
