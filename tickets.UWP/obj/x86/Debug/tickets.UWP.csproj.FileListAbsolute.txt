@@ -346,3 +346,14 @@ C:\Users\cfvel\Documents\GitHub\TicketsApp\tickets.UWP\obj\x86\Debug\Xamarin.For
 C:\Users\cfvel\Documents\GitHub\TicketsApp\tickets.UWP\obj\x86\Debug\Plugin.Clipboard.pri.xml
 C:\Users\cfvel\Documents\GitHub\TicketsApp\tickets.UWP\obj\x86\Debug\ProjectArchitectures.txt
 C:\Users\cfvel\Documents\GitHub\TicketsApp\tickets.UWP\obj\x86\Debug\.winmd_cache\$Microsoft.UI.Xaml.Markup.winmd_636758768200000000.json
+C:\Users\Miguel\Documents\TicketsApp\tickets.UWP\obj\x86\Debug\tickets.UWP.csprojAssemblyReference.cache
+C:\Users\Miguel\Documents\TicketsApp\tickets.UWP\obj\x86\Debug\App.g.i.cs
+C:\Users\Miguel\Documents\TicketsApp\tickets.UWP\obj\x86\Debug\App.g.cs
+C:\Users\Miguel\Documents\TicketsApp\tickets.UWP\obj\x86\Debug\MainPage.g.i.cs
+C:\Users\Miguel\Documents\TicketsApp\tickets.UWP\obj\x86\Debug\MainPage.g.cs
+C:\Users\Miguel\Documents\TicketsApp\tickets.UWP\obj\x86\Debug\App.xaml
+C:\Users\Miguel\Documents\TicketsApp\tickets.UWP\obj\x86\Debug\MainPage.xaml
+C:\Users\Miguel\Documents\TicketsApp\tickets.UWP\obj\x86\Debug\App.xbf
+C:\Users\Miguel\Documents\TicketsApp\tickets.UWP\obj\x86\Debug\MainPage.xbf
+C:\Users\Miguel\Documents\TicketsApp\tickets.UWP\obj\x86\Debug\XamlSaveStateFile.xml
+C:\Users\Miguel\Documents\TicketsApp\tickets.UWP\obj\x86\Debug\tickets.UWP.exe
