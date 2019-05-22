@@ -238,9 +238,13 @@ namespace tickets
            
             Device.StartTimer(new TimeSpan(0, 0, AppSettings.RefreshTicketsTimeout), () =>
               {
-                 Console.WriteLine("\n\n"+"sent ticket:\t"+view_sendTicket.sentTicket+"\n\n");
-                  GetTickets();
-                  return true;
+                  if (!view_sendTicket.sentTicket)
+                  {
+                      Console.WriteLine("\n\n" + "sent ticket:\t" + view_sendTicket.sentTicket + "\n\n");
+                      GetTickets();
+                      return true;
+                  }
+                 
               });
         }
 

@@ -14,7 +14,7 @@ namespace tickets.API
     public class Server
     {
        // const string BASE_ADDRESS = "https://cap.unitec.edu";
-        const string BASE_ADDRESS = "http://157.230.130.35";
+        const string BASE_ADDRESS = AppSettings.BASE_ADDRESS;
 
         public Server()
         {
@@ -309,6 +309,7 @@ namespace tickets.API
             byte[] boundaryStringLineBytes = ascii.GetBytes(boundaryStringLine);
             //message
             string messageInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "message", message);
+
             byte[] messageInputBytes = ascii.GetBytes(messageInput);
             //files
             for (int x = 0; x < files.Count; x++)
