@@ -13,8 +13,8 @@ namespace tickets.API
 {
     public class Server
     {
-        //const string BASE_ADDRESS = "https://cap.unitec.edu/";
-        const string BASE_ADDRESS = "http://138.197.198.67";
+       // const string BASE_ADDRESS = "https://cap.unitec.edu";
+        const string BASE_ADDRESS = "http://157.230.130.35";
 
         public Server()
         {
@@ -167,7 +167,10 @@ namespace tickets.API
         public string getTextAux(char delimiter,string text,int pos)
         {
             string txt = "";
+            int textdebug = text.Length;
+            int textdebug2 = pos;
             char val = text[pos];
+            
             while (val != delimiter)
             {
                 txt += val;
@@ -196,9 +199,11 @@ namespace tickets.API
             //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             //httpClient.BaseAddress = new Uri("https://178.128.75.38/");
             HttpResponseMessage capture = await httpClient.GetAsync(html);
+           
             MultipartFormDataContent form = new MultipartFormDataContent();
 
             String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
+           
             String[] tokens = res.Split(';');
             String cookie = tokens[0];
 
@@ -214,10 +219,10 @@ namespace tickets.API
 
             string token = node.GetAttributeValue("value", "0");
 
-            Encoding encoder = Encoding.GetEncoding("UTF-8");
+            Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
 
             form.Headers.Add("Cookie", cookie);
-            form.Headers.ContentType.CharSet = "ISO-8859-1";
+            form.Headers.ContentType.CharSet = AppSettings.Encoding;
             form.Add(new StringContent(user.Name, encoder), "name");
             form.Add(new StringContent(user.Email, encoder), "email");
             form.Add(new StringContent(user.Account, encoder), "custom3");

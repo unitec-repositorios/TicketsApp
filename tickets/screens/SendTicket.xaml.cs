@@ -22,13 +22,14 @@ namespace tickets
     {
         private Server server = new Server();
         private User user;
+        public bool sentTicket;
         List<(string, byte[])> files = new List<(string, byte[])>();
         //List<FileData> loadFiles = new List<FileData>();
 
         public SendTicket()
         {
             InitializeComponent();
- 
+            sentTicket = false;
             this.BindingContext = new Ticket();
 
 
@@ -110,6 +111,7 @@ namespace tickets
                 try
                 {
                     UserDialogs.Instance.ShowLoading("Enviando Ticket...");
+                    this.sentTicket = true;
                     string response = await server.submitTicket(number.Value.ToString(), subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex], files);
                     
                     if (response.Equals("error"))

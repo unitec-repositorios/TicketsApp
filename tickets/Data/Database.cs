@@ -27,6 +27,16 @@ namespace tickets
             return database;
         }
 
+        /**
+         * Clear Ticket
+         * 
+         * 
+        *///
+        public void ClearTicket()
+        {
+            database.ExecuteAsync("DELETE FROM Ticket  WHERE UserID = 1 ").Wait();
+        }
+
         /// <summary>
         /// Clears the database.
         /// </summary>
@@ -214,6 +224,7 @@ namespace tickets
         public Task<List<Ticket>> GetTicketsAsync()
         {
             //return database.Table<Ticket>().ToListAsync();
+           // this.ClearTicket();
             return database.QueryAsync<Ticket>("SELECT * FROM Ticket WHERE UserID = 1 ORDER BY Image DESC");
         }
 

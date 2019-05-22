@@ -17,6 +17,8 @@ namespace tickets
         private Server server = new Server();
         
         List<Ticket> tickets = new List<Ticket>();
+        bool sentTicket = false;
+        SendTicket view_sendTicket = new SendTicket();
 
 
         public MyTickets()
@@ -25,15 +27,17 @@ namespace tickets
             {
                 InitializeComponent();
                 //UserDialogs.Instance.ShowLoading("Cargando Tickets...");
-                TicketsListView.ItemsSource = tickets;
-                this.BindingContext = this;
                 GetTickets();
-
+                TicketsListView.ItemsSource = tickets;
+              
+                this.BindingContext = this;
+              
                 //UserDialogs.Instance.HideLoading();
                 var newTicket = new ToolbarItem
                 {
                     Icon = "nuevo.jpg",
-                    Command = new Command(async (s) => await Navigation.PushAsync(new SendTicket())),
+                    Command = new Command(async (x) => await Navigation.PushAsync(view_sendTicket)),
+                 
                     Order = ToolbarItemOrder.Primary
 
                 };
@@ -51,14 +55,14 @@ namespace tickets
 
                 var addTicketTool = new ToolbarItem
                 {
-
+                
                     Text = "Agregar Ticket",
                     Command = new Command(execute: () => addTicketIdAsync()),
 
                     Order = ToolbarItemOrder.Secondary
 
                 };
-
+              
 
                 switch (Device.RuntimePlatform)
                 {
@@ -83,13 +87,17 @@ namespace tickets
             }
         }
 
+        
+
         private async Task addTicketIdAsync()
         {
             Console.WriteLine("ADD TICKET FROM ID");
-            var promptConfig = new PromptConfig();
-            promptConfig.InputType = InputType.Name;
-            promptConfig.IsCancellable = true;
-            promptConfig.Message = "INGRESE ID DE TICKET";
+            var promptConfig = new PromptConfig
+            {
+                InputType = InputType.Name,
+                IsCancellable = true,
+                Message = "INGRESE ID DE TICKET"
+            };
             var result = await UserDialogs.Instance.PromptAsync(promptConfig);
             if (result.Ok)
             {
@@ -103,6 +111,7 @@ namespace tickets
                 {
                     UserDialogs.Instance.ShowLoading("Por favor espere");
                     User current = await App.Database.GetCurrentUser();
+                    UserDialogs.Instance.ShowError(current.Account);
                     string html = await server.getDetailsTicket(result.Text);
                     string date = await server.getInitDate(result.Text);
                     UserDialogs.Instance.HideLoading();
@@ -116,6 +125,7 @@ namespace tickets
                         string account = getDetailTicket(html, "Numero de cuenta / No. de talento humano:");
                         if (account == current.Account)
                         {
+                            await DisplayAlert("Client", "" + current.Account, "Cancelar");
                             string c = getDetailTicket(html, "Clasificacion:");
                             int clas = 5;
                             if (c == "Solicitud")
@@ -160,7 +170,7 @@ namespace tickets
                                 //error = "El ticket se agrego exitosamente";
                                 UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
                                 
-                                GetTickets();
+                               
                             }
                             catch (SQLiteException)
                             {
@@ -177,8 +187,11 @@ namespace tickets
                     }
                 }               
             }
-        }
+            this.GetTickets();
+        
 
+        }
+        
         //FUNCIONES AGREGAR TICKET DESDE ID
         private string getDetailTicket(string html, string search)
         {
@@ -205,16 +218,27 @@ namespace tickets
             return detail;
         }
 
-       
+
         //TERMINAN FUNCIONES
 
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            Device.StartTimer(new TimeSpan(0, 0, 1), () =>
+            {
+                if (view_sendTicket.sentTicket)
+                {
+                    Console.WriteLine("Refrescando todos los tickets");
+                    this.GetTickets();
+                    view_sendTicket = new SendTicket();
+                }
+                return true;
+            });
+           
             Device.StartTimer(new TimeSpan(0, 0, AppSettings.RefreshTicketsTimeout), () =>
               {
-                  //Get tickets every 1 minute.
+                 Console.WriteLine("\n\n"+"sent ticket:\t"+view_sendTicket.sentTicket+"\n\n");
                   GetTickets();
                   return true;
               });
@@ -283,6 +307,8 @@ namespace tickets
 
                 
                 List<Ticket> dbtickets;
+                tickets.Clear();
+               // App.Database.ClearTicket();
                 dbtickets = await App.Database.GetTicketsAsync();
                                                                            
                 
@@ -291,6 +317,7 @@ namespace tickets
                     Console.WriteLine("DBTICKETS COUNT: " +dbtickets.Count);
                     String updateDate = await server.getUpdateDate(dbtickets[i].ID);
                     Console.WriteLine("Recibiendo del sevidor para notificacion: " + updateDate.ToString());
+                    
                     if (!updateDate.Equals(dbtickets[i].Date) && updateDate != "error")
                     {
                         dbtickets[i].Image = "bell.png";
