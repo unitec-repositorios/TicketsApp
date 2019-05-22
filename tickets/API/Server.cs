@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
@@ -24,20 +25,32 @@ namespace tickets.API
         public async Task<string> getDetailsTicket(string id)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/print.php?track=" + id);
-            string html = await response.Content.ReadAsStringAsync();
+           // HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/print.php?track=" + id);
+            var response = await client.GetByteArrayAsync(BASE_ADDRESS + "/print.php?track=" + id);
+            Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
+           // var responseString = encoder.GetString(response, 0, response.Length - 1);
+            string html= encoder.GetString(response, 0, response.Length - 1);
+
+            ///string html = response.Content.ReadAsStringAsync().Result;
             if (html.IndexOf("<b>Error:</b>") != -1)
             {
                 return "Error";
             }
+             string test = "Comprobación ";
+            Console.WriteLine(BASE_ADDRESS + "/print.php?track=" + id + "\n\nHTML:\n" + html);
+            Console.WriteLine(test);
+            
             return html;
         }
+
+
 
         public async Task<List<DateTime>> getDateMessage(string id)
         {
             List<DateTime> fechas= new List<DateTime>();
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            response.Content.Headers.ContentType.CharSet= AppSettings.Encoding;
             string html = await response.Content.ReadAsStringAsync();
             int posFecha = 0;
             int pos = 0;
@@ -115,6 +128,7 @@ namespace tickets.API
 
         public async Task<string> getUpdateDate(string id)
         {
+           
             HttpClient _client = new HttpClient();
             HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
@@ -184,8 +198,12 @@ namespace tickets.API
         public async Task<string> getTicket(string id)
         {
             HttpClient _client = new HttpClient();
-            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
-            string value = await response.Content.ReadAsStringAsync();
+           // HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            var response = await _client.GetByteArrayAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
+            // var responseString = encoder.GetString(response, 0, response.Length - 1);
+            string value = encoder.GetString(response, 0, response.Length - 1);
+           // string value = await response.Content.ReadAsStringAsync();
             return value;
         }
 
@@ -309,7 +327,7 @@ namespace tickets.API
             byte[] boundaryStringLineBytes = ascii.GetBytes(boundaryStringLine);
             //message
             string messageInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "message", message);
-
+            Console.WriteLine("\n\nMensaje:\n" + messageInput);
             byte[] messageInputBytes = ascii.GetBytes(messageInput);
             //files
             for (int x = 0; x < files.Count; x++)

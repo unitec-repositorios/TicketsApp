@@ -87,6 +87,8 @@ namespace tickets
             }
         }
 
+
+
         
 
         private async Task addTicketIdAsync()
@@ -111,9 +113,10 @@ namespace tickets
                 {
                     UserDialogs.Instance.ShowLoading("Por favor espere");
                     User current = await App.Database.GetCurrentUser();
-                    UserDialogs.Instance.ShowError(current.Account);
+                  //  UserDialogs.Instance.ShowError(current.Account);
                     string html = await server.getDetailsTicket(result.Text);
                     string date = await server.getInitDate(result.Text);
+                    
                     UserDialogs.Instance.HideLoading();
                     if (html == "Error")
                     {
@@ -122,10 +125,12 @@ namespace tickets
                     }
                     else
                     {
-                        string account = getDetailTicket(html, "Numero de cuenta / No. de talento humano:");
-                        if (account == current.Account)
+                        //string account = getDetailTicket(html, "No. de talento Humano: ");
+                       // Console.WriteLine("Server Account: " + account);
+                        
+                        if (getIDAccount(html,current.Account))
                         {
-                            await DisplayAlert("Client", "" + current.Account, "Cancelar");
+                           
                             string c = getDetailTicket(html, "Clasificacion:");
                             int clas = 5;
                             if (c == "Solicitud")
@@ -191,7 +196,7 @@ namespace tickets
         
 
         }
-        
+
         //FUNCIONES AGREGAR TICKET DESDE ID
         private string getDetailTicket(string html, string search)
         {
@@ -219,6 +224,13 @@ namespace tickets
         }
 
 
+
+        private bool getIDAccount(string html,string numberAccount)
+        {
+            return html.Contains("No. de talento Humano: " + numberAccount+"<");
+        }
+
+
         //TERMINAN FUNCIONES
 
 
@@ -242,9 +254,10 @@ namespace tickets
                   {
                       Console.WriteLine("\n\n" + "sent ticket:\t" + view_sendTicket.sentTicket + "\n\n");
                       GetTickets();
-                      return true;
+                      
                   }
-                 
+                  return true;
+
               });
         }
 
