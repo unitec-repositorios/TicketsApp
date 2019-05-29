@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
@@ -13,8 +14,8 @@ namespace tickets.API
 {
     public class Server
     {
-        //const string BASE_ADDRESS = "https://cap.unitec.edu/";
-        const string BASE_ADDRESS = "http://138.197.198.67";
+       // const string BASE_ADDRESS = "https://cap.unitec.edu";
+        const string BASE_ADDRESS = AppSettings.BASE_ADDRESS;
 
         public Server()
         {
@@ -24,20 +25,32 @@ namespace tickets.API
         public async Task<string> getDetailsTicket(string id)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/print.php?track=" + id);
-            string html = await response.Content.ReadAsStringAsync();
+           // HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/print.php?track=" + id);
+            var response = await client.GetByteArrayAsync(BASE_ADDRESS + "/print.php?track=" + id);
+            Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
+           // var responseString = encoder.GetString(response, 0, response.Length - 1);
+            string html= encoder.GetString(response, 0, response.Length - 1);
+
+            ///string html = response.Content.ReadAsStringAsync().Result;
             if (html.IndexOf("<b>Error:</b>") != -1)
             {
                 return "Error";
             }
+             string test = "Comprobación ";
+            Console.WriteLine(BASE_ADDRESS + "/print.php?track=" + id + "\n\nHTML:\n" + html);
+            Console.WriteLine(test);
+            
             return html;
         }
+
+
 
         public async Task<List<DateTime>> getDateMessage(string id)
         {
             List<DateTime> fechas= new List<DateTime>();
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            response.Content.Headers.ContentType.CharSet= AppSettings.Encoding;
             string html = await response.Content.ReadAsStringAsync();
             int posFecha = 0;
             int pos = 0;
@@ -115,6 +128,7 @@ namespace tickets.API
 
         public async Task<string> getUpdateDate(string id)
         {
+           
             HttpClient _client = new HttpClient();
             HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
             string html = await response.Content.ReadAsStringAsync();
@@ -167,7 +181,10 @@ namespace tickets.API
         public string getTextAux(char delimiter,string text,int pos)
         {
             string txt = "";
+            int textdebug = text.Length;
+            int textdebug2 = pos;
             char val = text[pos];
+            
             while (val != delimiter)
             {
                 txt += val;
@@ -181,8 +198,12 @@ namespace tickets.API
         public async Task<string> getTicket(string id)
         {
             HttpClient _client = new HttpClient();
-            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
-            string value = await response.Content.ReadAsStringAsync();
+           // HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            var response = await _client.GetByteArrayAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
+            // var responseString = encoder.GetString(response, 0, response.Length - 1);
+            string value = encoder.GetString(response, 0, response.Length - 1);
+           // string value = await response.Content.ReadAsStringAsync();
             return value;
         }
 
@@ -196,9 +217,11 @@ namespace tickets.API
             //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             //httpClient.BaseAddress = new Uri("https://178.128.75.38/");
             HttpResponseMessage capture = await httpClient.GetAsync(html);
+           
             MultipartFormDataContent form = new MultipartFormDataContent();
 
             String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
+           
             String[] tokens = res.Split(';');
             String cookie = tokens[0];
 
@@ -214,10 +237,10 @@ namespace tickets.API
 
             string token = node.GetAttributeValue("value", "0");
 
-            Encoding encoder = Encoding.GetEncoding("UTF-8");
+            Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
 
             form.Headers.Add("Cookie", cookie);
-            form.Headers.ContentType.CharSet = "ISO-8859-1";
+            form.Headers.ContentType.CharSet = AppSettings.Encoding;
             form.Add(new StringContent(user.Name, encoder), "name");
             form.Add(new StringContent(user.Email, encoder), "email");
             form.Add(new StringContent(user.Account, encoder), "custom3");
@@ -304,6 +327,7 @@ namespace tickets.API
             byte[] boundaryStringLineBytes = ascii.GetBytes(boundaryStringLine);
             //message
             string messageInput = String.Format("Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}", "message", message);
+            Console.WriteLine("\n\nMensaje:\n" + messageInput);
             byte[] messageInputBytes = ascii.GetBytes(messageInput);
             //files
             for (int x = 0; x < files.Count; x++)
