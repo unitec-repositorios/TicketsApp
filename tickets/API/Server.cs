@@ -25,21 +25,14 @@ namespace tickets.API
         public async Task<string> getDetailsTicket(string id)
         {
             HttpClient client = new HttpClient();
-           // HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/print.php?track=" + id);
-            var response = await client.GetByteArrayAsync(BASE_ADDRESS + "/print.php?track=" + id);
+            var uri = BASE_ADDRESS + "/print.php?track=" + id;
+            var response = await client.GetByteArrayAsync(uri);
             Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
-           // var responseString = encoder.GetString(response, 0, response.Length - 1);
             string html= encoder.GetString(response, 0, response.Length - 1);
-
-            ///string html = response.Content.ReadAsStringAsync().Result;
             if (html.IndexOf("<b>Error:</b>") != -1)
             {
                 return "Error";
-            }
-             string test = "Comprobación ";
-            Console.WriteLine(BASE_ADDRESS + "/print.php?track=" + id + "\n\nHTML:\n" + html);
-            Console.WriteLine(test);
-            
+            }   
             return html;
         }
 
@@ -197,20 +190,20 @@ namespace tickets.API
 
         public async Task<string> getTicket(string id)
         {
+            var uri = BASE_ADDRESS + "/ticket.php?track=" + id;
             HttpClient _client = new HttpClient();
-           // HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
-            var response = await _client.GetByteArrayAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            var response = await _client.GetByteArrayAsync(uri);
+            var test = _client.GetStringAsync(uri);
+            Console.WriteLine("Method GET ");
+            Console.WriteLine(test.ToString());
             Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
-            // var responseString = encoder.GetString(response, 0, response.Length - 1);
             string value = encoder.GetString(response, 0, response.Length - 1);
-           // string value = await response.Content.ReadAsStringAsync();
             return value;
         }
 
         public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, List<(string, byte[])> files)
         {
             User user = await App.Database.GetCurrentUser();
-
             var html = @"" + BASE_ADDRESS + "/index.php?a=add";
             //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             HttpClient httpClient = new HttpClient();
