@@ -117,6 +117,7 @@ namespace tickets
                     if (response.Equals("error"))
                     {
                         await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
+                        this.sentTicket = false;
                         UserDialogs.Instance.HideLoading();
                     }
                     else
@@ -140,15 +141,16 @@ namespace tickets
                         {
                             CrossClipboard.Current.SetText(response);
                         }
+                        this.sentTicket = true;
                         //clean
+
                         number.Value = 1;
                         subject.Text = "";
                         message.Text = "";
                         picker.SelectedIndex = 1;
                         pickerPriority.SelectedIndex = 1;
                         await Navigation.PopAsync();
-                        this.sentTicket = true;
-
+                        
                     }
                 }
                 catch (Exception ex)
