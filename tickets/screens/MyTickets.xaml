@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="tickets.MyTickets" 
              Title="Mis Tickets" Icon="baseline_home_white_36pt" >
     <ContentPage.Content>
+
         <StackLayout>
             <SearchBar Placeholder="Buscar" TextChanged="SearchBar_TextChanged" HeightRequest="40"/>
-            <ListView x:Name="TicketsListView" IsPullToRefreshEnabled="True" Refreshing="TicketsListView_Refreshing" ItemSelected="goToViewTicket" SeparatorVisibility="Default" RowHeight="70">
-                <ListView.ItemTemplate>
+          <ListView x:Name="TicketsListView"  IsPullToRefreshEnabled="True" Refreshing="TicketsListView_Refreshing" ItemSelected="goToViewTicket" SeparatorVisibility="Default" RowHeight="70">
+      
+          <!--  <ListView  ItemsSource="{Binding ListTickets}"  SeparatorVisibility="Default" RowHeight="70">  -->
+              <ListView.ItemTemplate>
+                    
                     <DataTemplate>
-                        <ViewCell StyleId="disclosure">
-                            <StackLayout Orientation="Horizontal" Padding="10">
+                        <ViewCell StyleId="disclosure" >
+                            <StackLayout Orientation="Horizontal" Padding="10" Margin="2">
                                 <StackLayout HorizontalOptions="StartAndExpand">
                                     <Label Text="{Binding Subject}" TextColor="#0e2456" FontSize="20" LineBreakMode="TailTruncation" />
-                                    <Label Text="{Binding Message}" LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding CreationDate, StringFormat='{}{0:dd-MM-yyyy hh:mm tt}'}" LineBreakMode="TailTruncation" />
                                 </StackLayout>
                                 <Image x:Name="notification" Source="{Binding Image}" />
 
@@ -22,6 +26,7 @@
 
                             </StackLayout>
                         </ViewCell>
+                        
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

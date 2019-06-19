@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="tickets.Database">
+    <Position X="0.5" Y="0.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>gAACAgAAAAIAACBAMAEAAoZAQAICgIEEAAAAAVAAAAA=</HashCode>
+      <FileName>Data\Database.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tickets.API.Server">
+    <Position X="5.5" Y="0.5" Width="7" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAgAAIAAEACAAAJAAAARAAAAEACBAAAgAoAACA=</HashCode>
+      <FileName>API\Server.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tickets.MyTickets">
+    <Position X="12.75" Y="0.5" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQBECAgAAAFAAAAAAAAAQAAAABgAAAABAAAEAAI=</HashCode>
+      <FileName>View\MyTickets.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tickets.SendTicket">
+    <Position X="6.5" Y="5.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAIAAAAAAAAAAAACAAAAAAAAAEABgAAAAQI=</HashCode>
+      <FileName>View\SendTicket.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tickets.Ticket">
+    <Position X="18" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAoAAEIIQAAAgxkAAAABABAAAAIAAAEAA=</HashCode>
+      <FileName>Models\Ticket.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

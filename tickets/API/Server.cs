@@ -119,6 +119,8 @@ namespace tickets.API
             return "error al recibir la fecha";
         }
 
+      
+
         public async Task<string> getUpdateDate(string id)
         {
            
@@ -185,6 +187,68 @@ namespace tickets.API
                 val = text[pos];
             }
             return txt;
+        }
+
+        public string getItemOfHTML(string htmlsource,string item,string nextTag="",string delimitador="<")
+        {
+            Console.WriteLine("\nHTML Source:\n" + htmlsource);
+            string txt = "";
+            if (!htmlsource.Contains(item))
+            {
+                return "<Error>";
+            }
+            int posItem = htmlsource.IndexOf(item) + item.Length ;
+            char val = htmlsource[posItem];
+            if (nextTag != "")
+            {
+                while (val != nextTag[0])
+                {
+                    posItem++;
+                    val = htmlsource[posItem];
+                }
+            }
+          
+            posItem =posItem + nextTag.Length;
+            val = htmlsource[posItem];
+            while (val != delimitador[0])
+            {
+                txt += val;
+                posItem++;
+                val = htmlsource[posItem]; 
+            }
+            return txt;
+        }
+
+        public async Task<Ticket> GetTicket(string id)
+        {
+            var uri = BASE_ADDRESS + "/print.php?track=" + id;
+           // Server.request()
+            HttpClient _client = new HttpClient();
+            var response = await _client.GetByteArrayAsync(uri);         
+            Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
+            string html = encoder.GetString(response, 0, response.Length - 1);
+            if (html.IndexOf("<b>Error:</b>") != -1)
+            {
+                return null;
+            }
+            Console.WriteLine("\nServer.cs/GetTicket\nIsOpen: "+ getItemOfHTML(html, "Estado del ticket:"));
+            return new Ticket()
+            {
+                ID = getItemOfHTML(html, "ID de seguimiento: "),
+                Subject = getItemOfHTML(html, "<p>Tema: <b>"),
+                Affected = int.Parse(getItemOfHTML(html, "Cantidad de usuarios afectados: ")),
+                UserID = int.Parse(getItemOfHTML(html, "Número de Cuenta / No. de talento Humano: ")),
+                Priority = GetPrioridad(getItemOfHTML(html, "Prioridad:")),
+                Classification = GetClasificacion(getItemOfHTML(html, "<br />Clasificación: ")),
+                LastUpdate = DateTime.ParseExact(getItemOfHTML(html, "Última actualizacion: "), "yyyy-MM-dd HH:mm:ss", null),
+                CreationDate = DateTime.ParseExact(getItemOfHTML(html, "Creado en: "), "yyyy-MM-dd HH:mm:ss", null),
+                Message = getItemOfHTML(html, "<br /><b>Mensaje:</b><br />"),
+                Open = !(getItemOfHTML(html, "Estado del ticket:").Contains("Resuelto")),
+               
+            };
+
+
+
         }
 
 
@@ -275,6 +339,28 @@ namespace tickets.API
             }
         }
 
+        private int GetClasificacion(string clasificacion)
+        {
+            switch (clasificacion)
+            {
+                case "Solicitud":   return 1;
+                case "Información": return 2;
+                case "Queja":       return 3;
+                case "Reclamo":     return 4;
+                default:            return 5;
+            }
+           
+        }
+        private int GetPrioridad(string prioridad)
+        {
+            switch (prioridad) {
+                case "Alto":    return 1;
+                case "Medio":   return 2;
+                case "Bajo":    return 3;
+              
+                default:        return 3;
+            }
+        }
 
 
         public async Task<string> replyTicket(string message, List<(string, byte[])> files, string ticketID)
