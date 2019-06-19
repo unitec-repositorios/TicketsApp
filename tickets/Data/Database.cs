@@ -6,6 +6,8 @@ using System.Security.Cryptography;
 using System.IO;
 using System;
 using System.Text;
+using tickets.Data;
+using System.Collections.ObjectModel;
 
 namespace tickets
 {
@@ -34,7 +36,7 @@ namespace tickets
         *///
         public void ClearTicket()
         {
-            database.ExecuteAsync("DELETE FROM Ticket  WHERE UserID = 1 ").Wait();
+            database.ExecuteAsync("DELETE FROM Ticket").Wait();
         }
 
         /// <summary>
@@ -59,7 +61,9 @@ namespace tickets
             {
                 return database.FindWithQueryAsync<AdminUser>("SELECT * from AdminUser WHERE IsCurrent = 1").Result;
             }
+#pragma warning disable CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             catch (System.Exception ex)
+#pragma warning restore CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             {
                 return null;
             }
@@ -72,7 +76,9 @@ namespace tickets
             {
                 return database.FindWithQueryAsync<AdminUser>("SELECT * from AdminUser WHERE Email LIKE ?", email).Result;
             }
+#pragma warning disable CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             catch (System.Exception ex)
+#pragma warning restore CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             {
                 return null;
             }
@@ -88,7 +94,9 @@ namespace tickets
             {
                 return database.FindWithQueryAsync<User>("SELECT * from User WHERE IsCurrent = 1").Result;
             }
+#pragma warning disable CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             catch (System.Exception ex)
+#pragma warning restore CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             {
                 return null;
             }
@@ -100,7 +108,9 @@ namespace tickets
             {
                 return database.FindWithQueryAsync<User>("SELECT * from User WHERE Email LIKE ?", email).Result;
             }
+#pragma warning disable CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             catch (System.Exception ex)
+#pragma warning restore CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             {
                 return null;
             }
@@ -121,7 +131,9 @@ namespace tickets
             {
                 return database.FindWithQueryAsync<User>("SELECT * from User WHERE IsCurrent = 1");
             }
+#pragma warning disable CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             catch (System.Exception ex)
+#pragma warning restore CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             {
                 return null;
             }
@@ -280,5 +292,39 @@ namespace tickets
             }
             return memory.ToArray();
         }
+
+
+        public Task<Ticket> GetTicket(string id)
+        {
+            return database.Table<Ticket>().FirstOrDefaultAsync(t => t.ID==id);
+        }
+
+        public Task<List<Ticket>> GetTickets()
+        {
+            return  database.Table<Ticket>().ToListAsync();
+        }
+
+      
+
+        public async void AgregarTicket(Ticket ticket)
+        {
+            await database.InsertAsync(ticket);
+        }
+
+        public async void ActualizarTicket(Ticket ticket)
+        {
+           await database.UpdateAsync(ticket);
+        }
+
+        public async void EliminarTicket(Ticket ticket)
+        {
+            await database.DeleteAsync(ticket);
+        }
+
+        public async void EliminarTicket(string id)
+        {
+            EliminarTicket(await this.GetTicket(id));
+        }
+
     }
 }

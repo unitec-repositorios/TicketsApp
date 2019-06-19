@@ -21,7 +21,9 @@ namespace tickets
     public partial class SendTicket : ContentPage
     {
         private Server server = new Server();
+
         private User user;
+
         public bool sentTicket;
         List<(string, byte[])> files = new List<(string, byte[])>();
         //List<FileData> loadFiles = new List<FileData>();
@@ -140,6 +142,7 @@ namespace tickets
                         if (!copy)
                         {
                             CrossClipboard.Current.SetText(response);
+                            App.Database.AgregarTicket(await server.GetTicket(response));
                         }
                         this.sentTicket = true;
                         //clean

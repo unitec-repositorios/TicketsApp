@@ -9,14 +9,17 @@ using System.Collections.ObjectModel;
 using System.Timers;
 using Acr.UserDialogs;
 using SQLite;
+using System.Net.Http;
+using System.Text;
+using tickets.ViewModels;
 
 namespace tickets
 {
     public partial class MyTickets : ContentPage
     {
         private Server server = new Server();
-        
-        List<Ticket> tickets = new List<Ticket>();
+
+        private ObservableCollection<Ticket> tickets;
         bool sentTicket = false;
         SendTicket view_sendTicket = new SendTicket();
 
@@ -25,71 +28,80 @@ namespace tickets
         {
             try
             {
+
+                                                            
+               // App.Database.ClearTicket();
                 InitializeComponent();
-                //UserDialogs.Instance.ShowLoading("Cargando Tickets...");
-                GetTickets();
-                TicketsListView.ItemsSource = tickets;
-              
-                this.BindingContext = this;
-              
-                //UserDialogs.Instance.HideLoading();
-                var newTicket = new ToolbarItem
+
+                InitOtherComponents();
+
+                if (tickets == null)
                 {
-                    Icon = "nuevo.jpg",
-                    Command = new Command(async (x) => await Navigation.PushAsync(view_sendTicket)),
-                 
-                    Order = ToolbarItemOrder.Primary
-
-                };
-               
-
-                var settings = new ToolbarItem
-                {
-                    
-                    Text = "Ajustes",
-                    Command = new Command(async (s) => await Navigation.PushAsync(new AppSettingsPage())),
-                      
-                    Order = ToolbarItemOrder.Secondary
-                   
-                };
-
-                var addTicketTool = new ToolbarItem
-                {
-                
-                    Text = "Agregar Ticket",
-                    Command = new Command(execute: () => addTicketIdAsync()),
-
-                    Order = ToolbarItemOrder.Secondary
-
-                };
-              
-
-                switch (Device.RuntimePlatform)
-                {
-                    case Device.iOS:
-                        ToolbarItems.Add(newTicket);
-                        break;
-                    case Device.Android:
-                        ToolbarItems.Add(newTicket);
-                        ToolbarItems.Add(settings);
-                        ToolbarItems.Add(addTicketTool);
-                        break;
-                    case Device.UWP:
-                        ToolbarItems.Add(newTicket);
-                        ToolbarItems.Add(settings);
-                        break;
+                    tickets = new ListTicketsViewModel().ListTickets;
+                    GetTickets();
                 }
                
+
+                TicketsListView.ItemsSource=tickets ;
+                GetTickets();
+                this.BindingContext = this;
+
+
+                 UserDialogs.Instance.HideLoading();
+
+
             }
             catch(Exception ex)
             {
                 throw ex;
             }
+
+            
         }
 
 
+        private void InitOtherComponents()
+        {
+            var newTicket = new ToolbarItem
+            {
+                IconImageSource = "nuevo.jpg",
+                Command = new Command( () =>  Navigation.PushAsync(view_sendTicket)),
 
-        
+                Order = ToolbarItemOrder.Primary
+
+            };
+
+            var settings = new ToolbarItem
+            {
+                Text = "Ajustes",
+                Command = new Command(async (s) => await Navigation.PushAsync(new AppSettingsPage())),
+                Order = ToolbarItemOrder.Secondary
+            };
+
+            var addTicketTool = new ToolbarItem
+            {
+                Text = "Agregar Ticket",
+                Command = new Command(execute: () => addTicketIdAsync()),
+                Order = ToolbarItemOrder.Secondary
+            };
+
+
+            switch (Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    ToolbarItems.Add(newTicket);
+                    break;
+                case Device.Android:
+                    ToolbarItems.Add(newTicket);
+                    ToolbarItems.Add(settings);
+                    ToolbarItems.Add(addTicketTool);
+                    break;
+                case Device.UWP:
+                    ToolbarItems.Add(newTicket);
+                    ToolbarItems.Add(settings);
+                    break;
+            }
+        }
 
         private async Task addTicketIdAsync()
         {
@@ -104,30 +116,51 @@ namespace tickets
             if (result.Ok)
             {
                 //string error = "No se agrego el ticket, su numero de cuenta no coincide con el numero de cuenta enlazado al ticket";
-                if (result.Text == "")
+                if (string.IsNullOrEmpty(result.Text))
                 {
-                    //error = "Ingrese un id";
                     UserDialogs.Instance.ShowError("Ingrese un id.");
                 }
                 else
                 {
                     UserDialogs.Instance.ShowLoading("Por favor espere");
+                    User currentUser = App.Database.GetCurrentUser().Result;
+                    Ticket t = await server.GetTicket(result.Text);
+                    Ticket db_t = await App.Database.GetTicket(result.Text);
+                  //  UserDialogs.Instance.HideLoading();
+                    if (t == null)
+                    {
+                        UserDialogs.Instance.ShowError("No existe un ticket con el ID: " + result.Text);
+                    }
+                    else if (t.UserID != int.Parse(currentUser.Account))
+                    {
+                        UserDialogs.Instance.ShowError("No se agrego el ticket, su numero de cuenta no coincide con el numero de cuenta enlazado al ticket\nSu No.Cuenta: "+currentUser.ID);
+                    }
+                    else if(db_t!=null)
+                    {
+                        UserDialogs.Instance.ShowError("No se agrego el ticket, porque ya existe en la base de datos.\nSubject: "+ db_t.Subject);
+                    }
+                    else
+                    {
+                        t.Check();
+                       App.Database.AgregarTicket(t);
+                        GetTickets();
+                        await Task.Delay(1000);
+                        UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
+                    }
+                    
+                    ///OLD CODE
+                    /**UserDialogs.Instance.ShowLoading("Por favor espere");
                     User current = await App.Database.GetCurrentUser();
-                  //  UserDialogs.Instance.ShowError(current.Account);
                     string html = await server.getDetailsTicket(result.Text);
                     string date = await server.getInitDate(result.Text);
                     
                     UserDialogs.Instance.HideLoading();
                     if (html == "Error")
                     {
-                        //error = "No existe un ticket con ese numero de ID: " + result.Text;
                         UserDialogs.Instance.ShowError("No existe un ticket con ese number de ID: "+result.Text);
                     }
                     else
                     {
-                        //string account = getDetailTicket(html, "No. de talento Humano: ");
-                       // Console.WriteLine("Server Account: " + account);
-                        
                         if (getIDAccount(html,current.Account))
                         {
                             string c = getDetailTicket(html, "Clasificacion:");
@@ -183,7 +216,7 @@ namespace tickets
                         }
                         
 
-                    }
+                    }*/
                 }               
             }
 
@@ -226,17 +259,19 @@ namespace tickets
         //TERMINAN FUNCIONES
 
 
+
         protected override async void OnAppearing()
+
         {
             base.OnAppearing();
 
-            Device.StartTimer(new TimeSpan(0, 0, 1), () =>
+            Device.StartTimer(new TimeSpan(0, 0, 2), () =>
             {
                 if (view_sendTicket.sentTicket)
                 {
-                    Console.WriteLine("Refrescando todos los tickets");
-                    this.GetTickets();
+                    GetTickets();
                     view_sendTicket = new SendTicket();
+
                 }
                 return true;
             });
@@ -255,6 +290,7 @@ namespace tickets
         }
 
         protected override async void OnDisappearing()
+
         {
             base.OnDisappearing();
         }
@@ -278,7 +314,7 @@ namespace tickets
                     {
                         BindingContext = ticket.ID
                     });
-                    TicketsListView.SelectedItem = null;
+                    //TicketsListView.SelectedItem = null;
                     UserDialogs.Instance.HideLoading();
                 }
                 else
@@ -295,11 +331,10 @@ namespace tickets
             this.GetTickets();
             TicketsListView.EndRefresh();
         }
-
         private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             //List<Ticket> tickets = await App.Database.GetTicketsAsync(App.Database.GetCurrentUserNotAsync());
-
+    
             if (!String.IsNullOrWhiteSpace(e.NewTextValue))
             {
                 var showTickets = tickets.Where(t => t.Subject.Contains(e.NewTextValue)).ToList();
@@ -313,56 +348,103 @@ namespace tickets
 
         public async void GetTickets()
         {
-            try {
+            try
+            {
+                var temp_ticket = tickets;
+                foreach(Ticket t in temp_ticket)
+                {
 
-                
-                List<Ticket> dbtickets;
-                tickets.Clear();
-               // App.Database.ClearTicket();
-                dbtickets = await App.Database.GetTicketsAsync();
-                                                                           
-                
-                /*for (int i = 0; i < dbtickets.Count; i++){
-                //    Console.WriteLine("DBTICKETS COUNT: " +dbtickets.Count);
-                //    String updateDate = await server.getUpdateDate(dbtickets[i].ID);
-                    Console.WriteLine("Recibiendo del sevidor para notificacion: " + updateDate.ToString());
-                    
-                    if (!updateDate.Equals(dbtickets[i].Date)/ && updateDate != "error"){
-                        dbtickets[i].Image = "bell.png";
-                        dbtickets[i].Date = updateDate;
-                        await App.Database.UpdateTicket(dbtickets[i]);
-                    }
-                    else
-                        dbtickets[i].Image = "";
+                    Ticket sv_ticket =  await server.GetTicket(t.ID);
 
-                    bool open = await server.getOpenTicket(dbtickets[i].ID);
-                    Console.WriteLine("Recibiendo del sevidor: "+ open.ToString());
-                    if (!open){
-                        dbtickets[i].OpenImage = "lock.png";
-                        dbtickets[i].Open = open;
-                        await App.Database.UpdateTicket(dbtickets[i]);
+                    if (sv_ticket == null)
+                    {
+                        App.Database.EliminarTicket(t);
+                        continue;
                     }
-                    else
-                        dbtickets[i].OpenImage = "";
-              
-                    var exists = tickets.FirstOrDefault(t => t.ID == dbtickets[i].ID);
-                    // if no ticket was found with that id
-                    if (exists == null) {
-                        tickets.Add(dbtickets[i]);
-                    }
-                    else{
-                        exists.Image = dbtickets[i].Image;
-                        exists.OpenImage = dbtickets[i].OpenImage;
-                        if (!updateDate.Equals(exists)){
-                            exists.Date = updateDate;
+
+                        Console.WriteLine("\nMyTickets.xaml.cs/GetTicket");
+                        Console.WriteLine("\nID TICKET : "+t.ID+"\tSubject: "+t.Subject+"\nServer-Ticket.Open = "+sv_ticket.Open+"\tDB-Ticket.Open = "+t.Open);
+                    if (t.Open != sv_ticket.Open){
+                            t.Open = sv_ticket.Open;
+                            if (t.Open){
+                                t.OpenImage = "";
+                            }
+                            else
+                            {
+                            t.OpenImage = "lock.png";
+                            }
+                            App.Database.ActualizarTicket(t);
                         }
-
-                    }
+                        if (t.Open == false && t.OpenImage.Equals(""))
+                        {
+                            t.OpenImage = "lock.png";
+                            App.Database.ActualizarTicket(t);
+                        }
+                        if (t.LastUpdate != sv_ticket.LastUpdate)
+                        {
+                            sv_ticket.Image = "bell.png";
+                            App.Database.ActualizarTicket(sv_ticket);
+                        }   
                 }
-*/              
-                TicketsListView.ItemsSource = null;
-                TicketsListView.ItemsSource = tickets;               
+                tickets = new ListTicketsViewModel().ListTickets;
+                TicketsListView.ItemsSource = tickets;
 
+
+                ///OLD CODE
+                /*
+                List<Ticket> dbtickets;
+                
+             //   tickets.Clear();
+                dbtickets = await App.Database.GetTicketsAsync();
+               // Ticket ticket = await server.GetTicket("J95JZ468VQ");
+             //   Console.WriteLine("\nID TICKET: " + ticket.ID + "\nUser ID: " + ticket.UserID+ "\nFecha Creacion: "+ticket.CreationDate+"\nUltima actualizacion: "+ticket.LastUpdate);
+
+                    for (int i = 0; i < dbtickets.Count; i++) {
+                        //    Console.WriteLine("DBTICKETS COUNT: " +dbtickets.Count);
+                        String updateDate = await server.getUpdateDate(dbtickets[i].ID);
+                        Console.WriteLine("Recibiendo del sevidor para notificacion: " + updateDate.ToString());
+                        Console.WriteLine("\nTEST GET TICKET ");
+
+                        
+                        if (!updateDate.Equals(dbtickets[i].Date) && updateDate != "error") {
+
+                            dbtickets[i].Image = "bell.png";
+                            dbtickets[i].Date = updateDate;
+                            await App.Database.UpdateTicket(dbtickets[i]);
+                        }
+                        else
+                            dbtickets[i].Image = "";
+
+                        bool open = await server.getOpenTicket(dbtickets[i].ID);
+                        Console.WriteLine("Recibiendo del sevidor: " + open.ToString());
+                        if (!open) {
+                            dbtickets[i].OpenImage = "lock.png";
+                            dbtickets[i].Open = open;
+                            await App.Database.UpdateTicket(dbtickets[i]);
+                        }
+                        else
+                            dbtickets[i].OpenImage = "";
+
+
+                        var exists = tickets.FirstOrDefault(t => t.ID == dbtickets[i].ID);
+
+                        if (exists == null) {
+                            tickets.Add(dbtickets[i]);
+                        }
+                        else {
+                            exists.Image = dbtickets[i].Image;
+                            exists.OpenImage = dbtickets[i].OpenImage;
+                            if (!updateDate.Equals(exists)) {
+                                exists.Date = updateDate;
+                            }
+
+                        }
+                    }
+               
+                tickets = new ListTicketsViewModel().ListTickets;
+               
+                TicketsListView.ItemsSource = tickets;               
+                *///
             }
             catch (Exception ex)
             {

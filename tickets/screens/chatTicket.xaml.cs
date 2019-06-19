@@ -30,7 +30,7 @@ namespace tickets
         private string autorRef = "<td class=\"tickettd\">";
         public string stateText {get;set;}
         private List<DateTime> dateMessagesList;
-        private ToolbarItem openTicket,openBrowserTool;
+        private ToolbarItem openTicket,openBrowserTool,deleteTicketT;
 
         public chatViewModel chatVM;
         public chatTicket()
@@ -67,6 +67,12 @@ namespace tickets
                     Command = new Command(execute: () => openBrowser()),
                     Order = ToolbarItemOrder.Secondary
                 };
+                deleteTicketT = new ToolbarItem
+                {
+                    Text = "Eliminar Ticket",
+                    Command = new Command(execute: () => deleteTicket()),
+                    Order = ToolbarItemOrder.Secondary
+                };
 
 
                 switch (Device.RuntimePlatform)
@@ -74,6 +80,7 @@ namespace tickets
                     case Device.Android:
                         ToolbarItems.Add(openTicket);
                         ToolbarItems.Add(openBrowserTool);
+                        ToolbarItems.Add(deleteTicketT);
                         break;
                     case Device.UWP:
                         ToolbarItems.Add(openTicket);
@@ -95,6 +102,17 @@ namespace tickets
             string refresh = await server.getRefresh();
             string uri = server.GetBaseAdress() + "/ticket.php?track=" + ticketID + "&Refresh=" + refresh;
             await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+        }
+
+        private void deleteTicket()
+        {
+            bool answer =DisplayAlert("Alerta!", "¿Estas seguro que deseas eliminar este ticket?", "Si", "No").Result;
+            if (answer)
+            {
+                App.Database.EliminarTicket(ticketID);
+                Navigation.PopAsync();
+            }
+
         }
 
         private async void take_Photo(object sender, EventArgs args)

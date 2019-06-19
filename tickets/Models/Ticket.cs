@@ -20,18 +20,19 @@ namespace tickets
         public bool Open { get; set; }
 
         public string OpenImage { get; set; }
-
+        public DateTime CreationDate { get; set; }
+        public DateTime LastUpdate { get; set; }
         public string Date { get; set; }
         string image { get; set; }
 
 
         public Ticket()
         {
+           
+            
             this.image = "";
 
-            this.OpenImage = "";
-            this.Open = true;
-
+            this.OpenImage ="";
         }
 
         public void PrintData()
@@ -73,5 +74,12 @@ namespace tickets
             }
         }
 
+        internal void Check()
+        {
+            if (Open)
+                OpenImage = "";
+            else
+                OpenImage = "lock.png";
+        }
     }
 }
