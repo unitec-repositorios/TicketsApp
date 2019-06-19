@@ -64,7 +64,7 @@ namespace tickets
         {
             var newTicket = new ToolbarItem
             {
-                IconImageSource = "nuevo.jpg",
+                Icon = "nuevo.jpg",
                 Command = new Command( () =>  Navigation.PushAsync(view_sendTicket)),
 
                 Order = ToolbarItemOrder.Primary

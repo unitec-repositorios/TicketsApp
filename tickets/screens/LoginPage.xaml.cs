@@ -245,11 +245,12 @@ namespace tickets
             return TokenForUser;
         }
 
-        public static void SignOut()
+        public static async void SignOut()
         {
-            foreach (var user in App.IdentityClientApp.Users)
+            var accounts =await App.IdentityClientApp.GetAccountsAsync();
+            foreach (var user in  accounts)
             {
-                App.IdentityClientApp.Remove(user);
+                await App.IdentityClientApp.RemoveAsync(user);
             }
             graphClient = null;
             TokenForUser = null;
