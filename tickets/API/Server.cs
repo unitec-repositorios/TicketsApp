@@ -238,9 +238,8 @@ namespace tickets.API
         {
             User user = await App.Database.GetCurrentUser();
             var request = new RestRequest($"/print.php?track={id}+&e={user.Email}", Method.GET);
-            var response = client.Execute(request);
-            
-            if (response.StatusCode!=HttpStatusCode.OK)
+            var response = client.Execute(request); 
+            if (response.StatusCode!=HttpStatusCode.OK || response.Content.IndexOf("<b>Error:</b>") != -1)
             {
                 return null;
             }
