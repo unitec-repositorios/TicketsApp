@@ -8,7 +8,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
-
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace tickets.API
 {
@@ -16,16 +17,24 @@ namespace tickets.API
     {
        // const string BASE_ADDRESS = "https://cap.unitec.edu";
         const string BASE_ADDRESS = AppSettings.BASE_ADDRESS;
-
+        private readonly RestClient client;
         public Server()
         {
+            client = new RestClient(BASE_ADDRESS);
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
+            ///
+          //  string url = AppSettings.BASE_ADDRESS+"ticket.php";
+          //  var json = new WebClient().DownloadString(url);
+         //   dynamic m = JsonConvert.DeserializeObject(json);
+         //   Console.Write("\nServer.cs/Sever \n" + m);
         }
 
         public async Task<string> getDetailsTicket(string id)
         {
             HttpClient client = new HttpClient();
-            var uri = BASE_ADDRESS + "/print.php?track=" + id;
+            User user = await App.Database.GetCurrentUser();
+            var uri = BASE_ADDRESS + "/print.php?track=" + id+"&e="+user.Email;
             var response = await client.GetByteArrayAsync(uri);
             Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
             string html= encoder.GetString(response, 0, response.Length - 1);
@@ -42,7 +51,8 @@ namespace tickets.API
         {
             List<DateTime> fechas= new List<DateTime>();
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            User user = await App.Database.GetCurrentUser();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             response.Content.Headers.ContentType.CharSet= AppSettings.Encoding;
             string html = await response.Content.ReadAsStringAsync();
             int posFecha = 0;
@@ -82,7 +92,8 @@ namespace tickets.API
         public async Task<int> countResponse(string id)
         {
             HttpClient _client = new HttpClient();
-            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            User user = await App.Database.GetCurrentUser();
+            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             string html = await response.Content.ReadAsStringAsync();
             string searchSS = "<td class=\"ticketrow\">";
             int count = 0;
@@ -99,7 +110,8 @@ namespace tickets.API
         public async Task<string> getInitDate(string id)
         {
             HttpClient _client = new HttpClient();
-            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            User user = await App.Database.GetCurrentUser();
+            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             string html = await response.Content.ReadAsStringAsync();
             string search = "Creado en: </td>";
             int size = search.Count();
@@ -125,7 +137,8 @@ namespace tickets.API
         {
            
             HttpClient _client = new HttpClient();
-            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            User user = await App.Database.GetCurrentUser();
+            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             string html = await response.Content.ReadAsStringAsync();
             //Console.WriteLine("HTMLLLLLLL: " + html);
             string search = "�ltima actualizacion: </td>";
@@ -154,7 +167,8 @@ namespace tickets.API
         public async Task<bool> getOpenTicket(string id)
         {
             HttpClient _client = new HttpClient();
-            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            User user = await App.Database.GetCurrentUser();
+            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             string html = await response.Content.ReadAsStringAsync();
             return html.IndexOf("resolved") == -1;
         }
@@ -162,7 +176,8 @@ namespace tickets.API
         public async Task changeStatusTicket(string id)
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id);
+            User user = await App.Database.GetCurrentUser();
+            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             string html = await response.Content.ReadAsStringAsync();
             int posRefresh = html.IndexOf("Refresh=");
             int posToken =  html.IndexOf("token=");
@@ -221,29 +236,26 @@ namespace tickets.API
 
         public async Task<Ticket> GetTicket(string id)
         {
-            var uri = BASE_ADDRESS + "/print.php?track=" + id;
-           // Server.request()
-            HttpClient _client = new HttpClient();
-            var response = await _client.GetByteArrayAsync(uri);         
-            Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
-            string html = encoder.GetString(response, 0, response.Length - 1);
-            if (html.IndexOf("<b>Error:</b>") != -1)
+            User user = await App.Database.GetCurrentUser();
+            var request = new RestRequest($"/print.php?track={id}+&e={user.Email}", Method.GET);
+            var response = client.Execute(request);
+            
+            if (response.StatusCode!=HttpStatusCode.OK)
             {
                 return null;
             }
-            Console.WriteLine("\nServer.cs/GetTicket\nIsOpen: "+ getItemOfHTML(html, "Estado del ticket:"));
+            string html = response.Content;
             return new Ticket()
             {
-                ID = getItemOfHTML(html, "ID de seguimiento: "),
-                Subject = getItemOfHTML(html, "<p>Tema: <b>"),
-                Affected = int.Parse(getItemOfHTML(html, "Cantidad de usuarios afectados: ")),
-                UserID = int.Parse(getItemOfHTML(html, "Número de Cuenta / No. de talento Humano: ")),
-                Priority = GetPrioridad(getItemOfHTML(html, "Prioridad:")),
-                Classification = GetClasificacion(getItemOfHTML(html, "<br />Clasificación: ")),
-                LastUpdate = DateTime.ParseExact(getItemOfHTML(html, "Última actualizacion: "), "yyyy-MM-dd HH:mm:ss", null),
-                CreationDate = DateTime.ParseExact(getItemOfHTML(html, "Creado en: "), "yyyy-MM-dd HH:mm:ss", null),
-                Message = getItemOfHTML(html, "<br /><b>Mensaje:</b><br />"),
-                Open = !(getItemOfHTML(html, "Estado del ticket:").Contains("Resuelto")),
+                ID = getItemOfHTML(html, "<td>ID de seguimiento:</td>","<td>"),
+                Subject = getItemOfHTML(html, "<td>Tema:</td>","<td><b>"),
+                Affected = 0,
+                UserID = int.Parse(getItemOfHTML(html, "<td>Número de Cuenta | No. de talento Humano:</td>","<td>")),
+                Classification = GetClasificacion(getItemOfHTML(html, "<td>Clasificación:</td>","<td>")),
+                LastUpdate = DateTime.ParseExact(getItemOfHTML(html, "<td>Actualizar:</td>", "<td>"), "yyyy-MM-dd HH:mm:ss", null),
+                CreationDate = DateTime.ParseExact(getItemOfHTML(html, "<td>Creado en:</td>","<td>"), "yyyy-MM-dd HH:mm:ss", null),
+                Message = getItemOfHTML(html, "</table><p>"),
+                Open = !(getItemOfHTML(html, "<td>Estado del ticket:</td>","<td>").Contains("Resuelto")),
                
             };
 
@@ -267,6 +279,7 @@ namespace tickets.API
 
         public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, List<(string, byte[])> files)
         {
+            Dictionary<string, string> document = new Dictionary<string, string>();
             User user = await App.Database.GetCurrentUser();
             var html = @"" + BASE_ADDRESS + "/index.php?a=add";
             //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };

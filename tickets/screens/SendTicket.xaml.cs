@@ -147,11 +147,14 @@ namespace tickets
                         this.sentTicket = true;
                         //clean
 
+                        
+
                         number.Value = 1;
                         subject.Text = "";
                         message.Text = "";
                         picker.SelectedIndex = 1;
                         pickerPriority.SelectedIndex = 1;
+                        App.Current.MainPage = new NavigationPage(new MyTickets());
                         await Navigation.PopAsync();
                         
                     }

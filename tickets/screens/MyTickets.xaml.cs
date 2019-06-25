@@ -23,7 +23,6 @@ namespace tickets
         bool sentTicket = false;
         SendTicket view_sendTicket = new SendTicket();
 
-
         public MyTickets()
         {
             try
@@ -32,10 +31,12 @@ namespace tickets
                                                             
                // App.Database.ClearTicket();
                 InitializeComponent();
-
+                 
                 InitOtherComponents();
-
-                if (tickets == null)
+               
+                tickets = new ListTicketsViewModel().ListTickets;
+               
+                 if (tickets == null)
                 {
                     tickets = new ListTicketsViewModel().ListTickets;
                     GetTickets();
@@ -44,8 +45,8 @@ namespace tickets
 
                 TicketsListView.ItemsSource=tickets ;
                 GetTickets();
-                this.BindingContext = this;
-
+                this.BindingContext =this;
+                
 
                  UserDialogs.Instance.HideLoading();
 
@@ -144,7 +145,7 @@ namespace tickets
                         t.Check();
                        App.Database.AgregarTicket(t);
                         GetTickets();
-                        await Task.Delay(1000);
+                        await Task.Delay(500);
                         UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
                     }
                     
@@ -265,8 +266,9 @@ namespace tickets
         {
             base.OnAppearing();
 
-            Device.StartTimer(new TimeSpan(0, 0, 2), () =>
+            Device.StartTimer(new TimeSpan(0, 0, 1), () =>
             {
+             
                 if (view_sendTicket.sentTicket)
                 {
                     GetTickets();
@@ -315,6 +317,7 @@ namespace tickets
                         BindingContext = ticket.ID
                     });
                     //TicketsListView.SelectedItem = null;
+                    
                     UserDialogs.Instance.HideLoading();
                 }
                 else
