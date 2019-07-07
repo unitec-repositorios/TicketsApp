@@ -130,7 +130,7 @@ namespace tickets
                             ID = response,
                             UserID = App.Database.GetCurrentUserNotAsync().ID,
                             Affected = int.Parse(number.Value.ToString()),
-                            Classification = picker.SelectedIndex + 1,
+                            Classification = (picker.SelectedIndex + 1).ToString(),
                             Priority = pickerPriority.SelectedIndex + 1,
                             Subject = subject.Text,
                             Message = message.Text,

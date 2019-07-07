@@ -13,7 +13,7 @@ namespace tickets
         public string ID { get; set; }
         public int UserID { get; set; }
         public int Affected { get; set; }
-        public int Classification { get; set; }
+        public string Classification { get; set; }
         public int Priority { get; set; }
         public string Subject { get; set; }
         public string Message { get; set; }
@@ -24,6 +24,9 @@ namespace tickets
         public DateTime LastUpdate { get; set; }
         public string Date { get; set; }
         string image { get; set; }
+        public string Area { get; set; }
+        public string Category { get; set; }
+        public string CareerFacultyDepartment { get; set; }
 
 
         public Ticket()
@@ -64,6 +67,8 @@ namespace tickets
                 return image;
             }
         }
+
+       
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string propertyName = null)

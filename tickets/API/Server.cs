@@ -23,11 +23,6 @@ namespace tickets.API
             client = new RestClient(BASE_ADDRESS);
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
-            ///
-          //  string url = AppSettings.BASE_ADDRESS+"ticket.php";
-          //  var json = new WebClient().DownloadString(url);
-         //   dynamic m = JsonConvert.DeserializeObject(json);
-         //   Console.Write("\nServer.cs/Sever \n" + m);
         }
 
         public async Task<string> getDetailsTicket(string id)
@@ -234,6 +229,13 @@ namespace tickets.API
             return txt;
         }
 
+        private string getItemValue(HtmlDocument _document,Dictionary<string,object> _parserServer, string _key)
+        {
+            var _temp = _document.DocumentNode.SelectNodes((_parserServer[_key]).ToString()).FirstOrDefault().InnerText;
+            Console.WriteLine("\nConfig key "+_temp);
+            return _temp;
+        }
+
         public async Task<Ticket> GetTicket(string id)
         {
             User user = await App.Database.GetCurrentUser();
@@ -243,18 +245,22 @@ namespace tickets.API
             {
                 return null;
             }
-            string html = response.Content;
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(response.Content);
+            Dictionary<string, object> configParser = AppSettings.getConfigurationParser("print.php");
+            if (configParser == null) return null;
             return new Ticket()
             {
-                ID = getItemOfHTML(html, "<td>ID de seguimiento:</td>","<td>"),
-                Subject = getItemOfHTML(html, "<td>Tema:</td>","<td><b>"),
-                Affected = 0,
-                UserID = int.Parse(getItemOfHTML(html, "<td>Número de Cuenta | No. de talento Humano:</td>","<td>")),
-                Classification = GetClasificacion(getItemOfHTML(html, "<td>Clasificación:</td>","<td>")),
-                LastUpdate = DateTime.ParseExact(getItemOfHTML(html, "<td>Actualizar:</td>", "<td>"), "yyyy-MM-dd HH:mm:ss", null),
-                CreationDate = DateTime.ParseExact(getItemOfHTML(html, "<td>Creado en:</td>","<td>"), "yyyy-MM-dd HH:mm:ss", null),
-                Message = getItemOfHTML(html, "</table><p>"),
-                Open = !(getItemOfHTML(html, "<td>Estado del ticket:</td>","<td>").Contains("Resuelto")),
+                
+                ID              =   getItemValue(document,configParser,"ID de seguimiento"),
+                Subject         =   getItemValue(document,configParser, "Tema"),
+                UserID          =   int.Parse(getItemValue(document,configParser,"Número de Cuenta")),
+                Classification  =   getItemValue(document,configParser,"Clasificación"),
+                LastUpdate      =   DateTime.ParseExact(getItemValue(document,configParser,"Actualizar"), "yyyy-MM-dd HH:mm:ss", null),
+                CreationDate    =   DateTime.ParseExact(getItemValue(document,configParser,"Creado en"), "yyyy-MM-dd HH:mm:ss", null),
+                Message         =   getItemValue(document,configParser,"Mensaje"),
+                Open            =   !(getItemValue(document,configParser,"Estado del ticket").Contains("Resuelto"))
+
                
             };
 
@@ -278,13 +284,43 @@ namespace tickets.API
 
         public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, List<(string, byte[])> files)
         {
-            Dictionary<string, string> document = new Dictionary<string, string>();
+            Ticket ticket = new Ticket();
             User user = await App.Database.GetCurrentUser();
+            Dictionary<string, string> document = new Dictionary<string, string>
+            {
+                {"perfil", user.Profile },
+                {"campus",user.Campus },
+                {"area",ticket.Area },
+                {"category",ticket.Category },
+                {"name",user.Name },
+                {"email",user.Email },
+                {"priority",ticket.Priority.ToString()},
+                {"custom3",user.Account },
+                {"custom1",user.Campus },
+                {"custom2",user.Profile },
+                {"custom3",ticket.UserID.ToString()},
+                {"custom4",user.Career},
+                {"custom5",ticket.Classification},
+                {"custom6",user.PhoneNumber},
+                {"custom7",user.PersonalMail},
+                {"subject",ticket.Subject},
+                {"messege",ticket.Message}
+            };
+            var request = new RestRequest("/index.php?a=add",Method.POST);
+            var responseR =client.Execute(request);
+
+
+            ///<sumary>Cookie</sumary>
+            var cookie = responseR.Cookies.FirstOrDefault();
+            request.AddCookie(cookie.Name,cookie.Value);
+
+
             var html = @"" + BASE_ADDRESS + "/index.php?a=add";
             //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
             HttpClient httpClient = new HttpClient();
             //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             //httpClient.BaseAddress = new Uri("https://178.128.75.38/");
+            
             HttpResponseMessage capture = await httpClient.GetAsync(html);
            
             MultipartFormDataContent form = new MultipartFormDataContent();
@@ -292,9 +328,9 @@ namespace tickets.API
             String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
            
             String[] tokens = res.Split(';');
-            String cookie = tokens[0];
+            String cookieS = tokens[0];
 
-            String[] tokensValue = cookie.Split('=');
+            String[] tokensValue = cookieS.Split('=');
             String valueCookie = tokensValue[1];
 
             var htmlDoc = new HtmlDocument();
@@ -308,7 +344,7 @@ namespace tickets.API
 
             Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
 
-            form.Headers.Add("Cookie", cookie);
+            form.Headers.Add("Cookie", cookieS);
             form.Headers.ContentType.CharSet = AppSettings.Encoding;
             form.Add(new StringContent(user.Name, encoder), "name");
             form.Add(new StringContent(user.Email, encoder), "email");
@@ -323,6 +359,7 @@ namespace tickets.API
             form.Add(new StringContent(priority, encoder), "priority");
             form.Add(new StringContent(subject, encoder), "subject");
             form.Add(new StringContent(message, encoder), "message");
+           
             for (int x = 0; x < files.Count; x++)
             {
                 form.Add(new ByteArrayContent(files[x].Item2, 0, files[x].Item2.Length), "attachment[" + (x + 1) + "]", files[x].Item1);
