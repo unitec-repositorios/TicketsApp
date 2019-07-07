@@ -21,7 +21,7 @@ namespace tickets
         async protected override void OnAppearing()
         {
             base.OnAppearing();
-            User current = await App.Database.GetCurrentUser();
+            User current = await App.Database.GetCurrentUserAsync();
             if (current != null && BindingContext == null)
             {
                 Console.WriteLine("OnAppearing: Current user exists");
@@ -32,7 +32,7 @@ namespace tickets
         async void OnSaveTouched(object sender, System.EventArgs e)
         {
             var user = (User)BindingContext;
-            User current = await App.Database.GetCurrentUser();
+            User current = await App.Database.GetCurrentUserAsync();
             if (user.IsValid())
             {
                 if (current == null)

@@ -43,7 +43,7 @@ namespace tickets
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
-                DisplayAlert("No Camera", ":( No camera available.", "OK");
+                await DisplayAlert("No Camera", ":( No camera available.", "OK");
                 return;
             }
 
@@ -128,7 +128,7 @@ namespace tickets
                         await App.Database.CreateNewTicket(new Ticket()
                         {
                             ID = response,
-                            UserID = App.Database.GetCurrentUserNotAsync().ID,
+                            UserID = App.Database.GetCurrentUser().ID,
                             Affected = int.Parse(number.Value.ToString()),
                             Classification = (picker.SelectedIndex + 1).ToString(),
                             Priority = pickerPriority.SelectedIndex + 1,

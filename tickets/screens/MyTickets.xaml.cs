@@ -104,7 +104,7 @@ namespace tickets
             }
         }
 
-        private async Task addTicketIdAsync()
+        private async void addTicketIdAsync()
         {
             Console.WriteLine("ADD TICKET FROM ID");
             var promptConfig = new PromptConfig
@@ -124,7 +124,7 @@ namespace tickets
                 else
                 {
                     UserDialogs.Instance.ShowLoading("Por favor espere");
-                    User currentUser = App.Database.GetCurrentUser().Result;
+                    User currentUser = App.Database.GetCurrentUser();
                     Ticket t = await server.GetTicket(result.Text);
                     Ticket db_t = await App.Database.GetTicket(result.Text);
                   //  UserDialogs.Instance.HideLoading();
@@ -145,7 +145,7 @@ namespace tickets
                         t.Check();
                        App.Database.AgregarTicket(t);
                         GetTickets();
-                        await Task.Delay(500);
+                     //   await Task.Delay(500);
                         UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
                     }
                     

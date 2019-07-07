@@ -19,7 +19,7 @@ namespace tickets.UITests.UnitTests
         {
             await db.GetConnection().DropTableAsync<User>();
             await db.GetConnection().CreateTableAsync<User>();
-            User user = await db.GetCurrentUser();
+            User user = await db.GetCurrentUserAsync();
 
             Assert.IsNull(user);
         }
@@ -58,7 +58,7 @@ namespace tickets.UITests.UnitTests
 
             await db.CreateNewCurrentUser(user2);
 
-            User current = await db.GetCurrentUser();
+            User current = await db.GetCurrentUserAsync();
             current.PrintData();
             Assert.IsTrue(current.Name.Equals("NUEVO"));
         }
@@ -84,13 +84,13 @@ namespace tickets.UITests.UnitTests
             await db.CreateNewCurrentUser(user);
 
 
-            User current = await db.GetCurrentUser();
+            User current = await db.GetCurrentUserAsync();
 
             current.Name = "ACTUALIZADO";
 
             await db.SaveUserAsync(current);
 
-            User nuevoCurrent = await db.GetCurrentUser();
+            User nuevoCurrent = await db.GetCurrentUserAsync();
 
             Assert.IsTrue(nuevoCurrent.Name.Equals("ACTUALIZADO"));
 

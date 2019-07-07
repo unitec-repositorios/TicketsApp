@@ -25,10 +25,73 @@ namespace tickets.API
 
         }
 
+
+
+     
+        public async Task<Ticket> GetTicket(string id)
+        {
+            User user = await App.Database.GetCurrentUserAsync();
+            var request = new RestRequest($"/print.php?track={id}+&e={user.Email}", Method.GET);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK || response.Content.IndexOf("<b>Error:</b>") != -1)
+            {
+                return null;
+            }
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(response.Content);
+            Dictionary<string, object> configParser = AppSettings.getConfigurationParser("print.php");
+            if (configParser == null) return null;
+            return new Ticket()
+            {
+
+                ID = getItemValue(document, configParser, "ID de seguimiento"),
+                Subject = getItemValue(document, configParser, "Tema"),
+                UserID = int.Parse(getItemValue(document, configParser, "Número de Cuenta")),
+                Classification = getItemValue(document, configParser, "Clasificación"),
+                LastUpdate = DateTime.ParseExact(getItemValue(document, configParser, "Actualizar"), "yyyy-MM-dd HH:mm:ss", null),
+                CreationDate = DateTime.ParseExact(getItemValue(document, configParser, "Creado en"), "yyyy-MM-dd HH:mm:ss", null),
+                Message = getItemValue(document, configParser, "Mensaje"),
+                Open = !(getItemValue(document, configParser, "Estado del ticket").Contains("Resuelto"))
+
+
+            };
+
+
+
+        }
+
+
+        public Dictionary<string, string> getGestiones(int campus)
+        {
+            User _user = App.Database.GetCurrentUser();
+            var request = new RestRequest($"/index.php?a=add&perfil=3&campus={campus}", Method.GET);
+            var response = client.Execute(request);
+            var doc = new HtmlDocument();
+            doc.LoadHtml(response.Content);
+            var categorias = doc.DocumentNode.SelectNodes("//*[@id=\"ul_category\"]//li");
+            Dictionary<string, string> gestiones = new Dictionary<string, string>();
+            for (int i = 0; i < categorias.Count; i++)
+            {
+                gestiones.Add(categorias[i].InnerText.Substring(2), categorias[i].FirstChild.Attributes["href"].Value.Replace("amp;", ""));
+            }
+
+            return gestiones;
+        }
+
+
+        private string getItemValue(HtmlDocument _document, Dictionary<string, object> _parserServer, string _key)
+        {
+            var _temp = _document.DocumentNode.SelectNodes((_parserServer[_key]).ToString()).FirstOrDefault().InnerText;
+            Console.WriteLine("\nConfig key " + _temp);
+            return _temp;
+        }
+
+
+
         public async Task<string> getDetailsTicket(string id)
         {
             HttpClient client = new HttpClient();
-            User user = await App.Database.GetCurrentUser();
+            User user = await App.Database.GetCurrentUserAsync();
             var uri = BASE_ADDRESS + "/print.php?track=" + id+"&e="+user.Email;
             var response = await client.GetByteArrayAsync(uri);
             Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
@@ -46,7 +109,7 @@ namespace tickets.API
         {
             List<DateTime> fechas= new List<DateTime>();
             HttpClient client = new HttpClient();
-            User user = await App.Database.GetCurrentUser();
+            User user = await App.Database.GetCurrentUserAsync();
             HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             response.Content.Headers.ContentType.CharSet= AppSettings.Encoding;
             string html = await response.Content.ReadAsStringAsync();
@@ -87,7 +150,7 @@ namespace tickets.API
         public async Task<int> countResponse(string id)
         {
             HttpClient _client = new HttpClient();
-            User user = await App.Database.GetCurrentUser();
+            User user = await App.Database.GetCurrentUserAsync();
             HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             string html = await response.Content.ReadAsStringAsync();
             string searchSS = "<td class=\"ticketrow\">";
@@ -105,7 +168,7 @@ namespace tickets.API
         public async Task<string> getInitDate(string id)
         {
             HttpClient _client = new HttpClient();
-            User user = await App.Database.GetCurrentUser();
+            User user = await App.Database.GetCurrentUserAsync();
             HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             string html = await response.Content.ReadAsStringAsync();
             string search = "Creado en: </td>";
@@ -132,7 +195,7 @@ namespace tickets.API
         {
            
             HttpClient _client = new HttpClient();
-            User user = await App.Database.GetCurrentUser();
+            User user = await App.Database.GetCurrentUserAsync();
             HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             string html = await response.Content.ReadAsStringAsync();
             //Console.WriteLine("HTMLLLLLLL: " + html);
@@ -162,7 +225,7 @@ namespace tickets.API
         public async Task<bool> getOpenTicket(string id)
         {
             HttpClient _client = new HttpClient();
-            User user = await App.Database.GetCurrentUser();
+            User user = await App.Database.GetCurrentUserAsync();
             HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             string html = await response.Content.ReadAsStringAsync();
             return html.IndexOf("resolved") == -1;
@@ -171,7 +234,7 @@ namespace tickets.API
         public async Task changeStatusTicket(string id)
         {
             HttpClient client = new HttpClient();
-            User user = await App.Database.GetCurrentUser();
+            User user = await App.Database.GetCurrentUserAsync();
             HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
             string html = await response.Content.ReadAsStringAsync();
             int posRefresh = html.IndexOf("Refresh=");
@@ -229,44 +292,7 @@ namespace tickets.API
             return txt;
         }
 
-        private string getItemValue(HtmlDocument _document,Dictionary<string,object> _parserServer, string _key)
-        {
-            var _temp = _document.DocumentNode.SelectNodes((_parserServer[_key]).ToString()).FirstOrDefault().InnerText;
-            Console.WriteLine("\nConfig key "+_temp);
-            return _temp;
-        }
-
-        public async Task<Ticket> GetTicket(string id)
-        {
-            User user = await App.Database.GetCurrentUser();
-            var request = new RestRequest($"/print.php?track={id}+&e={user.Email}", Method.GET);
-            var response = client.Execute(request); 
-            if (response.StatusCode!=HttpStatusCode.OK || response.Content.IndexOf("<b>Error:</b>") != -1)
-            {
-                return null;
-            }
-            HtmlDocument document = new HtmlDocument();
-            document.LoadHtml(response.Content);
-            Dictionary<string, object> configParser = AppSettings.getConfigurationParser("print.php");
-            if (configParser == null) return null;
-            return new Ticket()
-            {
-                
-                ID              =   getItemValue(document,configParser,"ID de seguimiento"),
-                Subject         =   getItemValue(document,configParser, "Tema"),
-                UserID          =   int.Parse(getItemValue(document,configParser,"Número de Cuenta")),
-                Classification  =   getItemValue(document,configParser,"Clasificación"),
-                LastUpdate      =   DateTime.ParseExact(getItemValue(document,configParser,"Actualizar"), "yyyy-MM-dd HH:mm:ss", null),
-                CreationDate    =   DateTime.ParseExact(getItemValue(document,configParser,"Creado en"), "yyyy-MM-dd HH:mm:ss", null),
-                Message         =   getItemValue(document,configParser,"Mensaje"),
-                Open            =   !(getItemValue(document,configParser,"Estado del ticket").Contains("Resuelto"))
-
-               
-            };
-
-
-
-        }
+       
 
 
         public async Task<string> getTicket(string id)
@@ -285,7 +311,7 @@ namespace tickets.API
         public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, List<(string, byte[])> files)
         {
             Ticket ticket = new Ticket();
-            User user = await App.Database.GetCurrentUser();
+            User user = await App.Database.GetCurrentUserAsync();
             Dictionary<string, string> document = new Dictionary<string, string>
             {
                 {"perfil", user.Profile },

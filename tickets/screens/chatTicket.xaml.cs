@@ -126,7 +126,7 @@ namespace tickets
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
-                DisplayAlert("No Camera", ":( No camera available.", "OK");
+                await DisplayAlert("No Camera", ":( No camera available.", "OK");
                 return;
             }
 
@@ -217,6 +217,7 @@ namespace tickets
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace + "\nMensaje: " + ex.Message);
             }
         }
 
