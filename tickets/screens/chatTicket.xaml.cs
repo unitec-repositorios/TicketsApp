@@ -31,7 +31,7 @@ namespace tickets
         public string stateText {get;set;}
         private List<DateTime> dateMessagesList;
         private ToolbarItem openTicket,openBrowserTool,deleteTicketT;
-
+       // public static bool deletedTicket = false;
         public chatViewModel chatVM;
         public chatTicket()
         {
@@ -54,6 +54,7 @@ namespace tickets
                 
                openTicket = new ToolbarItem
                 {
+                   Icon = "trash.png",
                     Text = "Abrir Ticket",
                     Command = new Command(execute: () => switchState()),
 
@@ -63,12 +64,14 @@ namespace tickets
 
                 openBrowserTool = new ToolbarItem
                 {
+                    Icon = "trash.png",
                     Text = "Mas detalles",
                     Command = new Command(execute: () => openBrowser()),
                     Order = ToolbarItemOrder.Secondary
                 };
                 deleteTicketT = new ToolbarItem
                 {
+                    Icon="trash.png",
                     Text = "Eliminar Ticket",
                     Command = new Command(execute: () => deleteTicket()),
                     Order = ToolbarItemOrder.Secondary
@@ -99,19 +102,21 @@ namespace tickets
 
         private async void openBrowser()
         {
-            string refresh = await server.getRefresh();
-            string uri = server.GetBaseAdress() + "/ticket.php?track=" + ticketID + "&Refresh=" + refresh;
+            string refresh = await server.getRefreshCode();
+            string uri =$"{server.GetBaseAdress()}/ticket.php?track={ticketID}&Refresh={refresh}";
             await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
         }
 
-        private void deleteTicket()
+        private async void deleteTicket()
         {
-            bool answer =DisplayAlert("Alerta!", "¿Estas seguro que deseas eliminar este ticket?", "Si", "No").Result;
+            bool answer = await DisplayAlert("Alerta!", "¿Estas seguro que deseas eliminar este ticket?", "Si", "No");
             if (answer)
             {
                 App.Database.EliminarTicket(ticketID);
-                Navigation.PopAsync();
+                App.Current.MainPage = new NavigationPage(new MyTickets());
+
             }
+
 
         }
 
@@ -121,7 +126,7 @@ namespace tickets
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
-                DisplayAlert("No Camera", ":( No camera available.", "OK");
+                await DisplayAlert("No Camera", ":( No camera available.", "OK");
                 return;
             }
 
@@ -212,6 +217,7 @@ namespace tickets
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace + "\nMensaje: " + ex.Message);
             }
         }
 

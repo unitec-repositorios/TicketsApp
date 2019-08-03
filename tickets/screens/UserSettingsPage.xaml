@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:tickets" x:Class="tickets.UserSettingsPage" Title="Configuración de Cuenta" Icon="baseline_settings_black_36pt">
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:local="clr-namespace:tickets" 
+    x:Class="tickets.UserSettingsPage" 
+    Title="Configuración de Cuenta" Icon="baseline_settings_black_36pt">
     <ContentPage.Resources>
         <StyleSheet Source="../styles/style.css">
         </StyleSheet>
@@ -17,13 +22,13 @@
                     <Picker x:Name="campuspicker" Title="Campus" SelectedItem="{Binding Campus}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
-                                <x:String>UNITEC TGU</x:String>
-                                <x:String>UNITEC SPS</x:String>
-                                <x:String>CEUTEC TGU</x:String>
-                                <x:String>CEUTEC LCE</x:String>
-                                <x:String>CEUTEC SPS</x:String>
-                                <x:String>CEUTEC NORTE SPS</x:String>
-                                <x:String>UV</x:String>
+                                <x:String>Unitec Tegucigalpa</x:String>
+                                <x:String>Unitec San Pedro Sula</x:String>
+                                <x:String>Ceutec Tegucigalpa</x:String>
+                                <x:String>Ceutec La Ceiba</x:String>
+                                <x:String>Unitec DUV</x:String>
+                                <x:String>Ceutec San Pedro Sula</x:String>
+                               
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>

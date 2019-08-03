@@ -176,7 +176,7 @@ namespace tickets
         public async void GetTickets()
         {
 
-            User user = await App.Database.GetCurrentUser();
+            User user = await App.Database.GetCurrentUserAsync();
 
             var requestURI = @"http://138.197.198.67/admin/index.php";
             HttpClient httpClient = new HttpClient();

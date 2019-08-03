@@ -20,11 +20,10 @@ namespace tickets
         private Server server = new Server();
 
         private ObservableCollection<Ticket> tickets;
-        bool sentTicket = false;
-        SendTicket view_sendTicket = new SendTicket();
+        
+      //  SendTicket view_sendTicket = new SendTicket();
 
-
-        public MyTickets()
+        public  MyTickets()
         {
             try
             {
@@ -32,20 +31,22 @@ namespace tickets
                                                             
                // App.Database.ClearTicket();
                 InitializeComponent();
-
+                 
                 InitOtherComponents();
-
-                if (tickets == null)
+               
+                tickets = new ListTicketsViewModel().ListTickets;
+               
+                 if (tickets == null)
                 {
                     tickets = new ListTicketsViewModel().ListTickets;
-                    GetTickets();
+                  //  GetTickets();
                 }
                
 
                 TicketsListView.ItemsSource=tickets ;
                 GetTickets();
-                this.BindingContext = this;
-
+                this.BindingContext =this;
+                
 
                  UserDialogs.Instance.HideLoading();
 
@@ -64,8 +65,8 @@ namespace tickets
         {
             var newTicket = new ToolbarItem
             {
-                IconImageSource = "nuevo.jpg",
-                Command = new Command( () =>  Navigation.PushAsync(view_sendTicket)),
+                Icon = "nuevo.jpg",
+                Command = new Command(async () => await  Navigation.PushAsync(new SendTicket())),
 
                 Order = ToolbarItemOrder.Primary
 
@@ -81,7 +82,7 @@ namespace tickets
             var addTicketTool = new ToolbarItem
             {
                 Text = "Agregar Ticket",
-                Command = new Command(execute: () => addTicketIdAsync()),
+                Command = new Command(async() => await addTicketIdAsync()),
                 Order = ToolbarItemOrder.Secondary
             };
 
@@ -106,24 +107,28 @@ namespace tickets
         private async Task addTicketIdAsync()
         {
             Console.WriteLine("ADD TICKET FROM ID");
-            var promptConfig = new PromptConfig
+            var promptConfig = new PromptConfig()
             {
                 InputType = InputType.Name,
                 IsCancellable = true,
-                Message = "INGRESE ID DE TICKET"
+                Message = "Ingrese el ID del Ticket",
+                Placeholder="Id Ticket"
             };
-            var result = await UserDialogs.Instance.PromptAsync(promptConfig);
+            var loading = new Task(() => UserDialogs.Instance.ShowLoading("Por favor espere"));
+            var result = await UserDialogs.Instance.PromptAsync(promptConfig) ;
+            
             if (result.Ok)
             {
-                //string error = "No se agrego el ticket, su numero de cuenta no coincide con el numero de cuenta enlazado al ticket";
+                loading.Start();
+               // await Task.Delay(200);
                 if (string.IsNullOrEmpty(result.Text))
                 {
                     UserDialogs.Instance.ShowError("Ingrese un id.");
                 }
                 else
                 {
-                    UserDialogs.Instance.ShowLoading("Por favor espere");
-                    User currentUser = App.Database.GetCurrentUser().Result;
+                   // await Task.Delay(200);
+                    User currentUser = App.Database.GetCurrentUser();
                     Ticket t = await server.GetTicket(result.Text);
                     Ticket db_t = await App.Database.GetTicket(result.Text);
                   //  UserDialogs.Instance.HideLoading();
@@ -133,90 +138,20 @@ namespace tickets
                     }
                     else if (t.UserID != int.Parse(currentUser.Account))
                     {
-                        UserDialogs.Instance.ShowError("No se agrego el ticket, su numero de cuenta no coincide con el numero de cuenta enlazado al ticket\nSu No.Cuenta: "+currentUser.ID);
+                        UserDialogs.Instance.ShowError("No se agrego el ticket, su numero de cuenta no coincide con el numero de cuenta enlazado al ticket");
                     }
                     else if(db_t!=null)
                     {
-                        UserDialogs.Instance.ShowError("No se agrego el ticket, porque ya existe en la base de datos.\nSubject: "+ db_t.Subject);
+                        UserDialogs.Instance.ShowError("No se agrego el ticket, porque ya existe en la base de datos.");
                     }
                     else
                     {
-                        t.Check();
+                       // t.Check();
                        App.Database.AgregarTicket(t);
+                        await Task.Delay(500);
                         GetTickets();
-                        await Task.Delay(1000);
                         UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
                     }
-                    
-                    ///OLD CODE
-                    /**UserDialogs.Instance.ShowLoading("Por favor espere");
-                    User current = await App.Database.GetCurrentUser();
-                    string html = await server.getDetailsTicket(result.Text);
-                    string date = await server.getInitDate(result.Text);
-                    
-                    UserDialogs.Instance.HideLoading();
-                    if (html == "Error")
-                    {
-                        UserDialogs.Instance.ShowError("No existe un ticket con ese number de ID: "+result.Text);
-                    }
-                    else
-                    {
-                        if (getIDAccount(html,current.Account))
-                        {
-                            string c = getDetailTicket(html, "Clasificacion:");
-                            int clas = 5;
-                            if (c == "Solicitud"){
-                                clas = 1;
-                            }
-                            else if (c == "Información"){
-                                clas = 2;
-                            }
-                            else if (c == "Queja"){
-                                clas = 3;
-                            }
-                            else if (c == "Reclamo"){
-                                clas = 4;
-                            }
-                            string prioridad = getDetailTicket(html, "Prioridad:");
-                            int p = 3;
-                            if (prioridad == "Alto"){
-                                p = 1;
-                            }
-                            else if (prioridad == "Medio")
-                            {
-                                p = 2;
-                            }
-                            try
-                            {
-                                await App.Database.CreateNewTicket(new Ticket()
-                                {
-                                    ID = result.Text,
-                                    UserID = current.ID,
-                                    Affected = int.Parse(getDetailTicket(html, "Cantidad de usuarios afectados:")),
-                                    Classification = clas,
-                                    Priority = p,
-                                    Subject = getDetailTicket(html, "Tema"),
-                                    Message = getDetailTicket(html, "<b>Mensaje:</b>"),
-                                    Date = date,
-                                });
-                                //error = "El ticket se agrego exitosamente";
-                                this.GetTickets();
-                                UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
-                               
-                            }
-                            catch (SQLiteException)
-                            {
-                                //error = "No se agrergo el ticket, porque ya existe en la aplicacion";
-                                UserDialogs.Instance.ShowError("No se agrego el ticket, porque ya existe en la base de datos.");
-                            }
-                        }
-                        else
-                        {
-                            UserDialogs.Instance.ShowError("No se agrego el ticket, su numero de cuenta no coincide con el numero de cuenta enlazado al ticket");
-                        }
-                        
-
-                    }*/
                 }               
             }
 
@@ -260,21 +195,12 @@ namespace tickets
 
 
 
-        protected override async void OnAppearing()
+        protected override  void OnAppearing()
 
         {
             base.OnAppearing();
 
-            Device.StartTimer(new TimeSpan(0, 0, 2), () =>
-            {
-                if (view_sendTicket.sentTicket)
-                {
-                    GetTickets();
-                    view_sendTicket = new SendTicket();
-
-                }
-                return true;
-            });
+           
            /*
             Device.StartTimer(new TimeSpan(0, 0, AppSettings.RefreshTicketsTimeout), () =>
               {
@@ -289,7 +215,7 @@ namespace tickets
               });*/
         }
 
-        protected override async void OnDisappearing()
+        protected override void OnDisappearing()
 
         {
             base.OnDisappearing();
@@ -315,6 +241,7 @@ namespace tickets
                         BindingContext = ticket.ID
                     });
                     //TicketsListView.SelectedItem = null;
+                    
                     UserDialogs.Instance.HideLoading();
                 }
                 else
@@ -324,14 +251,14 @@ namespace tickets
             }
         }
 
-        private async void TicketsListView_Refreshing(object sender, EventArgs e)
+        private void TicketsListView_Refreshing(object sender, EventArgs e)
         {
 
            
             this.GetTickets();
             TicketsListView.EndRefresh();
         }
-        private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             //List<Ticket> tickets = await App.Database.GetTicketsAsync(App.Database.GetCurrentUserNotAsync());
     

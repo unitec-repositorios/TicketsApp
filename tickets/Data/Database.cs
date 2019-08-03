@@ -8,6 +8,7 @@ using System;
 using System.Text;
 using tickets.Data;
 using System.Collections.ObjectModel;
+using tickets.Models;
 
 namespace tickets
 {
@@ -22,6 +23,7 @@ namespace tickets
             database.CreateTableAsync<Ticket>().Wait();
             database.CreateTableAsync<Comment>().Wait();
             database.CreateTableAsync<AdminUser>().Wait();
+            database.CreateTableAsync<TicketFile>().Wait();
         }
 
         public SQLiteAsyncConnection GetConnection()
@@ -76,10 +78,9 @@ namespace tickets
             {
                 return database.FindWithQueryAsync<AdminUser>("SELECT * from AdminUser WHERE Email LIKE ?", email).Result;
             }
-#pragma warning disable CS0168 // La variable 'ex' se ha declarado pero nunca se usa
-            catch (System.Exception ex)
-#pragma warning restore CS0168 // La variable 'ex' se ha declarado pero nunca se usa
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace);
                 return null;
             }
         }
@@ -88,16 +89,16 @@ namespace tickets
         /// Gets the current user not async.
         /// </summary>
         /// <returns>The current user not async.</returns>
-        public User GetCurrentUserNotAsync()
+        public Task<User> GetCurrentUserAsync()
         {
             try
             {
-                return database.FindWithQueryAsync<User>("SELECT * from User WHERE IsCurrent = 1").Result;
+                return database.Table<User>().FirstOrDefaultAsync(x => x.IsCurrent==true);
+          
             }
-#pragma warning disable CS0168 // La variable 'ex' se ha declarado pero nunca se usa
-            catch (System.Exception ex)
-#pragma warning restore CS0168 // La variable 'ex' se ha declarado pero nunca se usa
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace +"\nMensaje: "+ex.Message);
                 return null;
             }
         }
@@ -108,10 +109,9 @@ namespace tickets
             {
                 return database.FindWithQueryAsync<User>("SELECT * from User WHERE Email LIKE ?", email).Result;
             }
-#pragma warning disable CS0168 // La variable 'ex' se ha declarado pero nunca se usa
-            catch (System.Exception ex)
-#pragma warning restore CS0168 // La variable 'ex' se ha declarado pero nunca se usa
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace + "\nMensaje: " + ex.Message);
                 return null;
             }
         }
@@ -119,22 +119,21 @@ namespace tickets
         public async void Logout()
         {
             await database.ExecuteAsync("Update user SET IsCurrent = 0");
-
         }
 
         /// <summary>
         /// Returns a <see cref="User"/> which is the current user
         /// </summary>
-        public Task<User> GetCurrentUser()
+        public User GetCurrentUser()
         {
             try
             {
-                return database.FindWithQueryAsync<User>("SELECT * from User WHERE IsCurrent = 1");
+                return GetCurrentUserAsync().Result;
             }
-#pragma warning disable CS0168 // La variable 'ex' se ha declarado pero nunca se usa
-            catch (System.Exception ex)
-#pragma warning restore CS0168 // La variable 'ex' se ha declarado pero nunca se usa
+
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace + "\nMensaje: " + ex.Message);
                 return null;
             }
         }
@@ -304,11 +303,14 @@ namespace tickets
             return  database.Table<Ticket>().ToListAsync();
         }
 
-      
+        public async void ActualizarUsuario(User _user)
+        {
+            await database.UpdateAsync(_user);
+        }            
 
         public async void AgregarTicket(Ticket ticket)
         {
-            await database.InsertAsync(ticket);
+            await database.InsertOrReplaceAsync(ticket);
         }
 
         public async void ActualizarTicket(Ticket ticket)

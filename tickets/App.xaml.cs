@@ -43,9 +43,9 @@ namespace tickets
 
             //Database.ClearDatabase();
 
-            Debug.WriteLineIf(Database.GetCurrentUserNotAsync() == null, "Current user is null, should go to login page");
+            Debug.WriteLineIf(Database.GetCurrentUser() == null, "Current user is null, should go to login page");
 
-            if (Database.GetCurrentUserNotAsync() == null)
+            if (Database.GetCurrentUser() == null)
             {
                 MainPage = new NavigationPage(new LoginPage());
             }

@@ -18,6 +18,7 @@ namespace tickets
         public string Career { get; set; }
         public string PhoneNumber { get; set; }
         public bool IsCurrent { get; set; }
+        public string PersonalMail { get; internal set; }
 
         public void PrintData()
         {
