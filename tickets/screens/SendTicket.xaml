@@ -17,31 +17,24 @@
             <StackLayout>
                 <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <StackLayout VerticalOptions="FillAndExpand">
-                        <Label Text="Cantidad de afectados"  Font="Bold, 24"></Label>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="180" />
-                            </Grid.ColumnDefinitions>
-                            <Entry Keyboard="Numeric"  Text="{Binding Source={x:Reference number}, Path = Value}" Grid.Row="0" Grid.Column="0" class="label"></Entry>
-                            <Stepper x:Name="number" Grid.Row="0" Grid.Column="1" Minimum="1" />
-                        </Grid>
-                        <Label Text="Clasificacion"  Font="Bold, 24"></Label>
+                        <Label Text="Area" FontAttributes="Bold" FontSize="Large"/>
+                        <Picker x:Name="picker_Areas" FontSize="Medium" SelectedIndexChanged="Picker_Areas_SelectedIndexChanged">
+                        </Picker>
+                        <Label Text="Categoria" FontAttributes="Bold" FontSize="Large"/>
+                        <Picker x:Name="picker_categories"  FontSize="Medium" ></Picker>
+                        <Label Text="Clasificacion"  Font="Bold" FontSize="Large"></Label>
                         <Picker x:Name="picker" SelectedIndex="1">
                             <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Solicitud</x:String>
-                                    <x:String>Informacion</x:String>
+                                    <x:String>Información</x:String>
                                     <x:String>Queja</x:String>
                                     <x:String>Reclamo</x:String>
                                     <x:String>Sugerencia</x:String>
                                 </x:Array>
                             </Picker.ItemsSource>
                         </Picker>
-                        <Label Text="Prioridad"  Font="Bold, 24"></Label>
+                        <Label Text="Prioridad"  Font="Bold" FontSize="Large"></Label>
                         <Picker x:Name="pickerPriority" SelectedIndex="1">
                             <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
@@ -51,9 +44,9 @@
                                 </x:Array>
                             </Picker.ItemsSource>
                         </Picker>
-                        <Label Text="Asunto"  Font="Bold, 24"></Label>
+                        <Label Text="Asunto"  Font="Bold" FontSize="Large"></Label>
                         <Entry x:Name="subject"></Entry>
-                        <Label Text="Mensaje"  Font="Bold, 24"></Label>
+                        <Label Text="Mensaje"  Font="Bold" FontSize="Large"></Label>
                         <Editor x:Name="message" class="editor"></Editor>
                         <Label Text="Archivos adjuntos" x:Name="Mylabel" HorizontalOptions="Center" class="label"></Label>
                         <Label x:Name="Adjun"></Label >

@@ -8,7 +8,7 @@ namespace tickets
     {
         //Servidor Oficial
         public const string BASE_ADDRESS = "https://cap.unitec.edu";
-
+       
 
         //Servidor de Prueba
         //public const string BASE_ADDRESS = "http://157.230.130.35";
@@ -16,7 +16,37 @@ namespace tickets
 
         public static int ImagesQuality = 50;
         public static int RefreshTicketsTimeout = 60;
-        public const string Encoding = "windows-1252";
+        public const string Encoding = "UTF-8";
+
+        private static int _limitFiles = 3;  //Cantidad de archivos que puede almacenar
+        private static int _limitSizeFile=4; //Tamaño en Megabytes(MB);
+
+        private static Dictionary<string, int> campus;
+        private static void cargarCampus()
+        {
+            campus = new Dictionary<string, int>
+            {
+                { "Unitec Tegucigalpa",1},
+                {"Unitec San Pedro Sula",2 },
+                {"Ceutec Tegucigalpa",3 },
+                {"Ceutec La Ceiba",4 },
+                {"Unitec DUV",5 },
+                {"Ceutec San Pedro Sula",6 },
+            };
+            
+        }
+        public static List<string> getCampus()
+        {
+            cargarCampus();
+            return new List<string>(campus.Keys);
+        }
+
+        public static int getIdCampus(string _nameCampus)
+        {
+            cargarCampus();
+            var _tempCampus= campus[_nameCampus];
+            return _tempCampus;
+        }
 
 
 
@@ -25,8 +55,14 @@ namespace tickets
         /// </sumary>
         private static string tableContainer = "//html//body//div//table//table[2]//table//";
         private static string tableContainerHEAD = "//html//body//div//table//table[1]//table//";
+
         private static string tokenpath = "//html//body//table//";
         private static string temp = "//input[@name='token']";
+        private static Dictionary<string, object> configIndex = new Dictionary<string, object>
+        {
+            {"Token",$"//input[@name='token'][@value]" }
+        };
+
         private static Dictionary<string, object> configServer = new Dictionary<string, object> {
                 {"Token",                               $"//input[@name='token'][@value]" },
                 {"Subject",                             $"//html//body//div//table//tr[2]//h3"},
@@ -55,6 +91,23 @@ namespace tickets
                 {"Mensaje",                             $"{tableContainer}p[2]" }
             };
 
+        private static Dictionary<string, int> DataSize = new Dictionary<string, int> {
+            {"KILOBYTE",1024 },
+            {"MEGABYTE",1024 },
+            {"GIGABYTE",1024 },
+        };
+
+        public static int GetLimiteArchivos()
+        {
+            return _limitFiles;
+        }
+
+
+        public static int GetSizeLimitFile() {
+            return (_limitSizeFile * DataSize["MEGABYTE"] * DataSize["KILOBYTE"]);
+
+        }
+
         /// <summary>
         /// Configuracion HTML Parser(print.php)
         /// </summary>
@@ -79,10 +132,10 @@ namespace tickets
             };
         private static Dictionary<string, Dictionary<string, object>> Configuraciones = new Dictionary<string, Dictionary<string, object>> {
             {"print.php",configPrint },
-            {"ticket.php",configServer}
+            {"ticket.php",configServer},
+            {"index.php",configIndex}
         };
-      
-
+        
 
         public static Dictionary<string,object> getConfigurationParser(string configuration)
         {

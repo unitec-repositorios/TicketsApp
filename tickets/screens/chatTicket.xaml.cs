@@ -102,8 +102,8 @@ namespace tickets
 
         private async void openBrowser()
         {
-            string refresh = await server.getRefresh();
-            string uri = server.GetBaseAdress() + "/ticket.php?track=" + ticketID + "&Refresh=" + refresh;
+            string refresh = await server.getRefreshCode();
+            string uri =$"{server.GetBaseAdress()}/ticket.php?track={ticketID}&Refresh={refresh}";
             await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
         }
 

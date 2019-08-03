@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -41,50 +42,147 @@ namespace tickets.API
             document.LoadHtml(response.Content);
             Dictionary<string, object> configParser = AppSettings.getConfigurationParser("print.php");
             if (configParser == null) return null;
-            return new Ticket()
+            var _estadoTicket = getItemValue(document, configParser, "Estado del ticket");
+            
+            Ticket _ticket= new Ticket()
             {
-
                 ID = getItemValue(document, configParser, "ID de seguimiento"),
                 Subject = getItemValue(document, configParser, "Tema"),
                 UserID = int.Parse(getItemValue(document, configParser, "Número de Cuenta")),
                 Classification = getItemValue(document, configParser, "Clasificación"),
-                LastUpdate = DateTime.ParseExact(getItemValue(document, configParser, "Actualizar"), "yyyy-MM-dd HH:mm:ss", null),
-                CreationDate = DateTime.ParseExact(getItemValue(document, configParser, "Creado en"), "yyyy-MM-dd HH:mm:ss", null),
+                LastUpdate = DateTime.ParseExact(getItemValue(document, configParser, "Actualizar"), "dd/MM/yyyy HH:mm:ss", null),
+                CreationDate = DateTime.ParseExact(getItemValue(document, configParser, "Creado en"), "dd/MM/yyyy HH:mm:ss", null),
                 Message = getItemValue(document, configParser, "Mensaje"),
-                Open = !(getItemValue(document, configParser, "Estado del ticket").Contains("Resuelto"))
-
-
+                Estado = _estadoTicket
             };
-
-
+            _ticket.Check();
+            return _ticket;
 
         }
 
-
-        public Dictionary<string, string> getGestiones(int campus)
+        private Dictionary<string, string> GetGestiones()
         {
             User _user = App.Database.GetCurrentUser();
-            var request = new RestRequest($"/index.php?a=add&perfil=3&campus={campus}", Method.GET);
+            var perfil = getIdPerfil(_user.Profile);
+            var campus = getIdCampus(_user.Campus);
+            var request = new RestRequest($"/index.php?a=add&perfil={perfil}&campus={campus}", Method.GET);
             var response = client.Execute(request);
             var doc = new HtmlDocument();
             doc.LoadHtml(response.Content);
             var categorias = doc.DocumentNode.SelectNodes("//*[@id=\"ul_category\"]//li");
             Dictionary<string, string> gestiones = new Dictionary<string, string>();
-            for (int i = 0; i < categorias.Count; i++)
+            foreach (var item in categorias)
             {
-                gestiones.Add(categorias[i].InnerText.Substring(2), categorias[i].FirstChild.Attributes["href"].Value.Replace("amp;", ""));
+                gestiones.Add(item.InnerText.Substring(2), item.FirstChild.Attributes["href"].Value.Replace("amp;", ""));
             }
 
             return gestiones;
+        }
+
+        private Dictionary<string, string> GetComoPodemosAyudarte(string url)
+        {
+            var request = new RestRequest($"{url}", Method.GET);
+            var response = client.Execute(request);
+            var doc = new HtmlDocument();
+            doc.LoadHtml(response.Content);
+            var categorias = doc.DocumentNode.SelectNodes("//*[@id=\"ul_category\"]//li");
+            Dictionary<string, string> comoPodemosAyudarte = new Dictionary<string, string>();
+            foreach (var item in categorias)
+            {
+                comoPodemosAyudarte.Add(item.InnerText.Substring(8), item.FirstChild.Attributes["href"].Value.Replace("amp;", ""));
+            }
+            return comoPodemosAyudarte;
+        }
+
+
+        private int getIdCampus(string campusName)
+        {
+            int idCampus = AppSettings.getIdCampus(campusName);
+            if (idCampus!=0)
+                return idCampus;
+            return 3;
+
+        }
+
+        private int getIdPerfil(string perfilName)
+        {
+            switch (perfilName)
+            {
+                case "Administrativo":  return 1;
+                case "Docente":         return 2;
+                case "Alumno":          return 3;
+                default:
+                    return 3;
+            }
         }
 
 
         private string getItemValue(HtmlDocument _document, Dictionary<string, object> _parserServer, string _key)
         {
             var _temp = _document.DocumentNode.SelectNodes((_parserServer[_key]).ToString()).FirstOrDefault().InnerText;
-            Console.WriteLine("\nConfig key " + _temp);
             return _temp;
         }
+
+        private List<(object,string,List<(object,string)>)> GetAreas_Categorias()
+        {
+            List<(object, string, List<(object, string)>)> _tempList = new List<(object, string, List<(object, string)>)>();
+            foreach(var item in GetGestiones())
+            {
+                List<(object, string)> _tempList2 = new List<(object, string)>();
+                foreach(var item2 in GetComoPodemosAyudarte(item.Value))
+                {
+                    var _value = GetDictionaryItems(item2.Value)["category"];
+                    _tempList2.Add((_value, item2.Key));
+                }
+                var _valueT = GetDictionaryItems(item.Value)["area"];
+                _tempList.Add((_valueT,item.Key,_tempList2));
+            }
+            return _tempList;
+        }
+
+        public Dictionary<string,List<string>> getDictionaryAreasXCategorias()
+        {
+            Dictionary<string, List<string>> _temp = new Dictionary<string, List<string>>();
+            foreach(var item in GetGestiones())
+            {
+                List<string> _tempList = new List<string>();     
+                foreach(var item2 in GetComoPodemosAyudarte(item.Value))
+                {
+                    _tempList.Add(item2.Key);
+                }
+                _temp.Add(item.Key, _tempList);
+            }
+            return _temp;
+        }
+
+        public Dictionary<string,object> GetDictionaryAreas()
+        {
+            return new Dictionary<string, object>(GetAreas_Categorias().ToDictionary(x => x.Item2, x => x.Item1));
+        }
+
+        public Dictionary<string,object> GetDictionaryCategory(string area)
+        {
+            return new Dictionary<string, object>(GetAreas_Categorias().FirstOrDefault(x => x.Item2 == area).Item3.ToDictionary(item => item.Item2, item => item.Item1));
+        }
+
+        private Dictionary<string,object> GetDictionaryItems(string url)
+        {
+           
+            var request = new RestRequest(url, Method.GET,DataFormat.Json);
+            return request.Parameters.ToDictionary(x => x.Name, x => x.Value);
+        }
+
+        public string GetValueArea(string area)
+        {
+            return GetDictionaryAreas()[area].ToString();
+        }
+
+        public string GetValueCategoria(string area,string categoria)
+        {
+            return GetDictionaryCategory(area)[categoria].ToString();
+        }
+
+
 
 
 
@@ -92,6 +190,7 @@ namespace tickets.API
         {
             HttpClient client = new HttpClient();
             User user = await App.Database.GetCurrentUserAsync();
+
             var uri = BASE_ADDRESS + "/print.php?track=" + id+"&e="+user.Email;
             var response = await client.GetByteArrayAsync(uri);
             Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
@@ -134,17 +233,18 @@ namespace tickets.API
         public string GetBaseAdress()
         {
             return BASE_ADDRESS;
+
         }
 
-        public async Task<string> getRefresh()
+        public async Task<string> getRefreshCode()
         {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php");
-            string html = await response.Content.ReadAsStringAsync();
-            string search = "\"Refresh\" value=" + '"';
-            int posRefresh = html.IndexOf(search) + search.Length;
-            string refresh = getTextAux('"', html, posRefresh);
-            return refresh;
+
+            var request = new RestRequest("/ticket.php");
+            var response = client.Execute(request);
+            var document = new HtmlDocument();
+            document.Load(response.Content);
+            var element = document.DocumentNode.SelectSingleNode("//input[@name='Refresh']");
+            return element.Attributes["value"].Value;
         }
 
         public async Task<int> countResponse(string id)
@@ -308,38 +408,112 @@ namespace tickets.API
             return value;
         }
 
-        public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, List<(string, byte[])> files)
+        public async Task<string> SendTicket(Ticket _ticket,List<(string,byte[])>_files)
         {
-            Ticket ticket = new Ticket();
-            User user = await App.Database.GetCurrentUserAsync();
-            Dictionary<string, string> document = new Dictionary<string, string>
+            User user = App.Database.GetCurrentUser();
+            var _perfil = getIdPerfil(user.Profile);
+            var _campus = getIdCampus(user.Campus);
+            
+            var request = new RestRequest($"/index.php?a=add&perfil={_perfil}&campus={_campus}&area={_ticket.Area}&category={_ticket.Category}", Method.POST);
+            var responseR = client.Execute(request);
+
+           
+      
+            
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(responseR.Content);
+            var configParser = AppSettings.getConfigurationParser("index.php");
+
+            //Token
+            var tokenValue = doc.DocumentNode.SelectSingleNode((configParser["Token"]).ToString()).Attributes["value"].Value;
+
+            //Cookie
+            var cookie = responseR.Cookies.FirstOrDefault();
+
+            //Body Request
+            Dictionary<string, object> document = new Dictionary<string, object>
             {
-                {"perfil", user.Profile },
-                {"campus",user.Campus },
-                {"area",ticket.Area },
-                {"category",ticket.Category },
                 {"name",user.Name },
                 {"email",user.Email },
-                {"priority",ticket.Priority.ToString()},
-                {"custom3",user.Account },
+                {"priority",_ticket.Priority},
                 {"custom1",user.Campus },
                 {"custom2",user.Profile },
-                {"custom3",ticket.UserID.ToString()},
+                {"custom3",user.Account },
+
+
                 {"custom4",user.Career},
-                {"custom5",ticket.Classification},
+                {"custom5",_ticket.Classification},
                 {"custom6",user.PhoneNumber},
-                {"custom7",user.PersonalMail},
-                {"subject",ticket.Subject},
-                {"messege",ticket.Message}
+                {"custom7",user.PersonalMail==null?user.Email:user.PersonalMail},
+                {"subject",_ticket.Subject},
+                {"message",_ticket.Message},
+                {"category",_ticket.Category },
+                {"token",tokenValue},
+                {"hx",3 },
+                {"hy",""}
+
             };
-            var request = new RestRequest("/index.php?a=add",Method.POST);
-            var responseR =client.Execute(request);
 
+            MultipartFormDataContent form = new MultipartFormDataContent();
 
-            ///<sumary>Cookie</sumary>
-            var cookie = responseR.Cookies.FirstOrDefault();
-            request.AddCookie(cookie.Name,cookie.Value);
+            //GET CHARSET OF SERVER
+            string charset = new StringContent(responseR.Content).Headers.ContentType.CharSet;
 
+            //Set Encoding al formulario
+            var encoder = Encoding.GetEncoding(charset);
+            form.Headers.ContentType.CharSet = charset;
+            Console.WriteLine("Charset: " + encoder.EncodingName+"\t"+charset);
+
+            //Agregando cookie
+            form.Headers.Add("Cookie", $"{cookie.Name}={cookie.Value}");
+
+            foreach (var item in document)
+            {
+                //Agregando contenido al formulario
+                form.Add(new StringContent(item.Value.ToString(), encoder), item.Key);
+            }
+
+            int indexFile = 1;
+
+            //Agregando los Archivos al Formulario
+            foreach(var file in _files)
+            {
+                form.Add(new ByteArrayContent(file.Item2, 0, file.Item2.Length), "attachment[" + (indexFile) + "]", file.Item1);
+                indexFile++;
+            }
+            string responseResult = "error";
+
+            //Enviando la peticion al servidor
+            using (var client = new HttpClient())
+            {
+                var response = await client.PostAsync($"{BASE_ADDRESS}/submit_ticket.php",form);
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        var resultData = await response.Content.ReadAsStringAsync();
+                        response.Dispose();
+                        doc.LoadHtml(resultData);
+                        var success = doc.DocumentNode.SelectSingleNode("//div[@class='success']");
+                        if (success != null)
+                        {
+                            var ID_TICKET= success.SelectSingleNode("//b[2]");
+                            Console.WriteLine("TICKET ENVIADO, SU ID = " + ID_TICKET.InnerText);
+                            responseResult = ID_TICKET.InnerText;
+                            return ID_TICKET.InnerText;   // return ID del ticket creado.
+                        }
+                    }
+                }
+            }
+            return responseResult;  //return "error" si no se creo el ticket
+              
+        }
+
+        public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, Ticket _ticket, List<(string, byte[])> files)
+        {
+           
+            User user = await App.Database.GetCurrentUserAsync();
+            
 
             var html = @"" + BASE_ADDRESS + "/index.php?a=add";
             //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
@@ -380,14 +554,15 @@ namespace tickets.API
             form.Add(new StringContent(user.Career, encoder), "custom4");
             form.Add(new StringContent(qualification, encoder), "custom5");
             form.Add(new StringContent(user.PhoneNumber, encoder), "custom15");
-            form.Add(new StringContent(number, encoder), "custom20");
-            form.Add(new StringContent("1", encoder), "category");
-            form.Add(new StringContent(priority, encoder), "priority");
-            form.Add(new StringContent(subject, encoder), "subject");
-            form.Add(new StringContent(message, encoder), "message");
+           // form.Add(new StringContent(number, encoder), "custom20");
+            form.Add(new StringContent(_ticket.Category, encoder), "category");
+            form.Add(new StringContent(_ticket.Priority.ToString(), encoder), "priority");
+            form.Add(new StringContent(_ticket.Subject, encoder), "subject");
+            form.Add(new StringContent(_ticket.Message, encoder), "message");
            
             for (int x = 0; x < files.Count; x++)
             {
+               
                 form.Add(new ByteArrayContent(files[x].Item2, 0, files[x].Item2.Length), "attachment[" + (x + 1) + "]", files[x].Item1);
             }
             form.Add(new StringContent(token, encoder), "token");
@@ -413,6 +588,9 @@ namespace tickets.API
                 return ticketId.InnerText;
             }
         }
+
+
+
 
         private int GetClasificacion(string clasificacion)
         {

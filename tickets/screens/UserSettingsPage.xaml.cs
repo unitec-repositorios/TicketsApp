@@ -9,13 +9,21 @@ namespace tickets
     {
         public UserSettingsPage()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }catch(Exception e)
+            {
+                Console.WriteLine("Message: " + e.Message + "\nStackTrace:" + e.StackTrace);
+            }
             txtname.Completed += (s, e) => txtemail.Focus();
             txtemail.Completed += (s, e) => campuspicker.Focus();
             profilepicker.SelectedIndexChanged += (s, e) => txtaccount.Focus();
+            campuspicker.SelectedIndex = 1;
             //txtemail.Completed += (s, e) => campuspicker.Focus();
             //txtemail.Completed += (s, e) => campuspicker.Focus();
             //txtemail.Completed += (s, e) => campuspicker.Focus();
+           
         }
 
         async protected override void OnAppearing()
@@ -45,7 +53,7 @@ namespace tickets
                 {
                     user.ID = current.ID;
                     user.IsCurrent = true;
-                    await App.Database.SaveUserAsync(user);
+                    App.Database.ActualizarUsuario(user);
                     await DisplayAlert("Enhorabuena", "Su usuario ha sido actualizado exitosamente!", "Aceptar");
                 }
                 user.PrintData();

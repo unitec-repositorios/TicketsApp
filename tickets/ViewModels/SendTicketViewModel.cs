@@ -6,22 +6,31 @@ using tickets.API;
 
 namespace tickets.ViewModels
 {
-    class SendTicketViewModel
+    public class SendTicketViewModel:Ticket
     {
-        public Ticket Ticket { set; get; }
+        
         public ObservableCollection<string> Gestiones { set; get; }
         public ObservableCollection<string> ComoPodemosAyudarte { set; get; }
 
         private Server _server;
-        private Dictionary<string, string> _gestiones;
-        private Dictionary<string, string> _comoPodemosAyudarte;
+        private Dictionary<string, object> _gestiones { set; get; }
+        private Dictionary<string, string> _comoPodemosAyudarte { set; get; }
 
-
+        public SendTicketViewModel()
+        {
+            _server = new Server();
+        }
         private List<string> GetGestiones()
         {
-           
-
-            return null;
+            _gestiones = _server.GetDictionaryAreas();
+            List<string> _tempGestiones=new List<string>();
+            foreach(var item in _gestiones)
+            {
+                _tempGestiones.Add(item.Key);
+            }
+            return _tempGestiones;
         }
+
+       
     }
 }

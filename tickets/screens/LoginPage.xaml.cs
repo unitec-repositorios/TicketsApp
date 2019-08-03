@@ -183,7 +183,7 @@ namespace tickets
         public bool CheckInternetConnection()
         {
             var current = Connectivity.NetworkAccess;
-            if (current == NetworkAccess.Internet)
+            if (current ==Xamarin.Essentials.NetworkAccess.Internet)
             {
                 return true;
             }

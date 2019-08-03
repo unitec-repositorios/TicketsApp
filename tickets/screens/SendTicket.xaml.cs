@@ -20,10 +20,12 @@ namespace tickets
 {
     public partial class SendTicket : ContentPage
     {
-        private Server server = new Server();
-
-        private User user;
-
+        private Server server;
+        public List<string> Categorias;
+        public ObservableCollection<string> Areas;
+        private Dictionary<string, List<string>> AreasxCategorias;
+        private List<(int, string, List<(int, string)>)> OptionsRequestServer;
+       
         public bool sentTicket;
         List<(string, byte[])> files = new List<(string, byte[])>();
         //List<FileData> loadFiles = new List<FileData>();
@@ -31,12 +33,33 @@ namespace tickets
         public SendTicket()
         {
             InitializeComponent();
-            sentTicket = false;
+            initDatos();
             this.BindingContext = new Ticket();
 
 
         }
 
+        private void initDatos()
+        {
+          
+                server = new Server();
+                AreasxCategorias = server.getDictionaryAreasXCategorias();
+            
+            if (Areas == null)
+            {
+
+                Areas = new ObservableCollection<string>(AreasxCategorias.Keys);
+            }
+           
+            picker_Areas.ItemsSource = Areas;
+            picker_Areas.SelectedIndex = 0;
+            Categorias = AreasxCategorias[picker_Areas.SelectedItem.ToString()];
+            picker_categories.ItemsSource = Categorias;
+            picker_categories.SelectedIndex = 0;
+        //    Categorias = new ObservableCollection<string>(server.GetDictionaryCategory((string)picker_Areas.ItemsSource[selectedIndex]).Keys);
+        }
+
+     
         private async void take_Photo(object sender, EventArgs args)
         {
             await CrossMedia.Current.Initialize();
@@ -106,16 +129,34 @@ namespace tickets
         }
 
         async void OnSubmit(object sender, System.EventArgs e)
+
         {
-            var valid = !String.IsNullOrWhiteSpace(number.Value.ToString()) && !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
+            server = new Server();
+            var valid = !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
             if (valid)
             {
                 try
                 {
                     UserDialogs.Instance.ShowLoading("Enviando Ticket...");
-                    
-                    string response = await server.submitTicket(number.Value.ToString(), subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex], files);
-                    
+                    string _keyArea = picker_Areas.SelectedItem.ToString();
+                    var _tempArea = server.GetValueArea(_keyArea);
+                    var _tempCategory = server.GetValueCategoria(_keyArea, picker_categories.SelectedItem.ToString());
+                    Ticket _ticket = new Ticket()
+                    {
+                        ID = "",
+                        Area=_tempArea,
+                        Category=_tempCategory,
+                        Priority = (pickerPriority.SelectedIndex + 1),
+                        Subject = subject.Text,
+                        Message = message.Text,
+                        Classification = picker.SelectedItem.ToString(),
+
+                    };
+                    // string response = await server.submitTicket("0", subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex],_ticket, files);
+                    string response;
+                     response= await server.SendTicket(_ticket, files);
+          
+                       
                     if (response.Equals("error"))
                     {
                         await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
@@ -124,18 +165,9 @@ namespace tickets
                     }
                     else
                     {
-                        string date = await server.getInitDate(response);
-                        await App.Database.CreateNewTicket(new Ticket()
-                        {
-                            ID = response,
-                            UserID = App.Database.GetCurrentUser().ID,
-                            Affected = int.Parse(number.Value.ToString()),
-                            Classification = (picker.SelectedIndex + 1).ToString(),
-                            Priority = pickerPriority.SelectedIndex + 1,
-                            Subject = subject.Text,
-                            Message = message.Text,
-                            Date = date,
-                        });
+                        //   string date = await server.getInitDate(response);
+                        _ticket = await server.GetTicket(response);
+                        App.Database.AgregarTicket(_ticket);
                         UserDialogs.Instance.ShowSuccess("Ticket Enviado!");
                         bool copy = await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
                         
@@ -149,7 +181,7 @@ namespace tickets
 
                         
 
-                        number.Value = 1;
+                        
                         subject.Text = "";
                         message.Text = "";
                         picker.SelectedIndex = 1;
@@ -161,6 +193,8 @@ namespace tickets
                 }
                 catch (Exception ex)
                 {
+                    
+                    Console.WriteLine(ex.StackTrace + " ----- "+ex.TargetSite );
                     await DisplayAlert("Error", "Error= " + ex, "OK");
                 }
             }
@@ -181,5 +215,13 @@ namespace tickets
             }
         }
 
+        private void Picker_Areas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+         //   int SelectedIndex = picker_Areas.SelectedIndex;
+            Categorias = AreasxCategorias[picker_Areas.SelectedItem.ToString()];
+            picker_categories.ItemsSource = Categorias;
+
+            picker_categories.SelectedIndex = 0;
+        }
     }
 }

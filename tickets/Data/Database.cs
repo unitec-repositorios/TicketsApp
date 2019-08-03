@@ -8,6 +8,7 @@ using System;
 using System.Text;
 using tickets.Data;
 using System.Collections.ObjectModel;
+using tickets.Models;
 
 namespace tickets
 {
@@ -22,6 +23,7 @@ namespace tickets
             database.CreateTableAsync<Ticket>().Wait();
             database.CreateTableAsync<Comment>().Wait();
             database.CreateTableAsync<AdminUser>().Wait();
+            database.CreateTableAsync<TicketFile>().Wait();
         }
 
         public SQLiteAsyncConnection GetConnection()
@@ -301,11 +303,14 @@ namespace tickets
             return  database.Table<Ticket>().ToListAsync();
         }
 
-      
+        public async void ActualizarUsuario(User _user)
+        {
+            await database.UpdateAsync(_user);
+        }            
 
         public async void AgregarTicket(Ticket ticket)
         {
-            await database.InsertAsync(ticket);
+            await database.InsertOrReplaceAsync(ticket);
         }
 
         public async void ActualizarTicket(Ticket ticket)
