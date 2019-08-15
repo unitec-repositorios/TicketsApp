@@ -67,17 +67,17 @@ namespace tickets
 
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
 
         }
 
-        protected override void OnSleep()
+        protected override async void OnSleep()
         {
             // Handle when your app sleeps
         }
 
-        protected override void OnResume()
+        protected override async void OnResume()
         {
             // Handle when your app resumes
         }

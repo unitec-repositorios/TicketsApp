@@ -229,18 +229,16 @@ namespace tickets
                 if (ticket != null)
                 {
                     UserDialogs.Instance.ShowLoading("Cargando Ticket...");
+                    chatTicket _chatTicket = new chatTicket() { BindingContext = ticket.ID };
                     Debug.WriteLine("Opening messages for ticket with id = " + ticket.ID);
-                    ticket.Date = await server.getUpdateDate(ticket.ID);
+                  //  ticket.Date = await server.getUpdateDate(ticket.ID);
                     ticket.Image = "";
+                   
+                    //ticket.OpenImage = "";
 
-                    ticket.OpenImage = "";
-
-                    await App.Database.UpdateTicket(ticket);
-                    await Navigation.PushAsync(new chatTicket()
-                    {
-                        BindingContext = ticket.ID
-                    });
-                    //TicketsListView.SelectedItem = null;
+                    //await App.Database.UpdateTicket(ticket);
+                    Navigation.PushAsync(_chatTicket);
+                    TicketsListView.SelectedItem = null;
                     
                     UserDialogs.Instance.HideLoading();
                 }

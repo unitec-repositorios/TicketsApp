@@ -29,7 +29,7 @@ namespace tickets
         private string messageRef = "<p><b>Mensaje:</b></p>";
         private string autorRef = "<td class=\"tickettd\">";
         public string stateText {get;set;}
-        private List<DateTime> dateMessagesList;
+       
         private ToolbarItem openTicket,openBrowserTool,deleteTicketT;
        // public static bool deletedTicket = false;
         public chatViewModel chatVM;
@@ -40,7 +40,7 @@ namespace tickets
                 InitializeComponent();
                 this.BindingContext = this;
                 chatVM = new chatViewModel(ticketID, files);
-                dateMessagesList = new List<DateTime>();
+       
                 
                 chatVM.ListMessages.CollectionChanged += (sender, e) =>
                 {
@@ -211,9 +211,12 @@ namespace tickets
                     Title = "Ticket No. " + ticketID;
                 }
                 BindingContext = chatVM = new chatViewModel(ticketID, files);
+                Console.WriteLine("Cargando Mensajes");
+                await readTicket();
+                Console.WriteLine("Mensajes Cargados");
                 openTicket.Text = await getSateText();
-                dateMessagesList = await server.getDateMessage(ticketID);
-                readTicket();
+              
+              
             }
             catch (Exception ex)
             {
@@ -221,125 +224,23 @@ namespace tickets
             }
         }
 
-        public async void readTicket()
+        public async Task readTicket()
         {
-            string html = await server.getTicket(ticketID);
-            string autor = "";
-            string message = "";
-            string myName = null;
-            int position = html.IndexOf(autorRef + "N");
-            int index = position + autorRef.Count();
-            int posFecha = 0;
-            while (position != -1)
+            List<Message> mensajes = await server.GetMessages(ticketID);
+           
+            string myName = mensajes.First().Autor;
+            foreach(var mensaje in mensajes)
             {
-                html = html.Substring(index);
-                autor = getAutor(html);
-                if (myName == null)
+                if (mensaje.Autor == myName)
                 {
-                    myName = autor;
+                    mensaje.EsPropio = true;
                 }
-                position = html.IndexOf(messageRef);
-                index = position + messageRef.Count();
-                if (position != -1)
-                {
-                    html = html.Substring(index);
-                    message = getMessage(html);
-                    bool typeText = true;
-                    //add new message to the chat
-                    if (autor.Equals(myName))
-                    {
-                        autor = "";
-                        typeText = false;
-                    }
-                    else
-                    {
-                        autor += ":\n";
-                    }
-                   
-                    var mymessage = new Message
-                    {
-                        Text = autor + message,
-                        IsTextIn = typeText,
-                        //need to correct the time message
-                        MessageDateTime = dateMessagesList[posFecha]
-                    };
-                    chatVM.ListMessages.Add(mymessage);
-                    posFecha++;
-                }
-                position = html.IndexOf(autorRef + "N");
-                index = position + autorRef.Count();
+                chatVM.ListMessages.Add(mensaje);
             }
-
-            messageComponent.IsVisible = await server.getOpenTicket(ticketID);
+           
             //Loading.IsVisible = false;
         }
-        public string getAutor(string html)
-        {
-            string autor = "";
-            string supportString = "";
-            int index = 0;
-            while (index != -1)
-            {
-                if (supportString.Contains(autorRef))
-                {
-                    if (html[index] != '<')
-                    {
-                        autor += html[index];
-                    }
-                    else
-                    {
-                        index = -2;
-                    }
-                }
-                else
-                {
-                    supportString += html[index];
-                }
-                index++;
-            }
-            return autor;
-        }
-        public string getMessage(string html)
-        {
-            string Mimessage = "";
-            string supportString = "";
-            int index = html.IndexOf("<p>") + 3;
-            int endMessage = html.IndexOf("</p>");
-            int endMessage2 = html.IndexOf("&nbsp;</p>");
-            bool tag = false;
-            if (endMessage2 < 0)
-            {
-                endMessage2 = endMessage;
-            }
-            while (index < endMessage && index < endMessage2)
-            {
-                if (html[index] == '<')
-                {
-                    supportString += html[index];
-                    tag = true;
-                }
-                else if (html[index] == '>')
-                {
-                    supportString += html[index];
-                    if (supportString.Equals("<br />"))
-                    {
-                        Mimessage += "\n";
-                    }
-                    supportString = "";
-                    tag = false;
-                }
-                else if (tag)
-                {
-                    supportString += html[index];
-                }
-                else
-                {
-                    Mimessage += html[index];
-                }
-                index++;
-            }
-            return Mimessage;
-        }
+
 
         async void switchState()
         {           

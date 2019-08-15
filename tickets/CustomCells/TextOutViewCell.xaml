@@ -11,24 +11,26 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
 
         </Grid.RowDefinitions>
-
-        <Frame Grid.Row="0"  Grid.Column="1" CornerRadius="15">
+     <!--   <Label Grid.Row="1" Grid.Column="1" TextColor="Black" FontSize="Small" FontAttributes="Bold"  Text="{Binding Autor}"/> -->
+        <Frame Grid.Row="2"  Grid.Column="1" CornerRadius="15">
             <Frame.HasShadow>
                 <OnPlatform x:TypeArguments="x:Boolean" Android="true" iOS="false"/>
             </Frame.HasShadow>
             <Frame.BackgroundColor>
                 <OnPlatform x:TypeArguments="Color" Android="White" iOS="#F5F5F5"/>
             </Frame.BackgroundColor>
-
+         
             <StackLayout Orientation="Vertical">
+                <Label TextColor="Black" FontSize="Small" FontAttributes="Bold"  Text="{Binding Autor}"/>
                 <Label TextColor="Black"  Text="{Binding Text}" />
 
             </StackLayout>
         </Frame>
-        <Label Grid.Row="1" FontSize="Micro" Grid.Column="1" HorizontalTextAlignment="End"  Text="{Binding MessageDateTime, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" TextColor="Gray"></Label>
+        <Label Grid.Row="3" FontSize="Micro" Grid.Column="1" HorizontalTextAlignment="End"  Text="{Binding Date, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" TextColor="Gray"></Label>
 
     </Grid>
 </ViewCell>

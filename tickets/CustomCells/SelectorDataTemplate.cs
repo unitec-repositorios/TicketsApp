@@ -14,7 +14,7 @@ namespace tickets
             var messageVm = item as Message;
             if (messageVm == null)
                 return null;
-            return messageVm.IsTextIn ? this.textInDataTemplate : this.textOutDataTemplate;
+            return messageVm.EsPropio ? this.textInDataTemplate : this.textOutDataTemplate;
         }
 
 

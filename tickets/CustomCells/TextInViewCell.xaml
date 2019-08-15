@@ -23,6 +23,6 @@
             </StackLayout>
         </Frame>
 
-        <Label FontSize="Micro" Grid.Row="1" Grid.Column="1" Text="{Binding MessageDateTime, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" TextColor="Gray"></Label>
+        <Label FontSize="Micro" Grid.Row="1" Grid.Column="1" Text="{Binding Date, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" TextColor="Gray"></Label>
     </Grid>
 </ViewCell>

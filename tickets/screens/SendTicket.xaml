@@ -20,9 +20,9 @@
                         <Label Text="Area" FontAttributes="Bold" FontSize="Large"/>
                         <Picker x:Name="picker_Areas" FontSize="Medium" SelectedIndexChanged="Picker_Areas_SelectedIndexChanged">
                         </Picker>
-                        <Label Text="Categoria" FontAttributes="Bold" FontSize="Large"/>
+                        <Label Text="Categoría" FontAttributes="Bold" FontSize="Large"/>
                         <Picker x:Name="picker_categories"  FontSize="Medium" ></Picker>
-                        <Label Text="Clasificacion"  Font="Bold" FontSize="Large"></Label>
+                        <Label Text="Clasificación"  Font="Bold" FontSize="Large"></Label>
                         <Picker x:Name="picker" SelectedIndex="1">
                             <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">

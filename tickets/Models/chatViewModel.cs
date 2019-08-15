@@ -12,7 +12,7 @@ namespace tickets.Models
 {
     public class chatViewModel : BaseViewModel
     {
-        public ObservableRangeCollection<Message> ListMessages { get; }
+        public ObservableRangeCollection<Message> ListMessages { get; set; }
         public ICommand SendCommand { get; set; }
         private Server server = new Server();
         private string ticketID;
@@ -35,9 +35,7 @@ namespace tickets.Models
                     var message = new Message
                     {
                         Text = OutText,
-                        Files = files,
-                        IsTextIn = false,
-                        MessageDateTime = DateTime.Now
+                        Date = DateTime.Now
                     };
 
                     

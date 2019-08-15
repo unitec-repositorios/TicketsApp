@@ -11,6 +11,7 @@ using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Newtonsoft.Json;
 using RestSharp;
+using tickets.Models;
 
 namespace tickets.API
 {
@@ -19,6 +20,7 @@ namespace tickets.API
        // const string BASE_ADDRESS = "https://cap.unitec.edu";
         const string BASE_ADDRESS = AppSettings.BASE_ADDRESS;
         private readonly RestClient client;
+
         public Server()
         {
             client = new RestClient(BASE_ADDRESS);
@@ -58,6 +60,137 @@ namespace tickets.API
             _ticket.Check();
             return _ticket;
 
+        }
+
+        public async Task<string> SendTicket(Ticket _ticket, List<(string, byte[])> _files)
+        {
+            User user = App.Database.GetCurrentUser();
+            var _perfil = getIdPerfil(user.Profile);
+            var _campus = getIdCampus(user.Campus);
+
+            var request = new RestRequest($"/index.php?a=add&perfil={_perfil}&campus={_campus}&area={_ticket.Area}&category={_ticket.Category}", Method.POST);
+            var responseR = client.Execute(request);
+
+
+
+
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(responseR.Content);
+            var configParser = AppSettings.getConfigurationParser("index.php");
+
+            //Token
+            var tokenValue = doc.DocumentNode.SelectSingleNode((configParser["Token"]).ToString()).Attributes["value"].Value;
+
+            //Cookie
+            var cookie = responseR.Cookies.FirstOrDefault();
+
+            //Body Request
+            Dictionary<string, object> document = new Dictionary<string, object>
+            {
+                {"name",user.Name },
+                {"email",user.Email },
+                {"priority",_ticket.Priority},
+                {"custom1",user.Campus },
+                {"custom2",user.Profile },
+                {"custom3",user.Account },
+
+
+                {"custom4",user.Career},
+                {"custom5",_ticket.Classification},
+                {"custom6",user.PhoneNumber},
+                {"custom7",user.PersonalMail==null?user.Email:user.PersonalMail},
+                {"subject",_ticket.Subject},
+                {"message",_ticket.Message},
+                {"category",_ticket.Category },
+                {"token",tokenValue},
+                {"hx",3 },
+                {"hy",""}
+
+            };
+
+            MultipartFormDataContent form = new MultipartFormDataContent();
+
+            //GET CHARSET OF SERVER
+            string charset = new StringContent(responseR.Content).Headers.ContentType.CharSet;
+
+            //Set Encoding al formulario
+            var encoder = Encoding.GetEncoding(charset);
+            form.Headers.ContentType.CharSet = charset;
+            Console.WriteLine("Charset: " + encoder.EncodingName + "\t" + charset);
+
+            //Agregando cookie
+            form.Headers.Add("Cookie", $"{cookie.Name}={cookie.Value}");
+
+            foreach (var item in document)
+            {
+                //Agregando contenido al formulario
+                form.Add(new StringContent(item.Value.ToString(), encoder), item.Key);
+            }
+
+            int indexFile = 1;
+
+            //Agregando los Archivos al Formulario
+            foreach (var file in _files)
+            {
+                form.Add(new ByteArrayContent(file.Item2, 0, file.Item2.Length), "attachment[" + (indexFile) + "]", file.Item1);
+                indexFile++;
+            }
+            string responseResult = "error";
+
+            //Enviando la peticion al servidor
+            using (var client = new HttpClient())
+            {
+                var response = await client.PostAsync($"{BASE_ADDRESS}/submit_ticket.php", form);
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        var resultData = await response.Content.ReadAsStringAsync();
+                        response.Dispose();
+                        doc.LoadHtml(resultData);
+                        var success = doc.DocumentNode.SelectSingleNode("//div[@class='success']");
+                        if (success != null)
+                        {
+                            var ID_TICKET = success.SelectSingleNode("//b[2]");
+                            Console.WriteLine("TICKET ENVIADO, SU ID = " + ID_TICKET.InnerText);
+                            responseResult = ID_TICKET.InnerText;
+                            return ID_TICKET.InnerText;   // return ID del ticket creado.
+                        }
+                    }
+                }
+            }
+            return responseResult;  //return "error" si no se creo el ticket
+
+        }
+
+        public async Task<List<Message>> GetMessages(string _idTicket)
+        {
+            User _user = await App.Database.GetCurrentUserAsync();
+            var request = new RestRequest($"/ticket.php?track={_idTicket}+&e={_user.Email}", Method.GET);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK || response.Content.IndexOf("<b>Error:</b>") != -1)
+            {
+                return null;
+            }
+            List<Message> mensajes = new List<Message>();
+
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(response.Content);
+            int cont = 1;
+            while (getMessageText(cont, document)!=null)
+            {
+                mensajes.Add(new Message
+                {
+                    Autor = getMessageFrom(cont, document),
+                    Date = getMessageDate(cont,document),
+                    Text = getMessageText(cont,document)
+
+                });
+                cont++;
+            }
+         
+
+            return mensajes;
         }
 
         private Dictionary<string, string> GetGestiones()
@@ -115,7 +248,6 @@ namespace tickets.API
                     return 3;
             }
         }
-
 
         private string getItemValue(HtmlDocument _document, Dictionary<string, object> _parserServer, string _key)
         {
@@ -182,10 +314,6 @@ namespace tickets.API
             return GetDictionaryCategory(area)[categoria].ToString();
         }
 
-
-
-
-
         public async Task<string> getDetailsTicket(string id)
         {
             HttpClient client = new HttpClient();
@@ -201,8 +329,6 @@ namespace tickets.API
             }   
             return html;
         }
-
-
 
         public async Task<List<DateTime>> getDateMessage(string id)
         {
@@ -289,8 +415,6 @@ namespace tickets.API
             return "error al recibir la fecha";
         }
 
-      
-
         public async Task<string> getUpdateDate(string id)
         {
            
@@ -322,6 +446,7 @@ namespace tickets.API
             }
             
         }
+
         public async Task<bool> getOpenTicket(string id)
         {
             HttpClient _client = new HttpClient();
@@ -392,9 +517,6 @@ namespace tickets.API
             return txt;
         }
 
-       
-
-
         public async Task<string> getTicket(string id)
         {
             var uri = BASE_ADDRESS + "/ticket.php?track=" + id;
@@ -406,107 +528,6 @@ namespace tickets.API
             Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
             string value = encoder.GetString(response, 0, response.Length - 1);
             return value;
-        }
-
-        public async Task<string> SendTicket(Ticket _ticket,List<(string,byte[])>_files)
-        {
-            User user = App.Database.GetCurrentUser();
-            var _perfil = getIdPerfil(user.Profile);
-            var _campus = getIdCampus(user.Campus);
-            
-            var request = new RestRequest($"/index.php?a=add&perfil={_perfil}&campus={_campus}&area={_ticket.Area}&category={_ticket.Category}", Method.POST);
-            var responseR = client.Execute(request);
-
-           
-      
-            
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(responseR.Content);
-            var configParser = AppSettings.getConfigurationParser("index.php");
-
-            //Token
-            var tokenValue = doc.DocumentNode.SelectSingleNode((configParser["Token"]).ToString()).Attributes["value"].Value;
-
-            //Cookie
-            var cookie = responseR.Cookies.FirstOrDefault();
-
-            //Body Request
-            Dictionary<string, object> document = new Dictionary<string, object>
-            {
-                {"name",user.Name },
-                {"email",user.Email },
-                {"priority",_ticket.Priority},
-                {"custom1",user.Campus },
-                {"custom2",user.Profile },
-                {"custom3",user.Account },
-
-
-                {"custom4",user.Career},
-                {"custom5",_ticket.Classification},
-                {"custom6",user.PhoneNumber},
-                {"custom7",user.PersonalMail==null?user.Email:user.PersonalMail},
-                {"subject",_ticket.Subject},
-                {"message",_ticket.Message},
-                {"category",_ticket.Category },
-                {"token",tokenValue},
-                {"hx",3 },
-                {"hy",""}
-
-            };
-
-            MultipartFormDataContent form = new MultipartFormDataContent();
-
-            //GET CHARSET OF SERVER
-            string charset = new StringContent(responseR.Content).Headers.ContentType.CharSet;
-
-            //Set Encoding al formulario
-            var encoder = Encoding.GetEncoding(charset);
-            form.Headers.ContentType.CharSet = charset;
-            Console.WriteLine("Charset: " + encoder.EncodingName+"\t"+charset);
-
-            //Agregando cookie
-            form.Headers.Add("Cookie", $"{cookie.Name}={cookie.Value}");
-
-            foreach (var item in document)
-            {
-                //Agregando contenido al formulario
-                form.Add(new StringContent(item.Value.ToString(), encoder), item.Key);
-            }
-
-            int indexFile = 1;
-
-            //Agregando los Archivos al Formulario
-            foreach(var file in _files)
-            {
-                form.Add(new ByteArrayContent(file.Item2, 0, file.Item2.Length), "attachment[" + (indexFile) + "]", file.Item1);
-                indexFile++;
-            }
-            string responseResult = "error";
-
-            //Enviando la peticion al servidor
-            using (var client = new HttpClient())
-            {
-                var response = await client.PostAsync($"{BASE_ADDRESS}/submit_ticket.php",form);
-                if (response.IsSuccessStatusCode)
-                {
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        var resultData = await response.Content.ReadAsStringAsync();
-                        response.Dispose();
-                        doc.LoadHtml(resultData);
-                        var success = doc.DocumentNode.SelectSingleNode("//div[@class='success']");
-                        if (success != null)
-                        {
-                            var ID_TICKET= success.SelectSingleNode("//b[2]");
-                            Console.WriteLine("TICKET ENVIADO, SU ID = " + ID_TICKET.InnerText);
-                            responseResult = ID_TICKET.InnerText;
-                            return ID_TICKET.InnerText;   // return ID del ticket creado.
-                        }
-                    }
-                }
-            }
-            return responseResult;  //return "error" si no se creo el ticket
-              
         }
 
         public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, Ticket _ticket, List<(string, byte[])> files)
@@ -589,9 +610,6 @@ namespace tickets.API
             }
         }
 
-
-
-
         private int GetClasificacion(string clasificacion)
         {
             switch (clasificacion)
@@ -604,6 +622,7 @@ namespace tickets.API
             }
            
         }
+
         private int GetPrioridad(string prioridad)
         {
             switch (prioridad) {
@@ -614,7 +633,6 @@ namespace tickets.API
                 default:        return 3;
             }
         }
-
 
         public async Task<string> replyTicket(string message, List<(string, byte[])> files, string ticketID)
         {
@@ -725,6 +743,39 @@ namespace tickets.API
             {
                 return "error";
             }
+        }
+
+        private string getMessageFrom(int index, HtmlDocument document)
+        {
+            var element = document.DocumentNode.SelectSingleNode($"//html//body//table//tr[2]//table[2]//tr[2]/td[2]/table//tr//table//tr//table//tr[2]//td[2]");
+            if (index == 1)
+                return element.InnerText;
+            element = document.DocumentNode.SelectSingleNode($"//html/body//table//tr[2]//table[2]//tr[2]//table//tr[{index}]//table//tr//table//tr[2]/td[2]");
+            if (element != null)
+                return element.InnerText;
+            else
+                return null;
+
+        }
+        private string getMessageText(int n, HtmlDocument document)
+        {
+            var element = document.DocumentNode.SelectSingleNode($"//html//body//table//tr[2]//table[2]//tr[2]//table//tr[{n}]//p[2]");
+            if (element != null)
+                return element.InnerText.Replace("&nbsp;", "");
+            else
+                return null;
+        }
+        private DateTime getMessageDate(int index, HtmlDocument document)
+        {
+            var element = document.DocumentNode.SelectSingleNode($"//html//body//table//tr[2]//table[2]//tr[2]/td[2]/table//tr//table//tr//table//tr//td[2]");
+            if (index == 1)
+                return DateTime.ParseExact(element.InnerText, "dd/MM/yyyy HH:mm:ss", null);
+
+            element = document.DocumentNode.SelectSingleNode($"//html/body//table//tr[2]//table[2]//tr[2]//table//tr[{index}]//table//tr//table//td[2]");
+            if (element != null)
+                return DateTime.ParseExact(element.InnerText, "dd/MM/yyyy HH:mm:ss", null);
+            else
+                return DateTime.MinValue;
         }
     }
 }
