@@ -23,14 +23,21 @@ namespace tickets.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private bool _isRefreshing= false;
+        
 
+        private bool _isEmpty = false;
         public bool IsEmpty {
             get
             {
-                return ListTickets == null || ListTickets.Count <= 0;
+                return _isEmpty;
+            }
+            set
+            {
+                _isEmpty = value;
+                OnPropertyChanged();
             }
         }
+        private bool _isRefreshing = false;
         public bool IsRefreshing
         {
             get { return _isRefreshing; }
@@ -39,7 +46,79 @@ namespace tickets.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
+        private string _sortBy;
+
+        public string SortBy
+        {
+            get { return _sortBy; }
+            set {
+                _sortBy = value;
+                OnPropertyChanged();
+                if (!string.IsNullOrEmpty(_sortBy))
+                {
+                    /*
+                     <x:String>Todos</x:String>
+                                <x:String>Abiertos</x:String>
+                                <x:String>Creación(Recientes)</x:String>
+                                <x:String>No Leídos</x:String>
+                     */
+                    var _originalListCopy = ListBaseTickets;
+                    if (_sortBy == "Todos")
+                        ListTickets = _originalListCopy;
+                    else if (_sortBy == "Abiertos")
+                    {
+                        ListTickets = new ObservableCollection<Ticket>(_originalListCopy.Where(x => x.IsOpen == true));
+                       
+                    }
+                    else if (_sortBy == "Creación(Recientes)")
+                    {
+                        ListTickets = new ObservableCollection<Ticket>(_originalListCopy.OrderByDescending(x => x.CreationDate));
+                  
+                    }
+                    else if (_sortBy == "No Leídos")
+                    {
+                        ListTickets = new ObservableCollection<Ticket>(_originalListCopy.Where(x => x.HasUpdate == true));
+                      
+                    }
+                    IsEmpty = false;
+                
+
+                        
+                }
+            }
+        }
+
+        private string _searchText;
+
+        public string SearchText
+        {
+            get {
+                return _searchText;
+            }
+            set {
+                if (_searchText != value)
+                {
+                    _searchText = value;
+                    if (!string.IsNullOrEmpty(_searchText))
+                    {
+                        var _originalListCopy = ListBaseTickets;
+                        var findText = _searchText.ToLower();
+                        ListTickets = new ObservableCollection<Ticket>(_originalListCopy.Where(x=>x.Subject.ToLower().Contains(findText)));
+                        IsEmpty = false;
+                    }
+                    else
+                    {
+                        SortBy = "Todos";
+                    }
+                }
+                OnPropertyChanged();
+               
+            }
+        }
+
+
+
         private SendTicket viewSendTicket { get; set; }
         
 
@@ -68,7 +147,8 @@ namespace tickets.ViewModels
             set {
                 _listTickets = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(IsEmpty));
+                IsEmpty = ListTickets == null || ListTickets.Count <= 0;
+
             }
 
         }
@@ -90,48 +170,27 @@ namespace tickets.ViewModels
         }
 
         private Server _server= new Server();
-        
 
-        private Ticket _selectedTicket;
 
-       
+        private ObservableCollection<Ticket> ListBaseTickets { get; set; }
 
-        /*public Ticket SelectedTicket
-        {
-            get => _selectedTicket;
-            set {
-                if (_selectedTicket != value)
-                {
-                    _selectedTicket = value;
-                    OnPropertyChanged();
-                    HandleSelectedItem();
-                    _selectedTicket = null;
-                }
-                
-               
-                
-           
-            }
-        }
-        */
         public ICommand AddTicketCommand { get; set; }
         public ICommand GoToSettingsCommand { get; set; }
         public ICommand GoToSendTicketCommand { get; set; }
-        public ICommand RefreshTickets { get; set; }
+        public ICommand RefreshTicketsCommand { get; set; }
 
       //  private SendTicket sendTicketView = new SendTicket();
 
         public ListTicketsViewModel()
         {
-            //  ListTickets = new ObservableCollection<Ticket>(); 
+            
             GetTickets();
             checkUpdates();
 
-          //  ListTickets.Add(new Ticket() { Subject = "Hola", IsOpen = false, CreationDate = DateTime.Now });
             AddTicketCommand = new Command(async () => await AddTicketAsync(),()=>!IsBusy);
             GoToSettingsCommand = new Command(async () => await GoToSettings(),()=>!IsBusy);
             GoToSendTicketCommand = new Command( () =>  GoToSendTicket(), () => !IsBusy);
-            RefreshTickets = new Command( () => RefreshTicket(), () => !IsBusy);
+            RefreshTicketsCommand = new Command(async () =>await RefreshTicket());
             
         }
 
@@ -141,6 +200,7 @@ namespace tickets.ViewModels
             var user = await App.Database.GetCurrentUserAsync();
             var temp_list =  await App.Database.GetTickets(int.Parse(user.Account));
             ListTickets = new ObservableCollection<Ticket>(temp_list.OrderByDescending(t => t.CreationDate).OrderByDescending(t => t.IsOpen));
+            ListBaseTickets = ListTickets;
             
         }
 
@@ -222,15 +282,16 @@ namespace tickets.ViewModels
      
         }
 
-        private async void RefreshTicket()
+        private async Task RefreshTicket()
         {
-            if (!IsRefreshing)
-            {
-                IsRefreshing = true;
-                checkUpdates();
-                await Task.Delay(800);
-                IsRefreshing = false;
-            }    
+
+            IsRefreshing = true;
+            checkUpdates();
+            await Task.Delay(800);
+            IsRefreshing = false;
+                
+
+             
         }
 
 
@@ -238,6 +299,12 @@ namespace tickets.ViewModels
         {
             if (!IsBusy && ListTickets!=null)
             {
+                var currentConnection = Connectivity.NetworkAccess;
+                if (currentConnection != NetworkAccess.Internet)
+                {
+                    IsBusy = false;
+                    return;
+                }
                 IsBusy = true;
                 foreach (var item in ListTickets)
                 {

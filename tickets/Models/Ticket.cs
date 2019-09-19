@@ -85,10 +85,12 @@ namespace tickets
         public bool IsOpen
         {
             get {
-                if (Estado == "Resuelto" || Estado == "Cerrar Ticket" || !_isOpen)
-                    return false;
+                if (Estado.Contains("Resuelto") || Estado.Contains("Cerrar Ticket"))
+                    _isOpen = false ;
                 else
-                    return false;
+                    _isOpen=true;
+
+                return _isOpen;
             }
             set
             {
@@ -106,9 +108,11 @@ namespace tickets
             get
             {
                 if (IsOpen)
-                    return "";
+                    _openImage="";
                 else
-                    return "lock.png";
+                    _openImage= "lock.png";
+
+                return _openImage;
             }
             set {
                 _openImage = value;

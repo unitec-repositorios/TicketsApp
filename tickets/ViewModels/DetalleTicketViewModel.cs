@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using tickets.API;
+using tickets.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -17,15 +18,15 @@ namespace tickets.ViewModels
 
         public Command ActualizarEstadoCommand { get; set; }
         public Command GoToWebCommand { get; set; }
+        public Command DeleteTicketCommand { get; set; }
 
         public DetalleTicketViewModel(Ticket _ticket=null)
         {
             _modelo = _ticket;
-           // Console.WriteLine("ID Ticket"+ID);
-           // Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject((Ticket)this));
             InitModel();
-            ActualizarEstadoCommand = new Command(async () => await ActualizarEstadoTicket());
+            ActualizarEstadoCommand = new Command(async () => await ActualizarEstadoTicket(),()=>!IsBusy);
             GoToWebCommand = new Command(async () => await GoToWeb(), () => !IsBusy);
+            DeleteTicketCommand = new Command(async () => await DeleteTicket(), () => !IsBusy);
         }
 
         public bool IsBusy { get; set; }
@@ -41,7 +42,7 @@ namespace tickets.ViewModels
             Console.WriteLine($"Cambiando Open de {IsOpen} a {!IsOpen}");
            
                     var actualValue = IsOpen;
-                    IsOpen = !actualValue;
+                //    IsOpen = !actualValue;
                   //  var _ticket = await _server.GetTicket(ID);
                     //await _database.ActualizarTicket(_ticket);
                     //_modelo = _ticket;
@@ -57,12 +58,30 @@ namespace tickets.ViewModels
             if (!IsBusy)
             {
                 IsBusy = true;
-               // var refresh = await _server.getRefreshCode();
-                //var uri = $"{_server.GetBaseAdress()}/ticket.php?track={ID}&Refresh={refresh}";
+                var server = new Server();
+                var uri = await server.GetURLTicket(_modelo.ID);
                 IsBusy = false;
-                //await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+                await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
             }
           
+        }
+
+        private async Task DeleteTicket()
+        {
+            if (!IsBusy)
+            {
+                IsBusy = true;
+                bool answer = await Application.Current.MainPage.DisplayAlert("Alerta!", "¿Estas seguro que deseas eliminar este ticket?", "Si", "No");
+                if (answer)
+                {
+                    App.Database.EliminarTicket(_modelo);
+                    IsBusy = false;
+                    App.Current.MainPage = new NavigationPage(new ListTicketsView());
+
+                }
+                IsBusy = false;
+            }
+        
         }
 
         private void InitModel()

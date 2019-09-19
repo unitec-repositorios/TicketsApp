@@ -368,11 +368,23 @@ namespace tickets
         public async Task AddMensaje(Message message )
         {
             await database.InsertOrReplaceAsync(message);
+        
+        }
+
+        public async Task AddMensajes(List<Message> mensajes)
+        {
+            await database.InsertAllAsync(mensajes);
         }
         public async Task<List<Message>> GetMessages(string id)
         {
             return await database.Table<Message>().Where(item=>item.IdTicket==id).ToListAsync();
         }
+
+        public async Task DeleteAllMessagesWith(string idTicket)
+        {
+            await database.Table<Message>().DeleteAsync(x => x.IdTicket == idTicket);
+        }
+       
             
 
 

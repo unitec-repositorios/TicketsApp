@@ -9,8 +9,8 @@
              x:Class="tickets.Views.DetalleTicketView">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Order="Primary" Icon="internet.png" />
-        <ToolbarItem Order="Secondary" Icon="cap.png" Text="Delete"/>
+        <ToolbarItem Order="Primary" Command="{Binding GoToWebCommand}" Icon="internet.png" />
+        <ToolbarItem Order="Secondary" Command="{Binding  DeleteTicketCommand}" Icon="cap.png" Text="Elimnar Ticket"/>
 
     </ContentPage.ToolbarItems>
     <ContentPage.Content>

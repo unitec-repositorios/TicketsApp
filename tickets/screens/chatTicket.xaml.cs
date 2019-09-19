@@ -60,7 +60,7 @@ namespace tickets
            
         }
 
-        private async Task openBrowser()
+        private async void openBrowser()
         {
             var uri = await server.GetURLTicket(ticketID);
             await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
@@ -186,15 +186,51 @@ namespace tickets
 
         public async void readTicket()
         {
-            Console.WriteLine(ticketID);
-            List<Message> mensajes =await server.GetMessages(ticketID);
-            if (mensajes != null)
+            chatVM.ListMessages.Clear();
+            var currentAccess= Connectivity.NetworkAccess;
+            List<Message> messages = null;
+            if (currentAccess == NetworkAccess.Internet)
             {
-                Console.WriteLine(mensajes.Count);
-                foreach (var mensaje in mensajes)
+               messages= await server.GetMessages(ticketID);
+            }
+              
+            if (messages == null)
+            {
+                var messagesDB = await App.Database.GetMessages(ticketID);
+                if (messagesDB == null)
                 {
+                    
+                    var currentTicket = await App.Database.GetTicket(ticketID);
+                    chatVM.ListMessages.Add(new Message()
+                    {
+                        IdTicket = currentTicket.ID,
+                        EsPropio=true,
+                        Date=currentTicket.CreationDate,
+                        Text= currentTicket.Message
+                    }) ;
+                }
+                else
+                {
+                    
+                    foreach (var item in messagesDB)
+                    {
+                        chatVM.ListMessages.Add(item);
+                    }
+                }
+                return;
+            }
+           // List<Message> mensajes = messages;
+            if (messages != null)
+            {
+                await App.Database.DeleteAllMessagesWith(ticketID);
+              
+                Console.WriteLine(messages.Count);
+                foreach (var mensaje in messages)
+                {
+                    mensaje.IdTicket = ticketID;
                     chatVM.ListMessages.Add(mensaje);
                 }
+                await App.Database.AddMensajes(chatVM.ListMessages.ToList());
             }
             else
             {
@@ -235,7 +271,8 @@ namespace tickets
 
         async Task<string> getSateText()
         {
-            return  await server.getOpenTicket(ticketID) ? "Cerrar Ticket" : "Abrir Ticket";
+            var currentTicket = await App.Database.GetTicket(ticketID);
+            return currentTicket.IsOpen? "Cerrar Ticket" : "Abrir Ticket";
         }
 
         private async void DeleteTicket(object sender, EventArgs e)
@@ -247,7 +284,7 @@ namespace tickets
         private async void GotoBrowser(object sender, EventArgs e)
 
         {
-            await openBrowser();
+             openBrowser();
         }
 
         private async void changeStatusTicket(object sender, EventArgs e)

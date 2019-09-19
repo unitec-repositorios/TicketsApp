@@ -16,7 +16,7 @@ using Microsoft.Identity.Client.Platforms.Android;
 
 namespace tickets.Droid
 {
-    [Activity(Label = "CAP Mobile", Icon = "@drawable/Icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "CAP Mobile", Icon = "@drawable/Icon", Theme = "@style/MainTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override async void OnCreate(Bundle bundle)

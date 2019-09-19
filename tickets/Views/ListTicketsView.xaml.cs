@@ -23,6 +23,7 @@ namespace tickets.Views
           //  BindingContext=this;
             
             BindingContext =new ListTicketsViewModel();
+            Picker_Filter.SelectedIndex = 0;
             
         }
 
@@ -55,6 +56,20 @@ namespace tickets.Views
                 );
                
               
+            }
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (SearchBar_Search != null) {
+                if (SearchBar_Search.Text.Length > 0)
+                {
+                    StackLayout_Filter.IsVisible = false;
+                }
+                else
+                {
+                    StackLayout_Filter.IsVisible = true;
+                }
             }
         }
     }
