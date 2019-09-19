@@ -265,15 +265,24 @@ namespace tickets.ViewModels
         }
         private void GoToSendTicket()
         {
-            if (!IsBusy)
+            var currentConnection = Connectivity.NetworkAccess;
+            if (currentConnection != NetworkAccess.Internet)
             {
+                UserDialogs.Instance.ShowError("Sin acceso a internet");
+                Task.Delay(500);
+                return;
+            }
+
+            if (!IsBusy)
+            {              
                 IsBusy = false;
                 Device.BeginInvokeOnMainThread(() => UserDialogs.Instance.ShowLoading());
                 Task.Run( async() => {
                     await GetSendTicketAsync();
                 }).ContinueWith(result => Device.BeginInvokeOnMainThread(() => {
-
+                    
                     UserDialogs.Instance.HideLoading();
+
                     App.Current.MainPage.Navigation.PushAsync(viewSendTicket);
                 })
                 );
