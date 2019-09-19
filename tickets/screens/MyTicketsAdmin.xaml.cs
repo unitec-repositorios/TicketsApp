@@ -86,24 +86,24 @@ namespace tickets
             refreshTicketsTimer.Dispose();
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             //Llamado a GetTickets reemplaza a SetTimer() debido a que el request de sesión en GetTickets crea exception al repetirse
             GetTickets();
             //SetTimer();
         }
 
-        protected override async void OnDisappearing()
+        protected override void OnDisappearing()
         {
             // ClearTimer();
         }
         //Tickets Enviados
-        async void goToViewTicketAdmin(object sender, SelectedItemChangedEventArgs e)
+         void goToViewTicketAdmin(object sender, SelectedItemChangedEventArgs e)
         {
 
         }
 
-        private async void TicketsListView_RefreshingAdmin(object sender, EventArgs e)
+        private  void TicketsListView_RefreshingAdmin(object sender, EventArgs e)
         {
             GetTickets();
             // TicketsListViewAdmin.ItemsSource = null;
@@ -112,7 +112,7 @@ namespace tickets
             TicketsListViewAdmin.EndRefresh();
         }
 
-        private async void SearchBar_TextChangedAdmin(object sender, TextChangedEventArgs e)
+        private void SearchBar_TextChangedAdmin(object sender, TextChangedEventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(e.NewTextValue))
             {
@@ -126,18 +126,18 @@ namespace tickets
         }
 
         //Tickets Asignados
-        async void goToViewTicketAdminAssign(object sender, SelectedItemChangedEventArgs e)
+        void goToViewTicketAdminAssign(object sender, SelectedItemChangedEventArgs e)
         {
 
         }
 
-        private async void TicketsListView_RefreshingAdminAssign(object sender, EventArgs e)
+        private void TicketsListView_RefreshingAdminAssign(object sender, EventArgs e)
         {
             GetTickets();
             TicketsListViewAdminAssign.EndRefresh();
         }
 
-        private async void SearchBar_TextChangedAdminAssign(object sender, TextChangedEventArgs e)
+        private void SearchBar_TextChangedAdminAssign(object sender, TextChangedEventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(e.NewTextValue))
             {

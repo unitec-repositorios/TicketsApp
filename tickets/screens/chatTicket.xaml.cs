@@ -14,6 +14,8 @@ using Plugin.FilePicker.Abstractions;
 using MvvmHelpers;
 using Acr.UserDialogs;
 using Xamarin.Essentials;
+using tickets.ViewModels;
+using tickets.Views;
 
 namespace tickets
 {
@@ -26,22 +28,18 @@ namespace tickets
         private Server server = new Server();
         public List<(string, byte[])> files = new List<(string, byte[])>();
         public string ticketID = null;
-        private string messageRef = "<p><b>Mensaje:</b></p>";
-        private string autorRef = "<td class=\"tickettd\">";
         public string stateText {get;set;}
        
-        private ToolbarItem openTicket,openBrowserTool,deleteTicketT;
-       // public static bool deletedTicket = false;
         public chatViewModel chatVM;
         public chatTicket()
         {
             try
             {
                 InitializeComponent();
-                this.BindingContext = this;
-                chatVM = new chatViewModel(ticketID, files);
-       
+               
                 
+                chatVM = new chatViewModel(ticketID, files);
+                     
                 chatVM.ListMessages.CollectionChanged += (sender, e) =>
                 {
                     var target = chatVM.ListMessages[chatVM.ListMessages.Count - 1];
@@ -51,45 +49,7 @@ namespace tickets
 
                 };
                 ListMessages = new ObservableRangeCollection<Message>();
-                
-               openTicket = new ToolbarItem
-                {
-                   Icon = "trash.png",
-                    Text = "Abrir Ticket",
-                    Command = new Command(execute: () => switchState()),
-
-                    Order = ToolbarItemOrder.Secondary
-
-                };
-
-                openBrowserTool = new ToolbarItem
-                {
-                    Icon = "trash.png",
-                    Text = "Mas detalles",
-                    Command = new Command(execute: () => openBrowser()),
-                    Order = ToolbarItemOrder.Secondary
-                };
-                deleteTicketT = new ToolbarItem
-                {
-                    Icon="trash.png",
-                    Text = "Eliminar Ticket",
-                    Command = new Command(execute: () => deleteTicket()),
-                    Order = ToolbarItemOrder.Secondary
-                };
-
-
-                switch (Device.RuntimePlatform)
-                {
-                    case Device.Android:
-                        ToolbarItems.Add(openTicket);
-                        ToolbarItems.Add(openBrowserTool);
-                        ToolbarItems.Add(deleteTicketT);
-                        break;
-                    case Device.UWP:
-                        ToolbarItems.Add(openTicket);
-                        break;
-                }//*/
-                
+ 
             }
             catch (Exception ex)
             {
@@ -100,20 +60,19 @@ namespace tickets
            
         }
 
-        private async void openBrowser()
+        private async Task openBrowser()
         {
-            string refresh = await server.getRefreshCode();
-            string uri =$"{server.GetBaseAdress()}/ticket.php?track={ticketID}&Refresh={refresh}";
+            var uri = await server.GetURLTicket(ticketID);
             await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
         }
 
-        private async void deleteTicket()
+        private async Task deleteTicket()
         {
             bool answer = await DisplayAlert("Alerta!", "¿Estas seguro que deseas eliminar este ticket?", "Si", "No");
             if (answer)
             {
                 App.Database.EliminarTicket(ticketID);
-                App.Current.MainPage = new NavigationPage(new MyTickets());
+                App.Current.MainPage = new NavigationPage(new ListTicketsView());
 
             }
 
@@ -212,37 +171,45 @@ namespace tickets
                 }
                 BindingContext = chatVM = new chatViewModel(ticketID, files);
                 Console.WriteLine("Cargando Mensajes");
-                await readTicket();
+                readTicket();
                 Console.WriteLine("Mensajes Cargados");
                 openTicket.Text = await getSateText();
-              
-              
+
+
             }
             catch (Exception ex)
             {
+                await Application.Current.MainPage.DisplayAlert("Error", "Se ha producido un error inesperado daremos soporte los mas antes posible\nDetalles Error:" + ex.InnerException, "Aceptar");
                 Console.WriteLine(ex.StackTrace + "\nMensaje: " + ex.Message);
             }
         }
 
-        public async Task readTicket()
+        public async void readTicket()
         {
-            List<Message> mensajes = await server.GetMessages(ticketID);
-           
-            string myName = mensajes.First().Autor;
-            foreach(var mensaje in mensajes)
+            Console.WriteLine(ticketID);
+            List<Message> mensajes =await server.GetMessages(ticketID);
+            if (mensajes != null)
             {
-                if (mensaje.Autor == myName)
+                Console.WriteLine(mensajes.Count);
+                foreach (var mensaje in mensajes)
                 {
-                    mensaje.EsPropio = true;
+                    chatVM.ListMessages.Add(mensaje);
                 }
-                chatVM.ListMessages.Add(mensaje);
             }
+            else
+            {
+                Console.WriteLine("No se ha cargado ningun mensaje");
+               
+            }
+            
+           
+           
            
             //Loading.IsVisible = false;
         }
 
 
-        async void switchState()
+        async Task switchState()
         {           
             string close = await server.getOpenTicket(ticketID) ? "cerrar" : "abrir";
             bool answer = await DisplayAlert("Alerta!", "¿Estas seguro que deseas " + close +" el ticket?", "Yes","No");
@@ -259,10 +226,36 @@ namespace tickets
             UserDialogs.Instance.HideLoading();
         }
 
+        private async void ToolbarItem_Clicked(object sender, EventArgs e)
+
+        {
+            var _ticket = await App.Database.GetTicket(ticketID);
+            await Navigation.PushAsync(new DetalleTicketView() { BindingContext = new DetalleTicketViewModel(_ticket)});
+        }
+
         async Task<string> getSateText()
         {
             return  await server.getOpenTicket(ticketID) ? "Cerrar Ticket" : "Abrir Ticket";
         }
+
+        private async void DeleteTicket(object sender, EventArgs e)
+
+        {
+            await deleteTicket();
+        }
+
+        private async void GotoBrowser(object sender, EventArgs e)
+
+        {
+            await openBrowser();
+        }
+
+        private async void changeStatusTicket(object sender, EventArgs e)
+
+        {
+            await switchState();
+        }
+
 
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)

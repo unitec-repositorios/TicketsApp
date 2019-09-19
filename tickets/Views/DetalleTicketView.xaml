@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:tickets.Views"
+             mc:Ignorable="d"
+             Title="Detalles del Ticket"
+             x:Class="tickets.Views.DetalleTicketView">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Icon="internet.png" />
+        <ToolbarItem Order="Secondary" Icon="cap.png" Text="Delete"/>
+
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        
+        <StackLayout>
+            <ScrollView>
+                <Grid Padding="20" RowSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition Height="*"/>
+                    
+                    </Grid.RowDefinitions>
+
+                
+                <!--  ID TICKET  -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="AUTO"/>
+                        <ColumnDefinition Width="AUTO"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Image Grid.Column="0" Source="key_4.jpg" Aspect="AspectFit" HeightRequest="24" WidthRequest="24"/>
+                    <Label Grid.Column="1" Text="ID Ticket" TextColor="SlateGray"  FontSize="Large" FontAttributes="Bold"/>
+                    <Frame Grid.Column="2" CornerRadius="15" Padding="0" BackgroundColor="LightGray" HasShadow="False">
+                        <Label Text="{Binding ID}" Margin="3" HorizontalOptions="Center" FontSize="Large" />
+                    </Frame>
+             
+                </Grid>
+                
+                <!-- Asunto -->
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="AUTO"/>
+                        <ColumnDefinition Width="AUTO"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0" Source="subject_1.png" HeightRequest="24" WidthRequest="24" Aspect="AspectFit"/>
+                    <Label Grid.Column="1" Text="Asunto" VerticalOptions="Center" FontSize="Large" FontAttributes="Bold"/>
+                    <Frame Grid.Column="2" CornerRadius="15" Padding="0" BackgroundColor="LightGray" HasShadow="False">
+                    <Label Text="{Binding Subject}" HorizontalTextAlignment="Center" Margin="3" VerticalOptions="Center" BackgroundColor="Transparent" HorizontalOptions="Center" FontSize="Large"/>
+                    </Frame>
+                   
+                </Grid>
+
+  
+                <!-- Estado -->
+                    <Grid Grid.Row="3" VerticalOptions="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="AUTO"/>
+                        <ColumnDefinition Width="AUTO"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="category_2.png" WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Aspect="AspectFit"/>
+                    <Label Grid.Column="1" Text="Estado" FontAttributes="Bold" VerticalOptions="Center" FontSize="Large"/>
+                    <Image Grid.Column="2" HorizontalOptions="End" Margin="0,0,20,0" Source="success.png"  Aspect="AspectFit" IsVisible="{Binding IsResuelto}"  HeightRequest="24"/>
+                       <!-- Si el ticket no esta resuelto muesta las opciones de abrir o cerrar ticket -->
+                        <Frame Grid.Column="2" HorizontalOptions="End" Margin="0,0,20,0" Padding="0" HasShadow="False" BackgroundColor="Transparent" HeightRequest="24" IsVisible="{Binding IsResuelto,Converter={converters:BooleanInvert}}">
+                            <StackLayout Orientation="Horizontal" Margin="0" HorizontalOptions="Center" IsVisible="True">
+                                <Image Source="unlocked_5.png" IsVisible="{Binding IsOpen}"/>
+                                <Image Source="locked_5.png" IsVisible="{Binding IsOpen,Converter={converters:BooleanInvert}}"/>
+
+                                <!--`   <Image Source="unlocked_5.png" IsVisible="{Binding Visible, Converter={converters:BooleanInvert}}"/>-->
+                            </StackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ActualizarEstadoCommand}"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </Grid>
+                
+                <!-- Dates  && Last Response -->
+                <Frame  Grid.Row="4" HasShadow="False" BorderColor="Gray" CornerRadius="20" Padding="5">
+                    <Grid VerticalOptions="CenterAndExpand" Margin="5,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--Creado-->
+                        <StackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" Padding="0">
+                            <Image Source="calendar_check.png" Aspect="AspectFit" HeightRequest="30"/>
+                            <Label Text="Creado" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding  CreationDate,StringFormat='{}{0:dd/MM/yyyy}' }" FontSize="Medium" HorizontalTextAlignment="Center" />
+                        </StackLayout>
+
+                        <!-- Ultima Respuesta -->
+                        <StackLayout Grid.Column="1" VerticalOptions="Start">
+                            <Image Source="user_response.png" Aspect="AspectFit" VerticalOptions="Center"  HeightRequest="38"/>
+                            <Label Text="Última Respuesta" FontAttributes="Bold" FontSize="Medium" HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding UltimaRespuesta}" FontSize="Small" HorizontalTextAlignment="Center" />
+                        </StackLayout>
+
+                        <!--Actualizado-->
+                        <StackLayout Grid.Column="2" VerticalOptions="Center">
+                            <Image Source="calendar_update.png" Aspect="AspectFit" HeightRequest="30"/>
+                            <Label Text="Actualizado" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding  LastUpdate,StringFormat='{}{0:dd/MM/yyyy}' }" FontSize="Medium" HorizontalTextAlignment="Center" />
+                        </StackLayout>
+
+                    </Grid>
+                </Frame>
+
+               
+                <Frame Grid.Row="5" HasShadow="False" BorderColor="Gray" CornerRadius="15" Padding="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        
+                        <StackLayout  Grid.Column="0">
+                            <Label Text="Respuestas" HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold"/>
+                            <Label Text="{Binding Respuestas}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                        </StackLayout>
+                        
+                        <StackLayout Grid.Column="1">
+                            <Label  Text="Categoria" HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold"/>
+                            <Label Text="{Binding Category}" HorizontalTextAlignment="Center"/>
+                        </StackLayout>
+                        
+                        <StackLayout Grid.Column="2">
+                            <Label  Text="Prioridad" HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold"/>
+                            <Label Text="{Binding Priority}" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                        </StackLayout>
+                      
+                        
+                    </Grid>
+                </Frame>
+                <Frame Grid.Row="6" HasShadow="False" VerticalOptions="Fill" CornerRadius="15" BorderColor="Gray" Margin="0,10,0,0">
+                    <StackLayout VerticalOptions="StartAndExpand">
+                        <Label Text="{Binding Message}" FontSize="Medium" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                </Frame>
+                
+                <Frame Grid.Row="6" HasShadow="False" HorizontalOptions="Center" BorderColor="Gray" CornerRadius="15" VerticalOptions="Start" Padding="50,2,50,2">
+                    <Label  Text="Mensaje" HorizontalTextAlignment="Center" FontAttributes="Bold"  FontSize="Medium" Margin="0"/>
+                </Frame>
+               
+
+
+
+
+                
+                <!-- ASUNTO -->
+
+            </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

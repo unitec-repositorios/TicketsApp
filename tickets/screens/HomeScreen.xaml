@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
     
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.HomeScreen" xmlns:pages="clr-namespace:tickets;assembly=tickets" Title="Tickets">
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="tickets.HomeScreen" xmlns:pages="clr-namespace:tickets;assembly=tickets"
+            xmlns:pages1="clr-namespace:tickets.Views" Title="Tickets">
     <!--Pages can be added as references or inline-->
+    <pages1:ListTicketsView/>
     <pages:MyTickets />
     <pages:AppSettingsPage />
 </TabbedPage>

@@ -21,7 +21,7 @@ namespace tickets
 		{
 			string password = passwordEntry.Text;
             string password2 = passwordEntry2.Text;
-			string encriptionKey = "ticketsApp";
+		//	string encriptionKey = "ticketsApp";
 			var isValid = ValidatePasswords (password, password2);
 			if (isValid) {
                 string encryptedPassword = App.Database.encryptPassword(password);

@@ -5,16 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using tickets.API;
 using tickets.Models;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Net.Http.Headers;
 using Microsoft.Graph;
 using Microsoft.Identity.Client;
 using Xamarin.Forms;
 using Xamarin.Essentials;
-
 using Xamarin.Forms.Xaml;
-using Xamarin.Forms;
+
 
 
 namespace tickets
@@ -97,7 +95,7 @@ namespace tickets
 
         private void  SignInButtonClicked(object sender, EventArgs e)
         {
-			User usr = App.Database.GetUserAsync(App.UserEmail);
+			User usr =  App.Database.GetUserAsync(App.UserEmail).Result;
 			if((usr.Profile).Equals("Administrativo")){
                 SignInAdminPage signIn = new SignInAdminPage();
             	App.Current.MainPage = new NavigationPage(signIn);

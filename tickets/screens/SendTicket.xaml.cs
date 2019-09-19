@@ -24,14 +24,23 @@ namespace tickets
         public List<string> Categorias;
         public ObservableCollection<string> Areas;
         private Dictionary<string, List<string>> AreasxCategorias;
-        private List<(int, string, List<(int, string)>)> OptionsRequestServer;
+   
        
         public bool sentTicket;
         List<(string, byte[])> files = new List<(string, byte[])>();
         //List<FileData> loadFiles = new List<FileData>();
+        private bool _isBusy;
+
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { _isBusy = value; }
+        }
+
 
         public SendTicket()
         {
+           
             InitializeComponent();
             initDatos();
             this.BindingContext = new Ticket();
@@ -128,16 +137,16 @@ namespace tickets
             }
         }
 
-        async void OnSubmit(object sender, System.EventArgs e)
-
+        public async void OnSubmit(object sender, System.EventArgs e)
         {
-            server = new Server();
+           
             var valid = !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
             if (valid)
             {
                 try
                 {
                     UserDialogs.Instance.ShowLoading("Enviando Ticket...");
+                    server = new Server();
                     string _keyArea = picker_Areas.SelectedItem.ToString();
                     var _tempArea = server.GetValueArea(_keyArea);
                     var _tempCategory = server.GetValueCategoria(_keyArea, picker_categories.SelectedItem.ToString());
@@ -146,7 +155,7 @@ namespace tickets
                         ID = "",
                         Area=_tempArea,
                         Category=_tempCategory,
-                        Priority = (pickerPriority.SelectedIndex + 1),
+                        Priority = ""+(pickerPriority.SelectedIndex + 1),
                         Subject = subject.Text,
                         Message = message.Text,
                         Classification = picker.SelectedItem.ToString(),
@@ -167,14 +176,14 @@ namespace tickets
                     {
                         //   string date = await server.getInitDate(response);
                         _ticket = await server.GetTicket(response);
-                        App.Database.AgregarTicket(_ticket);
+                        await App.Database.AgregarTicket(_ticket);
                         UserDialogs.Instance.ShowSuccess("Ticket Enviado!");
                         bool copy = await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
                         
                         if (!copy)
                         {
                             CrossClipboard.Current.SetText(response);
-                            App.Database.AgregarTicket(await server.GetTicket(response));
+                           // App.Database.AgregarTicket(await server.GetTicket(response));
                         }
                         this.sentTicket = true;
                         //clean

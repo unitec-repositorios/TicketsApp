@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="tickets.Views.SendTicketView">
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Frame BorderColor="Gray" CornerRadius="15" HasShadow="False">
+                <StackLayout VerticalOptions="Center" Padding="0" HorizontalOptions="StartAndExpand" Spacing="5" Orientation="Horizontal" >
+                    <Label Text="Hola" VerticalTextAlignment="Center"/>
+                    <Entry HorizontalOptions="Start" FontSize="Medium" Placeholder="Asunto persona"/>
+                 
+                </StackLayout>
+            </Frame>
+                    <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

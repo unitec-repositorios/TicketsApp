@@ -12,6 +12,7 @@ using Microsoft.Graph;
 using Microsoft.Identity.Client;
 using System.Net;
 using Xamarin.Essentials;
+using tickets.Views;
 
 namespace tickets
 {
@@ -50,35 +51,35 @@ namespace tickets
 
                     if (currentUserObject.UserPrincipalName.ToLower().Contains("@unitec.edu"))
                     {
-
                         App.Username = currentUserObject.DisplayName;
                         App.UserEmail = currentUserObject.UserPrincipalName;
                         username = App.Username;
                         email = App.UserEmail;
-                        Debug.WriteLine(App.Username);
-                        Debug.WriteLine(App.UserEmail);
+                        
 
                         // AQUI LOGIN
 
-                        var userSettings = new UserSettingsPage()
+                        var _userSettingView = new EditUserSettingView(new User()
                         {
-                            BindingContext = new User()
-                            {
-                                Name = username,
-                                Email = email
-                            }
-                        };
-                        var user = App.Database.GetUserAsync(email);
+                            Name = username,
+                            Email = email
+                        }); ;
+                        ;
+                       
+                        var user = await App.Database.GetUserAsync(email);
                         if (user == null)
                         {
-                            await Navigation.PushAsync(userSettings);
+                            App.Current.MainPage = new NavigationPage(_userSettingView);
+                          ///  await Navigation.PushAsync(_userSettingView);
                         }
                         else
                         {
-                            user.PrintData();
-                            Debug.WriteLine("Before createNewCurrentUser");
-                            await App.Database.CreateNewCurrentUser(user);
-                            Debug.WriteLine("After createNewCurrentUser");
+
+                            user.IsCurrent = true;
+                            await App.Database.ActualizarUsuario(user);
+                          //  Debug.WriteLine("Before createNewCurrentUser");
+                           // await App.Database.CreateNewCurrentUser(user);
+                            //Debug.WriteLine("After createNewCurrentUser");
                             //HomeScreen home = new HomeScreen();
                             //App.Current.MainPage = new NavigationPage(home);
                             switch (Xamarin.Forms.Device.RuntimePlatform)
@@ -91,9 +92,10 @@ namespace tickets
                                     break;
                                 case Xamarin.Forms.Device.Android:
                                     Debug.WriteLine("Device is ANDROID");
-                                    var newHome2 = new MyTickets();
-                                    await Navigation.PushAsync(newHome2);
-                                    App.Current.MainPage = new NavigationPage(newHome2);
+                                    //    var newHome2 = new MyTickets();
+                                    //      await Navigation.PushAsync(newHome2);
+                                    //  App.Current.MainPage = new NavigationPage(new MyTickets());
+                                    Application.Current.MainPage= new NavigationPage(new ListTicketsView());
                                     break;
                                 case Xamarin.Forms.Device.UWP:
                                     Debug.WriteLine("Device is UWP");
@@ -103,17 +105,17 @@ namespace tickets
                                     break;
                             }
                         }
-                        userSettings.Disappearing += async (sender2, e2) =>
+                        _userSettingView.Disappearing += async (sender2, e2) =>
                         {
-                            HomeScreen home = new HomeScreen();
-                            App.Current.MainPage = new NavigationPage(home);
+                          //  HomeScreen home = new HomeScreen();
+                         //   App.Current.MainPage = new NavigationPage(home);
                             switch (Xamarin.Forms.Device.RuntimePlatform)
                             {
                                 case Xamarin.Forms.Device.iOS:
                                     App.Current.MainPage = new NavigationPage(new HomeScreen());
                                     break;
                                 case Xamarin.Forms.Device.Android:
-                                    App.Current.MainPage = new NavigationPage(new MyTickets());
+                                    App.Current.MainPage = new NavigationPage(new ListTicketsView());
                                     break;
 
                             }
@@ -122,7 +124,6 @@ namespace tickets
                     }
                     else
                     {
-                        Debug.WriteLine("Llegue aca!");
                         await DisplayAlert("Error", "El correo utilizado no es valido. Por favor, utilice el correo de la Universidad", "Ok");
                         username = null;
                         email = null;

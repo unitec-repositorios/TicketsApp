@@ -31,6 +31,5 @@ namespace tickets.ViewModels
             return _tempGestiones;
         }
 
-       
     }
 }

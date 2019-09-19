@@ -53,19 +53,24 @@ namespace tickets
         ///<sumary>
         ///Configuraciones del Servido(Parser)
         /// </sumary>
-        private static string tableContainer = "//html//body//div//table//table[2]//table//";
-        private static string tableContainerHEAD = "//html//body//div//table//table[1]//table//";
+       
+        // private static string tableContainer = "//html//body//div//table//table[2]//table//";
+        //  private static string tableContainerHEAD = "//html//body//div//table//table[1]//table//";
+        private static string tableContainerHEAD    = "//table[1]//table//";
+        private static string tableContainer        = "//table[2]//table//";
 
         private static string tokenpath = "//html//body//table//";
-        private static string temp = "//input[@name='token']";
+       // private static string temp = "//input[@name='token']";
         private static Dictionary<string, object> configIndex = new Dictionary<string, object>
         {
             {"Token",$"//input[@name='token'][@value]" }
         };
 
         private static Dictionary<string, object> configServer = new Dictionary<string, object> {
+                {"root",                                $"ticket.php"},
                 {"Token",                               $"//input[@name='token'][@value]" },
-                {"Subject",                             $"//html//body//div//table//tr[2]//h3"},
+          //      {"Tema",                                $"//html//body//div//table//tr[2]//h3"},
+                 {"Tema",                                $"//h3"},
 
                 {"ID de seguimiento",                   $"{tableContainerHEAD}tr[1]//td[2]"},
                 {"Estado del ticket",                   $"{tableContainerHEAD}tr[2]//td[2]"},
@@ -113,12 +118,13 @@ namespace tickets
         /// </summary>
         private static string containerPrint = "//html//body//table//";
         private static Dictionary<string, object> configPrint = new Dictionary<string, object> {
+                {"root",                                $"print.php"},
                 {"Tema",                                $"{containerPrint}tr[{1}]//td[2]" },
                 {"ID de seguimiento",                   $"{containerPrint}tr[{2}]//td[2]"},
                 {"Estado del ticket",                   $"{containerPrint}tr[{3}]//td[2]"},
                 {"Creado en",                           $"{containerPrint}tr[{4}]//td[2]"},
                 {"Actualizar",                          $"{containerPrint}tr[{5}]//td[2]"},
-                {"Última respuesta",                    $"{containerPrint}tr[{6}]//td[2]"},
+                {"Última Respuesta",                    $"{containerPrint}tr[{6}]//td[2]"},
                 {"Categoria",                           $"{containerPrint}tr[{7}]//td[2]"},
                 {"Nombre",                              $"{containerPrint}tr[{8}]//td[2]"},
                 {"Campus",                              $"{containerPrint}tr[{9}]//td[2]"},

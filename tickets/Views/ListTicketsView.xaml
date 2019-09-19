@@ -1,0 +1,48 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:tickets.Views"
+             mc:Ignorable="d"
+             x:Class="tickets.Views.ListTicketsView"
+             Title="Mis Tickets" Icon="baseline_home_white_36pt"
+>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Secondary" Text="Ajustes" Command="{Binding  GoToSettingsCommand}"/>
+        <ToolbarItem Order="Secondary" Text="Agregar Ticket" Command="{Binding AddTicketCommand}"/>
+
+        <ToolbarItem Order="Primary" Icon="add_icon.png" Command="{Binding GoToSendTicketCommand}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        
+        <StackLayout Padding="10,0,10,10">
+            <StackLayout IsVisible="{Binding IsEmpty}" HorizontalOptions="Center" Padding="10">
+                <Image Source="cap_black_and_white.png"  HeightRequest="32"/>
+                <Label Text="No se ha agregado ningún ticket a la base de datos" FontAttributes="Bold" HorizontalTextAlignment="Center" FontSize="Medium" TextColor="DarkGray"/>
+            </StackLayout>
+            
+            <SearchBar IsVisible="{Binding IsEmpty,Converter={converters:BooleanInvert}}" Margin="-5,0,0,0" BackgroundColor="Transparent" Placeholder="Buscar..."/>
+
+            
+
+            <ListView x:Name="ListView_ListTicket" IsVisible="{Binding IsEmpty,Converter={converters:BooleanInvert}}" ItemsSource="{Binding ListTickets}" ItemSelected="OnSelectedItem" IsPullToRefreshEnabled="{Binding IsRefreshing}" RowHeight="80">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Padding="10" Margin="5" CornerRadius="15" BackgroundColor="White">
+                                <StackLayout Orientation="Horizontal" >
+                                    <StackLayout HorizontalOptions="StartAndExpand">
+                                        <Label Text="{Binding Subject}" TextColor="#0e2456" FontSize="20" LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding CreationDate, StringFormat='{}{0:dd-MM-yyyy hh:mm tt}'}" LineBreakMode="TailTruncation" />
+                                    </StackLayout>
+                                    <Image Source="{Binding Image}" HeightRequest="50" />
+                                    <Image Source="{Binding OpenImage}" HeightRequest="50"/>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage> 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using SQLite;
+
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.IO;
@@ -9,24 +9,35 @@ using System.Text;
 using tickets.Data;
 using System.Collections.ObjectModel;
 using tickets.Models;
+using Xamarin.Forms;
+using SQLite.Net;
 
 namespace tickets
 {
-    public class Database
+    public class Database:IDisposable
     {
-        readonly SQLiteAsyncConnection database;
+        readonly SQLite.SQLiteAsyncConnection database;
 
-        public Database(string dbPath)
+        public Database(string mode="")
         {
-            database = new SQLiteAsyncConnection(dbPath);
+            var configuracionDB = DependencyService.Get<IConfigurationDB>();
+            if (string.Equals(mode,"Test",StringComparison.OrdinalIgnoreCase))  ///IgnoreCase
+            {
+                database = new SQLite.SQLiteAsyncConnection(Path.Combine(configuracionDB.directorio, "TicketsAppTest.db3"));
+            }
+            else
+            {
+                database = new SQLite.SQLiteAsyncConnection(Path.Combine(configuracionDB.directorio, "TicketApp.db3"));
+            }
             database.CreateTableAsync<User>().Wait();
             database.CreateTableAsync<Ticket>().Wait();
+            database.CreateTableAsync<Message>().Wait();
             database.CreateTableAsync<Comment>().Wait();
             database.CreateTableAsync<AdminUser>().Wait();
             database.CreateTableAsync<TicketFile>().Wait();
         }
 
-        public SQLiteAsyncConnection GetConnection()
+        public SQLite.SQLiteAsyncConnection GetConnection()
         {
             return database;
         }
@@ -40,6 +51,8 @@ namespace tickets
         {
             database.ExecuteAsync("DELETE FROM Ticket").Wait();
         }
+
+
 
         /// <summary>
         /// Clears the database.
@@ -93,31 +106,32 @@ namespace tickets
         {
             try
             {
-                return database.Table<User>().FirstOrDefaultAsync(x => x.IsCurrent==true);
+                return database.Table<User>().FirstOrDefaultAsync(user => user.IsCurrent==true);
           
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace +"\nMensaje: "+ex.Message);
+                Console.WriteLine("\nError Database:\n" + ex);
                 return null;
             }
         }
 
-        public User GetUserAsync(string email)
+        public Task<User> GetUserAsync(string email)
         {
             try
             {
-                return database.FindWithQueryAsync<User>("SELECT * from User WHERE Email LIKE ?", email).Result;
+                return database.Table<User>().Where(user=>user.Email==email).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace + "\nMensaje: " + ex.Message);
+                Console.WriteLine("\nError Database:\n" + ex);
                 return null;
             }
         }
 
         public async void Logout()
         {
+            
             await database.ExecuteAsync("Update user SET IsCurrent = 0");
         }
 
@@ -298,22 +312,39 @@ namespace tickets
             return database.Table<Ticket>().FirstOrDefaultAsync(t => t.ID==id);
         }
 
-        public Task<List<Ticket>> GetTickets()
+        public async Task<List<Ticket>> GetTickets()
         {
-            return  database.Table<Ticket>().ToListAsync();
+            
+            var lista_ticket = await database.Table<Ticket>().ToListAsync();
+
+            return lista_ticket;
         }
 
-        public async void ActualizarUsuario(User _user)
+        public async Task<List<Ticket>> GetTickets(int _idCurrentUser)
         {
-            await database.UpdateAsync(_user);
+            return await database.Table<Ticket>().Where(item => item.UserID==_idCurrentUser).ToListAsync();
+        }
+
+        public async Task ActualizarUsuario(User _user)
+        {
+            try
+            {
+                await database.UpdateAsync(_user);
+            }
+            catch(Exception)
+            {
+                await database.InsertOrReplaceAsync(_user);
+                
+            }
+
         }            
 
-        public async void AgregarTicket(Ticket ticket)
+        public async Task AgregarTicket(Ticket ticket)
         {
             await database.InsertOrReplaceAsync(ticket);
         }
 
-        public async void ActualizarTicket(Ticket ticket)
+        public async Task ActualizarTicket(Ticket ticket)
         {
            await database.UpdateAsync(ticket);
         }
@@ -321,6 +352,7 @@ namespace tickets
         public async void EliminarTicket(Ticket ticket)
         {
             await database.DeleteAsync(ticket);
+           
         }
 
         public async void EliminarTicket(string id)
@@ -328,5 +360,25 @@ namespace tickets
             EliminarTicket(await this.GetTicket(id));
         }
 
+
+        /// <summary>
+        /// Repositorio Mensjaes
+        /// </summary>
+        
+        public async Task AddMensaje(Message message )
+        {
+            await database.InsertOrReplaceAsync(message);
+        }
+        public async Task<List<Message>> GetMessages(string id)
+        {
+            return await database.Table<Message>().Where(item=>item.IdTicket==id).ToListAsync();
+        }
+            
+
+
+        public void Dispose()
+        {
+            database.CloseAsync();
+        }
     }
 }

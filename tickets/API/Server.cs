@@ -17,56 +17,168 @@ namespace tickets.API
 {
     public class Server
     {
-       // const string BASE_ADDRESS = "https://cap.unitec.edu";
+        // const string BASE_ADDRESS = "https://cap.unitec.edu";
         const string BASE_ADDRESS = AppSettings.BASE_ADDRESS;
         private readonly RestClient client;
+      
+        private Configuraciones _configuracion = new Configuraciones();
 
         public Server()
         {
             client = new RestClient(BASE_ADDRESS);
+            HttpClient httpClient = new HttpClient();
+          
+            //CurrentUser = App.Database.GetCurrentUser();
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
         }
 
-
-
-     
-        public async Task<Ticket> GetTicket(string id)
+        /// <summary>
+        /// GET Method: Obtiene un apartir del ID
+        /// </summary>
+        /// <param name="id"> ID del Ticket a buscar </param>
+        /// <param name="_root"> La ruta de la pagina donde va a buscar {ticket.php , print.php}   </param>
+        /// <returns> Retorna un objeto tipo Ticket si lo encontro, de lo contrario retorna null </returns>
+        public async Task<Ticket> GetTicket(string id, string _root = "ticket.php")
         {
-            User user = await App.Database.GetCurrentUserAsync();
-            var request = new RestRequest($"/print.php?track={id}+&e={user.Email}", Method.GET);
-            var response = client.Execute(request);
-            if (response.StatusCode != HttpStatusCode.OK || response.Content.IndexOf("<b>Error:</b>") != -1)
-            {
+            Dictionary<string, object> configuracion = AppSettings.getConfigurationParser(_root);
+            if (configuracion == null)
                 return null;
-            }
+            User user = await App.Database.GetCurrentUserAsync();
+            var request = new RestRequest($"/{configuracion["root"]}?track={id}+&e={user.Email}", Method.GET);
+            var response = await client.ExecuteTaskAsync(request);          
+               if (response.StatusCode != HttpStatusCode.OK || !response.Content.Contains(id))
+               {
+                   return null;
+               }
+
+               switch (_root)
+               {
+                  case "ticket.php": return GetTicket_Ticket(response);
+                  case "print.php" : return GetTicket_Print(response, configuracion);
+                  default: return null;
+               } 
+       
+        }
+
+
+        private Ticket GetTicket_Ticket(IRestResponse response)
+        {
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(response.Content);
-            Dictionary<string, object> configParser = AppSettings.getConfigurationParser("print.php");
-            if (configParser == null) return null;
-            var _estadoTicket = getItemValue(document, configParser, "Estado del ticket");
-            
-            Ticket _ticket= new Ticket()
+            var nodes = document.DocumentNode.SelectNodes("//td[2]");
+            Dictionary<int, string> data = new Dictionary<int, string>();
+            int index = 0;
+            foreach (var item in nodes)
             {
-                ID = getItemValue(document, configParser, "ID de seguimiento"),
-                Subject = getItemValue(document, configParser, "Tema"),
-                UserID = int.Parse(getItemValue(document, configParser, "Número de Cuenta")),
-                Classification = getItemValue(document, configParser, "Clasificación"),
-                LastUpdate = DateTime.ParseExact(getItemValue(document, configParser, "Actualizar"), "dd/MM/yyyy HH:mm:ss", null),
-                CreationDate = DateTime.ParseExact(getItemValue(document, configParser, "Creado en"), "dd/MM/yyyy HH:mm:ss", null),
-                Message = getItemValue(document, configParser, "Mensaje"),
-                Estado = _estadoTicket
+                data.Add(index, item.InnerText);
+                index++;
+            }
+            var ticket= new Ticket()
+            {
+                Subject = document.DocumentNode.SelectSingleNode("//h3").InnerText,
+                ID = data[3].Split(' ')[0],
+                Estado = data[4].Split(' ')[0],
+                CreationDate = DateTime.ParseExact(data[5], "dd/MM/yyyy HH:mm:ss", null),
+                LastUpdate = DateTime.ParseExact(data[6], "dd/MM/yyyy HH:mm:ss", null),
+                UltimaRespuesta = data[7],
+                Category = data[8],
+                Respuestas = int.Parse(data[9]),
+                Priority = data[10],
+                UserID = int.Parse(data[20]),
+                Classification = data[22],
+                Message = document.DocumentNode.SelectSingleNode("//p[2]").InnerText.Replace("&nbsp;", "")
+            };
+            ticket.Check();
+            return ticket;
+        }
+
+        /// <summary>
+        /// Obtiene un Ticket de la direccion de ticket.php
+        /// </summary>
+        /// <param name="response"> IRestResponse </param> 
+        /// <param name="configuracion"> JSON:  Cofiguracion del Parser (XPath) </param>
+        /// <returns> retorna un objeto de tipo Ticket </returns>
+        private Ticket GetTicket_Ticket(IRestResponse response, Dictionary<string, object> configuracion)
+        {
+            Console.WriteLine("ticket.php");
+            var document = new HtmlDocument();
+            document.LoadHtml(response.Content.Replace("\r\n", "").Replace("\t", ""));
+            var node = document.DocumentNode.SelectSingleNode("//body//table//tr[2]");
+
+            var _estadoTicket = GetItemValueNode(node, configuracion, "Estado del ticket");             ///Estado del ticket
+           
+            Ticket _ticket = new Ticket(){
+                  ID = GetItemValueNode(node, configuracion, "ID de seguimiento").Split(' ')[0],          ///ID TICKET
+                  Subject = GetItemValueNode(node, configuracion, "Tema"),                                ///Asunto
+                  Estado = _estadoTicket,                                                                 ///Estado del ticket
+
+                  CreationDate = DateTime.ParseExact(GetItemValueNode(node, configuracion, "Creado en"), "dd/MM/yyyy HH:mm:ss", null),  ///Fecha de Creacion
+                  LastUpdate = DateTime.ParseExact(GetItemValueNode(node, configuracion, "Actualizar"), "dd/MM/yyyy HH:mm:ss", null),   ///Fecha Ultima Actualizacion
+
+                  UltimaRespuesta = GetItemValueNode(node, configuracion, "Última Respuesta"),            ///Ultima Respuesta
+                  Respuestas = int.Parse(GetItemValueNode(node, configuracion, "Respuestas")),            ///Respuestas
+
+                  Category = GetItemValueNode(node, configuracion, "Categoria"),                          ///Categoria
+                  Priority = GetItemValueNode(node, configuracion, "Prioridad"),                          ///Prioridad
+                  Classification = GetItemValueNode(node, configuracion, "Clasificación"),                ///Clasificacion
+
+                  UserID = int.Parse(GetItemValueNode(node, configuracion, "Número de Cuenta")),          ///Número de Cuenta | No. de talento Humano
+
+                  Message = GetItemValueNode(node, configuracion, "Mensaje").Replace("&nbsp;","")         ///Primer Mensaje
+
+              };
+          
+            return _ticket;
+        }
+
+       
+
+
+
+        /// <summary>
+        /// Obtiene un ticket apartir de la ruta de print.php
+        /// </summary>
+        /// <param name="document"> Documento HTML </param>
+        /// <param name="configuracion"> JSON: Configuracion del Parser </param>
+        /// <returns></returns>
+        private Ticket GetTicket_Print(IRestResponse response, Dictionary<string, object> configuracion)
+        {
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(response.Content);
+            var _estadoTicket = GetItemValue(document, configuracion, "Estado del ticket");             ///Estado del ticket
+
+            Ticket _ticket = new Ticket()
+            {
+
+                ID = GetItemValue(document, configuracion, "ID de seguimiento").Split(' ')[0],          ///ID TICKET
+                Subject = GetItemValue(document, configuracion, "Tema"),                                ///Asunto
+                Estado = _estadoTicket,                                                                 ///Estado del ticket
+
+                CreationDate = DateTime.ParseExact(GetItemValue(document, configuracion, "Creado en"), "dd/MM/yyyy HH:mm:ss", null),  ///Fecha de Creacion
+                LastUpdate = DateTime.ParseExact(GetItemValue(document, configuracion, "Actualizar"), "dd/MM/yyyy HH:mm:ss", null),   ///Fecha Ultima Actualizacion
+
+                UltimaRespuesta = GetItemValue(document, configuracion, "Última Respuesta"),            ///Ultima Respuesta
+
+                Category = GetItemValue(document, configuracion, "Categoria"),                          ///Categoria
+                Classification = GetItemValue(document, configuracion, "Clasificación"),                ///Clasificacion
+
+                UserID = int.Parse(GetItemValue(document, configuracion, "Número de Cuenta")),          ///Número de Cuenta | No. de talento Humano
+
+                Message = GetItemValue(document, configuracion, "Mensaje"),                              ///Primer Mensaje
+
             };
             _ticket.Check();
             return _ticket;
-
         }
+
+
 
         public async Task<string> SendTicket(Ticket _ticket, List<(string, byte[])> _files)
         {
-            User user = App.Database.GetCurrentUser();
-            var _perfil = getIdPerfil(user.Profile);
-            var _campus = getIdCampus(user.Campus);
+            User user =await App.Database.GetCurrentUserAsync();
+            var _perfil = _configuracion.GetIdPerfil(user.Profile);
+            var _campus = _configuracion.getIdCampus(user.Campus);
 
             var request = new RestRequest($"/index.php?a=add&perfil={_perfil}&campus={_campus}&area={_ticket.Area}&category={_ticket.Category}", Method.POST);
             var responseR = client.Execute(request);
@@ -98,7 +210,7 @@ namespace tickets.API
                 {"custom4",user.Career},
                 {"custom5",_ticket.Classification},
                 {"custom6",user.PhoneNumber},
-                {"custom7",user.PersonalMail==null?user.Email:user.PersonalMail},
+                {"custom7",user.PersonalEMail ?? user.Email},
                 {"subject",_ticket.Subject},
                 {"message",_ticket.Message},
                 {"category",_ticket.Category },
@@ -116,7 +228,6 @@ namespace tickets.API
             //Set Encoding al formulario
             var encoder = Encoding.GetEncoding(charset);
             form.Headers.ContentType.CharSet = charset;
-            Console.WriteLine("Charset: " + encoder.EncodingName + "\t" + charset);
 
             //Agregando cookie
             form.Headers.Add("Cookie", $"{cookie.Name}={cookie.Value}");
@@ -163,41 +274,62 @@ namespace tickets.API
 
         }
 
-        public async Task<List<Message>> GetMessages(string _idTicket)
+        public  async Task<List<Message>> GetMessages(string _idTicket)
         {
             User _user = await App.Database.GetCurrentUserAsync();
-            var request = new RestRequest($"/ticket.php?track={_idTicket}+&e={_user.Email}", Method.GET);
+            var request = new RestRequest($"/print.php?track={_idTicket}+&e={_user.Email}", Method.GET);
             var response = client.Execute(request);
-            if (response.StatusCode != HttpStatusCode.OK || response.Content.IndexOf("<b>Error:</b>") != -1)
+            if (response.StatusCode != HttpStatusCode.OK || !response.Content.Contains(_idTicket))
             {
                 return null;
-            }
-            List<Message> mensajes = new List<Message>();
-
-            HtmlDocument document = new HtmlDocument();
-            document.LoadHtml(response.Content);
-            int cont = 1;
-            while (getMessageText(cont, document)!=null)
-            {
-                mensajes.Add(new Message
-                {
-                    Autor = getMessageFrom(cont, document),
-                    Date = getMessageDate(cont,document),
-                    Text = getMessageText(cont,document)
-
-                });
-                cont++;
-            }
-         
-
-            return mensajes;
+            }   
+            return GetMessages_Print(response);
         }
 
+        private List<Message> GetMessages_Print(IRestResponse response)
+        {
+
+            List<Message> mensajes = new List<Message>();
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(response.Content.Replace("\n\r", ""));
+
+            var body = document.DocumentNode.SelectSingleNode("//body");
+            var messageContent = document.DocumentNode.SelectNodes("//p");
+            int index = 1;
+            var owner = "";
+
+            do
+            {
+                var heads = body.SelectNodes($"table[{index}]//td");
+                if (heads == null)
+                {
+                    break;
+                }
+                var message = new Message();
+                if (index == 1)
+                {
+                    message.Date = DateTime.ParseExact(heads[7].InnerText, "dd/MM/yyyy HH:mm:ss",null);
+                    message.Autor = owner = heads[15].InnerText;
+
+                }
+                else
+                {
+                    message.Date = DateTime.ParseExact(heads[1].InnerText, "dd/MM/yyyy HH:mm:ss",null);
+                    message.Autor = heads[3].InnerText;
+                }
+                message.Text = messageContent[index - 1].InnerText;
+                message.EsPropio = message.Autor == owner;
+                Console.WriteLine("Fecha: {0} \nMensaje: {1}\nEs Propio: {2}",message.Date,message.Text,message.EsPropio);
+                mensajes.Add(message);
+                index++;
+            } while (true);
+            return mensajes;
+        }
         private Dictionary<string, string> GetGestiones()
         {
             User _user = App.Database.GetCurrentUser();
-            var perfil = getIdPerfil(_user.Profile);
-            var campus = getIdCampus(_user.Campus);
+            var perfil = _configuracion.GetIdPerfil(_user.Profile);
+            var campus = _configuracion.getIdCampus(_user.Campus);
             var request = new RestRequest($"/index.php?a=add&perfil={perfil}&campus={campus}", Method.GET);
             var response = client.Execute(request);
             var doc = new HtmlDocument();
@@ -227,32 +359,15 @@ namespace tickets.API
             return comoPodemosAyudarte;
         }
 
-
-        private int getIdCampus(string campusName)
+        private string GetItemValue(HtmlDocument _document, Dictionary<string, object> _parserServer, string _key)
         {
-            int idCampus = AppSettings.getIdCampus(campusName);
-            if (idCampus!=0)
-                return idCampus;
-            return 3;
-
+            return _document.DocumentNode.SelectSingleNode((_parserServer[_key]).ToString()).InnerText;
+            //var _temp = _document.DocumentNode.SelectNodes((_parserServer[_key]).ToString()).FirstOrDefault().InnerText;
+            //return _temp;
         }
-
-        private int getIdPerfil(string perfilName)
+        private string GetItemValueNode(HtmlNode node, Dictionary<string, object> _parserServer, string _key)
         {
-            switch (perfilName)
-            {
-                case "Administrativo":  return 1;
-                case "Docente":         return 2;
-                case "Alumno":          return 3;
-                default:
-                    return 3;
-            }
-        }
-
-        private string getItemValue(HtmlDocument _document, Dictionary<string, object> _parserServer, string _key)
-        {
-            var _temp = _document.DocumentNode.SelectNodes((_parserServer[_key]).ToString()).FirstOrDefault().InnerText;
-            return _temp;
+            return node.SelectSingleNode((_parserServer[_key]).ToString()).InnerText;
         }
 
         private List<(object,string,List<(object,string)>)> GetAreas_Categorias()
@@ -314,47 +429,6 @@ namespace tickets.API
             return GetDictionaryCategory(area)[categoria].ToString();
         }
 
-        public async Task<string> getDetailsTicket(string id)
-        {
-            HttpClient client = new HttpClient();
-            User user = await App.Database.GetCurrentUserAsync();
-
-            var uri = BASE_ADDRESS + "/print.php?track=" + id+"&e="+user.Email;
-            var response = await client.GetByteArrayAsync(uri);
-            Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
-            string html= encoder.GetString(response, 0, response.Length - 1);
-            if (html.IndexOf("<b>Error:</b>") != -1)
-            {
-                return "Error";
-            }   
-            return html;
-        }
-
-        public async Task<List<DateTime>> getDateMessage(string id)
-        {
-            List<DateTime> fechas= new List<DateTime>();
-            HttpClient client = new HttpClient();
-            User user = await App.Database.GetCurrentUserAsync();
-            HttpResponseMessage response = await client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
-            response.Content.Headers.ContentType.CharSet= AppSettings.Encoding;
-            string html = await response.Content.ReadAsStringAsync();
-            int posFecha = 0;
-            int pos = 0;
-            while (pos != -1)
-            {
-                string search = "<td class=\"tickettd\">2";
-                pos = html.IndexOf(search);
-                posFecha = pos - 1 + search.Length;
-                if (pos > -1)
-                {
-                    string fecha = getTextAux('<', html, posFecha);
-                    fechas.Add(DateTime.Parse(fecha));
-                    pos = posFecha + 1;
-                    html = html.Substring(pos);
-                }
-            }
-            return fechas;
-        }
 
         public string GetBaseAdress()
         {
@@ -362,89 +436,12 @@ namespace tickets.API
 
         }
 
-        public async Task<string> getRefreshCode()
+
+
+        public async Task<string> GetURLTicket(string _idTicket)
         {
-
-            var request = new RestRequest("/ticket.php");
-            var response = client.Execute(request);
-            var document = new HtmlDocument();
-            document.Load(response.Content);
-            var element = document.DocumentNode.SelectSingleNode("//input[@name='Refresh']");
-            return element.Attributes["value"].Value;
-        }
-
-        public async Task<int> countResponse(string id)
-        {
-            HttpClient _client = new HttpClient();
-            User user = await App.Database.GetCurrentUserAsync();
-            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
-            string html = await response.Content.ReadAsStringAsync();
-            string searchSS = "<td class=\"ticketrow\">";
-            int count = 0;
-            int size = searchSS.Count();
-            while (html.IndexOf(searchSS) > -1)
-            {
-                count++;
-                int begin = size + html.IndexOf(searchSS);
-                html = html.Substring(begin);
-            }
-            return count;
-        }
-
-        public async Task<string> getInitDate(string id)
-        {
-            HttpClient _client = new HttpClient();
-            User user = await App.Database.GetCurrentUserAsync();
-            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
-            string html = await response.Content.ReadAsStringAsync();
-            string search = "Creado en: </td>";
-            int size = search.Count();
-            int begin = size + html.IndexOf(search);
-            string date = "";
-            char val = html[begin];
-            if (html.IndexOf(search) > -1)
-            {
-                date = getTextAux('/', html, begin);
-                string[] array = date.Split('>');
-                date = array[1];
-                date = date.Remove(date.Length - 1);
-                return date;
-
-            }
-
-            return "error al recibir la fecha";
-        }
-
-        public async Task<string> getUpdateDate(string id)
-        {
-           
-            HttpClient _client = new HttpClient();
-            User user = await App.Database.GetCurrentUserAsync();
-            HttpResponseMessage response = await _client.GetAsync(BASE_ADDRESS + "/ticket.php?track=" + id+"&e="+user.Email);
-            string html = await response.Content.ReadAsStringAsync();
-            //Console.WriteLine("HTMLLLLLLL: " + html);
-            string search = "�ltima actualizacion: </td>";
-            int size = search.Count();
-            Console.WriteLine("INT SIZE: " + size);
-            int begin = size + html.IndexOf(search);
-            Console.WriteLine("INT BEGIN: " + begin);
-            string date = "";
-            char val = html[begin];
-            Console.WriteLine("HTML INDEX OF SEARCH: "+html.IndexOf(search));
-            if (html.IndexOf(search,0) > -1)
-            {
-                date = getTextAux('/', html, begin);
-                string[] array = date.Split('>');
-                date = array[1];
-                date = date.Remove(date.Length - 1);
-                return date;
-
-            }
-            else
-            {
-               return "error";
-            }
-            
+            var _user = await App.Database.GetCurrentUserAsync();
+            return $"{BASE_ADDRESS}/ticket.php?track={_idTicket}&e={_user.Email}";
         }
 
         public async Task<bool> getOpenTicket(string id)
@@ -456,7 +453,7 @@ namespace tickets.API
             return html.IndexOf("resolved") == -1;
         }
 
-        public async Task changeStatusTicket(string id)
+        public async Task<bool> changeStatusTicket(string id)
         {
             HttpClient client = new HttpClient();
             User user = await App.Database.GetCurrentUserAsync();
@@ -468,7 +465,8 @@ namespace tickets.API
             string token = getTextAux('"',html,posToken);
             string s = await getOpenTicket(id) ? "3" : "1"; // 1 to open and 3 to close
             string link = BASE_ADDRESS + "/change_status.php?track=" + id + "&s=" + s + "&" + refresh + "&" + token;
-            response = await client.GetAsync(link);
+             response = await client.GetAsync(link);
+            return response != null;
         }
 
         public string getTextAux(char delimiter,string text,int pos)
@@ -487,152 +485,6 @@ namespace tickets.API
             return txt;
         }
 
-        public string getItemOfHTML(string htmlsource,string item,string nextTag="",string delimitador="<")
-        {
-            Console.WriteLine("\nHTML Source:\n" + htmlsource);
-            string txt = "";
-            if (!htmlsource.Contains(item))
-            {
-                return "<Error>";
-            }
-            int posItem = htmlsource.IndexOf(item) + item.Length ;
-            char val = htmlsource[posItem];
-            if (nextTag != "")
-            {
-                while (val != nextTag[0])
-                {
-                    posItem++;
-                    val = htmlsource[posItem];
-                }
-            }
-          
-            posItem =posItem + nextTag.Length;
-            val = htmlsource[posItem];
-            while (val != delimitador[0])
-            {
-                txt += val;
-                posItem++;
-                val = htmlsource[posItem]; 
-            }
-            return txt;
-        }
-
-        public async Task<string> getTicket(string id)
-        {
-            var uri = BASE_ADDRESS + "/ticket.php?track=" + id;
-            HttpClient _client = new HttpClient();
-            var response = await _client.GetByteArrayAsync(uri);
-            var test = _client.GetStringAsync(uri);
-            Console.WriteLine("Method GET ");
-            Console.WriteLine(test.ToString());
-            Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
-            string value = encoder.GetString(response, 0, response.Length - 1);
-            return value;
-        }
-
-        public async Task<string> submitTicket(string number, string subject, string message, string priority, string qualification, Ticket _ticket, List<(string, byte[])> files)
-        {
-           
-            User user = await App.Database.GetCurrentUserAsync();
-            
-
-            var html = @"" + BASE_ADDRESS + "/index.php?a=add";
-            //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-            HttpClient httpClient = new HttpClient();
-            //System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-            //httpClient.BaseAddress = new Uri("https://178.128.75.38/");
-            
-            HttpResponseMessage capture = await httpClient.GetAsync(html);
-           
-            MultipartFormDataContent form = new MultipartFormDataContent();
-
-            String res = capture.Headers.ElementAt(3).Value.ElementAt(0).ToString();
-           
-            String[] tokens = res.Split(';');
-            String cookieS = tokens[0];
-
-            String[] tokensValue = cookieS.Split('=');
-            String valueCookie = tokensValue[1];
-
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(await capture.Content.ReadAsStringAsync());
-
-            var node = htmlDoc.DocumentNode.SelectSingleNode("//input[@name='token']");
-
-            Console.WriteLine("Node Name: " + node.Name + "\n" + node.GetAttributeValue("value", "0"));
-
-            string token = node.GetAttributeValue("value", "0");
-
-            Encoding encoder = Encoding.GetEncoding(AppSettings.Encoding);
-
-            form.Headers.Add("Cookie", cookieS);
-            form.Headers.ContentType.CharSet = AppSettings.Encoding;
-            form.Add(new StringContent(user.Name, encoder), "name");
-            form.Add(new StringContent(user.Email, encoder), "email");
-            form.Add(new StringContent(user.Account, encoder), "custom3");
-            form.Add(new StringContent(user.Campus, encoder), "custom1");
-            form.Add(new StringContent(user.Profile, encoder), "custom2");
-            form.Add(new StringContent(user.Career, encoder), "custom4");
-            form.Add(new StringContent(qualification, encoder), "custom5");
-            form.Add(new StringContent(user.PhoneNumber, encoder), "custom15");
-           // form.Add(new StringContent(number, encoder), "custom20");
-            form.Add(new StringContent(_ticket.Category, encoder), "category");
-            form.Add(new StringContent(_ticket.Priority.ToString(), encoder), "priority");
-            form.Add(new StringContent(_ticket.Subject, encoder), "subject");
-            form.Add(new StringContent(_ticket.Message, encoder), "message");
-           
-            for (int x = 0; x < files.Count; x++)
-            {
-               
-                form.Add(new ByteArrayContent(files[x].Item2, 0, files[x].Item2.Length), "attachment[" + (x + 1) + "]", files[x].Item1);
-            }
-            form.Add(new StringContent(token, encoder), "token");
-            HttpResponseMessage response = await httpClient.PostAsync(BASE_ADDRESS + "/submit_ticket.php", form);
-            //response.Headers.Add(
-
-            response.EnsureSuccessStatusCode();
-            httpClient.Dispose();
-            string sd = await response.Content.ReadAsStringAsync();
-
-            var result = new HtmlDocument();
-            result.LoadHtml(sd);
-
-            var success = result.DocumentNode.SelectSingleNode("//div[@class='success']");
-            if (success == null)
-            {
-                return "error";
-            }
-            else
-            {
-                var ticketId = success.SelectSingleNode("//b[2]");
-                Console.WriteLine("TICKET ENVIADO, SU ID = " + ticketId.InnerText);
-                return ticketId.InnerText;
-            }
-        }
-
-        private int GetClasificacion(string clasificacion)
-        {
-            switch (clasificacion)
-            {
-                case "Solicitud":   return 1;
-                case "Información": return 2;
-                case "Queja":       return 3;
-                case "Reclamo":     return 4;
-                default:            return 5;
-            }
-           
-        }
-
-        private int GetPrioridad(string prioridad)
-        {
-            switch (prioridad) {
-                case "Alto":    return 1;
-                case "Medio":   return 2;
-                case "Bajo":    return 3;
-              
-                default:        return 3;
-            }
-        }
 
         public async Task<string> replyTicket(string message, List<(string, byte[])> files, string ticketID)
         {
@@ -745,35 +597,49 @@ namespace tickets.API
             }
         }
 
-        private string getMessageFrom(int index, HtmlDocument document)
+        private string GetMessageFrom(int index, HtmlDocument document,HtmlNode node)
         {
-            var element = document.DocumentNode.SelectSingleNode($"//html//body//table//tr[2]//table[2]//tr[2]/td[2]/table//tr//table//tr//table//tr[2]//td[2]");
+            //html//body//table//tr[2]//table[2]//tr[2]//table
+            HtmlNode element = null;
             if (index == 1)
+            {
+                                                         
+               element= document.DocumentNode.SelectSingleNode($"//html//body//table//tr[2]//table[2]//tr[2]/td[2]/table//tr//table//tr//table//tr[2]//td[2]");
                 return element.InnerText;
-            element = document.DocumentNode.SelectSingleNode($"//html/body//table//tr[2]//table[2]//tr[2]//table//tr[{index}]//table//tr//table//tr[2]/td[2]");
+            }
+            //  element = document.DocumentNode.SelectSingleNode($"//html/body//table//tr[2]//table[2]//tr[2]//table//tr[{index}]//table//tr//table//tr[2]/td[2]");
+                                                               //html//body//table//tr[2]//table[2]//tr[2]//table
+            element = node.SelectSingleNode($"//tr[{index}]//table//tr//table//tr[2]/td[2]");
             if (element != null)
                 return element.InnerText;
             else
                 return null;
 
         }
-        private string getMessageText(int n, HtmlDocument document)
+        private string GetMessageText(int n, HtmlNode node)
         {
-            var element = document.DocumentNode.SelectSingleNode($"//html//body//table//tr[2]//table[2]//tr[2]//table//tr[{n}]//p[2]");
+            HtmlNode element = node.SelectSingleNode($"//tr[{n}]//p[2]");
+          //  var element = document.DocumentNode.SelectSingleNode($"//html//body//table//tr[2]//table[2]//tr[2]//table//tr[{n}]//p[2]");
             if (element != null)
                 return element.InnerText.Replace("&nbsp;", "");
             else
                 return null;
         }
-        private DateTime getMessageDate(int index, HtmlDocument document)
+        private DateTime GetMessageDate(int index, HtmlDocument document, HtmlNode node)
         {
-            var element = document.DocumentNode.SelectSingleNode($"//html//body//table//tr[2]//table[2]//tr[2]/td[2]/table//tr//table//tr//table//tr//td[2]");
+            HtmlNode element = null;// document.DocumentNode.SelectSingleNode($"//html//body//table//tr[2]//table[2]//tr[2]/td[2]/table//tr//table//tr//table//tr//td[2]");
             if (index == 1)
+            {
+                element= document.DocumentNode.SelectSingleNode($"//html//body//table//tr[2]//table[2]//tr[2]/td[2]/table//tr//table//tr//table//tr//td[2]");
                 return DateTime.ParseExact(element.InnerText, "dd/MM/yyyy HH:mm:ss", null);
-
-            element = document.DocumentNode.SelectSingleNode($"//html/body//table//tr[2]//table[2]//tr[2]//table//tr[{index}]//table//tr//table//td[2]");
+            }
+                                             
+            element = document.DocumentNode.SelectSingleNode($"//html//body//table//tr[2]//table[2]//tr[2]//table//tr[{index}]//table//tr//table//td[2]");
             if (element != null)
+            {
+                Console.WriteLine("Test Fecha: "+element.InnerText);
                 return DateTime.ParseExact(element.InnerText, "dd/MM/yyyy HH:mm:ss", null);
+            }
             else
                 return DateTime.MinValue;
         }

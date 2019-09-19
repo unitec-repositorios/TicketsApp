@@ -4,7 +4,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Microsoft.Identity.Client;
 using System.Diagnostics;
-
+using tickets.Views;
+using tickets.ViewModels;
+using tickets.API;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace tickets
@@ -28,8 +30,7 @@ namespace tickets
             {
                 if (database == null)
                 {
-                    database = new Database(
-                      Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TicketsApp.db3"));
+                    database = new Database();
                 }
                 return database;
             }
@@ -37,49 +38,44 @@ namespace tickets
         public App()
         {
             InitializeComponent();
-            IdentityClientApp = new PublicClientApplication(ClientID);
-            IdentityClientApp.RedirectUri = RedirectUri;
-
-
-            //Database.ClearDatabase();
-
-            Debug.WriteLineIf(Database.GetCurrentUser() == null, "Current user is null, should go to login page");
-
-            if (Database.GetCurrentUser() == null)
+            IdentityClientApp = new PublicClientApplication(ClientID)
             {
-                MainPage = new NavigationPage(new LoginPage());
+                RedirectUri = RedirectUri
+            };
+
+            bool isTestView = false;
+            if (isTestView)
+            {
+                MainPage = new NavigationPage(new ListTicketsView());
+
+                //Database.ClearDatabase();
+
+                // Debug.WriteLineIf(Database.GetCurrentUser() == null, "Current user is null, should go to login page");
             }
             else
             {
-                switch(Device.RuntimePlatform)
+                if (Database.GetCurrentUser() == null)
                 {
-                    case Device.iOS:
-                        MainPage = new NavigationPage(new HomeScreen());
-                        break;
-                    case Device.Android:
-                        MainPage = new NavigationPage(new MyTickets());
-                        break;
-                    case Device.UWP:
-                        MainPage = new NavigationPage(new HomeScreen());
-                        break;
+                    MainPage = new NavigationPage(new LoginPage());
+                }
+                else
+                {
+                    switch (Device.RuntimePlatform)
+                    {
+                        case Device.iOS:
+                            MainPage = new NavigationPage(new HomeScreen());
+                            break;
+                        case Device.Android:
+                            //    MainPage = new NavigationPage(new MyTickets());
+                            MainPage = new NavigationPage(new ListTicketsView());
+                            break;
+                        case Device.UWP:
+                            MainPage = new NavigationPage(new HomeScreen());
+                            break;
+                    }
                 }
             }
-
         }
-
-        protected override async void OnStart()
-        {
-
-        }
-
-        protected override async void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
-
-        protected override async void OnResume()
-        {
-            // Handle when your app resumes
-        }
+      
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using tickets.Views;
 using Xamarin.Forms;
 
 namespace tickets
@@ -30,7 +30,7 @@ namespace tickets
         
         public async void goToUserSettings(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new UserSettingsPage());
+            await Navigation.PushAsync(new EditUserSettingView());
         }
 
         private async void SignInSignOutBtn_Clicked(object sender, EventArgs e)

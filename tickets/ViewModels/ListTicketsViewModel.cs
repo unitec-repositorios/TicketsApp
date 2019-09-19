@@ -1,40 +1,308 @@
-﻿using System;
+﻿using Acr.UserDialogs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using tickets.API;
+using tickets.Views;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace tickets.ViewModels
 {
-    public class ListTicketsViewModel:Ticket
+    public class ListTicketsViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Ticket>listTickets;
-       
-        public ObservableCollection<Ticket> ListTickets
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string name = "")
         {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        private bool _isRefreshing= false;
+
+        public bool IsEmpty {
+            get
+            {
+                return ListTickets == null || ListTickets.Count <= 0;
+            }
+        }
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set {
+                _isRefreshing = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        private SendTicket viewSendTicket { get; set; }
+        
+
+        private bool _isBusy=false;
+
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set {
+                _isBusy = value;
+                OnPropertyChanged();
+
+            }
+        }
+
+
+        private ObservableCollection<Ticket> _listTickets;
+        public ObservableCollection<Ticket> ListTickets {
             get {
-                if (listTickets==null)
+                if (_listTickets == null)
                 {
-                    GetTickets();
+                    InitListTicket();
                 }
-      
-                return listTickets;
+                return _listTickets;
+            }
+            set {
+                _listTickets = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsEmpty));
             }
 
-            set => listTickets = value; }
+        }
+
+        private async void InitListTicket()
+        {
+            var user = await App.Database.GetCurrentUserAsync();
+            var _tempListTickets = await App.Database.GetTickets(int.Parse(user.Account));
+            if (_tempListTickets == null)
+            {
+                _listTickets = new ObservableCollection<Ticket>();
+                return;
+            }
+            else
+            {
+                _listTickets = new ObservableCollection<Ticket>(_tempListTickets.OrderByDescending(t => t.CreationDate).OrderByDescending(t => t.IsOpen));
+            }
+           
+        }
+
+        private Server _server= new Server();
+        
+
+        private Ticket _selectedTicket;
 
        
 
-        private void GetTickets()
-
+        /*public Ticket SelectedTicket
         {
-            var temp_list = App.Database.GetTickets().Result;
-            
-            listTickets = new ObservableCollection<Ticket>(temp_list.OrderByDescending(t => t.CreationDate).OrderByDescending(t => t.Open));
+            get => _selectedTicket;
+            set {
+                if (_selectedTicket != value)
+                {
+                    _selectedTicket = value;
+                    OnPropertyChanged();
+                    HandleSelectedItem();
+                    _selectedTicket = null;
+                }
+                
+               
+                
+           
+            }
+        }
+        */
+        public ICommand AddTicketCommand { get; set; }
+        public ICommand GoToSettingsCommand { get; set; }
+        public ICommand GoToSendTicketCommand { get; set; }
+        public ICommand RefreshTickets { get; set; }
+
+      //  private SendTicket sendTicketView = new SendTicket();
+
+        public ListTicketsViewModel()
+        {
+            //  ListTickets = new ObservableCollection<Ticket>(); 
+            GetTickets();
+            checkUpdates();
+
+          //  ListTickets.Add(new Ticket() { Subject = "Hola", IsOpen = false, CreationDate = DateTime.Now });
+            AddTicketCommand = new Command(async () => await AddTicketAsync(),()=>!IsBusy);
+            GoToSettingsCommand = new Command(async () => await GoToSettings(),()=>!IsBusy);
+            GoToSendTicketCommand = new Command( () =>  GoToSendTicket(), () => !IsBusy);
+            RefreshTickets = new Command( () => RefreshTicket(), () => !IsBusy);
             
         }
-    }
 
-    
+      
+        private async void  GetTickets()
+        {
+            var user = await App.Database.GetCurrentUserAsync();
+            var temp_list =  await App.Database.GetTickets(int.Parse(user.Account));
+            ListTickets = new ObservableCollection<Ticket>(temp_list.OrderByDescending(t => t.CreationDate).OrderByDescending(t => t.IsOpen));
+            
+        }
+
+     
+
+        private async Task AddTicketAsync()
+        {
+            IsBusy = true;
+            var promptConfig = new PromptConfig()
+            {
+                InputType = InputType.Name,
+                IsCancellable = true,
+                Message = "Ingrese el ID del Ticket",
+                Placeholder = "Id Ticket"
+            };
+            var loading = new Task(() => UserDialogs.Instance.ShowLoading("Por favor espere"));
+            var result = await UserDialogs.Instance.PromptAsync(promptConfig);
+            if (result.Ok)
+            {
+                
+          
+                if (string.IsNullOrEmpty(result.Text))
+                {
+                    UserDialogs.Instance.ShowError("Ingrese un id.");
+                }
+                else
+                {
+                    loading.Start();
+                   
+                    Ticket db_t =await App.Database.GetTicket(result.Text);
+                    Ticket t = await _server.GetTicket(result.Text);
+                    if (t == null)
+                    {
+                        UserDialogs.Instance.ShowError("No existe un ticket con el ID: " + result.Text);
+                    }
+                    else if (db_t != null)
+                    {
+                        UserDialogs.Instance.ShowError("No se agrego el ticket, porque ya existe en la base de datos.");
+                    }
+                    else
+                    {
+                        await App.Database.AgregarTicket(t);
+                        GetTickets();
+                        UserDialogs.Instance.ShowSuccess("Ticket Agregado!");
+                     
+                        
+                    }
+                }
+            }
+            IsBusy = false;
+        }
+
+        private async Task GoToSettings()
+        {
+            if (!IsBusy)
+            {
+                IsBusy = false;
+                await Application.Current.MainPage.Navigation.PushAsync(new AppSettingsPage());
+            }
+                
+           
+        }
+        private void GoToSendTicket()
+        {
+            if (!IsBusy)
+            {
+                IsBusy = false;
+                Device.BeginInvokeOnMainThread(() => UserDialogs.Instance.ShowLoading());
+                Task.Run( async() => {
+                    await GetSendTicketAsync();
+                }).ContinueWith(result => Device.BeginInvokeOnMainThread(() => {
+
+                    UserDialogs.Instance.HideLoading();
+                    App.Current.MainPage.Navigation.PushAsync(viewSendTicket);
+                })
+                );
+
+            }
+     
+        }
+
+        private async void RefreshTicket()
+        {
+            if (!IsRefreshing)
+            {
+                IsRefreshing = true;
+                checkUpdates();
+                await Task.Delay(800);
+                IsRefreshing = false;
+            }    
+        }
+
+
+        private async void checkUpdates()
+        {
+            if (!IsBusy && ListTickets!=null)
+            {
+                IsBusy = true;
+                foreach (var item in ListTickets)
+                {
+                    var tempTicket =await _server.GetTicket(item.ID);
+                    if (item.LastUpdate != tempTicket.LastUpdate)
+                    {
+                        tempTicket.HasUpdate=true;
+                        await App.Database.ActualizarTicket(tempTicket);
+                    }
+                }
+                IsBusy = false;
+            }
+           
+        }
+
+     /*   private void HandleSelectedItem()
+        {
+            if (!IsBusy)
+            {
+                
+                IsBusy = true;
+                chatTicket _chatTicket=null;
+                Device.BeginInvokeOnMainThread(() => UserDialogs.Instance.ShowLoading("Cargando Ticket"));
+                Task.Run( () => {
+                    var tempList = ListTickets;
+                    ListTickets = new ObservableCollection<Ticket>(tempList);
+                    var idTicketSelected = SelectedTicket.ID;
+                    
+                    _chatTicket = new chatTicket() { BindingContext = idTicketSelected };
+                }).ContinueWith(result=>Device.BeginInvokeOnMainThread(()=> {
+                    UserDialogs.Instance.HideLoading();
+                    
+                    IsBusy = false;
+                    if (_chatTicket == null)
+                        return;
+
+                    App.Current.MainPage.Navigation.PushAsync(_chatTicket);
+
+                })
+                
+                );
+             
+            }
+
+
+           
+        }
+       */ 
+
+        private async Task<SendTicket> GetSendTicketAsync()
+        {
+
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+                viewSendTicket = new SendTicket();
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Acceso Internet", "Lo sentimos no tenemos acceso a intenert","Ok");
+                return null;
+            }
+             
+                return viewSendTicket;
+
+        }
+       
+    }    
 }

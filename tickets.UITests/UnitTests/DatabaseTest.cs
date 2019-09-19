@@ -11,8 +11,7 @@ namespace tickets.UITests.UnitTests
     public class DatabaseTest
     {
 
-        Database db = new Database(
-                      Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TicketsAppTest.db3"));
+        Database db = new Database("Test");
 
         [Test()]
         public async Task FirstTimeuserIsNull()
@@ -59,7 +58,6 @@ namespace tickets.UITests.UnitTests
             await db.CreateNewCurrentUser(user2);
 
             User current = await db.GetCurrentUserAsync();
-            current.PrintData();
             Assert.IsTrue(current.Name.Equals("NUEVO"));
         }
 

@@ -14,14 +14,21 @@ namespace tickets
             var messageVm = item as Message;
             if (messageVm == null)
                 return null;
-            return messageVm.EsPropio ? this.textInDataTemplate : this.textOutDataTemplate;
+            else if (messageVm.EsPropio)
+            {
+                return textInDataTemplate;
+            }
+            else
+            {
+                return textOutDataTemplate;
+            }
         }
 
 
         public SelectorDataTemplate()
         {
-            this.textInDataTemplate = new DataTemplate(typeof(TextInViewCell));
-            this.textOutDataTemplate = new DataTemplate(typeof(TextOutViewCell));
+            textInDataTemplate = new DataTemplate(typeof(TextInViewCell));
+            textOutDataTemplate = new DataTemplate(typeof(TextOutViewCell));
         }
 
     }

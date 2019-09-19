@@ -12,6 +12,7 @@ using Microsoft.Identity.Client;
 using System.Threading.Tasks;
 using Android;
 using Acr.UserDialogs;
+using Microsoft.Identity.Client.Platforms.Android;
 
 namespace tickets.Droid
 {

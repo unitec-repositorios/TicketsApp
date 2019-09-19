@@ -41,7 +41,7 @@ namespace tickets
         {
             var user = (User)BindingContext;
             User current = await App.Database.GetCurrentUserAsync();
-            if (user.IsValid())
+            if (user.IsValid)
             {
                 if (current == null)
                 {
@@ -53,10 +53,10 @@ namespace tickets
                 {
                     user.ID = current.ID;
                     user.IsCurrent = true;
-                    App.Database.ActualizarUsuario(user);
+                    await App.Database.ActualizarUsuario(user);
                     await DisplayAlert("Enhorabuena", "Su usuario ha sido actualizado exitosamente!", "Aceptar");
                 }
-                user.PrintData();
+               
                 await Navigation.PopAsync();
             }
             else

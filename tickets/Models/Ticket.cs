@@ -8,24 +8,247 @@ namespace tickets
 {
     public class Ticket : INotifyPropertyChanged
     {
-        [PrimaryKey]
-        public string ID { get; set; }
-        public int UserID { get; set; }
-        public int Affected { get; set; }
-        public string Classification { get; set; }
-        public int Priority { get; set; }
-        public string Subject { get; set; }
-        public string Message { get; set; }
-        public bool Open { get; set; }
 
-        public string Estado { get; set; }
-        public string OpenImage { get; set; }
-        public DateTime CreationDate { get; set; }
-        public DateTime LastUpdate { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string name = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+
+        private string _id;
+        [PrimaryKey]
+        public string ID
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
+        private int _userID;
+
+        public int UserID
+        {
+            get { return _userID; }
+            set {
+                _userID = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _usersAffected;
+        public int UsersAffected
+        {
+            get { return _usersAffected; }
+            set {
+                _usersAffected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _classification;
+        public string Classification
+        {
+            get { return _classification; }
+            set {
+                _classification = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _priority;
+
+        public string Priority
+        {
+            get { return _priority; }
+            set {
+                _priority = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _subject;
+
+        public string Subject
+        {
+            get { return _subject; }
+            set {
+                _subject = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isOpen;
+
+        public bool IsOpen
+        {
+            get {
+                if (Estado == "Resuelto" || Estado == "Cerrar Ticket" || !_isOpen)
+                    return false;
+                else
+                    return false;
+            }
+            set
+            {
+                _isOpen = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(OpenImage));
+            }
+            
+        }
+
+        private string _openImage;
+
+        public string OpenImage
+        {
+            get
+            {
+                if (IsOpen)
+                    return "";
+                else
+                    return "lock.png";
+            }
+            set {
+                _openImage = value;
+                OnPropertyChanged();
+             
+
+            }
+        }
+
+        private DateTime _creationDate;
+
+        public DateTime CreationDate
+        {
+            get { return _creationDate; }
+            set {
+                _creationDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _hasUpdate;
+
+        public bool HasUpdate
+        {
+            get {
+                return _hasUpdate;
+            }
+            set {
+                _hasUpdate = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(UpdateImage));
+            }
+        }
+
+
+        private DateTime _lastUpdate;
+
+        public DateTime LastUpdate
+        {
+            get { return _lastUpdate; }
+            set {
+                _lastUpdate = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(UpdateImage));
+            }
+        }
+
+        private string _category;
+
+        public string Category
+        {
+            get { return _category; }
+            set {
+                _category = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _updateImage;
+
+        public string UpdateImage
+        {
+
+            get {
+                if (HasUpdate)
+                    return "bell.png";
+                else
+                    return "";
+            }
+           
+        }
+
+        private string _estado;
+
+        public string Estado
+        {
+            get { return _estado; }
+            set {
+                _estado = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsResuelto));
+                OnPropertyChanged(nameof(IsOpen));
+                OnPropertyChanged(nameof(OpenImage));
+            }
+        }
+
+        private string _message;
+
+        public string Message
+        {
+            get { return _message; }
+            set {
+                _message = value;
+                OnPropertyChanged();
+
+            }
+        }
+
+        private bool _isResuelto;
+
+        public bool IsResuelto
+        {
+            get {
+                _isResuelto = false;
+                if (Estado == "Resuelto")
+                    _isResuelto = true;
+                return _isResuelto; }
+       
+        }
+
+        private string _ultimaRespuesta;
+
+        public string UltimaRespuesta
+        {
+            get {
+                return _ultimaRespuesta;
+            }
+            set {
+                _ultimaRespuesta = value;
+                OnPropertyChanged();
+
+            }
+        }
+
+        private int _respuestas;
+
+        public int Respuestas
+        {
+            get { return _respuestas; }
+            set { _respuestas = value; }
+        }
+
+
+
+
+
         public string Date { get; set; }
-        string image { get; set; }
+       
         public string Area { get; set; }
-        public string Category { get; set; }
+        
         public string CareerFacultyDepartment { get; set; }
 
 
@@ -37,6 +260,7 @@ namespace tickets
 
         private char separatorFileName = '$';
 
+       
 
         public void PrintData()
         {
@@ -48,25 +272,7 @@ namespace tickets
             }
         }
 
-        public string Image
-        {
-            set
-            {
-                if (image != value)
-                {
-                    image = value;
-
-                    if (PropertyChanged != null)
-                    {
-                        PropertyChanged(this, new PropertyChangedEventArgs("Image"));
-                    }
-                }
-            }
-            get
-            {
-                return image;
-            }
-        }
+        
 
        public void AddFileName(string _filename)
        {
@@ -166,27 +372,15 @@ namespace tickets
         {
             return _files;
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string propertyName = null)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+        
+       
 
         
-        internal void Check()
+        public void Check()
         {
-            if (Estado.Contains("Resuelto"))
-                Open = false;
-            else
-                Open = true;
-
-            if (Open)
-                OpenImage = "";
-            else
-                OpenImage = "lock.png";
+            Console.WriteLine("Check()");
+            Console.WriteLine("|| =====> Estado: " + Estado);
+      
         }
     }
 }

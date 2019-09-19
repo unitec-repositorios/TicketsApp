@@ -4,11 +4,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="tickets.MyTickets" 
              Title="Mis Tickets" Icon="baseline_home_white_36pt" >
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Icon="nuevo.jpg" Clicked="ToolbarItem_Nuevo"/>
+        <ToolbarItem Order="Secondary" Text="Ajustes" Clicked="ToolbarItem_Settings"/>
+        <ToolbarItem Order="Secondary" Text="Agregar Ticket" Command="{Binding AddTicketCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-
+    
         <StackLayout>
             <SearchBar Placeholder="Buscar" TextChanged="SearchBar_TextChanged" HeightRequest="40"/>
-          <ListView x:Name="TicketsListView"  IsPullToRefreshEnabled="True" Refreshing="TicketsListView_Refreshing" ItemSelected="goToViewTicket" SeparatorVisibility="Default" RowHeight="70">
+            <ListView x:Name="TicketsListView"  ItemsSource="{Binding ListTickets}" IsPullToRefreshEnabled="True" Refreshing="TicketsListView_Refreshing" ItemSelected="TicketsListView_ItemSelected" SeparatorVisibility="Default" RowHeight="70">
       
           <!--  <ListView  ItemsSource="{Binding ListTickets}"  SeparatorVisibility="Default" RowHeight="70">  -->
               <ListView.ItemTemplate>
