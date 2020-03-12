@@ -51,5 +51,11 @@
 	<string>Esta aplicación necesita acceso a la cámara para tomar fotos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Esta aplicación necesita acceso a la liberia de fotos para adjuntar fotos.</string>
+  <key>UIAppFonts</key>
+  <array>
+    <string>FontAwesome5BrandsRegular.otf</string>
+    <string>FontAwesome5Regular.otf</string>
+    <string>FontAwesome5Solid.otf</string>
+  </array>
 </dict>
 </plist>

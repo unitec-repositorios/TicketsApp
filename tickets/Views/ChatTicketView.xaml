@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="tickets.Views.ChatTicketView">
+    <ContentPage.Content>
+        <StackLayout Padding="15">
+           
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="AUTO"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame Grid.Column="0" CornerRadius="20" BackgroundColor="LightGray" Margin="0" Padding="10" HasShadow="False">
+                    <Label Text="JTR-RFD-W34R" HorizontalTextAlignment="Center" FontSize="Large" />
+                </Frame>
+                
+            </Grid>
+       
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Grid VerticalOptions="EndAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="AUTO"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="AUTO"/>
+                </Grid.ColumnDefinitions>
+                <!-- Enviar mensaje -->
+                <Frame x:Name="MessageContainer" Grid.Column="1" VerticalOptions="EndAndExpand"  BorderColor="Gray" HasShadow="False" CornerRadius="10" Padding="10,0,10,10" HeightRequest="32" >
+                    <Editor x:Name="EditorText" Margin="10,10,10,10"  VerticalOptions="FillAndExpand" TextChanged="OnTextChanged" Placeholder="Escriba un mensaje ..."/>
+                </Frame>
+                
+                <!-- Enviar -->
+                <Label Grid.Column="2" Margin="10,0,10,0" VerticalOptions="Center" Text="&#xf1d8;" FontFamily="{StaticResource FontAwesomeRegular}" FontSize="28" TextColor="Blue"/>
+                <!-- Enviar-->
+                <Label Grid.Column="0" Margin="10,0,10,0" VerticalOptions="Center" Text="&#xf0c6;" FontFamily="{StaticResource FontAwesomeSolid}" FontSize="28" TextColor="Black"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>  
