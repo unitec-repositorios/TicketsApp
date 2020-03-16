@@ -265,30 +265,29 @@ namespace tickets.ViewModels
         }
         private void GoToSendTicket()
         {
-            var currentConnection = Connectivity.NetworkAccess;
-            if (currentConnection != NetworkAccess.Internet)
+            try
             {
-                UserDialogs.Instance.ShowError("Sin acceso a internet");
-                Task.Delay(500);
-                return;
-            }
+                var currentConnection = Connectivity.NetworkAccess;
+                if (currentConnection != NetworkAccess.Internet)
+                {
+                    UserDialogs.Instance.ShowError("Sin acceso a internet");
+                    Task.Delay(500);
+                    return;
+                }
 
-            if (!IsBusy)
-            {              
-                IsBusy = false;
-                Device.BeginInvokeOnMainThread(() => UserDialogs.Instance.ShowLoading());
-                Task.Run( async() => {
-                    await GetSendTicketAsync();
-                }).ContinueWith(result => Device.BeginInvokeOnMainThread(() => {
-                    
+                if (!IsBusy)
+                {
+                    IsBusy = false;
+                    UserDialogs.Instance.ShowLoading();
+                    App.Current.MainPage.Navigation.PushAsync(new SendTicket());
                     UserDialogs.Instance.HideLoading();
-
-                    App.Current.MainPage.Navigation.PushAsync(viewSendTicket);
-                })
-                );
-
+                }
             }
-     
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw ex;
+            }
         }
 
         private async Task RefreshTicket()
@@ -298,9 +297,6 @@ namespace tickets.ViewModels
             checkUpdates();
             await Task.Delay(800);
             IsRefreshing = false;
-                
-
-             
         }
 
 

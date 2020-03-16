@@ -89,6 +89,14 @@ namespace tickets.Models
 
         }
 
+        public string OutText
+        {
+            get
+            {
+                return Autor + "\n" + Text;
+            }
+        }
+
         
     }
 }

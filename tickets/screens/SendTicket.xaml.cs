@@ -24,8 +24,8 @@ namespace tickets
         public List<string> Categorias;
         public ObservableCollection<string> Areas;
         private Dictionary<string, List<string>> AreasxCategorias;
-   
-       
+
+        private bool HandlerAlreadyRunning;
         public bool sentTicket;
         List<(string, byte[])> files = new List<(string, byte[])>();
         //List<FileData> loadFiles = new List<FileData>();
@@ -44,7 +44,8 @@ namespace tickets
             InitializeComponent();
             initDatos();
             this.BindingContext = new Ticket();
-
+            picker.SelectedItem = "Solicitud";
+            pickerPriority.SelectedItem = "Medio";
 
         }
 
@@ -65,6 +66,7 @@ namespace tickets
             Categorias = AreasxCategorias[picker_Areas.SelectedItem.ToString()];
             picker_categories.ItemsSource = Categorias;
             picker_categories.SelectedIndex = 0;
+            HandlerAlreadyRunning = false;
         //    Categorias = new ObservableCollection<string>(server.GetDictionaryCategory((string)picker_Areas.ItemsSource[selectedIndex]).Keys);
         }
 
@@ -139,13 +141,20 @@ namespace tickets
 
         public async void OnSubmit(object sender, System.EventArgs e)
         {
-           
             var valid = !String.IsNullOrWhiteSpace(subject.Text) && !String.IsNullOrWhiteSpace(message.Text);
             if (valid)
             {
                 try
                 {
-                    UserDialogs.Instance.ShowLoading("Enviando Ticket...");
+                    UserDialogs.Instance.ShowLoading("Enviando Ticket ...");
+
+                    if (HandlerAlreadyRunning)
+                    {
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                    HandlerAlreadyRunning = true;
+
                     server = new Server();
                     string _keyArea = picker_Areas.SelectedItem.ToString();
                     var _tempArea = server.GetValueArea(_keyArea);
@@ -153,9 +162,9 @@ namespace tickets
                     Ticket _ticket = new Ticket()
                     {
                         ID = "",
-                        Area=_tempArea,
-                        Category=_tempCategory,
-                        Priority = ""+(pickerPriority.SelectedIndex + 1),
+                        Area = _tempArea,
+                        Category = _tempCategory,
+                        Priority = "" + (pickerPriority.SelectedIndex + 1),
                         Subject = subject.Text,
                         Message = message.Text,
                         Classification = picker.SelectedItem.ToString(),
@@ -163,13 +172,15 @@ namespace tickets
                     };
                     // string response = await server.submitTicket("0", subject.Text, message.Text, (pickerPriority.SelectedIndex + 1) + "", picker.Items[picker.SelectedIndex],_ticket, files);
                     string response;
-                     response= await server.SendTicket(_ticket, files);
-          
-                       
+                    response = await server.SendTicket(_ticket, files);
+
+                    
+
                     if (response.Equals("error"))
                     {
                         await DisplayAlert("Ticket no se ha podido enviar", "Revise por favor", "OK");
                         this.sentTicket = false;
+                        HandlerAlreadyRunning = false;
                         UserDialogs.Instance.HideLoading();
                     }
                     else
@@ -177,39 +188,37 @@ namespace tickets
                         //   string date = await server.getInitDate(response);
                         _ticket = await server.GetTicket(response);
                         await App.Database.AgregarTicket(_ticket);
+                        UserDialogs.Instance.HideLoading();
                         UserDialogs.Instance.ShowSuccess("Ticket Enviado!");
                         bool copy = await DisplayAlert("Ticket ha sido enviado", "Ticket ID: " + response, "OK", "Copiar Ticket ID");
-                        
+
                         if (!copy)
                         {
                             CrossClipboard.Current.SetText(response);
-                           // App.Database.AgregarTicket(await server.GetTicket(response));
+                            // App.Database.AgregarTicket(await server.GetTicket(response));
                         }
                         this.sentTicket = true;
                         //clean
 
-                        
-
-                        
                         subject.Text = "";
                         message.Text = "";
-                        picker.SelectedIndex = 1;
-                        pickerPriority.SelectedIndex = 1;
+                        picker.SelectedItem = "Solicitud";
+                        pickerPriority.SelectedItem = "Medio";
+                        HandlerAlreadyRunning = false;
                         App.Current.MainPage = new NavigationPage(new MyTickets());
                         await Navigation.PopAsync();
-                        
                     }
                 }
                 catch (Exception ex)
                 {
-                    
-                    Console.WriteLine(ex.StackTrace + " ----- "+ex.TargetSite );
+                    HandlerAlreadyRunning = false;
+                    Console.WriteLine(ex.StackTrace + " ----- " + ex.TargetSite);
                     await DisplayAlert("Error", "Error= " + ex, "OK");
                 }
             }
             else
             {
-                await DisplayAlert("Advertencia", "Favor llene todos los campos", "OK");
+                await DisplayAlert("Advertencia", "Favor llene el Asunto y Mensaje", "OK");
             }
         }
 

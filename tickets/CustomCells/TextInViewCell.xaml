@@ -19,7 +19,7 @@
         
         <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#0535f0" CornerRadius="15" HasShadow="True" >
             <StackLayout>
-                <Label TextColor="White" Text="{Binding Text}" />
+                <Button BackgroundColor="#0535f0" TextColor="White" Text="{Binding Text}" Clicked="OnClickedMsg" />
             </StackLayout>
         </Frame>
         <Label FontSize="Micro" Grid.Row="1" Grid.Column="1" Text="{Binding Date, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" TextColor="Gray"></Label>

@@ -23,7 +23,7 @@
                         <Label Text="Categoría" FontAttributes="Bold" FontSize="Large"/>
                         <Picker x:Name="picker_categories"  FontSize="Medium" ></Picker>
                         <Label Text="Clasificación"  Font="Bold" FontSize="Large"></Label>
-                        <Picker x:Name="picker" SelectedIndex="1">
+                        <Picker x:Name="picker">
                             <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Solicitud</x:String>
@@ -35,7 +35,7 @@
                             </Picker.ItemsSource>
                         </Picker>
                         <Label Text="Prioridad"  Font="Bold" FontSize="Large"></Label>
-                        <Picker x:Name="pickerPriority" SelectedIndex="1">
+                        <Picker x:Name="pickerPriority">
                             <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Alto</x:String>
